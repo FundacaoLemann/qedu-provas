@@ -47,6 +47,7 @@
       "style": false,
       "template": false
     },
+    "poll": "1000",
     "spec": {
       "class": false,
       "component": true,
