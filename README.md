@@ -1,9 +1,26 @@
-# QeduProvasNg
+# QEdu Provas Angular
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.19-3.
 
+## Prerequisites
+
+In order to make things work you should have installed int your machine:
+* Vangrant ^1.8.5
+* VirtualBox ^5.0.26
+
+## Instalation
+
+### 1. Vagrant setup
+Setup the environment by running `vagrant up`.
+Once it has finished updating and insalling the packages you can access the VM by running `vagrant ssh`.
+All the commands are executed from inside the VM and from the *root app folder* wich is mapped to `/qedu-provas-ng/`.
+
+### 2. Environment Setup
+From the root app folder run `yarn` to install all the js depencies.
+
+
 ## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+From the root app folder run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -11,11 +28,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `yarn test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
