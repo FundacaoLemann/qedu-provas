@@ -1,3 +1,16 @@
-<h1>
-  {{title}}
-</h1>
+<header>
+	<div class="header-inner container">
+		<div class="pull-left">
+			<img src="assets/images/qedu-logo-q.png" class="logo">
+		</div>
+		<div class="pull-right"><i class="fa fa-calendar"></i> {{current_date | date: 'dd/MM/yyyy'}}</div>
+	</div><!-- .container -->
+</header>
+
+<main>
+	<router-outlet></router-outlet>
+</main>
+
+<footer>
+	<div class="footer-inner">QEdu 2016. Todos os direitos reservados.</div>
+</footer>

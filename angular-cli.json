@@ -18,9 +18,12 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss",
+        "../node_modules/font-awesome/scss/font-awesome.scss",
+        "assets/scss/styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
@@ -28,8 +31,10 @@
       }
     }
   ],
-  "addons": [],
-  "packages": [],
+  "addons": [
+  ],
+  "packages": [
+  ],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
@@ -41,13 +46,13 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "sass",
     "prefixInterfaces": false,
+    "poll": 1000,
     "inline": {
       "style": false,
       "template": false
     },
-    "poll": "1000",
     "spec": {
       "class": false,
       "component": true,

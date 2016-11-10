@@ -1,0 +1,12 @@
+// Structure
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+@import 'styles/placeholders.scss';
+
+// Theme
+@import 'styles/bootstrap-theme';
+
+// Main and Shared styles
+@import 'styles/reset.scss';
+@import 'styles/header.scss';
+@import 'styles/footer.scss';

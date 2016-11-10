@@ -1,0 +1,30 @@
+<form #studentForm="ngForm">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-md-6">
+				<div class="form-group">
+					<label for="student_name">Nome (obrigatório)</label>
+					<input type="text"  class="form-control" placeholder="Seu nome completo" id="name"
+									required
+									name="name"
+									[(ngModel)]="student.name"
+									>
+					<div *ngIf="formErrors?.name" class="alert alert-danger">
+						<b>error: </b><span [innerHTML]="formErrors.name"></span>
+					</div>
+
+				</div><!-- .form-group -->
+			</div><!-- .col-xs-12 -->
+			<div class="col-xs-12 col-md-6">
+				<div class="form-group">
+					<label for="student_number">Número de matrícula (obrigatório)</label>
+					<input type="text"  class="form-control" placeholder="Seu número de estudante ou matrícula" id="register_number"
+									required
+									name="register_number"
+									[(ngModel)]="student.register_number"
+									>
+				</div><!-- .form-group -->
+			</div><!-- .col-xs-12.col-md-6 -->
+		</div><!-- .row -->
+	</div><!-- .container-fluid -->
+</form>
