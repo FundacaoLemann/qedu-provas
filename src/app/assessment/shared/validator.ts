@@ -92,7 +92,7 @@ export class Validator {
 
 				let invalidCharsError: string = (rules.messages && rules.messages.invalidCharacters)
 																			? rules.messages.invalidCharacters
-																			: `Não utilizes estes caracteres: ${uniqueInvalidMatches.join('')}`;
+																			: `Caracteres inválidos: ${uniqueInvalidMatches.join('')}`;
 
 				errors.push(invalidCharsError);
 			}

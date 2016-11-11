@@ -19,7 +19,7 @@ describe('AssessmentService', () => {
 	});
 
 	it('should return an empty assessment', () => {
-		service.getAssessment('').then(assessment => expect(assessment.uuid).not.toBeDe	fined);
+		service.getAssessment('').then(assessment => expect(assessment.uuid).not.toBeDefined);
 	});
 
 });

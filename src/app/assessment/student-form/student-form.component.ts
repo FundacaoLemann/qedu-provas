@@ -1,8 +1,10 @@
-import { Component, ViewChild, AfterViewChecked } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Student } from '../model/student';
-import { Validator, Validations } from '../shared/validator';
+
+import { forbiddenCharactersValidator } from '../shared';
+import { CustomFormErrors } from '../shared';
 
 @Component({
   selector: 'qp-student-form',
@@ -10,41 +12,53 @@ import { Validator, Validations } from '../shared/validator';
   styleUrls: ['./student-form.component.sass']
 })
 
-export class StudentFormComponent implements AfterViewChecked {
+export class StudentFormComponent implements OnInit {
+
+	constructor(private fb: FormBuilder){}
 	
   student: Student = new Student()
-  studentForm: NgForm;
+  studentForm: FormGroup;
 
-  @ViewChild('studentForm') viewForm: NgForm;
+  formErrors = {};
+  formClasses = {};
 
-  ngAfterViewChecked() {
-    this.setupForm();
+  ngOnInit() {
+  	this.formBuild();
   }
 
-  setupForm() {
-    if( this.studentForm === this.viewForm) { return; }
+  formBuild() {
+  	this.studentForm = this.fb.group({
+  		'name': [
+  			this.student.name, [
+	  			Validators.required,
+	  			forbiddenCharactersValidator(/[~`!@#$%^&*()_+={}[\]|\\:;"<>,./?\d]/g)
+	  		]
+  		],
+      'register_number' : [
+        this.student.register_number, Validators.required
+      ]
+  	});
 
-    this.studentForm = this.viewForm;
-    this.studentForm.valueChanges.
-      subscribe(data => this.formChanged(data));
+  	this.studentForm.valueChanges
+  		.subscribe(data => this.onValueChanged(data));
   }
 
-  formChanged(data?: any) {
-    let errors: string[];
-    if (! this.studentForm.pristine) {
-      this.formErrors.name = Validator.validate(this.student.name, 
-        { validations: {
-            required: true, 
-            length: {min: 2},
-            invalidCharacters: /[~`!@#$%^&*()_+={}[\]|\\:;"'<>,./?\d]/g
-          }
-        }).join('<br>');
+  updateFormClasses() {
+    for(let controlName in this.studentForm.controls) {
+      let control = this.studentForm.controls[controlName];
+
+      if ( control.dirty && ! control.valid ) {
+        this.formClasses[controlName] = 'invalid';
+      }
+      else if ( control.dirty && control.valid ) {
+        this.formClasses[controlName] = 'valid';
+      }
     }
+
   }
 
-  formErrors = {
-    'name': '',
-    'register_number': ''
+  onValueChanged(data?: any) {
+    this.formErrors = CustomFormErrors.parseForm(this.studentForm);
+    this.updateFormClasses();
   }
-
 }
