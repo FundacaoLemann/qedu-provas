@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { Student } from '../model/student';
+import { Student } from '../../model/student';
 
-import { forbiddenCharactersValidator } from '../shared';
-import { CustomFormErrors } from '../shared';
+import { CustomFormErrors, forbiddenCharactersValidator } from '../../shared';
+
+import { Assessment } from '../../model';
+import { DataService } from '../../data.service';
 
 @Component({
   selector: 'qp-student-form',
@@ -13,17 +16,24 @@ import { CustomFormErrors } from '../shared';
 })
 
 export class StudentFormComponent implements OnInit {
+  assessment: Assessment
 
-	constructor(private fb: FormBuilder){}
-	
   student: Student = new Student()
-  studentForm: FormGroup;
-
+  studentForm: FormGroup
+  
   formErrors = {};
   formClasses = {};
 
+  constructor(
+    private dataService: DataService,
+    private fb: FormBuilder
+  ){
+  }
+
   ngOnInit() {
-  	this.formBuild();
+    this.formBuild();
+
+    this.dataService.assessment.subscribe(assessment => this.assessment = assessment);
   }
 
   formBuild() {
@@ -34,31 +44,25 @@ export class StudentFormComponent implements OnInit {
 	  			forbiddenCharactersValidator(/[~`!@#$%^&*()_+={}[\]|\\:;"<>,./?\d]/g)
 	  		]
   		],
-      'register_number' : [
-        this.student.register_number, Validators.required
-      ]
+      'register_number': []
   	});
 
-  	this.studentForm.valueChanges
-  		.subscribe(data => this.onValueChanged(data));
+  	this.studentForm.valueChanges.subscribe(data => this.validateForm());
   }
 
-  updateFormClasses() {
-    for(let controlName in this.studentForm.controls) {
-      let control = this.studentForm.controls[controlName];
+  formSubmit() {
+    if (this.studentForm.valid) {
+      let student =  new Student(
+        this.studentForm.get('name').value,
+        this.studentForm.get('register_number').value
+      );
+      console.log('passou');
 
-      if ( control.dirty && ! control.valid ) {
-        this.formClasses[controlName] = 'invalid';
-      }
-      else if ( control.dirty && control.valid ) {
-        this.formClasses[controlName] = 'valid';
-      }
+      this.dataService.setStudent(student);
     }
-
   }
 
-  onValueChanged(data?: any) {
+  validateForm() {
     this.formErrors = CustomFormErrors.parseForm(this.studentForm);
-    this.updateFormClasses();
   }
 }

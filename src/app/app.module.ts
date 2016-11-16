@@ -1,27 +1,33 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AssessmentRoutingModule } from './assessment/assessment-routing.module';
 
-import { AssessmentModule } from './assessment/assessment.module';
+import { AppComponent } from './app.component';
+import { AssessmentComponent } from './assessment/assessment.component';
+import { StudentFormComponent } from './assessment/student-form/student-form.component';
+
+import { AssessmentService } from './assessment/assessment.service';
+import { DataService } from './data.service';
 
 @NgModule({
 	imports: [
 		BrowserModule,
-		FormsModule,
+		ReactiveFormsModule,
 		HttpModule,
-		RouterModule,
 		AppRoutingModule,
-		AssessmentModule
+		AssessmentRoutingModule
 	],
 	declarations: [
 		AppComponent,
+		AssessmentComponent,
+		StudentFormComponent
 	],
-	providers: [],
+	providers: [DataService, AssessmentService],
 	bootstrap: [AppComponent]
 })
 

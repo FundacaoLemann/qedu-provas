@@ -3,9 +3,9 @@ import { Router,
 				 ActivatedRoute, 
 				 Params            } from '@angular/router';
 
-import { Assessment        } from './model/assessment';
-import { AssessmentService } from './assessment.service';
-import { Student           } from './model/student';
+import { Assessment        } from '../model/assessment';
+import { Student           } from '../model/student';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -15,23 +15,24 @@ import { Student           } from './model/student';
 })
 
 export class AssessmentComponent implements OnInit {
+	student: Student
+
 	constructor( 
-		private assessmentService: AssessmentService,
+		private dataService: DataService,
 		private route: ActivatedRoute,
 		private router: Router
-	) {}
-
-	assessment: Assessment;
-	student: Student;
+	) {
+		this.dataService.student.subscribe(student => this.student = student);
+	}
 
 	ngOnInit() {
-		this.getAssessment();
+		this.loadAssessment();
 	}
 
-	getAssessment() {
-		let uuid = this.route.snapshot.params['uuid'];
-		this.assessmentService.getAssessment(uuid).then(assessment => {
-			this.assessment = assessment;
-		});
+	loadAssessment() {
+		let uuid: string = this.route.snapshot.params['uuid'];
+
+		this.dataService.loadAssessment(uuid);
 	}
+
 }

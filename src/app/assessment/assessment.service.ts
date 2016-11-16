@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Response  } from '@angular/http';
 
-import { Assessment } from './model/assessment';
-import { ASSESSMENTS } from './mock/assessment-mock';
+import { Student } from '../model/student';
+import { Assessment } from '../model/assessment';
+
+import { ASSESSMENTS } from '../mock/assessment-mock';
 
 @Injectable()
 
 export class AssessmentService {
-	
 	constructor() {}
 
-	getAssessments(): Promise<Assessment[]> {
-		return Promise.resolve(ASSESSMENTS);
-	}
-
-	getAssessment(uuid: string): Promise<Assessment> {
+	getAssessment(uuid: string): Promise<any> {
 		for(let assessment of ASSESSMENTS) {
-			if(assessment.uuid === uuid)
+			if (uuid === assessment.uuid) {
 				return Promise.resolve(assessment);
-		} 
+			}
+		}
 
-		return new Promise<Assessment>(() => { return new Assessment() });
+		return Promise.resolve();
 	}
 
 }
