@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Student } from '../../model/student';
 
@@ -26,14 +26,16 @@ export class StudentFormComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
   ){
   }
 
   ngOnInit() {
     this.formBuild();
 
-    this.dataService.assessment.subscribe(assessment => this.assessment = assessment);
+    this.dataService.assessmentObservable.subscribe(assessment => this.assessment = assessment);
   }
 
   formBuild() {
@@ -54,11 +56,12 @@ export class StudentFormComponent implements OnInit {
     if (this.studentForm.valid) {
       let student =  new Student(
         this.studentForm.get('name').value,
-        this.studentForm.get('register_number').value
+        this.studentForm.get('register_number').value,
+        true
       );
-      console.log('passou');
 
       this.dataService.setStudent(student);
+      this.router.navigate(['instrucoes'], { relativeTo: this.route });
     }
   }
 

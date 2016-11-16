@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="col-xs-12">
+			<h3>Instruções</h3>
+			<hr>
+		</div>
+
+		<div class="col-xs-12">
+			{{ assessment.instructions }}
+		</div><!-- .col-xs-12-->
+		<div class="col-xs-4">
+			<h4><i class="fa fa-clock-o"></i> Duração</h4>
+			<h5>{{ assessment.duration }} minutos</h5>
+		</div>
+
+		<div class="col-xs-4">
+			<h4><i class="fa fa-check-square-o"></i> Questões</h4>
+			<h5>{{ assessment.items_count }} questões</h5>
+		</div>
+
+	</div><!-- .panel-body -->
+	<div class="panel-footer">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<button type="submit" class="btn btn-success">Iniciar prova</button>
+			</div><!-- .col-xs-12 -->
+		</div>
+	</div><!-- .panel-footer -->
+</div><!-- .panel-default -->

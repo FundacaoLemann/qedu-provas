@@ -15,14 +15,13 @@ import { DataService } from '../data.service';
 })
 
 export class AssessmentComponent implements OnInit {
-	student: Student
+	studentForm: boolean = false;
 
 	constructor( 
 		private dataService: DataService,
 		private route: ActivatedRoute,
 		private router: Router
 	) {
-		this.dataService.student.subscribe(student => this.student = student);
 	}
 
 	ngOnInit() {
