@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { DataService } from '../../data.service';
 export class StudentFormComponent implements OnInit {
   assessment: Assessment
 
-  student: Student = new Student()
+  student: Student
   studentForm: FormGroup
   
   formErrors = {};
@@ -30,12 +30,15 @@ export class StudentFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ){
+    this.dataService.assessmentObservable.subscribe(assessment => this.assessment = assessment);
+    this.dataService.studentObservable.subscribe(student => this.student = student);
   }
 
   ngOnInit() {
-    this.formBuild();
+    this.assessment = this.dataService.assessment;
+    this.student    = this.dataService.student || new Student();
 
-    this.dataService.assessmentObservable.subscribe(assessment => this.assessment = assessment);
+    this.formBuild();
   }
 
   formBuild() {
@@ -46,18 +49,17 @@ export class StudentFormComponent implements OnInit {
 	  			forbiddenCharactersValidator(/[~`!@#$%^&*()_+={}[\]|\\:;"<>,./?\d]/g)
 	  		]
   		],
-      'register_number': []
+      'register_number': this.student.register_number
   	});
 
   	this.studentForm.valueChanges.subscribe(data => this.validateForm());
-  }
+}
 
   formSubmit() {
     if (this.studentForm.valid) {
       let student =  new Student(
         this.studentForm.get('name').value,
-        this.studentForm.get('register_number').value,
-        true
+        this.studentForm.get('register_number').value
       );
 
       this.dataService.setStudent(student);
@@ -65,7 +67,7 @@ export class StudentFormComponent implements OnInit {
     }
   }
 
-  validateForm() {
-    this.formErrors = CustomFormErrors.parseForm(this.studentForm);
+  validateForm(dirtyOnly: boolean = true) {
+    this.formErrors = CustomFormErrors.parseForm(this.studentForm, dirtyOnly);
   }
 }

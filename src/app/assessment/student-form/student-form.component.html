@@ -10,6 +10,7 @@
 				<div class="form-group">
 					<label for="student_name">Nome (obrigatório)</label>
 					<input type="text" class="form-control" placeholder="Seu nome completo" id="name"
+									required 
 									formControlName="name"
 									>
 					<div *ngIf="formErrors?.name" class="form-field-error" >

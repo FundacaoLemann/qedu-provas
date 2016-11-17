@@ -13,6 +13,7 @@ import { StudentFormComponent } from './assessment/student-form/student-form.com
 
 import { AssessmentService } from './assessment/assessment.service';
 import { DataService } from './data.service';
+import { InstructionsComponent } from './assessment/instructions/instructions.component';
 
 @NgModule({
 	imports: [
@@ -25,7 +26,8 @@ import { DataService } from './data.service';
 	declarations: [
 		AppComponent,
 		AssessmentComponent,
-		StudentFormComponent
+		StudentFormComponent,
+		InstructionsComponent
 	],
 	providers: [DataService, AssessmentService],
 	bootstrap: [AppComponent]

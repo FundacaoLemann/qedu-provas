@@ -1,13 +1,20 @@
-.form-field-error 
-	color: $color-red
-	margin: 6px 0
-
-.form-control.ng-dirty.ng-invalid,
+%invalid
 	border-color: $color-red
-
 	&:focus
 		border-color: $color-red
 		box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px transparentize($color-red, .4);
 
-.form-control.ng-dirty.ng-valid
+%valid
 	border-color: $color-primary
+
+.form-field-error 
+	color: $color-red
+	margin: 6px 0
+
+.form-control.ng-dirty.ng-invalid
+	@extend %invalid
+
+
+.form-control.ng-dirty.ng-valid
+	@extend %valid
+
