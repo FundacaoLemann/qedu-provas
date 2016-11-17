@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Assessment } from '../../model/assessment';
 import { DataService } from '../../data.service';
+import { TimerService } from '../timer/timer.service';
 
 @Component({
   selector: 'app-instructions',
@@ -15,10 +16,15 @@ export class InstructionsComponent implements OnInit {
   constructor(
   	private router: Router,
   	private dataService: DataService,
-  ){
-    this.assessment = this.dataService.assessment;
+    private timer: TimerService
+  ) {
   }
 
   ngOnInit() {
+    this.assessment = this.dataService.assessment;
+  }
+
+  startTimer() {
+    this.timer.start();
   }
 }

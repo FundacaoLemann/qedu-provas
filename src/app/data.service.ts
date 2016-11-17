@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Assessment } from './model/assessment';
 import { AssessmentService } from './assessment/assessment.service';
 import { Student } from './model/student';
+import { TimerService } from './assessment/timer/timer.service';
 
 @Injectable()
 
@@ -20,7 +21,8 @@ export class DataService {
 
   constructor( 
   	private assessmentService: AssessmentService,
-    private router: Router
+    private router: Router,
+    private timer: TimerService
 	) {
   	this.assessmentObservable = this.assessmentSource$.asObservable();
   	this.studentObservable = this.studentSource$.asObservable();
@@ -30,6 +32,8 @@ export class DataService {
   	this.assessmentService.getAssessment(uuid).then((assessment) => {
 			this.assessmentSource$.next(assessment);
       this.assessment = assessment;
+
+      this.timer.setTimer(this.assessment.duration);
   	});
 
   	return this.assessmentObservable;

@@ -10,10 +10,12 @@ import { AssessmentRoutingModule } from './assessment/assessment-routing.module'
 import { AppComponent } from './app.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { StudentFormComponent } from './assessment/student-form/student-form.component';
-
 import { AssessmentService } from './assessment/assessment.service';
-import { DataService } from './data.service';
 import { InstructionsComponent } from './assessment/instructions/instructions.component';
+import { TimerComponent } from './assessment/timer/timer.component';
+
+import { DataService } from './data.service';
+import { TimerService } from './assessment/timer/timer.service';
 
 @NgModule({
 	imports: [
@@ -27,9 +29,10 @@ import { InstructionsComponent } from './assessment/instructions/instructions.co
 		AppComponent,
 		AssessmentComponent,
 		StudentFormComponent,
-		InstructionsComponent
+		InstructionsComponent,
+		TimerComponent
 	],
-	providers: [DataService, AssessmentService],
+	providers: [DataService, AssessmentService, TimerService],
 	bootstrap: [AppComponent]
 })
 

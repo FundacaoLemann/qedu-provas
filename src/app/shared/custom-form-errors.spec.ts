@@ -6,7 +6,7 @@ let fc: FormControl;
 
 describe('Class: CustomFormErrors', () => {
 
-	fdescribe('parseField()', () => {
+	describe('parseField()', () => {
 		it('should return an empty array', () => {
 			fc = new FormControl('renan', Validators.required);
 			expect(CustomFormErrors.parseField(fc)).toEqual([]);
