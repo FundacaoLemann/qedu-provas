@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Student } from '../../model/student';
+import { CustomFormErrors } from '../../shared/custom-form-errors';
+import { forbiddenCharactersValidator } from '../../shared/forbidden-characters.directive';
 
-import { CustomFormErrors, forbiddenCharactersValidator } from '../../shared';
+import { Student } from '../../shared/model/student';
 
-import { Assessment } from '../../model';
-import { DataService } from '../../data.service';
+import { Assessment } from '../../shared/model';
+import { DataService } from '../../shared/data.service';
 
 @Component({
   selector: 'qp-student-form',

@@ -3,9 +3,9 @@ import { Router,
 				 ActivatedRoute, 
 				 Params            } from '@angular/router';
 
-import { Assessment        } from '../model/assessment';
-import { Student           } from '../model/student';
-import { DataService } from '../data.service';
+import { Assessment        } from '../shared/model/assessment';
+import { Student           } from '../shared/model/student';
+import { DataService } from '../shared/data.service';
 
 
 @Component({

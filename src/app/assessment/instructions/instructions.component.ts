@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Assessment } from '../../model/assessment';
-import { DataService } from '../../data.service';
+import { Assessment } from '../../shared/model/assessment';
+import { DataService } from '../../shared/data.service';
 import { TimerService } from '../timer/timer.service';
 
 @Component({

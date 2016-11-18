@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Response  } from '@angular/http';
 
-import { Student } from '../model/student';
-import { Assessment } from '../model/assessment';
+import { Student } from '../shared/model/student';
+import { Assessment } from '../shared/model/assessment';
 
-import { ASSESSMENTS } from '../mock/assessment-mock';
+import { ASSESSMENTS } from '../shared/mock/assessment-mock';
 
 @Injectable()
 
@@ -20,5 +20,4 @@ export class AssessmentService {
 
 		return Promise.resolve();
 	}
-
 }

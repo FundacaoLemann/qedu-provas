@@ -4,9 +4,10 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import { Assessment } from './model/assessment';
-import { AssessmentService } from './assessment/assessment.service';
 import { Student } from './model/student';
-import { TimerService } from './assessment/timer/timer.service';
+
+import { AssessmentService } from '../assessment/assessment.service';
+import { TimerService } from '../assessment/timer/timer.service';
 
 @Injectable()
 
