@@ -17,10 +17,11 @@ export class TimerComponent implements OnInit, OnDestroy {
   constructor(
   	private timer: TimerService
   ) {
-  	this._timeLeftSubscription = this.timer.timeLeft.subscribe(timeLeft => this.timeLeft = this.clockFormat(timeLeft));
+    this._timeLeftSubscription = this.timer.timeLeft.subscribe(timeLeft => this.timeLeft = this.clockFormat(timeLeft));
   }
 
   ngOnInit() {
+    this.timeLeft = this.clockFormat(this.timer.timeLeftInSeconds);
   }
 
   ngOnDestroy() {

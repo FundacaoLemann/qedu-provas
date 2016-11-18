@@ -1,28 +1,46 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { TimerComponent } from './timer.component';
+import { TimerService } from './timer.service';
+
+let comp: TimerComponent;
+let fixture:  ComponentFixture<TimerComponent>;
+let de: DebugElement;
+let el: HTMLElement;
+
+let timerService: TimerService;
 
 describe('TimerComponent', () => {
-  let component: TimerComponent;
-  let fixture: ComponentFixture<TimerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ TimerComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [TimerComponent],
+			providers: [TimerService]
+		});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TimerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+		fixture = TestBed.createComponent(TimerComponent);
+		comp = fixture.componentInstance;
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+		de = fixture.debugElement.query(By.css('#timer'));
+		el = de.nativeElement;
+
+		timerService = fixture.debugElement.injector.get(TimerService);
+		timerService.setTimer(1);
+	});
+
+	it('should display 01:00', () => {
+		fixture.detectChanges();
+		expect(el.textContent).toEqual("01:00");
+	});
+
+	it('should display the decreased time by seconds', (done) => {
+		timerService.start();
+		setTimeout(() => {
+			expect(comp.timeLeft).toMatch(/00:5[8|7]/);
+			done();
+		}, 2000);
+	});
+
 });
