@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ApplymentComponent } from './applyment.component';
+import { ApplymentModule } from "./applyment.module";
+import { RouterModule } from "@angular/router";
+import { APP_BASE_HREF } from "@angular/common";
 
 describe('ApplymentComponent', () => {
   let component: ApplymentComponent;
@@ -11,9 +14,15 @@ describe('ApplymentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ApplymentComponent ]
-    })
-    .compileComponents();
+             imports: [
+               ApplymentModule,
+               RouterModule.forRoot([])
+             ],
+             providers: [
+               { provide: APP_BASE_HREF, useValue: '/' }
+             ]
+           })
+           .compileComponents();
   }));
 
   beforeEach(() => {

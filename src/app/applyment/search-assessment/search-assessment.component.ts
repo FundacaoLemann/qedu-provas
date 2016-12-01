@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-search-assessment',
@@ -7,19 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-assessment.component.sass']
 })
 export class SearchAssessmentComponent implements OnInit {
-  uuid: string = '';
+  form: FormGroup;
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor (private router: Router,
+               private fb: FormBuilder) {
 
-  ngOnInit() {
+    this.form = this.fb.group({
+      'uuid': ['', Validators.required]
+    });
+
   }
 
-  formSubmit() {
-    // if (this.uuid === '') return;
+  ngOnInit () {
+  }
 
-    this.router.navigate(['prova', this.uuid]);
+  onSubmit () {
+    if (this.form.valid)
+      this.router.navigate(['prova', this.form.get('uuid').value]);
   }
 
 }

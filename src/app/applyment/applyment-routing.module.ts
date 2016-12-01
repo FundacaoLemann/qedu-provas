@@ -1,9 +1,9 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
-import {SearchAssessmentComponent} from "./search-assessment/search-assessment.component";
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SearchAssessmentComponent } from "./search-assessment/search-assessment.component";
 
 const routes: Routes = [
-  {path: '', component: SearchAssessmentComponent}
+  { path: '', component: SearchAssessmentComponent },
 ];
 
 @NgModule({
@@ -11,4 +11,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class ApplymentRoutingModule {}
+export class ApplymentRoutingModule {
+}

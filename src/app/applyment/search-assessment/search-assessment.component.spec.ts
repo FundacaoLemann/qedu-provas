@@ -1,6 +1,8 @@
+///<reference path="../../../../node_modules/@angular/core/testing/fake_async.d.ts"/>
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import { DebugElement } from '@angular/core';
 
 import { SearchAssessmentComponent } from './search-assessment.component';
@@ -37,21 +39,20 @@ describe('SearchAssessmentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should navigate to `prova/7sk0d88kw9` when `Buscar` button is clicked', (done) => {
+  it('should navigate to `prova/7sk0d88kw9` when `Buscar` button is clicked', async(() => {
     // Spy on service
     spyOn(routerService, 'navigate');
     // Change the input
     let input = fixture.debugElement.query(By.css('input')).nativeElement;
+    let button = fixture.debugElement.query(By.css('button.search')).nativeElement;
+
     input.value = '7sk0d88kw9';
     input.dispatchEvent(new Event('input'));
-    console.log(component.uuid);
-    fixture.detectChanges();
-    // Listen to button click and evaluate the test
-    let button = fixture.debugElement.query(By.css('button.search')).nativeElement;
-    button.addEventListener('click', () => {
-      expect(routerService.navigate).toHaveBeenCalledWith(['prova', '7sk0d88kw9']);
-      done();
-    });
     button.dispatchEvent(new Event('click'));
-  });
+
+    fixture.whenStable().then(() => {
+      expect(routerService.navigate).toHaveBeenCalledWith(['prova', '7sk0d88kw9'])
+    });
+
+  }));
 });
