@@ -1,5 +1,5 @@
 import { AssessmentService } from './assessment.service';
-import { ASSESSMENTS } from '../mock/assessment-mock';
+import { ASSESSMENTS } from "../shared/mock/assessment-mock";
 
 let service: AssessmentService;
 
