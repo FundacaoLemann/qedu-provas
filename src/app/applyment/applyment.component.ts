@@ -9,7 +9,7 @@ export class ApplymentComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

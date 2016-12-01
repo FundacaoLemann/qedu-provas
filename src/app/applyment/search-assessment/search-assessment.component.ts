@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class SearchAssessmentComponent implements OnInit {
   form: FormGroup;
+  formErrors: string[];
 
   constructor (private router: Router,
                private fb: FormBuilder) {

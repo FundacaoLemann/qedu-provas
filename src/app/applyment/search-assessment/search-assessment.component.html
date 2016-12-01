@@ -1,13 +1,13 @@
 <div class="panel panel-default">
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <div class="panel-body">
       <div class="form-group">
         <label for="assessment_uuid">Código da Prova</label>
-        <input type="text" id="assessment_uuid" class="form-control" formControlName="uuid" >
+        <input type="text" id="assessment_uuid" class="form-control" formControlName="uuid" required>
       </div>
     </div>
     <div class="panel-footer text-center">
-      <button class="btn btn-success search" type="submit" (click)="onSubmit()">Buscar</button>
+      <button class="btn btn-success search" type="button" (click)="onSubmit()">Buscar</button>
     </div>
   </form>
 </div>

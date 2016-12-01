@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ApplymentComponent } from './applyment.component';
 
-import {SharedModule} from '../shared/shared.module';
-import {SearchAssessmentComponent} from './search-assessment/search-assessment.component';
-import {ApplymentRoutingModule} from './applyment-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { ApplymentRoutingModule } from './applyment-routing.module';
+import { StudentFormComponent } from "./student-form/student-form.component";
+import { SearchAssessmentComponent } from "./search-assessment/search-assessment.component";
 
 @NgModule({
   imports: [
@@ -12,11 +13,13 @@ import {ApplymentRoutingModule} from './applyment-routing.module';
   ],
   declarations: [
     ApplymentComponent,
+    StudentFormComponent,
     SearchAssessmentComponent
   ],
   exports: [
     ApplymentComponent,
-    SearchAssessmentComponent
+    StudentFormComponent
   ]
 })
-export class ApplymentModule { }
+export class ApplymentModule {
+}

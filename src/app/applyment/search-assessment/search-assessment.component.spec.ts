@@ -2,13 +2,14 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import { DebugElement } from '@angular/core';
 
-import { SearchAssessmentComponent } from './search-assessment.component';
 import { Router } from '@angular/router';
 import { RouterStub } from '../../../testing/router-stub';
 import { SharedModule } from '../../shared/shared.module';
+import { SearchAssessmentComponent } from "./search-assessment.component";
+
+import { setInputValue, dispatchEvent } from "../../../testing/form-helper";
 
 
 describe('SearchAssessmentComponent', () => {
@@ -43,12 +44,8 @@ describe('SearchAssessmentComponent', () => {
     // Spy on service
     spyOn(routerService, 'navigate');
     // Change the input
-    let input = fixture.debugElement.query(By.css('input')).nativeElement;
-    let button = fixture.debugElement.query(By.css('button.search')).nativeElement;
-
-    input.value = '7sk0d88kw9';
-    input.dispatchEvent(new Event('input'));
-    button.dispatchEvent(new Event('click'));
+    setInputValue(fixture, 'input', '7sk0d88kw9');
+    dispatchEvent(fixture, 'button.search', 'click');
 
     fixture.whenStable().then(() => {
       expect(routerService.navigate).toHaveBeenCalledWith(['prova', '7sk0d88kw9'])

@@ -4,9 +4,6 @@ import { TestBed, async } from '@angular/core/testing';
 import { ForbiddenCharactersDirective } from './forbidden-characters.directive';
 
 import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
-import { forbiddenCharactersValidator } from '../shared';
-
-import { CustomFormErrors } from '../shared';
 
 let fc: FormControl;
 

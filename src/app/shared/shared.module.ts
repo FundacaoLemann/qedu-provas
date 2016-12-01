@@ -1,9 +1,9 @@
-import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {ReactiveFormsModule, FormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
-import {ForbiddenCharactersDirective} from "./forbidden-characters.directive";
-import {CustomFormErrors} from "./custom-form-errors";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
+
+import { ForbiddenCharactersDirective } from "./directives/forbidden-characters.directive";
 
 @NgModule({
   imports: [
@@ -21,4 +21,5 @@ import {CustomFormErrors} from "./custom-form-errors";
   providers: []
 })
 
-export class SharedModule {}
+export class SharedModule {
+}

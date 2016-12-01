@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate [ngClass]="{ 'submited': formSubmited }">
+    <div class="panel-body">
+      <div class="col-xs-12">
+        <h3 class="title">{{assessment?.title}}</h3>
+        <hr>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="name">Nome (obrigatório)</label>
+          <input type="text" class="form-control" placeholder="Seu nome completo" id="name"
+                 required
+                 formControlName="name"
+                 (keydown.enter)="onSubmit()"
+          >
+          <div *ngIf="formErrorMessages?.name" class="form-field-error name_errors">
+            <span [innerHTML]="formErrorMessages?.name"></span>
+          </div>
+        </div><!-- .form-group -->
+      </div><!-- .col-xs-12 -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="register_number">Número de matrícula</label>
+          <input type="text" class="form-control" placeholder="Seu número de estudante ou matrícula"
+                 id="register_number"
+                 formControlName="register_number"
+                 (keydown.enter)="onSubmit()"
+          >
+          <div *ngIf="formErrorMessages?.register_number" class="form-field-error">
+            <span [innerHTML]="formErrorMessages?.register_number"></span>
+          </div>
+        </div><!-- .form-group -->
+      </div><!-- .col-xs-12.col-md-6 -->
+
+    </div><!-- .panel-body -->
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <button type="button" class="btn btn-success" (click)="onSubmit()">Continuar</button>
+        </div><!-- .col-xs-12 -->
+      </div>
+    </div><!-- .panel-footer -->
+  </form>
+</div><!-- .panel-default -->

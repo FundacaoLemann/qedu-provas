@@ -2,15 +2,13 @@ import { Directive } from '@angular/core';
 import { ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Directive({
-  selector: '[appForbiddenCharacters]'
+  selector: '[forbiddenCharacters]'
 })
 export class ForbiddenCharactersDirective {
 
   constructor() { }
 
 }
-
-
 
 export function forbiddenCharactersValidator(charactersList: RegExp): ValidatorFn {
 	return (control: AbstractControl): {[key: string]: any} => {
