@@ -4,35 +4,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AssessmentRoutingModule } from './assessment/assessment-routing.module';
+import {ApplymentModule} from "./applyment/applyment.module";
 
-import { AppComponent } from './app.component';
-import { AssessmentComponent } from './assessment/assessment.component';
-import { StudentFormComponent } from './assessment/student-form/student-form.component';
-import { InstructionsComponent } from './assessment/instructions/instructions.component';
-import { TimerComponent } from './assessment/timer/timer.component';
-
-import { AssessmentService } from './assessment/assessment.service';
-import { TimerService } from './assessment/timer/timer.service';
-import { DataService } from './shared/data.service';
+import {AppComponent} from './app.component';
+import {SharedModule} from "./shared/shared.module";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
 	imports: [
-		BrowserModule,
-		ReactiveFormsModule,
-		HttpModule,
-		AppRoutingModule,
-		AssessmentRoutingModule
+    AppRoutingModule,
+    ApplymentModule,
+	  SharedModule,
 	],
 	declarations: [
-		AppComponent,
-		AssessmentComponent,
-		StudentFormComponent,
-		InstructionsComponent,
-		TimerComponent
+		AppComponent
 	],
-	providers: [DataService, AssessmentService, TimerService],
+	providers: [],
 	bootstrap: [AppComponent]
 })
 

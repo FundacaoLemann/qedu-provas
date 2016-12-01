@@ -9,16 +9,11 @@ import { Router } from '@angular/router';
 
 export class AppComponent implements OnInit {
 	constructor(
-		private router: Router
 	) {}
 
 	current_date: Date;
 
 	ngOnInit() {
 		this.current_date = new Date();
-	}
-
-	goToAssessment(uuid: string): void {
-		this.router.navigate(['prova', uuid]);
 	}
 }

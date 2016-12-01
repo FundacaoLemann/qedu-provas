@@ -3,12 +3,12 @@
 		<div class="pull-left">
 			<img src="assets/images/qedu-logo-q.png" class="logo">
 		</div>
-		<div class="pull-right"><i class="fa fa-calendar"></i> {{current_date | date: 'dd/MM/yyyy'}}</div>
+		<div class="pull-right"><i class="fa fa-calendar"></i> {{ current_date | date:'dd/MM/yyyy' }} </div>
 	</div><!-- .container -->
 </header>
 
 <main>
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </main>
 
 <footer>
