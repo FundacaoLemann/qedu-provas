@@ -8,7 +8,7 @@ import { InstructionsPageComponent } from "./instructions-page/instructions-page
 const routes: Routes = [
   { path: '', component: SearchAssessmentPageComponent },
   { path: 'prova/:uuid', component: StudentFormPageComponent },
-  { path: 'prova/:uuid/instructions', component: InstructionsPageComponent }
+  { path: 'prova/:uuid/instructions', component: InstructionsPageComponent },
 ];
 
 @NgModule({
