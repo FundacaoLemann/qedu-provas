@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ApplymentRoutingModule } from './applyment-routing.module';
 import { StudentFormComponent } from "./student-form/student-form.component";
 import { SearchAssessmentComponent } from "./search-assessment/search-assessment.component";
+import { InstructionsComponent } from "./instructions/instructions.component";
 
 @NgModule({
   imports: [
@@ -14,11 +15,11 @@ import { SearchAssessmentComponent } from "./search-assessment/search-assessment
   declarations: [
     ApplymentComponent,
     StudentFormComponent,
-    SearchAssessmentComponent
+    SearchAssessmentComponent,
+    InstructionsComponent
   ],
   exports: [
     ApplymentComponent,
-    StudentFormComponent
   ]
 })
 export class ApplymentModule {
