@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Assessment } from '../../shared/model/assessment';
 import { ASSESSMENTS } from "../../../mocks/assessments-mock";
@@ -12,14 +12,16 @@ import { ASSESSMENTS } from "../../../mocks/assessments-mock";
 export class InstructionsPageComponent implements OnInit {
   assessment: Assessment;
 
-  constructor(
-  	private router: Router,
-  ) { }
+  constructor (private router: Router,
+               private route: ActivatedRoute,) {
+  }
 
-  ngOnInit() {
+  ngOnInit () {
     this.assessment = ASSESSMENTS[0];
   }
 
-  startTimer() {
+  startAssessment () {
+    let assessment_uuid = this.route.snapshot.params['uuid'];
+    this.router.navigate(['prova', assessment_uuid, 'questao', '1']);
   }
 }
