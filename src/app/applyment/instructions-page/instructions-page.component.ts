@@ -5,11 +5,11 @@ import { Assessment } from '../../shared/model/assessment';
 import { ASSESSMENTS } from "../../../mocks/assessments-mock";
 
 @Component({
-  selector: 'app-instructions',
-  templateUrl: './instructions.component.html',
-  styleUrls: ['./instructions.component.sass']
+  selector: 'app-instructions-page',
+  templateUrl: 'instructions-page.component.html',
+  styleUrls: ['instructions-page.component.sass']
 })
-export class InstructionsComponent implements OnInit {
+export class InstructionsPageComponent implements OnInit {
   assessment: Assessment;
 
   constructor(

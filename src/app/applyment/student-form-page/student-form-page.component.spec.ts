@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { RouterStub } from '../../../testing/router-stub';
 import { SharedModule } from '../../shared/shared.module';
-import { StudentFormComponent } from "./student-form.component";
+import { StudentFormPageComponent } from "./student-form-page.component";
 import { Assessment } from "../../shared/model/assessment";
 
 import { ActivatedRouteStub } from "../../../testing/activated-route-stub";
@@ -17,9 +17,9 @@ import { StoreService } from "../../core/shared/store.service";
 import { ASSESSMENTS } from "../../shared/mock/assessment-mock";
 import { setInputValue, getInputValue } from "../../../testing/form-helper";
 
-describe('StudentFormComponent', () => {
-  let component: StudentFormComponent;
-  let fixture: ComponentFixture<StudentFormComponent>;
+describe('StudentFormPageComponent', () => {
+  let component: StudentFormPageComponent;
+  let fixture: ComponentFixture<StudentFormPageComponent>;
   let routerService: Router;
   let storeService: StoreService;
   let assessment: Assessment;
@@ -32,7 +32,7 @@ describe('StudentFormComponent', () => {
 
     TestBed.configureTestingModule({
              imports: [SharedModule],
-             declarations: [StudentFormComponent],
+             declarations: [StudentFormPageComponent],
              providers: [
                StoreService,
                { provide: Router, useValue: new RouterStub() },
@@ -43,7 +43,7 @@ describe('StudentFormComponent', () => {
 
   }));
   beforeEach(() => {
-    fixture = TestBed.createComponent(StudentFormComponent);
+    fixture = TestBed.createComponent(StudentFormPageComponent);
     component = fixture.componentInstance;
     routerService = fixture.debugElement.injector.get(Router);
     storeService = fixture.debugElement.injector.get(StoreService);
@@ -65,7 +65,7 @@ describe('StudentFormComponent', () => {
     expect(getInputValue(fixture, '#name')).toEqual('John Doe');
   });
 
-  it('should navigate to instructions when has no errors', () => {
+  it('should navigate to instructions-page when has no errors', () => {
     spyOn(routerService, 'navigate');
     spyOn(storeService, 'setStudent');
 

@@ -11,11 +11,11 @@ import { StoreService } from "../../core/shared/store.service";
 
 @Component({
   selector: 'qp-student-form',
-  templateUrl: './student-form.component.html',
-  styleUrls: ['./student-form.component.sass']
+  templateUrl: 'student-form-page.component.html',
+  styleUrls: ['student-form-page.component.sass']
 })
 
-export class StudentFormComponent implements OnInit {
+export class StudentFormPageComponent implements OnInit {
   form: FormGroup;
   formSubmited: boolean = false;
   formErrorMessages: {

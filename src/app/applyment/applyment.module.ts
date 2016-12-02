@@ -3,9 +3,9 @@ import { ApplymentComponent } from './applyment.component';
 
 import { SharedModule } from '../shared/shared.module';
 import { ApplymentRoutingModule } from './applyment-routing.module';
-import { StudentFormComponent } from "./student-form/student-form.component";
-import { SearchAssessmentComponent } from "./search-assessment/search-assessment.component";
-import { InstructionsComponent } from "./instructions/instructions.component";
+import { StudentFormPageComponent } from "./student-form-page/student-form-page.component";
+import { SearchAssessmentPageComponent } from "./search-assessment-page/search-assessment-page.component";
+import { InstructionsPageComponent } from "./instructions-page/instructions-page.component";
 
 @NgModule({
   imports: [
@@ -14,9 +14,9 @@ import { InstructionsComponent } from "./instructions/instructions.component";
   ],
   declarations: [
     ApplymentComponent,
-    StudentFormComponent,
-    SearchAssessmentComponent,
-    InstructionsComponent
+    StudentFormPageComponent,
+    SearchAssessmentPageComponent,
+    InstructionsPageComponent
   ],
   exports: [
     ApplymentComponent,

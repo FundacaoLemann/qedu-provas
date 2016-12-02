@@ -9,20 +9,20 @@ import { RouterStub } from '../../../testing/router-stub';
 import { SharedModule } from '../../shared/shared.module';
 
 import { setInputValue, dispatchEvent } from "../../../testing/form-helper";
-import { InstructionsComponent } from "./instructions.component";
+import { InstructionsPageComponent } from "./instructions-page.component";
 import { ASSESSMENTS } from "../../../mocks/assessments-mock";
 
 
-describe('InstructionsComponent', () => {
-  let component: InstructionsComponent;
-  let fixture: ComponentFixture<InstructionsComponent>;
+describe('InstructionsPageComponent', () => {
+  let component: InstructionsPageComponent;
+  let fixture: ComponentFixture<InstructionsPageComponent>;
   let routerService: Router;
   let assessment = ASSESSMENTS[0];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
              imports: [SharedModule],
-             declarations: [ InstructionsComponent ],
+             declarations: [ InstructionsPageComponent ],
              providers: [
                { provide: Router, useValue: new RouterStub() }
              ]
@@ -32,7 +32,7 @@ describe('InstructionsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstructionsComponent);
+    fixture = TestBed.createComponent(InstructionsPageComponent);
     component = fixture.componentInstance;
     routerService = fixture.debugElement.injector.get(Router);
     fixture.detectChanges();

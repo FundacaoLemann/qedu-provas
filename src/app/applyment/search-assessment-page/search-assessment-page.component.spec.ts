@@ -7,20 +7,20 @@ import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterStub } from '../../../testing/router-stub';
 import { SharedModule } from '../../shared/shared.module';
-import { SearchAssessmentComponent } from "./search-assessment.component";
+import { SearchAssessmentPageComponent } from "./search-assessment-page.component";
 
 import { setInputValue, dispatchEvent } from "../../../testing/form-helper";
 
 
-describe('SearchAssessmentComponent', () => {
-  let component: SearchAssessmentComponent;
-  let fixture: ComponentFixture<SearchAssessmentComponent>;
+describe('SearchAssessmentPageComponent', () => {
+  let component: SearchAssessmentPageComponent;
+  let fixture: ComponentFixture<SearchAssessmentPageComponent>;
   let routerService: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [ SearchAssessmentComponent ],
+      declarations: [ SearchAssessmentPageComponent ],
       providers: [
         { provide: Router, useValue: new RouterStub() }
       ]
@@ -30,7 +30,7 @@ describe('SearchAssessmentComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchAssessmentComponent);
+    fixture = TestBed.createComponent(SearchAssessmentPageComponent);
     component = fixture.componentInstance;
     routerService = fixture.debugElement.injector.get(Router);
     fixture.detectChanges();

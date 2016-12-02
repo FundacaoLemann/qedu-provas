@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-search-assessment',
-  templateUrl: './search-assessment.component.html',
-  styleUrls: ['./search-assessment.component.sass']
+  selector: 'app-search-assessment-page',
+  templateUrl: 'search-assessment-page.component.html',
+  styleUrls: ['search-assessment-page.component.sass']
 })
-export class SearchAssessmentComponent implements OnInit {
+export class SearchAssessmentPageComponent implements OnInit {
   form: FormGroup;
   formErrors: string[];
 
