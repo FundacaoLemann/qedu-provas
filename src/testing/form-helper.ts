@@ -8,6 +8,10 @@ export function setInputValue (fixture: ComponentFixture<any>, selector: string,
   return fixture.whenStable();
 }
 
+export function getInputValue (fixture: ComponentFixture<any>, selector): any {
+  return fixture.debugElement.query(By.css(selector)).nativeElement.value;
+}
+
 export function dispatchEvent (fixture: ComponentFixture<any>, selector: string, event: string | Event): Promise<any> {
   let el = fixture.debugElement.query(By.css(selector)).nativeElement;
 
@@ -19,3 +23,4 @@ export function dispatchEvent (fixture: ComponentFixture<any>, selector: string,
   }
   return fixture.whenStable();
 }
+

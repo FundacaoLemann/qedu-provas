@@ -7,6 +7,7 @@ import { Assessment } from "../../shared/model/assessment";
 import { FormErrorsParser } from "../../shared/form-errors-parser";
 import { forbiddenCharactersValidator } from "../../shared/directives/forbidden-characters.directive";
 import { ASSESSMENTS } from "../../shared/mock/assessment-mock";
+import { StoreService } from "../../core/shared/store.service";
 
 @Component({
   selector: 'qp-student-form',
@@ -26,24 +27,31 @@ export class StudentFormComponent implements OnInit {
 
   constructor (private fb: FormBuilder,
                private router: Router,
-               private route: ActivatedRoute) {
-    this.formBuild();
+               private route: ActivatedRoute,
+               private store: StoreService) {
+
     this.assessment = ASSESSMENTS[0];
   }
 
   ngOnInit (): void {
+    let student = this.store.getStudentValue();
+    this.formBuild(student);
+
+    this.store.student.subscribe(student => {
+      this.form.patchValue(student);
+    });
   }
 
-  formBuild (): void {
+  formBuild (student?): void {
     this.form = this.fb.group({
       'name': [
-        '',
+        student.name || '',
         [
           Validators.required,
           forbiddenCharactersValidator(/[\d~`!@#$%^&*()_=+{}[\]|\\:;"'<>,.?/]/g)
         ]
       ],
-      'register_number': ''
+      'register_number': student.register_number || ''
     });
 
     this.form.valueChanges.subscribe(() => {
@@ -59,6 +67,7 @@ export class StudentFormComponent implements OnInit {
       this.displayErrors(false);
     }
     else {
+      this.store.setStudent(this.form.getRawValue());
       this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'instructions']);
     }
   }

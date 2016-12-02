@@ -11,15 +11,17 @@ import { SharedModule } from '../../shared/shared.module';
 import { StudentFormComponent } from "./student-form.component";
 import { Assessment } from "../../shared/model/assessment";
 
-import { ASSESSMENTS } from "../../shared/mock/assessment-mock";
-import { setInputValue } from "../../../testing/form-helper";
 import { ActivatedRouteStub } from "../../../testing/activated-route-stub";
+import { StoreService } from "../../core/shared/store.service";
 
+import { ASSESSMENTS } from "../../shared/mock/assessment-mock";
+import { setInputValue, getInputValue } from "../../../testing/form-helper";
 
 describe('StudentFormComponent', () => {
   let component: StudentFormComponent;
   let fixture: ComponentFixture<StudentFormComponent>;
   let routerService: Router;
+  let storeService: StoreService;
   let assessment: Assessment;
   let route = new ActivatedRouteStub();
 
@@ -32,6 +34,7 @@ describe('StudentFormComponent', () => {
              imports: [SharedModule],
              declarations: [StudentFormComponent],
              providers: [
+               StoreService,
                { provide: Router, useValue: new RouterStub() },
                { provide: ActivatedRoute, useValue: route }
              ]
@@ -43,6 +46,7 @@ describe('StudentFormComponent', () => {
     fixture = TestBed.createComponent(StudentFormComponent);
     component = fixture.componentInstance;
     routerService = fixture.debugElement.injector.get(Router);
+    storeService = fixture.debugElement.injector.get(StoreService);
     fixture.detectChanges();
   });
 
@@ -55,14 +59,21 @@ describe('StudentFormComponent', () => {
     expect(title).toEqual(assessment.title);
   });
 
+  it('should display the student data if already set', () => {
+    storeService.setStudent({ name: 'John Doe', 'register_number': '' });
+    fixture.detectChanges();
+    expect(getInputValue(fixture, '#name')).toEqual('John Doe');
+  });
+
   it('should navigate to instructions when has no errors', () => {
     spyOn(routerService, 'navigate');
+    spyOn(storeService, 'setStudent');
 
     setInputValue(fixture, '#name', 'John Doe');
     component.onSubmit();
 
-    expect(routerService.navigate).toHaveBeenCalledWith(['prova', assessment.uuid,'instructions']);
-
+    expect(routerService.navigate).toHaveBeenCalledWith(['prova', assessment.uuid, 'instructions']);
+    expect(storeService.setStudent).toHaveBeenCalledWith({ name: 'John Doe', register_number: '' });
   });
 
   describe('Form validation', () => {

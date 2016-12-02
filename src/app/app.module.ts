@@ -4,24 +4,27 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import {ApplymentModule} from "./applyment/applyment.module";
+import { ApplymentModule } from "./applyment/applyment.module";
 
-import {AppComponent} from './app.component';
-import {SharedModule} from "./shared/shared.module";
-import {AppRoutingModule} from "./app-routing.module";
+import { AppComponent } from './app.component';
+import { SharedModule } from "./shared/shared.module";
+import { AppRoutingModule } from "./app-routing.module";
+import { CoreModule } from "./core/core.module";
 
 @NgModule({
-	imports: [
+  imports: [
     AppRoutingModule,
     ApplymentModule,
-	  SharedModule,
-	],
-	declarations: [
-		AppComponent
-	],
-	providers: [],
-	bootstrap: [AppComponent]
+    SharedModule,
+    CoreModule
+  ],
+  declarations: [
+    AppComponent
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 
 
-export class AppModule { }
+export class AppModule {
+}
