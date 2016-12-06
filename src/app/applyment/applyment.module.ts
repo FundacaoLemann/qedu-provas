@@ -7,6 +7,7 @@ import { StudentFormPageComponent } from "./student-form-page/student-form-page.
 import { SearchAssessmentPageComponent } from "./search-assessment-page/search-assessment-page.component";
 import { InstructionsPageComponent } from "./instructions-page/instructions-page.component";
 import { QuestionPageComponent } from "./question-page/question-page.component";
+import { AnswerComponent } from './question-page/answer.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { QuestionPageComponent } from "./question-page/question-page.component";
     StudentFormPageComponent,
     SearchAssessmentPageComponent,
     InstructionsPageComponent,
-    QuestionPageComponent
+    QuestionPageComponent,
+    AnswerComponent,
   ],
   exports: [
     ApplymentComponent,

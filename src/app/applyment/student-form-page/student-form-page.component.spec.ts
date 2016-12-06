@@ -14,8 +14,8 @@ import { Assessment } from "../../shared/model/assessment";
 import { ActivatedRouteStub } from "../../../testing/activated-route-stub";
 import { StoreService } from "../../core/shared/store.service";
 
-import { ASSESSMENTS } from "../../shared/mock/assessment-mock";
 import { setInputValue, getInputValue } from "../../../testing/form-helper";
+import { ASSESSMENTS } from '../../../mocks/assessments-mock';
 
 describe('StudentFormPageComponent', () => {
   let component: StudentFormPageComponent;

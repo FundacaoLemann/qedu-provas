@@ -1,0 +1,27 @@
+$blue-color: rgb(40,100,168)
+
+.answer
+  position: relative
+  padding: 15px 15px 15px 60px
+  border: 1px solid #eeeeee
+  margin-bottom: 10px
+  transition: all 250ms
+  background-color: #fff
+  cursor: pointer !important
+
+  &:hover,
+  &.active
+    color: $blue-color
+    box-shadow: 0 0 10px transparentize($blue-color, 0.6)
+    border-color: $blue-color
+
+  label
+    font-weight: normal
+    margin: 0
+
+  input[type=radio]
+    position: absolute
+    left: 30px
+    top: 50%
+    transform: translate(-50%, -50%)
+    margin: 0

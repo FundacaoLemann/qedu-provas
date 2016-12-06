@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { Student } from '../../shared/model/student';
-import { Assessment } from "../../shared/model/assessment";
-import { FormErrorsParser } from "../../shared/form-errors-parser";
-import { forbiddenCharactersValidator } from "../../shared/directives/forbidden-characters.directive";
-import { ASSESSMENTS } from "../../shared/mock/assessment-mock";
-import { StoreService } from "../../core/shared/store.service";
+import { Assessment } from '../../shared/model/assessment';
+import { FormErrorsParser } from '../../shared/form-errors-parser';
+import { StoreService } from '../../core/shared/store.service';
+import { forbiddenCharactersValidator } from '../../shared/directives/forbidden-characters.directive';
+import { ASSESSMENTS } from '../../../mocks/assessments-mock';
 
 @Component({
   selector: 'qp-student-form',
@@ -62,7 +60,7 @@ export class StudentFormPageComponent implements OnInit {
   onSubmit () {
     this.formSubmited = true;
 
-    if (this.form.invalid) {
+    if ( this.form.invalid ) {
       this.form.markAsDirty();
       this.displayErrors(false);
     }
