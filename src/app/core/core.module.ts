@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreComponent } from './core.component';
 import { HttpModule } from "@angular/http";
 import { StoreService } from "./shared/store.service";
 
@@ -8,7 +7,7 @@ import { StoreService } from "./shared/store.service";
   imports: [
     HttpModule
   ],
-  declarations: [CoreComponent],
+  declarations: [],
   providers: [StoreService]
 })
 export class CoreModule { }
