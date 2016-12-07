@@ -1,5 +1,5 @@
-export * from './forbidden-characters.directive';
-export * from './custom-form-errors';
+export * from './directives/forbidden-characters.directive';
+export * from './form-errors-parser';
 
 export * from './model/student';
 export * from './model/assessment';
