@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { FormErrorsParser } from '../../shared/form-errors-parser';
 import { StoreService } from '../../core/shared/store.service';
+import { AssessmentService } from '../../core/shared/assessment.service';
+import { Observable } from 'rxjs';
 import { forbiddenCharactersValidator } from '../../shared/directives/forbidden-characters.directive';
-import { ASSESSMENTS } from '../../../mocks/assessments-mock';
 
 @Component({
   selector: 'qp-student-form',
@@ -23,15 +24,23 @@ export class StudentFormPageComponent implements OnInit {
 
   assessment: Assessment;
 
-  constructor (private fb: FormBuilder,
+  constructor (private assessmentService: AssessmentService,
+               private fb: FormBuilder,
                private router: Router,
                private route: ActivatedRoute,
                private store: StoreService) {
 
-    this.assessment = ASSESSMENTS[0];
   }
 
   ngOnInit (): void {
+    this.assessmentService.getAssessment('1')
+      .subscribe(
+        assessment => this.assessment = assessment,
+        error => {
+          this.assessment = null;
+        }
+      );
+
     let student = this.store.getStudentValue();
     this.formBuild(student);
 

@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
-import { ASSESSMENTS } from '../../../mocks/assessments-mock';
 
 describe('ApplymentService', () => {
   beforeEach(() => {

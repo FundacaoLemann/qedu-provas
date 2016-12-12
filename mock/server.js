@@ -9,7 +9,7 @@ server.use(router);
 // In this example, returned resources will be wrapped in a body property
 router.render = function (req, res) {
   res.jsonp({
-    data: res.locals.data
+    data: Object.keys(res.locals.data).length > 0 ? res.locals.data : null
   })
 };
 
