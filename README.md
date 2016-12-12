@@ -19,8 +19,10 @@ To run the app from a local environment be sure you have the [requirements](#req
 * Clone this repository
 * Navigate through your terminal to the app root folder
 * Install depencies with `yarn`
+* Start the `Fake API` server with `yarn fake-api` to support `mocked json` requests on tests and preview 
 * Start the Webpack Developer Server (WDS) with `yarn start` or `ng serve`
 * Open [`http://localhost:4200`](http://localhost:4200) in your browser to see app running
+
 
 ## Build
 

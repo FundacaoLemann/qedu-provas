@@ -8,7 +8,8 @@
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "fake-api": "node_modules/.bin/nodemon mock/server.js mock/server.js"
   },
   "private": true,
   "dependencies": {
@@ -36,11 +37,13 @@
     "codelyzer": "~1.0.0-beta.3",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
+    "json-server": "^0.9.4",
     "karma": "1.2.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "nodemon": "^1.11.0",
     "protractor": "4.0.9",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
