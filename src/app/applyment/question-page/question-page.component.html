@@ -2,17 +2,17 @@
   <div class="panel-body">
 
     <div class="col-xs-12">
-      <h3>Questão #1</h3>
+      <h3>Questão #{{questionId+1}}</h3>
       <hr>
     </div>
 
     <div class="col-xs-12 col-md-6">
-      <div class="question" question>{{ question.text }}</div>
+      <div class="question" question>{{ question?.text }}</div>
     </div>
 
     <div class="col-xs-12 col-md-6">
       <qp-answer
-        *ngFor="let answer of question.answers"
+        *ngFor="let answer of answers"
         [answer]="answer"
         [checked]="answer.id === checked"
         (onClicked)="updateChecked($event)"

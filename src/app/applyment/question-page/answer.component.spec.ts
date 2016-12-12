@@ -2,14 +2,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AnswerComponent } from './answer.component';
-import { Answer } from '../../shared/model/answer';
 import { dispatchEvent } from '../../../testing/form-helper';
-import { ASSESSMENTS } from '../../../mocks/assessments-mock';
 
 describe('AnswerComponent', () => {
   let component: AnswerComponent;
   let fixture: ComponentFixture<AnswerComponent>;
-  let answer: Answer;
+  let answer = {
+    "id": 1,
+    "text": "Cum lumen assimilant, omnes rationees tractare fortis, neuter urbses."
+  };
 
 
   beforeEach(async(() => {
@@ -22,7 +23,7 @@ describe('AnswerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AnswerComponent);
     component = fixture.componentInstance;
-    component.answer = answer = ASSESSMENTS[0].questions[0].answers[0];
+    component.answer = answer;
     fixture.detectChanges();
   });
 

@@ -6,9 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
 import { ApplymentModule } from '../applyment.module';
-import { dispatchEvent } from '../../../testing/form-helper';
-import { ASSESSMENTS } from '../../../mocks/assessments-mock';
 import { StoreService } from '../../core/shared/store.service';
+import { AssessmentService } from '../../core/shared/assessment.service';
+import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
+import { dispatchEvent } from '../../../testing/form-helper';
 
 describe('QuestionPageComponent', () => {
   let component: QuestionPageComponent;
@@ -23,17 +24,20 @@ describe('QuestionPageComponent', () => {
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
           { provide: Router, useClass: RouterStub },
-          StoreService
+          { provide: AssessmentService, useClass: AssessmentServiceStub },
+          StoreService,
         ]
       })
       .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionPageComponent);
+    component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     store = fixture.debugElement.injector.get(StoreService);
-    component = fixture.componentInstance;
+
+    route.testParams = { uuid: '1', question_id: 1 };
     fixture.detectChanges();
   });
 
@@ -42,30 +46,24 @@ describe('QuestionPageComponent', () => {
   });
 
   it('should display a question and its answers', () => {
-    let question = ASSESSMENTS[0].questions[0];
-
     let questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
-    expect(questionEl.textContent).toEqual(question.text);
+    expect(questionEl.textContent).toEqual('If you fly or sit with a great truth, silence absorbs you.');
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
   });
 
   it('should update the checked answer when `onClicked` is fired', async(() => {
-    let answer = ASSESSMENTS[0].questions[0].answers[0];
-    component.updateChecked(answer.id);
+    component.updateChecked(1);
     fixture.whenStable();
-    expect(component.checked).toEqual(answer.id);
+    expect(component.checked).toEqual(1);
   }));
 
   it('should store the answer in the data store service', () => {
     spyOn(store, 'setAnswer');
-    let question = ASSESSMENTS[0].questions[0];
-    component.question = question;
-    component.updateChecked(question.answers[1].id);
-    expect(store.setAnswer).toHaveBeenCalledWith(question.id, question.answers[1].id);
+    component.updateChecked(1);
+    expect(store.setAnswer).toHaveBeenCalledWith(1, 1);
   });
 
   it('should navigate to the next question', async(() => {
-    route.testParams = { uuid: '1', question_id: 1 };
     spyOn(component, 'nextQuestion');
     spyOn(router, 'navigate');
 

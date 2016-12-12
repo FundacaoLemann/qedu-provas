@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpModule } from "@angular/http";
-import { StoreService } from "./shared/store.service";
+import { HttpModule } from '@angular/http';
+import { StoreService } from './shared/store.service';
+import { AssessmentService } from './shared/assessment.service';
 
 @NgModule({
   imports: [
     HttpModule
   ],
   declarations: [],
-  providers: [StoreService]
+  providers: [
+    StoreService,
+    AssessmentService
+  ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

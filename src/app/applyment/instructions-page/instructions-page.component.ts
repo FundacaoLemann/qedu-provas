@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { Assessment } from '../../shared/model/assessment';
-import { ASSESSMENTS } from "../../../mocks/assessments-mock";
+import { AssessmentService } from '../../core/shared/assessment.service';
 
 @Component({
   selector: 'app-instructions-page',
@@ -12,12 +11,16 @@ import { ASSESSMENTS } from "../../../mocks/assessments-mock";
 export class InstructionsPageComponent implements OnInit {
   assessment: Assessment;
 
-  constructor (private router: Router,
+  constructor (private assessmentService: AssessmentService,
+               private router: Router,
                private route: ActivatedRoute,) {
   }
 
   ngOnInit () {
-    this.assessment = ASSESSMENTS[0];
+    this.assessmentService.getAssessment('1').subscribe(
+      assessment => this.assessment = assessment,
+      error => this.assessment = null
+    );
   }
 
   startAssessment () {
