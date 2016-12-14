@@ -51,10 +51,10 @@ describe('QuestionPageComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
   });
 
-  it('should update the checked answer when `onClicked` is fired', async(() => {
+  it('should update the checkedAnswer answer when `onClicked` is fired', async(() => {
     component.updateChecked(1);
     fixture.whenStable();
-    expect(component.checked).toEqual(1);
+    expect(component.checkedAnswer).toEqual(1);
   }));
 
   it('should store the answer in the data store service', () => {
@@ -63,14 +63,32 @@ describe('QuestionPageComponent', () => {
     expect(store.setAnswer).toHaveBeenCalledWith(1, 1);
   });
 
-  it('should navigate to the next question', async(() => {
-    spyOn(component, 'nextQuestion');
-    spyOn(router, 'navigate');
+  describe('navigation buttons', () => {
 
-    dispatchEvent(fixture, '[next]', 'click');
+    it('should navigate to the next question when clicked', async(() => {
+      spyOn(component, 'nextQuestion');
+      spyOn(router, 'navigate');
+      dispatchEvent(fixture, '[next-question]', 'click');
 
-    expect(component.nextQuestion).toHaveBeenCalled();
-  }));
+      expect(component.nextQuestion).toHaveBeenCalled();
+    }));
 
+    it('should navigate to the previous question when previous is clicked', async(() => {
+      spyOn(router, 'navigate');
+      route.testParams = { uuid: '1', question_id: 2 };
+      dispatchEvent(fixture, '[prev-question]', 'click');
+
+      expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', 1]);
+    }));
+
+    it('should disable the prev-button when the current question is the first', () => {
+      route.testParams = { uuid: 1, question_id: 1 };
+      fixture.detectChanges();
+
+      let buttonEl = fixture.debugElement.query(By.css('[prev-question]')).nativeElement;
+
+      expect(buttonEl.disabled).toEqual(true);
+    });
+  });
 });
 
