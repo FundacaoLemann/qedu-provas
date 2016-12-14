@@ -40,7 +40,7 @@ describe('AnswerComponent', () => {
       dispatchEvent(fixture, '.answer', 'click');
     });
 
-    it('should set checked to the input element', () => {
+    it('should set checkedAnswer to the input element', () => {
       let inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
       dispatchEvent(fixture, '.answer', 'click');
       fixture.detectChanges();

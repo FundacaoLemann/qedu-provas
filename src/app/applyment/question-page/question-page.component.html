@@ -14,7 +14,7 @@
       <qp-answer
         *ngFor="let answer of answers"
         [answer]="answer"
-        [checked]="answer.id === checked"
+        [checked]="answer.id === checkedAnswer"
         (onClicked)="updateChecked($event)"
       ></qp-answer>
     </div>
@@ -23,10 +23,18 @@
   <div class="panel-footer">
     <div class="row">
       <div class="col-xs-6">
-        <button class="btn btn-primary" prev>Voltar</button>
+        <button class="btn btn-primary"
+                prev-question
+                [disabled]="questionId <= 0"
+                [ngClass]="{disabled: questionId <= 0}"
+                (click)="prevQuestion()">Voltar
+        </button>
       </div>
       <div class="col-xs-6 text-right">
-        <button class="btn btn-success" next (click)="nextQuestion()">Avançar</button>
+        <button class="btn btn-success"
+                next-question
+                (click)="nextQuestion()">Avançar
+        </button>
       </div>
     </div>
   </div>

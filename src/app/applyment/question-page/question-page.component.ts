@@ -12,7 +12,7 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 export class QuestionPageComponent implements OnInit {
   question: Question;
   answers: any[];
-  checked: number = 0;
+  checkedAnswer: number = 0;
   assesmentId: number = 0;
   questionId: number = 0;
 
@@ -32,22 +32,44 @@ export class QuestionPageComponent implements OnInit {
       )
       .subscribe(
         questions => {
-          this.question = questions[this.questionId];
-          this.answers = this.question.answers;
+          try {
+            this.question = questions[this.questionId];
+            this.answers = this.question.answers;
+          }
+          catch ( err ) {
+            this.question = new Question();
+            this.answers = [];
+          }
+          finally {
+            this.checkedAnswer = 0;
+          }
+        },
+        error => {
+          this.question = new Question();
+          this.answers = [];
         }
       );
-    // this.loadQuestion();
   }
 
   updateChecked (answer_id: number) {
-    this.checked = answer_id;
+    this.checkedAnswer = answer_id;
     this.store.setAnswer(this.question.id, answer_id);
   }
 
   nextQuestion () {
     let questionId = (+this.route.snapshot.params['question_id']) + 1;
+
     let uuid = this.route.snapshot.params['uuid'];
     this.router.navigate(['prova', uuid, 'questao', questionId]);
+  }
+
+  prevQuestion () {
+    let questionId = (+this.route.snapshot.params['question_id']) - 1;
+
+    if ( questionId >= 1) {
+      let uuid = this.route.snapshot.params['uuid'];
+      this.router.navigate(['prova', uuid, 'questao', questionId]);
+    }
   }
 
 }
