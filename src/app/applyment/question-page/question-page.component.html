@@ -24,16 +24,16 @@
     <div class="row">
       <div class="col-xs-6">
         <button class="btn btn-primary"
-                prev-question
+                prev
                 [disabled]="questionId <= 0"
                 [ngClass]="{disabled: questionId <= 0}"
-                (click)="prevQuestion()">Voltar
+                (click)="back()">Voltar
         </button>
       </div>
       <div class="col-xs-6 text-right">
         <button class="btn btn-success"
-                next-question
-                (click)="nextQuestion()">Avançar
+                next
+                (click)="next()">Avançar
         </button>
       </div>
     </div>
