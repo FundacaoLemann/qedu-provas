@@ -66,17 +66,26 @@ describe('QuestionPageComponent', () => {
   describe('navigation buttons', () => {
 
     it('should navigate to the next question when clicked', async(() => {
-      spyOn(component, 'nextQuestion');
+      route.testParams = { uuid: '1', question_id: 1 };
       spyOn(router, 'navigate');
-      dispatchEvent(fixture, '[next-question]', 'click');
+      dispatchEvent(fixture, '[next]', 'click');
 
-      expect(component.nextQuestion).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', 2]);
+    }));
+
+    it('should navigate to review page when the current question is the last', async(() => {
+      route.testParams = { uuid: '1', question_id: 2 };
+
+      spyOn(router, 'navigate');
+      dispatchEvent(fixture, '[next]', 'click');
+      expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'revisao']);
     }));
 
     it('should navigate to the previous question when previous is clicked', async(() => {
-      spyOn(router, 'navigate');
       route.testParams = { uuid: '1', question_id: 2 };
-      dispatchEvent(fixture, '[prev-question]', 'click');
+
+      spyOn(router, 'navigate');
+      dispatchEvent(fixture, '[prev]', 'click');
 
       expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', 1]);
     }));
@@ -85,7 +94,7 @@ describe('QuestionPageComponent', () => {
       route.testParams = { uuid: 1, question_id: 1 };
       fixture.detectChanges();
 
-      let buttonEl = fixture.debugElement.query(By.css('[prev-question]')).nativeElement;
+      let buttonEl = fixture.debugElement.query(By.css('[prev]')).nativeElement;
 
       expect(buttonEl.disabled).toEqual(true);
     });
