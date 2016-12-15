@@ -9,6 +9,7 @@ import { InstructionsPageComponent } from "./instructions-page/instructions-page
 import { QuestionPageComponent } from "./question-page/question-page.component";
 import { AnswerComponent } from './question-page/answer.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
+import { ReviewModalComponent } from './review-page/review-modal.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,10 @@ import { ReviewPageComponent } from './review-page/review-page.component';
     QuestionPageComponent,
     AnswerComponent,
     ReviewPageComponent,
+    ReviewModalComponent,
+  ],
+  entryComponents: [
+    ReviewModalComponent,
   ],
   exports: [
     ApplymentComponent,
