@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 import { ForbiddenCharactersDirective } from "./directives/forbidden-characters.directive";
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { ForbiddenCharactersDirective } from "./directives/forbidden-characters.
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    RouterModule
   ],
   declarations: [
     ForbiddenCharactersDirective

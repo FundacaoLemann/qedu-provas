@@ -11,9 +11,11 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 })
 export class QuestionPageComponent implements OnInit {
   question: Question;
+  questionsLength: number;
   answers: any[];
   checkedAnswer: number = 0;
   assesmentId: number = 0;
+
   questionId: number = 0;
 
   constructor (private assessmentService: AssessmentService,
@@ -56,11 +58,26 @@ export class QuestionPageComponent implements OnInit {
     this.store.setAnswer(this.question.id, answer_id);
   }
 
+
   nextQuestion () {
     let questionId = (+this.route.snapshot.params['question_id']) + 1;
-
     let uuid = this.route.snapshot.params['uuid'];
-    this.router.navigate(['prova', uuid, 'questao', questionId]);
+
+    if ( nextQuestion > this.questionsLength ) {
+      this.router.navigate(['prova', uuid, 'revisao']);
+    }
+    else {
+      this.router.navigate(['prova', uuid, 'questao', nextQuestion]);
+    }
+  }
+
+  back () {
+    let prevQuestion = (+this.route.snapshot.params['question_id']) - 1;
+
+    if ( prevQuestion >= 1 ) {
+      let uuid = this.route.snapshot.params['uuid'];
+      this.router.navigate(['prova', uuid, 'questao', prevQuestion]);
+    }
   }
 
   prevQuestion () {
