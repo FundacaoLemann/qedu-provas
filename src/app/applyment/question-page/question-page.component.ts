@@ -14,6 +14,8 @@ export class QuestionPageComponent implements OnInit {
   questionsLength: number;
   answers: any[];
   checkedAnswer: number = 0;
+  assesmentId: number = 0;
+
   questionId: number = 0;
 
   constructor (private assessmentService: AssessmentService,
@@ -33,7 +35,6 @@ export class QuestionPageComponent implements OnInit {
       .subscribe(
         questions => {
           try {
-            this.questionsLength = questions.length;
             this.question = questions[this.questionId];
             this.answers = this.question.answers;
           }
@@ -57,8 +58,9 @@ export class QuestionPageComponent implements OnInit {
     this.store.setAnswer(this.question.id, answer_id);
   }
 
-  next () {
-    let nextQuestion = (+this.route.snapshot.params['question_id']) + 1;
+
+  nextQuestion () {
+    let questionId = (+this.route.snapshot.params['question_id']) + 1;
     let uuid = this.route.snapshot.params['uuid'];
 
     if ( nextQuestion > this.questionsLength ) {
@@ -75,6 +77,15 @@ export class QuestionPageComponent implements OnInit {
     if ( prevQuestion >= 1 ) {
       let uuid = this.route.snapshot.params['uuid'];
       this.router.navigate(['prova', uuid, 'questao', prevQuestion]);
+    }
+  }
+
+  prevQuestion () {
+    let questionId = (+this.route.snapshot.params['question_id']) - 1;
+
+    if ( questionId >= 1) {
+      let uuid = this.route.snapshot.params['uuid'];
+      this.router.navigate(['prova', uuid, 'questao', questionId]);
     }
   }
 
