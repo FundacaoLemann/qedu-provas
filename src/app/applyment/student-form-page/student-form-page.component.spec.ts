@@ -7,17 +7,18 @@ import { RouterStub } from '../../../testing/router-stub';
 import { SharedModule } from '../../shared/shared.module';
 import { StudentFormPageComponent } from './student-form-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
-import { StoreService } from '../../core/shared/store.service';
 import { CoreModule } from '../../core/core.module';
 import { AssessmentService } from '../../core/shared/assessment.service';
+import { ApplymentService } from '../../core/shared/applyment.service';
+import { StoreService } from '../../core/shared/store.service';
 import { setInputValue, getInputValue } from '../../../testing/form-helper';
 
 describe('StudentFormPageComponent', () => {
   let component: StudentFormPageComponent;
   let fixture: ComponentFixture<StudentFormPageComponent>;
   let routerService: Router;
-  let storeService: StoreService;
   let assessmentService: AssessmentService;
+  let applymentService: ApplymentService;
   let route = new ActivatedRouteStub();
   let assessment = {
     "id": 1,
@@ -37,6 +38,7 @@ describe('StudentFormPageComponent', () => {
         declarations: [StudentFormPageComponent],
         providers: [
           StoreService,
+          ApplymentService,
           { provide: Router, useValue: new RouterStub() },
           { provide: ActivatedRoute, useValue: route },
         ]
@@ -48,7 +50,7 @@ describe('StudentFormPageComponent', () => {
     fixture = TestBed.createComponent(StudentFormPageComponent);
     component = fixture.componentInstance;
     routerService = fixture.debugElement.injector.get(Router);
-    storeService = fixture.debugElement.injector.get(StoreService);
+    applymentService = fixture.debugElement.injector.get(ApplymentService);
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
     component.assessment = assessment;
@@ -67,21 +69,15 @@ describe('StudentFormPageComponent', () => {
     expect(title).toEqual(assessment.title);
   }));
 
-  it('should display the student data if already set', () => {
-    storeService.setStudent({ name: 'John Doe', 'register_number': '' });
-    fixture.detectChanges();
-    expect(getInputValue(fixture, '#name')).toEqual('John Doe');
-  });
-
   it('should navigate to instructions-page when has no errors', () => {
     spyOn(routerService, 'navigate');
-    spyOn(storeService, 'setStudent');
+    spyOn(applymentService, 'setStudent');
 
     setInputValue(fixture, '#name', 'John Doe');
     component.onSubmit();
 
     expect(routerService.navigate).toHaveBeenCalledWith(['prova', assessment.uuid, 'instructions']);
-    expect(storeService.setStudent).toHaveBeenCalledWith({ name: 'John Doe', register_number: '' });
+    expect(applymentService.setStudent).toHaveBeenCalledWith({ name: 'John Doe', register_number: '' });
   });
 
   describe('Form validation', () => {
