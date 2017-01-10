@@ -17,14 +17,14 @@ export class InstructionsPageComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.assessmentService.getAssessment('1').subscribe(
+    let assessmentUUID = this.route.snapshot.params['uuid'];
+    this.assessmentService.getAssessment(assessmentUUID).subscribe(
       assessment => this.assessment = assessment,
       error => this.assessment = null
     );
   }
 
   startAssessment () {
-    let assessment_uuid = this.route.snapshot.params['uuid'];
-    this.router.navigate(['prova', assessment_uuid, 'questao', '1']);
+    this.router.navigate(['prova', this.assessment.id, 'questao', '1']);
   }
 }

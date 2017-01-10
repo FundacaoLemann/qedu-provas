@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../shared/model/question';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ReviewModalComponent } from './review-modal.component';
+import { ApplymentService } from '../../core/shared/applyment.service';
 
 @Component({
   selector: 'app-review-page',
@@ -11,19 +12,26 @@ import { ReviewModalComponent } from './review-modal.component';
 })
 export class ReviewPageComponent implements OnInit {
   questions: Question[];
+  answersLength: number = 0;
+  questionsLength: number = 0;
   @ViewChild('modal') modalRef: ComponentRef<ReviewModalComponent>;
 
   constructor (private router: Router,
                private route: ActivatedRoute,
                private viewContainer: ViewContainerRef,
                private componentFactoryResolver: ComponentFactoryResolver,
-               private assessmentService: AssessmentService) {
+               private assessmentService: AssessmentService,
+               private applymentService: ApplymentService) {
   }
 
   ngOnInit () {
     this.assessmentService.getQuestions('1')
       .subscribe(
-        questions => this.questions = questions,
+        (questions) => {
+          this.questions = questions;
+          this.questionsLength = questions.length;
+          this.answersLength = this.applymentService.getAnswers().length;
+        },
         error => this.questions = []
       );
   }
@@ -42,7 +50,7 @@ export class ReviewPageComponent implements OnInit {
     });
   }
 
-  closeDialog() {
+  closeDialog () {
     this.viewContainer.clear();
   }
 

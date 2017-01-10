@@ -1,36 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
+import { StoreService } from './store.service';
 
 @Injectable()
 export class ApplymentService {
-  private _student: Student;
-  private _answers: {[key: number]: number};
-  private _startTime: Date;
-  private _finishTime: Date;
 
-  constructor () {
-    this._student = new Student();
+  constructor (private store: StoreService) {
   }
 
-  start (): void {
-    this._startTime = new Date();
+  setStudent (student: Student) {
+    this.store.setValue('student', student);
   }
 
-  get startTime (): Date {
-    return this._startTime;
+  getStudent (): Student {
+    let student = this.store.getValue('student') || new Student();
+    return student as Student;
   }
 
-  finish(): void {
-    this._finishTime = new Date();
+  setAnswer (questionId: number, answerId: number) {
+    let answers = this.store.getValue('answers') || [];
+    answers[questionId] = answerId;
+
+    this.store.setValue('answers', answers);
   }
 
-  get finishTime(): Date {
-    return this._finishTime;
+  getAnswer (questionId: number): number {
+    let answers = this.store.getValue('answers') || [];
+    return answers[questionId] || null;
   }
 
-  setAnswer(question_id: number, answer_id: number): void {
-    this._answers[question_id] = answer_id;
+  getAnswers(): Array<number> {
+    return this.store.getValue('answers') || [];
   }
-
-
 }

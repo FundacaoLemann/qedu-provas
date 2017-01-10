@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { FormErrorsParser } from '../../shared/form-errors-parser';
-import { StoreService } from '../../core/shared/store.service';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { Observable } from 'rxjs';
+import { ApplymentService } from '../../core/shared/applyment.service';
 import { forbiddenCharactersValidator } from '../../shared/directives/forbidden-characters.directive';
 
 @Component({
@@ -28,7 +28,7 @@ export class StudentFormPageComponent implements OnInit {
                private fb: FormBuilder,
                private router: Router,
                private route: ActivatedRoute,
-               private store: StoreService) {
+               private applymentService: ApplymentService) {
 
   }
 
@@ -41,12 +41,8 @@ export class StudentFormPageComponent implements OnInit {
         }
       );
 
-    let student = this.store.getStudentValue();
+    let student = this.applymentService.getStudent();
     this.formBuild(student);
-
-    this.store.student.subscribe(student => {
-      this.form.patchValue(student);
-    });
   }
 
   formBuild (student?): void {
@@ -74,7 +70,7 @@ export class StudentFormPageComponent implements OnInit {
       this.displayErrors(false);
     }
     else {
-      this.store.setStudent(this.form.getRawValue());
+      this.applymentService.setStudent(this.form.getRawValue());
       this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'instructions']);
     }
   }

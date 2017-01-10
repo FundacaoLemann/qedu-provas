@@ -8,9 +8,11 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { RouterStub } from '../../../testing/router-stub';
 import { Question } from '../../shared/model/question';
-import { ReviewModalComponent } from './review-modal.component';
 import { ApplymentModule } from '../applyment.module';
 import { ComponentRef } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { CoreModule } from '../../core/core.module';
+import { ApplymentService } from '../../core/shared/applyment.service';
 
 describe('ReviewPageComponent', () => {
   let component: ReviewPageComponent;
@@ -18,11 +20,12 @@ describe('ReviewPageComponent', () => {
   let router: Router;
   let route: ActivatedRouteStub;
   let assessmentService: AssessmentServiceStub;
+  let applymentService: ApplymentService;
   let questionsStub: Question[];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [ApplymentModule],
+        imports: [ApplymentModule, CoreModule],
         providers: [
           { provide: Router, useClass: RouterStub },
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
@@ -39,6 +42,11 @@ describe('ReviewPageComponent', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
+    // Set a fake answer
+    applymentService = fixture.debugElement.injector.get(ApplymentService);
+    applymentService.setAnswer(0, 1);
+
+    // Set a fake route
     route.testParams = { uuid: '1' };
 
     assessmentService.getQuestions('1').subscribe(questions => questionsStub = questions);
@@ -65,6 +73,11 @@ describe('ReviewPageComponent', () => {
     dispatchEvent(fixture, '[button-finish]', 'click');
     fixture.detectChanges();
     expect(component.modalRef).toEqual(jasmine.any(ComponentRef));
+  }));
+
+  it('should display the amount of answered questions', async(() => {
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.items_count')).nativeElement.innerHTML).toEqual('1 de 2 questões');
   }));
 
 });

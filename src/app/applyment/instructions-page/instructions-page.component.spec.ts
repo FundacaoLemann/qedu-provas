@@ -19,14 +19,16 @@ describe('InstructionsPageComponent', () => {
   let assessmentService: AssessmentServiceStub;
 
   beforeEach(async(() => {
+    let routeStub = new ActivatedRouteStub();
+    routeStub.testParams = { uuid: '1' };
     TestBed.configureTestingModule({
         imports: [
-          SharedModule
+          SharedModule,
         ],
         declarations: [InstructionsPageComponent],
         providers: [
           { provide: Router, useValue: new RouterStub() },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+          { provide: ActivatedRoute, useValue: routeStub },
           { provide: AssessmentService, useClass: AssessmentServiceStub },
         ]
       })
@@ -40,9 +42,10 @@ describe('InstructionsPageComponent', () => {
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
-    fixture.detectChanges();
 
     spyOn(router, 'navigate');
+    route.testParams = { uuid: '1' };
+    fixture.detectChanges();
   });
 
   it('should create', async(() => {
@@ -61,10 +64,8 @@ describe('InstructionsPageComponent', () => {
   });
 
   it('should redirect to question page when button clicked', () => {
-    route.testParams = { uuid: '1' };
-
     dispatchEvent(fixture, 'button.continue', 'click');
-    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', '1']);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', 1, 'questao', '1']);
   });
 })
 ;

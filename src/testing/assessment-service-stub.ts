@@ -9,7 +9,7 @@ export class AssessmentServiceStub {
     this.assessmentSource = new Subject<Assessment>();
   }
 
-  getAssessment (assessment_id: string): Observable<Assessment> {
+  getAssessment (assessmentId: string): Observable<Assessment> {
     let assessment = {
       "id": 1,
       "uuid": "89sj0j201j",
@@ -22,7 +22,7 @@ export class AssessmentServiceStub {
     return Observable.from([assessment]);
   }
 
-  getQuestions(assessment_id: string): Observable<Question[]> {
+  getQuestions(assessmentId: string): Observable<Question[]> {
     let questions = [
       {
         "assessmentId": 1,

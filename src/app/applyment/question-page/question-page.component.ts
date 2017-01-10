@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Question } from '../../shared/model/question';
-import { StoreService } from '../../core/shared/store.service';
 import { AssessmentService } from '../../core/shared/assessment.service';
+import { ApplymentService } from '../../core/shared/applyment.service';
 
 @Component({
   selector: 'app-question-page',
@@ -14,19 +14,19 @@ export class QuestionPageComponent implements OnInit {
   questionsLength: number;
   answers: any[];
   checkedAnswer: number = 0;
-  questionId: number = 0;
+  questionIndex: number = 0;
 
   constructor (private assessmentService: AssessmentService,
                private route: ActivatedRoute,
                private router: Router,
-               private store: StoreService) {
+               private applymentService: ApplymentService) {
   }
 
   ngOnInit () {
     this.route.params
       .switchMap(
         (params: Params) => {
-          this.questionId = (+params['question_id']) - 1;
+          this.questionIndex = (+params['question_id']) - 1;
           return this.assessmentService.getQuestions(params['uuid']);
         }
       )
@@ -34,7 +34,7 @@ export class QuestionPageComponent implements OnInit {
         questions => {
           try {
             this.questionsLength = questions.length;
-            this.question = questions[this.questionId];
+            this.question = questions[this.questionIndex];
             this.answers = this.question.answers;
           }
           catch ( err ) {
@@ -42,7 +42,7 @@ export class QuestionPageComponent implements OnInit {
             this.answers = [];
           }
           finally {
-            this.checkedAnswer = 0;
+            this.checkedAnswer = this.applymentService.getAnswer(this.questionIndex) || 0;
           }
         },
         error => {
@@ -52,9 +52,9 @@ export class QuestionPageComponent implements OnInit {
       );
   }
 
-  updateChecked (answer_id: number) {
-    this.checkedAnswer = answer_id;
-    this.store.setAnswer(this.question.id, answer_id);
+  updateChecked (answerId: number) {
+    this.checkedAnswer = answerId;
+    this.applymentService.setAnswer(this.questionIndex, answerId);
   }
 
   next () {

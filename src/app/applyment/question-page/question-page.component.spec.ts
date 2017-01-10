@@ -6,9 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
 import { ApplymentModule } from '../applyment.module';
-import { StoreService } from '../../core/shared/store.service';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
+import { ApplymentService } from '../../core/shared/applyment.service';
+import { CoreModule } from '../../core/core.module';
 import { dispatchEvent } from '../../../testing/form-helper';
 
 describe('QuestionPageComponent', () => {
@@ -16,16 +17,15 @@ describe('QuestionPageComponent', () => {
   let fixture: ComponentFixture<QuestionPageComponent>;
   let route: ActivatedRouteStub;
   let router: RouterStub;
-  let store: StoreService;
+  let applymentService: ApplymentService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [ApplymentModule],
+        imports: [ApplymentModule, CoreModule],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStub },
           { provide: Router, useClass: RouterStub },
           { provide: AssessmentService, useClass: AssessmentServiceStub },
-          StoreService,
         ]
       })
       .compileComponents();
@@ -35,9 +35,10 @@ describe('QuestionPageComponent', () => {
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    store = fixture.debugElement.injector.get(StoreService);
+    applymentService = fixture.debugElement.injector.get(ApplymentService);
 
-    route.testParams = { uuid: '1', question_id: 1 };
+    route.testParams = { uuid: '1', question_id: '1' };
+
     fixture.detectChanges();
   });
 
@@ -58,13 +59,19 @@ describe('QuestionPageComponent', () => {
   }));
 
   it('should store the answer in the data store service', () => {
-    spyOn(store, 'setAnswer');
+    spyOn(applymentService, 'setAnswer');
+    route.testParams = { uuid: '1', question_id: 1 };
     component.updateChecked(1);
-    expect(store.setAnswer).toHaveBeenCalledWith(1, 1);
+    expect(applymentService.setAnswer).toHaveBeenCalledWith(0, 1);
+  });
+
+  it('should load and display the answer when already set', () => {
+    applymentService.setAnswer(0, 1);
+    route.testParams = { uuid: '1', question_id: 1 };
+    expect(component.checkedAnswer).toEqual(1);
   });
 
   describe('navigation buttons', () => {
-
     it('should navigate to the next question when clicked', async(() => {
       route.testParams = { uuid: '1', question_id: 1 };
       spyOn(router, 'navigate');

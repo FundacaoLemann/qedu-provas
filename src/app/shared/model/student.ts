@@ -1,6 +1,4 @@
 export class Student {
-	constructor (
-		public name: string = '',
-		public register_number: string = ''
-	){}
+  name: string;
+  register_number: string;
 }

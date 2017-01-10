@@ -10,54 +10,43 @@ export class StoreService {
   private _answers: Observable<AnswerStore[]>;
   private _answersSubject: BehaviorSubject<AnswerStore[]>;
 
+  private _storeSubject: BehaviorSubject<{}>;
+  public store;
+
   constructor () {
     this._studentSubject = new BehaviorSubject({ name: '', register_number: '' });
     this._student = this._studentSubject.asObservable();
 
     this._answersSubject = new BehaviorSubject([]);
     this._answers = this._answersSubject.asObservable();
+
+    this._storeSubject = new BehaviorSubject({});
+    this.store = this._storeSubject.asObservable();
   }
 
   setStudent (student: Student) {
     this._studentSubject.next(student);
   }
 
-  getStudentValue (): Student {
-    return this._studentSubject.getValue();
-  }
-
   get student (): Observable<Student> {
     return this._student;
   }
 
-  setAnswer (question_id: number, answer_id: number) {
-    let updateAnswer = new AnswerStore(question_id, answer_id);
-    let currentAnswers = this.getAnswers();
-
-    let foundAnswer;
-    let index = 0;
-    for ( index; index < currentAnswers.length; index++ ) {
-      if ( currentAnswers[index].question_id === question_id ) {
-        foundAnswer = currentAnswers[index];
-        break;
-      }
-    }
-
-    if ( !foundAnswer ) {
-      currentAnswers.push(updateAnswer);
-    }
-    else {
-      currentAnswers[index] = updateAnswer;
-    }
-
-    this._answersSubject.next(currentAnswers);
+  setValue (branch: string, value: {}) {
+    let _value = {};
+    _value[branch] = value;
+    this._storeSubject.next(Object.assign({}, this._storeSubject.getValue(), _value));
   }
 
-  getAnswers (): AnswerStore[] {
-    return this._answersSubject.getValue();
-  }
+  getValue (branch?: string): any {
+    let state = this._storeSubject.getValue();
 
-  get answers (): Observable<AnswerStore[]> {
-    return this._answers;
+    if( branch) {
+      return (state[branch]) ? state[branch] : null;
+    } else {
+      return state;
+    }
   }
 }
+
+

@@ -1,11 +1,15 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
+import { StoreService } from './store.service';
 
 describe('ApplymentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ApplymentService]
+      providers: [
+        ApplymentService,
+        StoreService
+      ]
     });
   });
 
@@ -13,26 +17,13 @@ describe('ApplymentService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should record start time of applyment', inject([ApplymentService], (service: ApplymentService) => {
-    service.start();
-    expect(service.startTime).toEqual(jasmine.any(Date));
+  it('should hold student data', inject([ApplymentService], (service: ApplymentService) => {
+    let student = {
+      name: 'John Doe',
+      register_number: '12345'
+    };
+    service.setStudent(student);
+    expect(service.getStudent()).toEqual(student);
   }));
-
-  it('should record finish time of applyment', inject([ApplymentService], (service: ApplymentService) => {
-    service.finish();
-    expect(service.finishTime).toEqual(jasmine.any(Date));
-  }));
-
-
-  describe('question management', () => {
-    let service: ApplymentService;
-
-    beforeAll(() => {
-      service = new ApplymentService();
-    });
-
-  });
-
-
 
 });
