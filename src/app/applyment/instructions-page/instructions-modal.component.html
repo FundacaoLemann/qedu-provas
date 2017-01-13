@@ -1,0 +1,29 @@
+<div class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h3>Atenção</h3>
+        <hr>
+        <p>
+          Ao clicar em <b>Confirmar</b> sua prova será iniciada e o tempo sera contabilizado.<br>
+          Deseja continuar?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-xs-6 text-left">
+            <button
+              class="btn btn-default"
+              close-button
+              (click)="close()">
+              Cancelar
+            </button>
+          </div>
+          <div class="col-xs-6">
+            <button class="btn btn-success" confirm (click)="confirmStart()">Confirmar!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

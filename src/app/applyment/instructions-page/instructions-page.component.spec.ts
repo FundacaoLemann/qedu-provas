@@ -4,12 +4,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RouterStub } from '../../../testing/router-stub';
-import { SharedModule } from '../../shared/shared.module';
 import { InstructionsPageComponent } from './instructions-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { dispatchEvent } from '../../../testing/form-helper';
+import { ApplymentModule } from '../applyment.module';
 
 describe('InstructionsPageComponent', () => {
   let component: InstructionsPageComponent;
@@ -23,9 +23,8 @@ describe('InstructionsPageComponent', () => {
     routeStub.testParams = { uuid: '1' };
     TestBed.configureTestingModule({
         imports: [
-          SharedModule,
+          ApplymentModule
         ],
-        declarations: [InstructionsPageComponent],
         providers: [
           { provide: Router, useValue: new RouterStub() },
           { provide: ActivatedRoute, useValue: routeStub },
@@ -63,9 +62,10 @@ describe('InstructionsPageComponent', () => {
     expect(itemsCountEl.textContent).toEqual(`10 questões`);
   });
 
-  it('should redirect to question page when button clicked', () => {
+  it('should open modal when click on start', () => {
     dispatchEvent(fixture, 'button.continue', 'click');
-    expect(router.navigate).toHaveBeenCalledWith(['prova', 1, 'questao', '1']);
+    fixture.detectChanges();
+    expect(component.modalRef).toBeTruthy();
   });
-})
-;
+
+});
