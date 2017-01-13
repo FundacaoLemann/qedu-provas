@@ -6,6 +6,7 @@ import { ApplymentRoutingModule } from './applyment-routing.module';
 import { StudentFormPageComponent } from "./student-form-page/student-form-page.component";
 import { SearchAssessmentPageComponent } from "./search-assessment-page/search-assessment-page.component";
 import { InstructionsPageComponent } from "./instructions-page/instructions-page.component";
+import { InstructionsModalComponent } from './instructions-page/instructions-modal.component';
 import { QuestionPageComponent } from "./question-page/question-page.component";
 import { AnswerComponent } from './question-page/answer.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
@@ -21,6 +22,7 @@ import { ReviewModalComponent } from './review-page/review-modal.component';
     StudentFormPageComponent,
     SearchAssessmentPageComponent,
     InstructionsPageComponent,
+    InstructionsModalComponent,
     QuestionPageComponent,
     AnswerComponent,
     ReviewPageComponent,
@@ -28,6 +30,7 @@ import { ReviewModalComponent } from './review-page/review-modal.component';
   ],
   entryComponents: [
     ReviewModalComponent,
+    InstructionsModalComponent
   ],
   exports: [
     ApplymentComponent,
