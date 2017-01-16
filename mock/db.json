@@ -13,7 +13,13 @@
     {
       "assessmentId": 1,
       "id": 1,
-      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aspernatur dicta explicabo in nam non nulla, officia possimus repellendus voluptatibus. Adipisci alias assumenda facilis harum illum laborum neque nostrum reprehenderit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore inventore ipsa maxime modi nam placeat quis temporibus voluptatum. Labore, suscipit?",
+      "text": "{{IMG_65863}} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aspernatur dicta explicabo in nam non nulla, officia possimus repellendus voluptatibus. Adipisci alias assumenda facilis harum illum laborum neque nostrum reprehenderit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore inventore ipsa maxime modi nam placeat quis temporibus voluptatum. Labore, suscipit?",
+      "images": [
+        {
+          "id": "IMG_65863",
+          "url": "http://localhost:3000/public/IMG_65863.jpg"
+        }
+      ],
       "answers": [
         {
           "id": 1,
