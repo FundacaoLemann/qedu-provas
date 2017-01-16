@@ -30,7 +30,9 @@ export class ReviewPageComponent implements OnInit {
         (questions) => {
           this.questions = questions;
           this.questionsLength = questions.length;
-          this.answersLength = this.applymentService.getAnswers().length;
+          this.answersLength = this.applymentService.getAnswers()
+              .filter(answer => (answer) ? answer : null)
+              .length;
         },
         error => this.questions = []
       );
