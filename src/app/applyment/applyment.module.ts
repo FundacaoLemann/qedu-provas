@@ -11,6 +11,7 @@ import { QuestionPageComponent } from "./question-page/question-page.component";
 import { AnswerComponent } from './question-page/answer.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
 import { ReviewModalComponent } from './review-page/review-modal.component';
+import { CurrentQuestionComponent } from './question-page/current-question.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { ReviewModalComponent } from './review-page/review-modal.component';
     AnswerComponent,
     ReviewPageComponent,
     ReviewModalComponent,
+    CurrentQuestionComponent,
   ],
   entryComponents: [
     ReviewModalComponent,
