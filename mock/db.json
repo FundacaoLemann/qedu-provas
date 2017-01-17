@@ -13,11 +13,17 @@
     {
       "assessmentId": 1,
       "id": 1,
-      "text": "{{IMG_65863}} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aspernatur dicta explicabo in nam non nulla, officia possimus repellendus voluptatibus. Adipisci alias assumenda facilis harum illum laborum neque nostrum reprehenderit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore inventore ipsa maxime modi nam placeat quis temporibus voluptatum. Labore, suscipit?",
-      "images": [
+      "text": "{{IMG_65863}} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aspernatur dicta explicabo in nam non nulla, officia possimus repellendus voluptatibus. {{IMG_65864}}Adipisci alias assumenda facilis harum illum laborum neque nostrum reprehenderit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore inventore ipsa maxime modi nam placeat quis temporibus voluptatum. Labore, suscipit?",
+      "media": [
         {
           "id": "IMG_65863",
-          "url": "http://localhost:3000/public/IMG_65863.jpg"
+          "type": "image",
+          "source": "http://localhost:3000/public/IMG_65863.png"
+        },
+        {
+          "id": "IMG_65864",
+          "type": "image",
+          "source": "http://localhost:3000/public/IMG_65864.jpg"
         }
       ],
       "answers": [
@@ -47,6 +53,7 @@
       "assessmentId": 1,
       "id": 2,
       "text": "Wow, courage!Lord, ye cold jack- set sails for adventure! Dozens of anomalies will be lost in plasmas like attitudes in alarms",
+      "media" : [],
       "answers": [
         {
           "id": 1,
@@ -73,7 +80,8 @@
     {
       "assessmentId": 1,
       "id": 3,
-      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem ducimus ea fuga nesciunt nulla sed voluptatibus?",
+      "text": "Consectetur adipisicing elit. Ab autem ducimus ea fuga nesciunt nulla sed voluptatibus?",
+      "media": [],
       "answers": [
         {
           "id": 1,

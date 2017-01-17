@@ -11,6 +11,7 @@ import { ApplymentService } from '../../core/shared/applyment.service';
 })
 export class QuestionPageComponent implements OnInit {
   question: Question;
+  questionText: string = '';
   questionsLength: number;
   answers: any[];
   checkedAnswer: number = 0;
@@ -35,7 +36,9 @@ export class QuestionPageComponent implements OnInit {
           try {
             this.questionsLength = questions.length;
             this.question = questions[this.questionIndex];
+            this.questionText = this.questionHTMLText();
             this.answers = this.question.answers;
+            document.body.scrollTop = 0;
           }
           catch ( err ) {
             this.question = new Question();
@@ -50,6 +53,19 @@ export class QuestionPageComponent implements OnInit {
           this.answers = [];
         }
       );
+  }
+
+  questionHTMLText (): string {
+    let questionText = this.question.text;
+
+    this.question.media.map(media => {
+      switch (media.type) {
+        case 'image':
+          questionText = questionText.replace(`{{${media.id}}}`, `<p><img class="img-responsive center-block" src="${media.source}" /></p>`); break;
+      }
+    });
+
+    return questionText;
   }
 
   updateChecked (answerId: number) {
