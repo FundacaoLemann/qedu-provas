@@ -6,6 +6,7 @@ import { SearchAssessmentPageComponent } from "./search-assessment-page/search-a
 import { InstructionsPageComponent } from "./instructions-page/instructions-page.component";
 import { QuestionPageComponent } from "./question-page/question-page.component";
 import { ReviewPageComponent } from './review-page/review-page.component';
+import { CongratulationsPageComponent } from './congratulations-page/congratulations-page.component';
 
 const routes: Routes = [
   { path: '', component: SearchAssessmentPageComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'prova/:uuid/instructions', component: InstructionsPageComponent },
   { path: 'prova/:uuid/questao/:question_id', component: QuestionPageComponent },
   { path: 'prova/:uuid/revisao', component: ReviewPageComponent },
+  { path: 'prova/:uuid/parabens', component: CongratulationsPageComponent },
 ];
 
 @NgModule({

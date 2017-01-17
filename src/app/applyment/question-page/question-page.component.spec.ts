@@ -48,7 +48,9 @@ describe('QuestionPageComponent', () => {
 
   it('should display a question and its answers', () => {
     let questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
-    expect(questionEl.textContent).toEqual('If you fly or sit with a great truth, silence absorbs you.');
+    fixture.detectChanges();
+    console.log(questionEl);
+    expect(questionEl.innerHTML).toEqual('Wow, courage!Lord, ye cold jack- set sails for adventure! Dozens of anomalies will be lost in plasmas like attitudes in alarms');
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
   });
 

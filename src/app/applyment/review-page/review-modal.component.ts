@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-review-modal',
@@ -8,12 +9,19 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 export class ReviewModalComponent implements OnInit {
   onClose: EventEmitter<null> = new EventEmitter<null>();
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor (private router: Router,
+               private route: ActivatedRoute) {
   }
 
-  close() {
+  ngOnInit () {
+  }
+
+  finish () {
+    let uuid = this.route.snapshot.params['uuid'];
+    this.router.navigate(['prova', uuid , 'parabens']);
+  }
+
+  close () {
     this.onClose.emit();
   }
 
