@@ -12,6 +12,7 @@ import { AnswerComponent } from './question-page/answer.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
 import { ReviewModalComponent } from './review-page/review-modal.component';
 import { CurrentQuestionComponent } from './question-page/current-question.component';
+import { CongratulationsPageComponent } from './congratulations-page/congratulations-page.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { CurrentQuestionComponent } from './question-page/current-question.compo
     ReviewPageComponent,
     ReviewModalComponent,
     CurrentQuestionComponent,
+    CongratulationsPageComponent,
   ],
   entryComponents: [
     ReviewModalComponent,

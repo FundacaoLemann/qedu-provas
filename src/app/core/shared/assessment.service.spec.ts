@@ -32,8 +32,8 @@ describe('AssessmentService', () => {
 
   it('.getQuestions(assessment_id) should return an array of Questions', async(inject([AssessmentService], (service: AssessmentService) => {
     service.getQuestions('1').subscribe(questions => {
-      expect(questions[0].text).toEqual('If you fly or sit with a great truth, silence absorbs you.');
-      expect(questions[1].text).toEqual('Wow, courage!Lord, ye cold jack- set sails for adventure! Dozens of anomalies will be lost in plasmas like attitudes in alarms');
+      expect(questions[0].text).toEqual('Wow, courage!Lord, ye cold jack- set sails for adventure! Dozens of anomalies will be lost in plasmas like attitudes in alarms');
+      expect(questions[1].text).toEqual('Consectetur adipisicing elit. Ab autem ducimus ea fuga nesciunt nulla sed voluptatibus?');
     });
   })));
 

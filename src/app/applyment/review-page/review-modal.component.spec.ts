@@ -1,25 +1,33 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { ReviewModalComponent } from './review-modal.component';
 import { dispatchEvent } from '../../../testing/form-helper';
+import { RouterStub } from '../../../testing/router-stub';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 
 describe('ReviewModalComponent', () => {
   let component: ReviewModalComponent;
   let fixture: ComponentFixture<ReviewModalComponent>;
+  let router: Router;
+  let route = new ActivatedRouteStub();
+  route.testParams = { uuid: '1' };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReviewModalComponent ]
-    })
-    .compileComponents();
+        declarations: [ReviewModalComponent],
+        providers: [
+          { provide: ActivatedRoute, useValue: route},
+          { provide: Router, useClass: RouterStub }
+        ]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewModalComponent);
     component = fixture.componentInstance;
+    router = fixture.debugElement.injector.get(Router);
     fixture.detectChanges();
   });
 
@@ -31,5 +39,11 @@ describe('ReviewModalComponent', () => {
     spyOn(component.onClose, 'emit');
     dispatchEvent(fixture, '[close-button]', 'click');
     expect(component.onClose.emit).toHaveBeenCalled();
+  });
+
+  it('should redirect to congratulations screen on click', () => {
+    spyOn(router, 'navigate');
+    dispatchEvent(fixture, '[finishButton]', 'click');
+    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'parabens']);
   });
 });
