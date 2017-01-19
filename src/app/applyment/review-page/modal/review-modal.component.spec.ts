@@ -1,10 +1,10 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReviewModalComponent } from './review-modal.component';
-import { dispatchEvent } from '../../../testing/form-helper';
-import { RouterStub } from '../../../testing/router-stub';
+import { dispatchEvent } from '../../../../testing/form-helper';
+import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
+import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
 
 describe('ReviewModalComponent', () => {
   let component: ReviewModalComponent;

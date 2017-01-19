@@ -1,33 +1,40 @@
+<div class="page">
+	<qp-header></qp-header>
 
-<div class="panel panel-default">
-	<div class="panel-body">
-		<div class="col-xs-12">
-			<h3>Instruções</h3>
-			<hr>
-		</div>
+	<main class="container">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="col-xs-12">
+					<h3>Instruções</h3>
+					<hr>
+				</div>
 
-		<div class="col-xs-12">
-      <div class="instructions">{{ assessment?.instructions }}</div>
-			<hr>
-		</div><!-- .col-xs-12-->
+				<div class="col-xs-12">
+					<div class="instructions">{{ assessment?.instructions }}</div>
+					<hr>
+				</div><!-- .col-xs-12-->
 
-		<div class="col-xs-12 col-md-3">
-			<h4><i class="fa fa-clock-o"></i> Duração</h4>
-			<h5 class="duration">{{ assessment?.duration }} minutos</h5>
-		</div>
+				<div class="col-xs-12 col-md-3">
+					<h4><i class="fa fa-clock-o"></i> Duração</h4>
+					<h5 class="duration">{{ assessment?.duration }} minutos</h5>
+				</div>
 
-		<div class="col-xs-12 col-md-3">
-			<h4><i class="fa fa-check-square-o"></i> Questões</h4>
-			<h5 class="items_count">{{ assessment?.items_count }} questões</h5>
+				<div class="col-xs-12 col-md-3">
+					<h4><i class="fa fa-check-square-o"></i> Questões</h4>
+					<h5 class="items_count">{{ assessment?.items_count }} questões</h5>
+				</div>
+			</div><!-- .panel-body -->
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-xs-12 text-center">
+						<button type="submit" class="btn btn-success continue" (click)="openDialog()">Iniciar prova</button>
+					</div><!-- .col-xs-12 -->
+				</div>
+			</div><!-- .panel-footer -->
 		</div>
-	</div><!-- .panel-body -->
-	<div class="panel-footer">
-		<div class="row">
-			<div class="col-xs-12 text-center">
-				<button type="submit" class="btn btn-success continue" (click)="openDialog()">Iniciar prova</button>
-			</div><!-- .col-xs-12 -->
-		</div>
-	</div><!-- .panel-footer -->
-</div><!-- .panel-default -->
+	</main>
+
+	<qp-footer></qp-footer>
+</div>
 
 <div #modal></div>

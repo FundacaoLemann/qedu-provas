@@ -2,7 +2,7 @@ import { Component, OnInit, ComponentRef, ViewChild, ViewContainerRef, Component
 import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { InstructionsModalComponent } from './instructions-modal.component';
+import { InstructionsModalComponent } from './modal/instructions-modal.component';
 
 @Component({
   selector: 'app-instructions-page',

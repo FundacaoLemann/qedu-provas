@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, ViewChil
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../shared/model/question';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { ReviewModalComponent } from './review-modal.component';
+import { ReviewModalComponent } from './modal/review-modal.component';
 import { ApplymentService } from '../../core/shared/applyment.service';
 
 @Component({

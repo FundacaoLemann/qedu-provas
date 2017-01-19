@@ -1,48 +1,57 @@
-<div class="panel panel-default">
-  <div class="panel-body">
+<div class="page">
+  <qp-header></qp-header>
 
-    <div class="col-xs-12">
-      <h3>Questão #{{questionIndex+1}}</h3>
-      <hr>
-    </div>
+  <main class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-body">
 
-    <div class="col-xs-12 col-md-6">
-      <div class="question" question [innerHTML]="questionText"></div>
-    </div>
+        <div class="col-xs-12">
+          <h3>Questão #{{questionIndex+1}}</h3>
+          <hr>
+        </div>
 
-    <div class="col-xs-12 col-md-6">
-      <qp-answer
-        *ngFor="let answer of answers"
-        [answer]="answer"
-        [checked]="answer.id === checkedAnswer"
-        (onClicked)="updateChecked($event)"
-      ></qp-answer>
-    </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="question" question [innerHTML]="questionText"></div>
+        </div>
 
-  </div>
-  <div class="panel-footer">
-    <div class="row">
-      <div class="col-xs-4">
-        <button class="btn btn-primary"
-                prev
-                [disabled]="questionIndex <= 0"
-                [ngClass]="{disabled: questionIndex <= 0}"
-                (click)="back()">Voltar
-        </button>
+        <div class="col-xs-12 col-md-6">
+          <qp-answer
+                  *ngFor="let answer of answers"
+                  [answer]="answer"
+                  [checked]="answer.id === checkedAnswer"
+                  (onClicked)="updateChecked($event)"
+          ></qp-answer>
+        </div>
+
       </div>
-      <div class="col-xs-4 text-center">
-        <qp-current-question
-          [currentQuestion]="questionIndex+1"
-          [questionsLength]="questionsLength"
-        ></qp-current-question>
-      </div>
-      <div class="col-xs-4 text-right">
-        <button class="btn btn-success"
-                next
-                (click)="next()">Avançar
-        </button>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-xs-4">
+            <button class="btn btn-primary"
+                    prev
+                    [disabled]="questionIndex <= 0"
+                    [ngClass]="{disabled: questionIndex <= 0}"
+                    (click)="back()">Voltar
+            </button>
+          </div>
+          <div class="col-xs-4 text-center">
+            <qp-current-question
+                    [currentQuestion]="questionIndex+1"
+                    [questionsLength]="questionsLength"
+            ></qp-current-question>
+          </div>
+          <div class="col-xs-4 text-right">
+            <button class="btn btn-success"
+                    next
+                    (click)="next()">Avançar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
+
+  <qp-footer></qp-footer>
+
 </div>
 

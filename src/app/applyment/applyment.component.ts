@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-applyment',
+  selector: 'qp-applyment',
   templateUrl: './applyment.component.html',
 })
 export class ApplymentComponent implements OnInit {
