@@ -1,45 +1,50 @@
 <div class="page">
-	<qp-header></qp-header>
+  <qp-header [logo]="false"></qp-header>
 
-	<main class="container">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-xs-12">
-						<qp-page-logos></qp-page-logos>
-					</div>
-				</div>
-				<div class="col-xs-12">
-					<h3>Instruções</h3>
-					<hr>
-				</div>
+  <main class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <qp-page-logos></qp-page-logos>
+          </div>
+        </div>
 
-				<div class="col-xs-12">
-					<div class="instructions">{{ assessment?.description }}</div>
-					<hr>
-				</div><!-- .col-xs-12-->
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Instruções</h3>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="instructions">{{ assessment?.description }}</div>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <h4><i class="fa fa-clock-o"></i> Duração</h4>
+            <h5 class="duration">{{ assessment?.duration }} minutos</h5>
+          </div>
+          <div class="col-xs-12 col-md-3">
+            <h4><i class="fa fa-check-square-o"></i> Questões</h4>
+            <h5 class="items_count">{{ assessment?.itemsCount }} questões</h5>
+          </div>
+        </div>
 
-				<div class="col-xs-12 col-md-3">
-					<h4><i class="fa fa-clock-o"></i> Duração</h4>
-					<h5 class="duration">{{ assessment?.duration }} minutos</h5>
-				</div>
+      </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <button type="submit" class="btn btn-success continue" (click)="openDialog()">Iniciar prova</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-				<div class="col-xs-12 col-md-3">
-					<h4><i class="fa fa-check-square-o"></i> Questões</h4>
-					<h5 class="items_count">{{ assessment?.itemsCount }} questões</h5>
-				</div>
-			</div><!-- .panel-body -->
-			<div class="panel-footer">
-				<div class="row">
-					<div class="col-xs-12 text-center">
-						<button type="submit" class="btn btn-success continue" (click)="openDialog()">Iniciar prova</button>
-					</div><!-- .col-xs-12 -->
-				</div>
-			</div><!-- .panel-footer -->
-		</div>
-	</main>
-
-	<qp-footer></qp-footer>
+  <qp-footer></qp-footer>
 </div>
 
 <div #modal></div>
