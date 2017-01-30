@@ -20,7 +20,7 @@ describe('ApplymentService', () => {
   it('should hold student data', inject([ApplymentService], (service: ApplymentService) => {
     let student = {
       name: 'John Doe',
-      register_number: '12345'
+      matricula: '12345'
     };
     service.setStudent(student);
     expect(service.getStudent()).toEqual(student);

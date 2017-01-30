@@ -2,44 +2,61 @@ import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AnswerStore } from './model/answer-store';
+import { Answer } from '../../shared/model/answer';
 
 @Injectable()
 export class StoreService {
-  private _studentSubject: BehaviorSubject<Student>;
-  private _student: Observable<Student>;
-  private _answers: Observable<AnswerStore[]>;
-  private _answersSubject: BehaviorSubject<AnswerStore[]>;
+  private _student$: BehaviorSubject<Student>;
+  private _answers$: BehaviorSubject<Array<any>>;
 
-  private _storeSubject: BehaviorSubject<{}>;
+  private _store$: BehaviorSubject<{}>;
   public store;
 
   constructor () {
-    this._studentSubject = new BehaviorSubject(null);
-    this._student = this._studentSubject.asObservable();
+    this._student$ = new BehaviorSubject(null);
 
-    this._answersSubject = new BehaviorSubject([]);
-    this._answers = this._answersSubject.asObservable();
+    this._answers$ = new BehaviorSubject([]);
 
-    this._storeSubject = new BehaviorSubject({});
-    this.store = this._storeSubject.asObservable();
+    this._store$ = new BehaviorSubject({});
+    this.store = this._store$.asObservable();
   }
 
+  //Students
   setStudent (student: Student) {
-    this._studentSubject.next(student);
+    const newStudent = Object.assign({}, this._student$.getValue(), student);
+    this._student$.next(newStudent);
+  }
+
+  getStudent(): Student {
+    return this._student$.getValue() as Student;
   }
 
   get student (): Observable<Student> {
-    return this._student;
+    return this._student$.asObservable();
+  }
+
+  // Answers
+  getAnswers(): number[] {
+    return this._answers$.getValue();
+  }
+
+  setAnswers(answers: number[]) {
+    const newAnswers = Object.assign([], this._answers$.getValue(), answers);
+    this._answers$.next(newAnswers);
+  }
+
+  get answers (): Observable<number[]> {
+    return this._answers$.asObservable();
   }
 
   setValue (branch: string, value: {}) {
     let _value = {};
     _value[branch] = value;
-    this._storeSubject.next(Object.assign({}, this._storeSubject.getValue(), _value));
+    this._store$.next(Object.assign({}, this._store$.getValue(), _value));
   }
 
   getValue (branch?: string): any {
-    let state = this._storeSubject.getValue();
+    let state = this._store$.getValue();
 
     if( branch) {
       return (state[branch]) ? state[branch] : null;
