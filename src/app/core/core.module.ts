@@ -6,6 +6,7 @@ import { ApplymentService } from './shared/applyment.service';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
+import { StudentService } from './shared/student.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { FooterComponent } from './footer/footer.component';
   providers: [
     StoreService,
     AssessmentService,
-    ApplymentService
+    ApplymentService,
+    StudentService
   ],
   exports: [
     HeaderComponent,

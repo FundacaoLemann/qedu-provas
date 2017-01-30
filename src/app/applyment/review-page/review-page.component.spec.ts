@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReviewPageComponent } from './review-page.component';
-import { dispatchEvent } from '../../../testing/form-helper';
+import { dispatchEvent } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { AssessmentService } from '../../core/shared/assessment.service';
@@ -28,7 +28,7 @@ describe('ReviewPageComponent', () => {
         imports: [ApplymentModule, CoreModule],
         providers: [
           { provide: Router, useClass: RouterStub },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() },
           { provide: AssessmentService, useClass: AssessmentServiceStub }
         ]
       })

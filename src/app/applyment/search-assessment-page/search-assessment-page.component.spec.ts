@@ -1,15 +1,14 @@
 ///<reference path="../../../../node_modules/@angular/core/testing/fake_async.d.ts"/>
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Router } from '@angular/router';
 import { RouterStub } from '../../../testing/router-stub';
-import { SharedModule } from '../../shared/shared.module';
 import { SearchAssessmentPageComponent } from "./search-assessment-page.component";
 
-import { setInputValue, dispatchEvent } from "../../../testing/form-helper";
+import { setInputValue, dispatchEvent } from "../../../testing/testing-helper";
+import { CoreModule } from '../../core/core.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 describe('SearchAssessmentPageComponent', () => {
@@ -19,13 +18,13 @@ describe('SearchAssessmentPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
-      declarations: [ SearchAssessmentPageComponent ],
-      providers: [
-        { provide: Router, useValue: new RouterStub() }
-      ]
-    })
-    .compileComponents();
+        imports: [CoreModule, SharedModule],
+        declarations: [SearchAssessmentPageComponent],
+        providers: [
+          { provide: Router, useValue: new RouterStub() }
+        ]
+      })
+      .compileComponents();
 
   }));
 

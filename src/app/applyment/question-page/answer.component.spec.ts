@@ -2,7 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AnswerComponent } from './answer.component';
-import { dispatchEvent } from '../../../testing/form-helper';
+import { dispatchEvent } from '../../../testing/testing-helper';
 
 describe('AnswerComponent', () => {
   let component: AnswerComponent;

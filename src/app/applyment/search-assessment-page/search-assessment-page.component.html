@@ -2,28 +2,34 @@
   <qp-header [logo]="false"></qp-header>
   <main>
     <div class="container">
-      <div class="col-xs-12 col-md-6 col-md-offset-3 text-center search-page">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 no-h-padding">
         <div class="panel panel-default">
-
-          <div class="intro">
-            <img src="assets/images/qedu-logo-borderless.png" alt="QEdu Logo" class="logo">
-            <p>
-              Bem vindo ao Sistema de Avaliação QEdu Provas. <br>
-              Informe no campo abaixo o <strong>Código da Prova</strong> para prosseguir.
-            </p>
-          </div>
-
           <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
             <div class="panel-body">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-xs-8 col-xs-offset-2 text-center">
-                    <label for="assessment_uuid">Código da Prova</label>
-                    <input type="text"
-                           id="assessment_uuid"
-                           class="form-control"
-                           formControlName="uuid"
-                           required>
+              <div class="row">
+                <div class="col-xs-12 text-center">
+                  <div class="intro">
+                    <img src="assets/images/qedu-logo-borderless.png" alt="QEdu Logo" class="logo">
+                    <p>
+                      Bem vindo ao Sistema de Avaliação QEdu Provas. <br>
+                      Informe no campo abaixo o <strong>Código da Prova</strong> para prosseguir.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-xs-8 col-xs-offset-2 text-center">
+                        <label for="assessment_uuid">Código da Prova</label>
+                        <input type="text"
+                               id="assessment_uuid"
+                               class="form-control"
+                               formControlName="uuid"
+                               required>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

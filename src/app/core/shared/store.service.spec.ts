@@ -11,7 +11,7 @@ describe('StoreService', () => {
   });
 
   it('should hold data', inject([StoreService], (store: StoreService) => {
-    let student = { name: 'John Doe', register_number: '12345' };
+    let student = { name: 'John Doe', matricula: '12345' };
     store.setValue('student', student);
     expect(store.getValue('student')).toEqual(student);
   }));

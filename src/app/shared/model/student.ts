@@ -1,4 +1,6 @@
 export class Student {
+  id: string;
+  access_token: string;
   name: string;
-  register_number: string;
+  matricula: string;
 }

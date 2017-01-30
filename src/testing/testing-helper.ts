@@ -24,3 +24,18 @@ export function dispatchEvent (fixture: ComponentFixture<any>, selector: string,
   return fixture.whenStable();
 }
 
+export function getNativeElement(fixture: ComponentFixture<any>, selector): any {
+  return fixture.debugElement.query(By.css(selector)).nativeElement;
+}
+
+export function getAllNativeElements(fixture: ComponentFixture<any>, selector): any[] {
+  let nativeElements = [];
+  const elements = fixture.debugElement.queryAll(By.css(selector));
+
+  for(let debugElement of elements) {
+    nativeElements.push(debugElement.nativeElement);
+  }
+
+  return nativeElements;
+}
+

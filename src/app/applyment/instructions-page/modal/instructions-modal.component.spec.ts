@@ -2,7 +2,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { InstructionsModalComponent } from './instructions-modal.component';
 import { ApplymentModule } from '../../applyment.module';
-import { dispatchEvent } from '../../../../testing/form-helper';
+import { dispatchEvent } from '../../../../testing/testing-helper';
 import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';

@@ -14,7 +14,7 @@ export class StoreService {
   public store;
 
   constructor () {
-    this._studentSubject = new BehaviorSubject({ name: '', register_number: '' });
+    this._studentSubject = new BehaviorSubject(null);
     this._student = this._studentSubject.asObservable();
 
     this._answersSubject = new BehaviorSubject([]);

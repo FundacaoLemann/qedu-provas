@@ -13,7 +13,7 @@ export class ApplymentService {
   }
 
   getStudent (): Student {
-    let student = this.store.getValue('student') || new Student();
+    let student = this.store.getValue('student') || null;
     return student as Student;
   }
 

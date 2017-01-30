@@ -1,0 +1,100 @@
+<div class="page">
+  <qp-header [logo]="false"></qp-header>
+  <main class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="logos">
+              <div class="logo">
+
+                <img src="http://static.wixstatic.com/media/30d283_5186d1e399494ad69edb61b39a8b0fe4~mv2.jpg"
+                     alt=""
+                     class="img-responsive">
+              </div>
+              <div class="logo logo-qedu">
+                <img src="assets/images/qedu-logo-borderless.png" alt="QEdu Logo" class="img-responsive">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h1 class="title">{{assessment?.mainTitle}}</h1>
+            <hr>
+            <h3 class="secundary-title">{{assessment?.secundaryTitle}}</h3>
+            <p>
+              {{assessment?.description}}
+            </p>
+          </div>
+        </div>
+        <hr>
+        <div class="row" *ngIf="student">
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label>Nome</label> <br>
+              <span studentName>{{student?.name}}</span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
+            <div class="form-group">
+              <label>Matrícula</label> <br>
+              <span studentMatricula>{{student?.matricula}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="! student">
+          <form (submit)="onSubmit()">
+            <div class="col-xs-12 col-md-4 col-md-offset-4 text-center" [ngClass]="{'has-error': error}">
+              <label>Código do Estudante</label>
+              <input [(ngModel)]="accessToken"
+                     name="accessToken"
+                     id="accessToken"
+                     type="text"
+                     placeholder="Código do Estudante"
+                     class="form-control">
+
+              <div class="error form-field-error">{{error}}</div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="panel-footer">
+        <div class="row">
+
+          <div *ngIf="! student">
+            <div class="col-xs-12 text-center">
+              <button submit
+                      type="button"
+                      class="btn btn-success"
+                      (click)="onSubmit()">Continuar
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="student">
+            <div class="col-xs-12 clearfix">
+              <button cancel
+                      type="button"
+                      class="btn btn-default"
+                      (click)="onCancel()"
+              >
+                Cancelar
+              </button>
+              <button continue
+                      type="button"
+                      class="btn btn-success pull-right"
+                      (click)="onContinue()"
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <qp-footer></qp-footer>
+</div>

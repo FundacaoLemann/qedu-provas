@@ -10,7 +10,7 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { ApplymentService } from '../../core/shared/applyment.service';
 import { CoreModule } from '../../core/core.module';
-import { dispatchEvent } from '../../../testing/form-helper';
+import { dispatchEvent } from '../../../testing/testing-helper';
 
 describe('QuestionPageComponent', () => {
   let component: QuestionPageComponent;
@@ -23,12 +23,13 @@ describe('QuestionPageComponent', () => {
     TestBed.configureTestingModule({
         imports: [ApplymentModule, CoreModule],
         providers: [
-          { provide: ActivatedRoute, useClass: ActivatedRouteStub },
+          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() },
           { provide: Router, useClass: RouterStub },
           { provide: AssessmentService, useClass: AssessmentServiceStub },
         ]
       })
       .compileComponents();
+
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionPageComponent);
@@ -49,7 +50,6 @@ describe('QuestionPageComponent', () => {
   it('should display a question and its answers', () => {
     let questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
     fixture.detectChanges();
-    console.log(questionEl);
     expect(questionEl.innerHTML).toEqual('Wow, courage!Lord, ye cold jack- set sails for adventure! Dozens of anomalies will be lost in plasmas like attitudes in alarms');
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
   });

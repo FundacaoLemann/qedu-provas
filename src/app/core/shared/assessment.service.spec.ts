@@ -19,7 +19,7 @@ describe('AssessmentService', () => {
   }));
 
   it('.getAssessment(assessment_id) should return an Assessment', async(inject([AssessmentService], (service: AssessmentService) => {
-    service.getAssessment('1').subscribe(assessment => expect(assessment.title).toEqual('Língua Portuguesa'));
+    service.getAssessment('1').subscribe(assessment => expect(assessment.main_title).toEqual('Língua Portuguesa'));
   })));
 
   it('.getAssessment(assessment_id) should catch an error when id is invalid', async(inject([AssessmentService], (service: AssessmentService) => {

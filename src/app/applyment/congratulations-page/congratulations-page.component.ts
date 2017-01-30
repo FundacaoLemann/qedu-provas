@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-congratulations-page',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./congratulations-page.component.sass']
 })
 export class CongratulationsPageComponent implements OnInit {
+  home: string = 'home';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 }

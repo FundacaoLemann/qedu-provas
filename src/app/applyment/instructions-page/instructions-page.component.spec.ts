@@ -3,13 +3,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+// App
 import { RouterStub } from '../../../testing/router-stub';
 import { InstructionsPageComponent } from './instructions-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
-import { dispatchEvent } from '../../../testing/form-helper';
+import { dispatchEvent } from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
+import json from '../../utils/json';
+
+const db = require('../../../../mock/db.json');
 
 describe('InstructionsPageComponent', () => {
   let component: InstructionsPageComponent;
@@ -17,6 +22,7 @@ describe('InstructionsPageComponent', () => {
   let router: Router;
   let route: ActivatedRouteStub;
   let assessmentService: AssessmentServiceStub;
+  const mockAssessment = json.camelizeObject(db.assessments[0]);
 
   beforeEach(async(() => {
     let routeStub = new ActivatedRouteStub();
@@ -28,11 +34,10 @@ describe('InstructionsPageComponent', () => {
         providers: [
           { provide: Router, useValue: new RouterStub() },
           { provide: ActivatedRoute, useValue: routeStub },
-          { provide: AssessmentService, useClass: AssessmentServiceStub },
+          AssessmentService
         ]
       })
       .compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -43,6 +48,8 @@ describe('InstructionsPageComponent', () => {
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
     spyOn(router, 'navigate');
+    spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
+
     route.testParams = { uuid: '1' };
     fixture.detectChanges();
   });
@@ -53,18 +60,19 @@ describe('InstructionsPageComponent', () => {
 
   it('should display an assessment details', () => {
     let instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
-    expect(instructionEl.textContent).toEqual('Star of a unrelated alignment, open the disconnection!');
+    expect(instructionEl.textContent).toEqual(mockAssessment.description);
 
     let durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
-    expect(durationEl.textContent).toEqual(`12 minutos`);
+    expect(durationEl.textContent).toEqual(`${mockAssessment.duration} minutos`);
 
     let itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
-    expect(itemsCountEl.textContent).toEqual(`10 questões`);
+    expect(itemsCountEl.textContent).toEqual(`${mockAssessment.itemsCount} questões`);
   });
 
   it('should open modal when click on start', () => {
     dispatchEvent(fixture, 'button.continue', 'click');
     fixture.detectChanges();
+
     expect(component.modalRef).toBeTruthy();
   });
 

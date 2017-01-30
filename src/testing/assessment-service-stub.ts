@@ -13,13 +13,14 @@ export class AssessmentServiceStub {
     let assessment = {
       "id": 1,
       "uuid": "89sj0j201j",
-      "title": "Língua Portuguesa",
+      "main_title": "Língua Portuguesa",
       "instructions": "Star of a unrelated alignment, open the disconnection!",
+      "description": "Star of a unrelated alignment, open the disconnection!",
       "duration": 12,
       "items_count": 10
     };
 
-    return Observable.from([assessment]);
+    return Observable.of(assessment);
   }
 
   getQuestions(assessmentId: string): Observable<Question[]> {
