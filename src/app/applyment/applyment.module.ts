@@ -13,6 +13,7 @@ import { CurrentQuestionComponent } from './question-page/current-question.compo
 import { CongratulationsPageComponent } from './congratulations-page/congratulations-page.component';
 import { CoreModule } from '../core/core.module';
 import { StudentAuthenticationPageComponent } from './student-authentication-page/student-authentication-page.component';
+import { PageLogosComponent } from './shared/page-logos/page-logos.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { StudentAuthenticationPageComponent } from './student-authentication-pag
     ReviewModalComponent,
     CurrentQuestionComponent,
     CongratulationsPageComponent,
+    PageLogosComponent,
   ],
   entryComponents: [
     ReviewModalComponent,
