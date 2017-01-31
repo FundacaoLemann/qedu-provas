@@ -12,6 +12,7 @@ import { StoreService } from '../../core/shared/store.service';
 import { StudentService } from '../../core/shared/student.service';
 import { camelizeObject } from '../../utils/json';
 import * as test from '../../../testing/testing-helper';
+import { ApplymentModule } from '../applyment.module';
 
 const mockStudent = {
   id: '1234',
@@ -31,8 +32,7 @@ describe('StudentAuthenticationPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [SharedModule, CoreModule],
-        declarations: [StudentAuthenticationPageComponent],
+        imports: [ApplymentModule],
         providers: [
           StoreService,
           ApplymentService,
