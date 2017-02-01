@@ -43,7 +43,7 @@ export class InstructionsPageComponent implements OnInit {
   }
 
   initAssessment () {
-    this.applymentService.initAnswers(this.assessment.items_count);
+    this.applymentService.initAnswers(this.assessment.itemsCount);
     this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', '1']);
   }
 }

@@ -14,6 +14,7 @@ import { CongratulationsPageComponent } from './congratulations-page/congratulat
 import { CoreModule } from '../core/core.module';
 import { StudentAuthenticationPageComponent } from './student-authentication-page/student-authentication-page.component';
 import { PageLogosComponent } from './shared/page-logos/page-logos.component';
+import { ProgressionPathComponent } from './question-page/progression-path/progression-path.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { PageLogosComponent } from './shared/page-logos/page-logos.component';
     CurrentQuestionComponent,
     CongratulationsPageComponent,
     PageLogosComponent,
+    ProgressionPathComponent,
   ],
   entryComponents: [
     ReviewModalComponent,

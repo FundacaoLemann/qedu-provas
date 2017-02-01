@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Answer } from '../../shared/model/answer';
 
 @Component({
@@ -6,15 +6,12 @@ import { Answer } from '../../shared/model/answer';
   templateUrl: './answer.component.html',
   styleUrls: ['./answer.component.sass']
 })
-export class AnswerComponent implements OnInit {
+export class AnswerComponent {
   @Input() answer: Answer = { id: 0, text: '' };
   @Input() checked: boolean = false;
   @Output() onClicked: EventEmitter<number> = new EventEmitter<number>();
 
   constructor () {
-  }
-
-  ngOnInit () {
   }
 
   onClick () {

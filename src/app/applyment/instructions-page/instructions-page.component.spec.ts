@@ -85,7 +85,7 @@ describe('InstructionsPageComponent', () => {
 
     component.initAssessment();
 
-    expect(applyment.initAnswers).toHaveBeenCalledWith(mockAssessment.items_count);
+    expect(applyment.initAnswers).toHaveBeenCalledWith(mockAssessment.itemsCount);
     expect(router.navigate).toHaveBeenCalledWith(['prova', mockAssessment.id.toString(), 'questao', '1']);
   }));
 

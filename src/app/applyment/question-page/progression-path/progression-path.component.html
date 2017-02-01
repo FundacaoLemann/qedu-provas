@@ -1,0 +1,9 @@
+<ul class="progression-path-list">
+  <li *ngFor="let answer of answers; let indexFor = index"
+      (click)="onItemClick(indexFor+1)"
+      [ngClass]="{answered: answer > 0 }"
+      class="progression-path-item">
+    <span class="number">{{indexFor+1}}</span>
+    <span class="status"><i class="fa fa-check"></i></span>
+  </li>
+</ul>

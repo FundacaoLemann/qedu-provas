@@ -1,5 +1,7 @@
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { DebugElement } from '@angular/core';
+import { getNsPrefix } from '@angular/compiler/src/ml_parser/tags';
 
 export function setInputValue (fixture: ComponentFixture<any>, selector: string, value: any): Promise<any> {
   let el = fixture.debugElement.query(By.css(selector)).nativeElement;
@@ -37,5 +39,13 @@ export function getAllNativeElements(fixture: ComponentFixture<any>, selector): 
   }
 
   return nativeElements;
+}
+
+export function getDebugElement(fixture: ComponentFixture<any>, selector: string): DebugElement {
+  return fixture.debugElement.query(By.css(selector));
+}
+
+export function getAllDebugElements(fixture: ComponentFixture<any>, selector: string): DebugElement[] {
+  return fixture.debugElement.queryAll(By.css(selector));
 }
 
