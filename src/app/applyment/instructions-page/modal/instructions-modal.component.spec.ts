@@ -6,6 +6,7 @@ import { dispatchEvent } from '../../../../testing/testing-helper';
 import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
+import { By } from '@angular/platform-browser';
 
 
 describe('InstructionsModalComponent', () => {
@@ -15,7 +16,7 @@ describe('InstructionsModalComponent', () => {
 
   beforeEach(async(() => {
     let routerStub = new ActivatedRouteStub();
-    routerStub.testParams = { uuid: '1'};
+    routerStub.testParams = { uuid: '1' };
 
     TestBed.configureTestingModule({
         imports: [ApplymentModule],
@@ -41,8 +42,11 @@ describe('InstructionsModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should redirect to question page when button clicked', () => {
-    dispatchEvent(fixture, '[confirm]', 'click');
-    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', '1']);
-  });
+  it('should emit onConfirm when click', async(() => {
+    spyOn(component.onConfirm, 'emit');
+
+    fixture.debugElement.query(By.css('[confirm]')).nativeElement.click();
+
+    expect(component.onConfirm.emit).toHaveBeenCalled();
+  }));
 });

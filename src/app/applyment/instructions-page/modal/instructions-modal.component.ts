@@ -8,9 +8,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class InstructionsModalComponent {
   onClose: EventEmitter<any> = new EventEmitter();
+  onConfirm: EventEmitter<any> = new EventEmitter();
 
-  constructor (private router: Router,
-               private route: ActivatedRoute) {
+  constructor () {
   }
 
   close () {
@@ -18,8 +18,6 @@ export class InstructionsModalComponent {
   }
 
   confirmStart () {
-    let uuid = this.route.snapshot.params['uuid'];
-    this.router.navigate(['prova', uuid, 'questao', '1']);
+    this.onConfirm.emit();
   }
-
 }

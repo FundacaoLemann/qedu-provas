@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
 import { StoreService } from './store.service';
 
-fdescribe('ApplymentService', () => {
+describe('ApplymentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [

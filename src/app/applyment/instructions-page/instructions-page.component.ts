@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
+import { ApplymentService } from '../../core/shared/applyment.service';
 
 @Component({
   selector: 'app-instructions-page',
@@ -17,7 +18,8 @@ export class InstructionsPageComponent implements OnInit {
                private router: Router,
                private route: ActivatedRoute,
                private viewContainerRef: ViewContainerRef,
-               private componentFactoryResolver: ComponentFactoryResolver) {
+               private componentFactoryResolver: ComponentFactoryResolver,
+               private applymentService: ApplymentService) {
   }
 
   ngOnInit () {
@@ -36,5 +38,12 @@ export class InstructionsPageComponent implements OnInit {
     this.modalRef.instance.onClose.subscribe(() => {
       this.viewContainerRef.clear();
     });
+
+    this.modalRef.instance.onConfirm.subscribe(() => this.initAssessment());
+  }
+
+  initAssessment () {
+    this.applymentService.initAnswers(this.assessment.items_count);
+    this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', '1']);
   }
 }

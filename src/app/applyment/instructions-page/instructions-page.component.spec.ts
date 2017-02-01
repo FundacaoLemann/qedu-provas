@@ -13,6 +13,7 @@ import { AssessmentServiceStub } from '../../../testing/assessment-service-stub'
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
 import json from '../../utils/json';
+import { ApplymentService } from '../../core/shared/applyment.service';
 
 const db = require('../../../../mock/db.json');
 
@@ -22,6 +23,7 @@ describe('InstructionsPageComponent', () => {
   let router: Router;
   let route: ActivatedRouteStub;
   let assessmentService: AssessmentServiceStub;
+  let applyment: ApplymentService;
   const mockAssessment = json.camelizeObject(db.assessments[0]);
 
   beforeEach(async(() => {
@@ -46,8 +48,8 @@ describe('InstructionsPageComponent', () => {
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    applyment = fixture.debugElement.injector.get(ApplymentService);
 
-    spyOn(router, 'navigate');
     spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
 
     route.testParams = { uuid: '1' };
@@ -55,6 +57,7 @@ describe('InstructionsPageComponent', () => {
   });
 
   it('should create', async(() => {
+    expect(applyment).toBeDefined();
     expect(component).toBeTruthy();
   }));
 
@@ -75,5 +78,15 @@ describe('InstructionsPageComponent', () => {
 
     expect(component.modalRef).toBeTruthy();
   });
+
+  it('initAssessment', async(() => {
+    spyOn(applyment, 'initAnswers');
+    spyOn(router, 'navigate');
+
+    component.initAssessment();
+
+    expect(applyment.initAnswers).toHaveBeenCalledWith(mockAssessment.items_count);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', mockAssessment.id.toString(), 'questao', '1']);
+  }));
 
 });

@@ -24,18 +24,22 @@ export class ApplymentService {
     this.store.setAnswers(answers);
   }
 
+  initAnswers (length: number) {
+    const initialAnswers = Array(length).fill(0);
+    this.store.setAnswers(initialAnswers);
+  }
+
   getAnswer (questionId: number): number {
     let answers = this.store.getAnswers();
     return answers[questionId];
   }
 
-  getAnswers(): Array<number> {
+  getAnswers (): Array<number> {
     return this.store.getAnswers();
   }
 
-  initAnswers(length: number) {
-    const initialAnswers = Array(length).fill(0);
-    this.store.setAnswers(initialAnswers);
+  getAnswersAsObservable (): Observable<number[]> {
+    return this.store.answers;
   }
 
 }
