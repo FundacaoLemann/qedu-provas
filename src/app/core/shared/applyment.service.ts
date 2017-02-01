@@ -33,4 +33,9 @@ export class ApplymentService {
     return this.store.getAnswers();
   }
 
+  initAnswers(length: number) {
+    const initialAnswers = Array(length).fill(0);
+    this.store.setAnswers(initialAnswers);
+  }
+
 }

@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
 import { StoreService } from './store.service';
 
-describe('ApplymentService', () => {
+fdescribe('ApplymentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -24,6 +24,17 @@ describe('ApplymentService', () => {
     };
     service.setStudent(student);
     expect(service.getStudent()).toEqual(student);
+  }));
+
+  it('should initialize the answers store', inject([ApplymentService], (service: ApplymentService) => {
+    expect(service.initAnswers).toBeDefined();
+    service.initAnswers(10);
+
+    const answers = service.getAnswers();
+    expect(answers.length).toEqual(10);
+    for (let answer of answers) {
+      expect(answer).toEqual(0);
+    }
   }));
 
 });
