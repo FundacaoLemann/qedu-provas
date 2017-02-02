@@ -1,7 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Location } from '@angular/common';
 // App
 import { CongratulationsPageComponent } from './congratulations-page.component';
 import { ApplymentModule } from '../applyment.module';

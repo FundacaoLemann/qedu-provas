@@ -63,7 +63,7 @@ describe('InstructionsPageComponent', () => {
 
   it('should display an assessment details', () => {
     let instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
-    expect(instructionEl.textContent).toEqual(mockAssessment.description);
+    expect(instructionEl.innerHTML).toEqual(mockAssessment.instructions);
 
     let durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
     expect(durationEl.textContent).toEqual(`${mockAssessment.duration} minutos`);
