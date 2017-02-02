@@ -12,27 +12,32 @@ import { ApplymentService } from '../../core/shared/applyment.service';
 })
 export class ReviewPageComponent implements OnInit {
   questions: Question[];
+  answers: number[] = [];
   answersLength: number = 0;
   questionsLength: number = 0;
   @ViewChild('modal') modalRef: ComponentRef<ReviewModalComponent>;
 
-  constructor (private router: Router,
-               private route: ActivatedRoute,
-               private viewContainer: ViewContainerRef,
+  constructor (private viewContainer: ViewContainerRef,
                private componentFactoryResolver: ComponentFactoryResolver,
                private assessmentService: AssessmentService,
-               private applymentService: ApplymentService) {
+               private applymentService: ApplymentService,
+               private route: ActivatedRoute,
+               private router: Router,) {
   }
 
   ngOnInit () {
-    this.assessmentService.getQuestions('1')
+    this.load();
+  }
+
+  load () {
+    // console.log(this.assessmentService.getQuestions);
+    this.assessmentService.getQuestions(this.route.snapshot.params['uuid'])
       .subscribe(
         (questions) => {
           this.questions = questions;
           this.questionsLength = questions.length;
-          this.answersLength = this.applymentService.getAnswers()
-              .filter(answer => (answer) ? answer : null)
-              .length;
+          this.answers = this.applymentService.getAnswers();
+          this.answersLength = this.answers.filter((answer) => !!answer).length;
         },
         error => this.questions = []
       );
@@ -41,6 +46,10 @@ export class ReviewPageComponent implements OnInit {
   back () {
     let uuid = this.route.snapshot.params['uuid'];
     this.router.navigate(['prova', uuid, 'questao', this.questions.length]);
+  }
+
+  navigate (questionNumber: number) {
+    this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', questionNumber.toString()]);
   }
 
   openDialog () {

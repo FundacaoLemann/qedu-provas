@@ -1,35 +1,39 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReviewPageComponent } from './review-page.component';
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { RouterStub } from '../../../testing/router-stub';
-import { Question } from '../../shared/model/question';
 import { ApplymentModule } from '../applyment.module';
 import { ComponentRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { CoreModule } from '../../core/core.module';
 import { ApplymentService } from '../../core/shared/applyment.service';
+import { Observable } from 'rxjs';
+import { SharedModule } from '../../shared/shared.module';
+import * as json from '../../utils/json';
+const db = require('../../../../mock/db.json');
 
 describe('ReviewPageComponent', () => {
   let component: ReviewPageComponent;
   let fixture: ComponentFixture<ReviewPageComponent>;
   let router: Router;
   let route: ActivatedRouteStub;
-  let assessmentService: AssessmentServiceStub;
+  let assessmentService: AssessmentService;
   let applymentService: ApplymentService;
-  let questionsStub: Question[];
+  let mockQuestions = db.questions;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [ApplymentModule, CoreModule],
+        imports: [
+          ApplymentModule,
+          SharedModule,
+          // RouterTestingModule.withRoutes([])
+        ],
         providers: [
           { provide: Router, useClass: RouterStub },
-          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() },
-          { provide: AssessmentService, useClass: AssessmentServiceStub }
+          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1' }) },
+          ApplymentService
         ]
       })
       .compileComponents();
@@ -40,16 +44,17 @@ describe('ReviewPageComponent', () => {
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
+
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
-    // Set a fake answer
     applymentService = fixture.debugElement.injector.get(ApplymentService);
+    //init questions with 10
+    applymentService.initAnswers(mockQuestions.length);
+    // Set two correct answers
     applymentService.setAnswer(0, 1);
+    applymentService.setAnswer(3, 2);
 
-    // Set a fake route
-    route.testParams = { uuid: '1' };
-
-    assessmentService.getQuestions('1').subscribe(questions => questionsStub = questions);
+    spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
 
     fixture.detectChanges();
   }));
@@ -59,14 +64,14 @@ describe('ReviewPageComponent', () => {
   });
 
   it('should return to the last question when back is clicked', () => {
-    component.questions = questionsStub;
+    component.questions = mockQuestions;
 
     spyOn(router, 'navigate');
 
     dispatchEvent(fixture, '[back]', 'click');
     fixture.detectChanges();
 
-    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', questionsStub.length]);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', mockQuestions.length]);
   });
 
   it('should create a modal when the finish button is clicked', async(() => {
@@ -76,8 +81,19 @@ describe('ReviewPageComponent', () => {
   }));
 
   it('should display the amount of answered questions', async(() => {
+    component.load();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.items_count')).nativeElement.innerHTML).toEqual('1 de 2 questões');
+    const answeredQuestions = fixture.debugElement.query(By.css('.items_count')).nativeElement.innerHTML;
+
+    expect(answeredQuestions).toEqual('2 de 10 questões');
+  }));
+
+  it('should display the answers', async(() => {
+    const tableItems = fixture.debugElement.queryAll(By.css('tbody tr')).length;
+    const tableItemsAnswered = fixture.debugElement.queryAll(By.css('tbody tr:not(.danger)')).length;
+
+    expect(tableItems).toEqual(mockQuestions.length);
+    expect(tableItemsAnswered).toEqual(2);
   }));
 
 });
