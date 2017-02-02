@@ -15,13 +15,13 @@ export class AssessmentService {
 
   getAssessment (assessment_id: string): Observable<Assessment> {
     return this.http.get(`${apiUrl}/assessments/${assessment_id}`)
-      .map(resp => jsonFn.camelizeObject(resp.json()).data )
+      .map(resp => jsonFn.camelizeObject(resp.json()).data)
       .catch(this._handleError);
   }
 
   getQuestions (assessment_id: string): Observable<Question[]> {
     return this.http.get(`${apiUrl}/assessment/${assessment_id}/questions`)
-      .map(resp => resp.json().data as Question[])
+      .map(resp => jsonFn.camelizeObject(resp.json()).data)
       .catch(this._handleError);
   }
 
