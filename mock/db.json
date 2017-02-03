@@ -40,7 +40,7 @@
       "assessmentId": 1,
       "id": 2,
       "text": "<p>I) No período clássico, os escultores gregos retratavam o homem com perfeição, nas proporções perfeitas.</p> <p>II) As esculturas do período helenístico, na Grécia antiga, representavam o homem com movimento, demonstrando suas emoções e angústias.</p> <p>III) Os arquitetos gregos desenvolveram os arcos e as abóbodas nas construções de templos.</p> <p>IV) As esculturas chamadas de “Os Kouros” eram feitas em bronze e representavam somente mulheres jovens. </p> <p>Em relação à arte grega, marque a alternativa correta quanto às afirmações acima.</p>",
-      "media" : [],
+      "media": [],
       "answers": [
         {
           "id": 1,
@@ -295,13 +295,15 @@
       ]
     }
   ],
-  "students" : [
+  "students": [
     {
       "id": "12345",
       "access_token": "12345",
       "name": "John Doe",
       "matricula": "98765"
     }
-  ]
-
+  ],
+  "status": {
+    "status": "OK"
+  }
 }

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-instructions-modal',
   templateUrl: 'instructions-modal.component.html',
-  styleUrls: ['instructions-modal.component.sass']
+  styles: []
 })
 export class InstructionsModalComponent {
   onClose: EventEmitter<any> = new EventEmitter();

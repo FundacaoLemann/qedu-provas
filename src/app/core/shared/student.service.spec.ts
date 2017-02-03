@@ -1,4 +1,3 @@
-/* tslint:disable:no-unused-variable */
 import { TestBed, async, inject } from '@angular/core/testing';
 import { StudentService } from './student.service';
 import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
