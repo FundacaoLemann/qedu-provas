@@ -1,5 +1,6 @@
 export class RouterStub {
-  url: string = '';
+  url = '';
+
   navigate (routes: string[]): void {}
 
   constructor(

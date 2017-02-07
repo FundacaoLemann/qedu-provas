@@ -3,3 +3,4 @@ export class Media {
   type: string;
   source: string;
 }
+

@@ -1,4 +1,3 @@
-/* tslint:disable:no-unused-variable */
 import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
 import { StoreService } from './store.service';
@@ -18,10 +17,11 @@ describe('ApplymentService', () => {
   }));
 
   it('should hold student data', inject([ApplymentService], (service: ApplymentService) => {
-    let student = {
+    const student = {
       name: 'John Doe',
       matricula: '12345'
     };
+
     service.setStudent(student);
     expect(service.getStudent()).toEqual(student);
   }));
@@ -32,7 +32,7 @@ describe('ApplymentService', () => {
 
     const answers = service.getAnswers();
     expect(answers.length).toEqual(10);
-    for (let answer of answers) {
+    for (const answer of answers) {
       expect(answer).toEqual(0);
     }
   }));

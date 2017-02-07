@@ -1,4 +1,4 @@
 export class Author {
-	uuid: string;
-	name: string;
+  uuid: string;
+  name: string;
 }

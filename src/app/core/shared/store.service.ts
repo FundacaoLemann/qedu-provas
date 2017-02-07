@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { AnswerStore } from './model/answer-store';
-import { Answer } from '../../shared/model/answer';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class StoreService {
@@ -12,7 +11,7 @@ export class StoreService {
   private _store$: BehaviorSubject<{}>;
   public store;
 
-  constructor () {
+  constructor() {
     this._student$ = new BehaviorSubject(null);
 
     this._answers$ = new BehaviorSubject([]);
@@ -21,8 +20,8 @@ export class StoreService {
     this.store = this._store$.asObservable();
   }
 
-  //Students
-  setStudent (student: Student) {
+  // Students
+  setStudent(student: Student) {
     const newStudent = Object.assign({}, this._student$.getValue(), student);
     this._student$.next(newStudent);
   }
@@ -31,7 +30,7 @@ export class StoreService {
     return this._student$.getValue() as Student;
   }
 
-  get student (): Observable<Student> {
+  get student(): Observable<Student> {
     return this._student$.asObservable();
   }
 
@@ -45,20 +44,20 @@ export class StoreService {
     this._answers$.next(newAnswers);
   }
 
-  get answers (): Observable<number[]> {
+  get answers(): Observable<number[]> {
     return this._answers$.asObservable();
   }
 
-  setValue (branch: string, value: {}) {
-    let _value = {};
+  setValue(branch: string, value: {}) {
+    const _value = {};
     _value[branch] = value;
     this._store$.next(Object.assign({}, this._store$.getValue(), _value));
   }
 
-  getValue (branch?: string): any {
-    let state = this._store$.getValue();
+  getValue(branch?: string): any {
+    const state = this._store$.getValue();
 
-    if( branch) {
+    if ( branch ) {
       return (state[branch]) ? state[branch] : null;
     } else {
       return state;

@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Question } from '../../shared/model/question';
+import 'rxjs/add/operator/switchMap';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ApplymentService } from '../../core/shared/applyment.service';
 
 @Component({
-  selector: 'app-question-page',
+  selector: 'qp-question-page',
   templateUrl: './question-page.component.html',
   styleUrls: ['./question-page.component.sass']
 })
 export class QuestionPageComponent implements OnInit {
   question: Question;
-  questionText: string = '';
+  questionText = '';
   questionsLength: number;
   answers: any[];
-  checkedAnswer: number = 0;
-  questionIndex: number = 0;
+  checkedAnswer = 0;
+  questionIndex = 0;
 
-  constructor (private assessmentService: AssessmentService,
-               private route: ActivatedRoute,
-               private router: Router,
-               private applymentService: ApplymentService) {
+  constructor(private assessmentService: AssessmentService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private applymentService: ApplymentService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.route.params
       .switchMap(
         (params: Params) => {
@@ -39,12 +40,10 @@ export class QuestionPageComponent implements OnInit {
             this.questionText = this.questionHTMLText();
             this.answers = this.question.answers;
             document.body.scrollTop = 0;
-          }
-          catch ( err ) {
+          } catch (err) {
             this.question = new Question();
             this.answers = [];
-          }
-          finally {
+          } finally {
             this.checkedAnswer = this.applymentService.getAnswer(this.questionIndex) || 0;
           }
         },
@@ -55,41 +54,42 @@ export class QuestionPageComponent implements OnInit {
       );
   }
 
-  questionHTMLText (): string {
+  questionHTMLText(): string {
     let questionText = this.question.text;
 
     this.question.media.map(media => {
       switch (media.type) {
         case 'image':
-          questionText = questionText.replace(`{{${media.id}}}`, `<p><img class="img-responsive center-block" src="${media.source}" /></p>`); break;
+          questionText = questionText.replace(`{{${media.id}}}`,
+            `<p><img class="img-responsive center-block" src="${media.source}" /></p>`);
+          break;
       }
     });
 
     return questionText;
   }
 
-  updateChecked (answerId: number) {
+  updateChecked(answerId: number) {
     this.checkedAnswer = answerId;
     this.applymentService.setAnswer(this.questionIndex, answerId);
   }
 
-  next () {
-    let nextQuestion = (+this.route.snapshot.params['question_id']) + 1;
-    let uuid = this.route.snapshot.params['uuid'];
+  next() {
+    const nextQuestion = (+this.route.snapshot.params['question_id']) + 1;
+    const uuid = this.route.snapshot.params['uuid'];
 
     if ( nextQuestion > this.questionsLength ) {
       this.router.navigate(['prova', uuid, 'revisao']);
-    }
-    else {
+    } else {
       this.router.navigate(['prova', uuid, 'questao', nextQuestion]);
     }
   }
 
-  back () {
-    let prevQuestion = (+this.route.snapshot.params['question_id']) - 1;
+  back() {
+    const prevQuestion = (+this.route.snapshot.params['question_id']) - 1;
 
     if ( prevQuestion >= 1 ) {
-      let uuid = this.route.snapshot.params['uuid'];
+      const uuid = this.route.snapshot.params['uuid'];
       this.router.navigate(['prova', uuid, 'questao', prevQuestion]);
     }
   }

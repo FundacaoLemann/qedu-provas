@@ -8,7 +8,7 @@ import { ApplymentService } from '../../../core/shared/applyment.service';
   styleUrls: ['./progression-path.component.sass']
 })
 export class ProgressionPathComponent implements OnInit {
-  @Input() questionsLength: number = 0;
+  @Input() questionsLength = 0;
   answers: number[] = [];
 
   constructor (private router: Router,

@@ -14,18 +14,18 @@ import { StudentService } from '../../core/shared/student.service';
 
 export class StudentAuthenticationPageComponent implements OnInit {
   student = null;
+  error =  '';
   assessment: Assessment;
   accessToken: string;
-  error: string = '';
 
-  constructor (private assessmentService: AssessmentService,
-               private router: Router,
-               private route: ActivatedRoute,
-               private applymentService: ApplymentService,
-               private studentService: StudentService) {
+  constructor(private assessmentService: AssessmentService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private applymentService: ApplymentService,
+              private studentService: StudentService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.student = this.applymentService.getStudent() || null;
 
     this.assessmentService.getAssessment(this.route.snapshot.params['uuid'])
@@ -39,7 +39,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
       );
   }
 
-  onSubmit () {
+  onSubmit() {
     const setError = () => {
       this.accessToken = '';
       this.error = 'Código inválido';
@@ -53,31 +53,30 @@ export class StudentAuthenticationPageComponent implements OnInit {
               this.student = student;
               this.applymentService.setStudent(student);
               this.error = '';
-            }
-            else {
+            } else {
               setError();
             }
           },
           error => {
             setError();
           }
-        )
+        );
     }
   }
 
-  onContinue () {
+  onContinue() {
     if ( this.student ) {
       this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'instrucoes']);
     }
   }
 
-  onCancel () {
+  onCancel() {
     this.accessToken = null;
     this.error = null;
     this.student = null;
   }
 
-  fetchUser (accessToken: string) {
+  fetchUser(accessToken: string) {
     return this.studentService.getStudentByToken(accessToken);
   }
 }

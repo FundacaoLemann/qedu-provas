@@ -15,7 +15,7 @@ describe('InstructionsModalComponent', () => {
   let router: RouterStub;
 
   beforeEach(async(() => {
-    let routerStub = new ActivatedRouteStub();
+    const routerStub = new ActivatedRouteStub();
     routerStub.testParams = { uuid: '1' };
 
     TestBed.configureTestingModule({

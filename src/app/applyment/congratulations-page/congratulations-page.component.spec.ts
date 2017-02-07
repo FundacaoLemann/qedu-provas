@@ -1,18 +1,9 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 // App
 import { CongratulationsPageComponent } from './congratulations-page.component';
 import { ApplymentModule } from '../applyment.module';
-import { Router } from '@angular/router';
 import * as test from '../../../testing/testing-helper';
-import { Component } from '@angular/core';
-
-@Component({
-  template: '<router-outlet></router-outlet>'
-})
-class RedirectComponent {
-}
 
 describe('CongratulationsPageComponent', () => {
   let component: CongratulationsPageComponent;
@@ -22,11 +13,8 @@ describe('CongratulationsPageComponent', () => {
     TestBed.configureTestingModule({
         imports: [
           ApplymentModule,
-          RouterTestingModule.withRoutes([
-            { path: 'home', component: RedirectComponent }
-          ])
+          RouterTestingModule.withRoutes([])
         ],
-        declarations: [RedirectComponent]
       })
       .compileComponents();
   }));

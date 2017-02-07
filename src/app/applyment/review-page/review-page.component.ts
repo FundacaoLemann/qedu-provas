@@ -6,31 +6,30 @@ import { ReviewModalComponent } from './modal/review-modal.component';
 import { ApplymentService } from '../../core/shared/applyment.service';
 
 @Component({
-  selector: 'app-review-page',
+  selector: 'qp-review-page',
   templateUrl: './review-page.component.html',
   styleUrls: ['./review-page.component.sass']
 })
 export class ReviewPageComponent implements OnInit {
   questions: Question[];
   answers: number[] = [];
-  answersLength: number = 0;
-  questionsLength: number = 0;
+  answersLength = 0;
+  questionsLength = 0;
   @ViewChild('modal') modalRef: ComponentRef<ReviewModalComponent>;
 
-  constructor (private viewContainer: ViewContainerRef,
-               private componentFactoryResolver: ComponentFactoryResolver,
-               private assessmentService: AssessmentService,
-               private applymentService: ApplymentService,
-               private route: ActivatedRoute,
-               private router: Router,) {
+  constructor(private viewContainer: ViewContainerRef,
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private assessmentService: AssessmentService,
+              private applymentService: ApplymentService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.load();
   }
 
-  load () {
-    // console.log(this.assessmentService.getQuestions);
+  load() {
     this.assessmentService.getQuestions(this.route.snapshot.params['uuid'])
       .subscribe(
         (questions) => {
@@ -43,25 +42,25 @@ export class ReviewPageComponent implements OnInit {
       );
   }
 
-  back () {
-    let uuid = this.route.snapshot.params['uuid'];
+  back() {
+    const uuid = this.route.snapshot.params['uuid'];
     this.router.navigate(['prova', uuid, 'questao', this.questions.length]);
   }
 
-  navigate (questionNumber: number) {
+  navigate(questionNumber: number) {
     this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', questionNumber.toString()]);
   }
 
-  openDialog () {
+  openDialog() {
     this.closeDialog();
-    let modalFactory = this.componentFactoryResolver.resolveComponentFactory(ReviewModalComponent);
+    const modalFactory = this.componentFactoryResolver.resolveComponentFactory(ReviewModalComponent);
     this.modalRef = this.viewContainer.createComponent(modalFactory);
     this.modalRef.instance.onClose.subscribe(() => {
       this.viewContainer.clear();
     });
   }
 
-  closeDialog () {
+  closeDialog() {
     this.viewContainer.clear();
   }
 

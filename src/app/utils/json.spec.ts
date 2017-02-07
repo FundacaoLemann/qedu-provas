@@ -7,8 +7,8 @@ describe('camelize', () => {
 });
 
 describe('camelizeObject', () => {
-  let obj = { first_name: "john", last_name: "Doe" };
-  let d2 = {
+  const obj = {first_name: 'john', last_name: 'Doe'};
+  const d2 = {
     firstName: 'john',
     lastName: 'Doe',
     others: {
@@ -22,7 +22,7 @@ describe('camelizeObject', () => {
   };
 
   it('should camelcase the object keys', () => {
-    expect(json.camelizeObject(obj)).toEqual({ firstName: 'john', lastName: 'Doe' });
+    expect(json.camelizeObject(obj)).toEqual({firstName: 'john', lastName: 'Doe'});
   });
 
   it('should camelcase the object and the children keys', () => {
@@ -40,3 +40,4 @@ describe('camelizeObject', () => {
     });
   });
 });
+

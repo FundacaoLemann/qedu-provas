@@ -9,7 +9,7 @@ export class FooterComponent {
   @Input() disclaimer: string;
 
   constructor() {
-    this.disclaimer = "QEdu 2016. Todos os direitos reservados.";
+    this.disclaimer = 'QEdu 2016. Todos os direitos reservados.';
   }
 
 }

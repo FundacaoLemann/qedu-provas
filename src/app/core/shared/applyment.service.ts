@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
 import { StoreService } from './store.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ApplymentService {
@@ -10,7 +10,7 @@ export class ApplymentService {
   }
 
   setStudent (student: Student) {
-    this.store.setStudent(student)
+    this.store.setStudent(student);
   }
 
   getStudent (): Student {
@@ -18,7 +18,7 @@ export class ApplymentService {
   }
 
   setAnswer (questionId: number, answerId: number) {
-    let answers = this.store.getAnswers();
+    const answers = this.store.getAnswers();
     answers[questionId] = answerId;
 
     this.store.setAnswers(answers);
@@ -30,7 +30,7 @@ export class ApplymentService {
   }
 
   getAnswer (questionId: number): number {
-    let answers = this.store.getAnswers();
+    const answers = this.store.getAnswers();
     return answers[questionId];
   }
 

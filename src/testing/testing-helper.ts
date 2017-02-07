@@ -1,26 +1,24 @@
-import { ComponentFixture } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { DebugElement } from '@angular/core';
-import { getNsPrefix } from '@angular/compiler/src/ml_parser/tags';
+import {ComponentFixture} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
 
-export function setInputValue (fixture: ComponentFixture<any>, selector: string, value: any): Promise<any> {
-  let el = fixture.debugElement.query(By.css(selector)).nativeElement;
+export function setInputValue(fixture: ComponentFixture<any>, selector: string, value: any): Promise<any> {
+  const el = fixture.debugElement.query(By.css(selector)).nativeElement;
   el.value = value;
   el.dispatchEvent(new Event('input'));
   return fixture.whenStable();
 }
 
-export function getInputValue (fixture: ComponentFixture<any>, selector): any {
+export function getInputValue(fixture: ComponentFixture<any>, selector): any {
   return fixture.debugElement.query(By.css(selector)).nativeElement.value;
 }
 
-export function dispatchEvent (fixture: ComponentFixture<any>, selector: string, event: string | Event): Promise<any> {
-  let el = fixture.debugElement.query(By.css(selector)).nativeElement;
+export function dispatchEvent(fixture: ComponentFixture<any>, selector: string, event: string | Event): Promise<any> {
+  const el = fixture.debugElement.query(By.css(selector)).nativeElement;
 
   if (typeof event === 'string') {
     el.dispatchEvent(new Event(event));
-  }
-  else {
+  } else {
     el.dispatchEvent(event);
   }
   return fixture.whenStable();
@@ -31,10 +29,10 @@ export function getNativeElement(fixture: ComponentFixture<any>, selector): any 
 }
 
 export function getAllNativeElements(fixture: ComponentFixture<any>, selector): any[] {
-  let nativeElements = [];
+  const nativeElements = [];
   const elements = fixture.debugElement.queryAll(By.css(selector));
 
-  for(let debugElement of elements) {
+  for (const debugElement of elements) {
     nativeElements.push(debugElement.nativeElement);
   }
 

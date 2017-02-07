@@ -1,12 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 // App
 import { RouterStub } from '../../../testing/router-stub';
-import { SharedModule } from '../../shared/shared.module';
 import { StudentAuthenticationPageComponent } from './student-authentication-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
-import { CoreModule } from '../../core/core.module';
 import { ApplymentService } from '../../core/shared/applyment.service';
 import { StoreService } from '../../core/shared/store.service';
 import { StudentService } from '../../core/shared/student.service';
@@ -27,7 +25,7 @@ describe('StudentAuthenticationPageComponent', () => {
   let applymentService: ApplymentService;
   let studentService: StudentService;
   let router: Router;
-  let route = new ActivatedRouteStub();
+  const route = new ActivatedRouteStub();
   route.testParams = { 'uuid': '1' };
 
   beforeEach(async(() => {

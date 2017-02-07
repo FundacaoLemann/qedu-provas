@@ -52,8 +52,8 @@ describe('ProgressionPathComponent', () => {
     expect(debugEls.length).toEqual(mockQuestions.length);
 
     for ( let i = 0; i < mockQuestions.length; i++ ) {
-      let match = debugEls[i].query(By.css(`.number`)).nativeElement.textContent;
-      let expected = (i + 1).toString();
+      const match = debugEls[i].query(By.css(`.number`)).nativeElement.textContent;
+      const expected = (i + 1).toString();
       expect(match).toEqual(expected);
     }
   }));
@@ -62,7 +62,7 @@ describe('ProgressionPathComponent', () => {
     spyOn(router, 'navigate');
     fixture.debugElement.queryAll(By.css('ul li'))[1].nativeElement.click();
 
-    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', '2'])
+    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', '2']);
   });
 
   it('should display the answers with .answered', async(() => {

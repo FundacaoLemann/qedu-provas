@@ -1,12 +1,10 @@
-///<reference path="../../../../node_modules/@angular/core/testing/fake_async.d.ts"/>
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Router } from '@angular/router';
 import { RouterStub } from '../../../testing/router-stub';
-import { SearchAssessmentPageComponent } from "./search-assessment-page.component";
+import { SearchAssessmentPageComponent } from './search-assessment-page.component';
 
-import { setInputValue, dispatchEvent } from "../../../testing/testing-helper";
+import { setInputValue, dispatchEvent } from '../../../testing/testing-helper';
 import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -47,7 +45,7 @@ describe('SearchAssessmentPageComponent', () => {
     dispatchEvent(fixture, 'button.search', 'click');
 
     fixture.whenStable().then(() => {
-      expect(routerService.navigate).toHaveBeenCalledWith(['prova', '7sk0d88kw9'])
+      expect(routerService.navigate).toHaveBeenCalledWith(['prova', '7sk0d88kw9']);
     });
 
   }));

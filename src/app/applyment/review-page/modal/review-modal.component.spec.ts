@@ -10,7 +10,7 @@ describe('ReviewModalComponent', () => {
   let component: ReviewModalComponent;
   let fixture: ComponentFixture<ReviewModalComponent>;
   let router: Router;
-  let route = new ActivatedRouteStub();
+  const route = new ActivatedRouteStub();
   route.testParams = { uuid: '1' };
 
   beforeEach(async(() => {

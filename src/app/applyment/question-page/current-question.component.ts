@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['current-question.component.sass']
 })
 export class CurrentQuestionComponent {
-  @Input() currentQuestion: number = 0;
-  @Input() questionsLength: number = 0;
+  @Input() currentQuestion = 0;
+  @Input() questionsLength = 0;
 }

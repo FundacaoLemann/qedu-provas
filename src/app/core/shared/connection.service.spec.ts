@@ -23,18 +23,20 @@ describe('ConnectionService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('get status of the connection once', async(inject([ConnectionService, MockBackend], (service: ConnectionService, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe((connection) => {
-      connection.mockRespond(new Response(new ResponseOptions({
-        body: null,
-        status: 0
-      })));
-    });
+  it('get status of the connection once', async(
+    inject([ConnectionService, MockBackend],
+      (service: ConnectionService, mockBackend: MockBackend) => {
+        mockBackend.connections.subscribe((connection) => {
+          connection.mockRespond(new Response(new ResponseOptions({
+            body: null,
+            status: 0
+          })));
+        });
 
-    expect(service.getStatusOnce).toBeDefined();
-    service.getStatusOnce().subscribe(status => {
-      expect(status).toEqual(true);
-    });
-  })));
+        expect(service.getStatusOnce).toBeDefined();
+        service.getStatusOnce().subscribe(status => {
+          expect(status).toEqual(true);
+        });
+      })));
 
 });

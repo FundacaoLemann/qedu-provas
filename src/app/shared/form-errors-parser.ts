@@ -2,45 +2,51 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 export class FormErrorsParser {
   static parseField(formField: AbstractControl): string[] {
-    let errorMessages: string[] = [];
-    let errors = formField.errors;
+    const errorMessages: string[] = [];
+    const errors = formField.errors;
 
-    if(errors == null ) return errorMessages;
+    if ( errors == null ) {
+      return errorMessages;
+    }
 
-    if(errors.hasOwnProperty('required')) {
+    if ( errors.hasOwnProperty('required') ) {
       errorMessages.push('Campo obrigatório');
     }
 
-    if(errors.hasOwnProperty('minlength')) {
+    if ( errors.hasOwnProperty('minlength') ) {
       errorMessages.push(`Campo deve ter pelo menos ${errors['minlength'].requiredLength} caracteres`);
     }
 
-    if(errors.hasOwnProperty('maxlength')) {
+    if ( errors.hasOwnProperty('maxlength') ) {
       errorMessages.push(`Campo não deve ter mais que ${errors['maxlength'].requiredLength} caracteres`);
     }
 
-    if(errors.hasOwnProperty('pattern')) {
+    if ( errors.hasOwnProperty('pattern') ) {
       errorMessages.push(`Formato inválido`);
     }
 
-    if(errors.hasOwnProperty('forbiddenCharacters')) {
+    if ( errors.hasOwnProperty('forbiddenCharacters') ) {
       errorMessages.push(`Caracteres inválidos: ${errors['forbiddenCharacters'].join('')}`);
     }
 
     return errorMessages;
   }
 
-  static parseForm(form: FormGroup, dirtyFieldsOnly: boolean = true): any {
-    let errorMessages = {};
+  static parseForm(form: FormGroup, dirtyFieldsOnly = true): any {
+    const errorMessages = {};
 
-    for(let controlName in form.controls) {
-      let control: AbstractControl = form.controls[controlName];
+    for (const controlName in form.controls) {
+      if ( controlName ) {
+        const control: AbstractControl = form.controls[controlName];
 
-      if(dirtyFieldsOnly && ! control.dirty) { break; }
+        if ( dirtyFieldsOnly && !control.dirty ) {
+          break;
+        }
 
-      let errors: string[] = FormErrorsParser.parseField(control);
+        const errors: string[] = FormErrorsParser.parseField(control);
 
-      errorMessages[controlName] = (errors) ? errors : [];
+        errorMessages[controlName] = (errors) ? errors : [];
+      }
     }
 
     return (errorMessages);

@@ -9,8 +9,11 @@ import { ApplymentModule } from '../applyment.module';
 import { ComponentRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ApplymentService } from '../../core/shared/applyment.service';
-import { Observable } from 'rxjs';
 import { SharedModule } from '../../shared/shared.module';
+// Rxjs
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+// Utils
 import * as json from '../../utils/json';
 const db = require('../../../../mock/db.json');
 
@@ -21,21 +24,21 @@ describe('ReviewPageComponent', () => {
   let route: ActivatedRouteStub;
   let assessmentService: AssessmentService;
   let applymentService: ApplymentService;
-  let mockQuestions = db.questions;
+  const mockQuestions = db.questions;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          ApplymentModule,
-          SharedModule,
-          // RouterTestingModule.withRoutes([])
-        ],
-        providers: [
-          { provide: Router, useClass: RouterStub },
-          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1' }) },
-          ApplymentService
-        ]
-      })
+      imports: [
+        ApplymentModule,
+        SharedModule,
+        // RouterTestingModule.withRoutes([])
+      ],
+      providers: [
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1' }) },
+        ApplymentService
+      ]
+    })
       .compileComponents();
   }));
 
@@ -48,7 +51,7 @@ describe('ReviewPageComponent', () => {
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
     applymentService = fixture.debugElement.injector.get(ApplymentService);
-    //init questions with 10
+    // init questions with 10
     applymentService.initAnswers(mockQuestions.length);
     // Set two correct answers
     applymentService.setAnswer(0, 1);

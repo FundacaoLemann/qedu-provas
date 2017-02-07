@@ -1,20 +1,20 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import {Component, OnInit, EventEmitter} from '@angular/core';
 
 @Component({
-  selector: 'app-no-connection-modal',
+  selector: 'qp-no-connection-modal',
   templateUrl: 'no-connection-modal.component.html',
   styles: []
 })
 export class NoConnectionModalComponent implements OnInit {
   onConfirm: EventEmitter<any> = new EventEmitter();
 
-  constructor () {
+  constructor() {
   }
 
-  ngOnInit () {
+  ngOnInit() {
   }
 
-  confirm () {
-    this.onConfirm.emit()
+  confirm() {
+    this.onConfirm.emit();
   }
 }

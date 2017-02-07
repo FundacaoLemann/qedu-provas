@@ -8,7 +8,7 @@ import { Answer } from '../../shared/model/answer';
 })
 export class AnswerComponent {
   @Input() answer: Answer = { id: 0, text: '' };
-  @Input() checked: boolean = false;
+  @Input() checked = false;
   @Output() onClicked: EventEmitter<number> = new EventEmitter<number>();
 
   constructor () {

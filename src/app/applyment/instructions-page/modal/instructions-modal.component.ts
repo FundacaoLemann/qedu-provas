@@ -1,8 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-instructions-modal',
+  selector: 'qp-instructions-modal',
   templateUrl: 'instructions-modal.component.html',
   styles: []
 })

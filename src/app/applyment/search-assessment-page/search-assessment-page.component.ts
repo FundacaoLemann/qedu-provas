@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-search-assessment-page',
+  selector: 'qp-search-assessment-page',
   templateUrl: 'search-assessment-page.component.html',
   styleUrls: ['search-assessment-page.component.sass']
 })
@@ -24,8 +24,9 @@ export class SearchAssessmentPageComponent implements OnInit {
   }
 
   onSubmit () {
-    if (this.form.valid)
+    if (this.form.valid) {
       this.router.navigate(['prova', this.form.get('uuid').value]);
+    }
   }
 
 }

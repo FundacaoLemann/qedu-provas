@@ -1,7 +1,6 @@
-/* tslint:disable:no-unused-variable */
 import { inject, TestBed } from '@angular/core/testing';
 import { StoreService } from './store.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 describe('StoreService', () => {
 
@@ -12,7 +11,7 @@ describe('StoreService', () => {
   });
 
   it('should hold data', inject([StoreService], (store: StoreService) => {
-    let student = { name: 'John Doe', matricula: '12345' };
+    const student = { name: 'John Doe', matricula: '12345' };
     store.setValue('student', student);
     expect(store.getValue('student')).toEqual(student);
   }));

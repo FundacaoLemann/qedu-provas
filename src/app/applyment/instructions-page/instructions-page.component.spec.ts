@@ -1,9 +1,8 @@
-///<reference path="../../../../node_modules/@angular/core/testing/fake_async.d.ts"/>
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 // App
 import { RouterStub } from '../../../testing/router-stub';
 import { InstructionsPageComponent } from './instructions-page.component';
@@ -27,18 +26,18 @@ describe('InstructionsPageComponent', () => {
   const mockAssessment = json.camelizeObject(db.assessments[0]);
 
   beforeEach(async(() => {
-    let routeStub = new ActivatedRouteStub();
+    const routeStub = new ActivatedRouteStub();
     routeStub.testParams = { uuid: '1' };
     TestBed.configureTestingModule({
-        imports: [
-          ApplymentModule
-        ],
-        providers: [
-          { provide: Router, useValue: new RouterStub() },
-          { provide: ActivatedRoute, useValue: routeStub },
-          AssessmentService
-        ]
-      })
+      imports: [
+        ApplymentModule
+      ],
+      providers: [
+        { provide: Router, useValue: new RouterStub() },
+        { provide: ActivatedRoute, useValue: routeStub },
+        AssessmentService
+      ]
+    })
       .compileComponents();
   }));
 
@@ -62,13 +61,13 @@ describe('InstructionsPageComponent', () => {
   }));
 
   it('should display an assessment details', () => {
-    let instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
+    const instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
     expect(instructionEl.innerHTML).toEqual(mockAssessment.instructions);
 
-    let durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
+    const durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
     expect(durationEl.textContent).toEqual(`${mockAssessment.duration} minutos`);
 
-    let itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
+    const itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
     expect(itemsCountEl.textContent).toEqual(`${mockAssessment.itemsCount} questões`);
   });
 

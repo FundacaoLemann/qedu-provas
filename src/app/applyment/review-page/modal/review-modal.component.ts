@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-review-modal',
+  selector: 'qp-review-modal',
   templateUrl: 'review-modal.component.html',
   styleUrls: ['review-modal.component.sass']
 })
@@ -17,7 +17,7 @@ export class ReviewModalComponent implements OnInit {
   }
 
   finish () {
-    let uuid = this.route.snapshot.params['uuid'];
+    const uuid = this.route.snapshot.params['uuid'];
     this.router.navigate(['prova', uuid , 'parabens']);
   }
 

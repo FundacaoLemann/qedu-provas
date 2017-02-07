@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
-  @Input('logo') logo: boolean = true;
+  @Input('logo') logo = true;
 
   constructor () {
   }

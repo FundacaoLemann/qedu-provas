@@ -1,4 +1,3 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { QuestionPageComponent } from './question-page.component';
 import { By } from '@angular/platform-browser';
@@ -7,10 +6,13 @@ import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
 import { ApplymentModule } from '../applyment.module';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { ApplymentService } from '../../core/shared/applyment.service';
 import { CoreModule } from '../../core/core.module';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import { dispatchEvent } from '../../../testing/testing-helper';
+import * as json from '../../utils/json';
+const db = require('../../../../mock/db.json');
 
 describe('QuestionPageComponent', () => {
   let component: QuestionPageComponent;
@@ -18,17 +20,19 @@ describe('QuestionPageComponent', () => {
   let route: ActivatedRouteStub;
   let router: RouterStub;
   let applymentService: ApplymentService;
+  let assessmentService: AssessmentService;
+  const mockQuestions = json.camelizeObject(db.questions);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [ApplymentModule, CoreModule],
-        providers: [
-          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() },
-          { provide: Router, useClass: RouterStub },
-          { provide: AssessmentService, useClass: AssessmentServiceStub },
-        ]
-      })
+      imports: [ApplymentModule, CoreModule],
+      providers: [
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() },
+        { provide: Router, useClass: RouterStub },
+      ]
+    })
       .compileComponents();
+
 
   }));
   beforeEach(() => {
@@ -36,9 +40,13 @@ describe('QuestionPageComponent', () => {
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
     applymentService = fixture.debugElement.injector.get(ApplymentService);
 
     route.testParams = { uuid: '1', question_id: '1' };
+
+    spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(mockQuestions));
+    applymentService.initAnswers(mockQuestions.length);
 
     fixture.detectChanges();
   });
@@ -47,12 +55,14 @@ describe('QuestionPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display a question and its answers', () => {
-    let questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
+  it('should display a question', async(() => {
+    route.testParams = { uuid: '1', question_id: '2' };
     fixture.detectChanges();
-    expect(questionEl.innerHTML).toEqual('Wow, courage!Lord, ye cold jack- set sails for adventure! Dozens of anomalies will be lost in plasmas like attitudes in alarms');
-    expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
-  });
+
+    const questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
+    expect(questionEl.innerHTML).toEqual(mockQuestions[1].text);
+    expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(4);
+  }));
 
   it('should update the checkedAnswer answer when `onClicked` is fired', async(() => {
     component.updateChecked(1);
@@ -83,27 +93,28 @@ describe('QuestionPageComponent', () => {
     }));
 
     it('should navigate to review page when the current question is the last', async(() => {
-      route.testParams = { uuid: '1', question_id: 2 };
+      route.testParams = { uuid: '1', question_id: '10' };
 
       spyOn(router, 'navigate');
       dispatchEvent(fixture, '[next]', 'click');
+
       expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'revisao']);
     }));
 
     it('should navigate to the previous question when previous is clicked', async(() => {
-      route.testParams = { uuid: '1', question_id: 2 };
+      route.testParams = { uuid: '1', question_id: '9' };
 
       spyOn(router, 'navigate');
       dispatchEvent(fixture, '[prev]', 'click');
 
-      expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', 1]);
+      expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', 8]);
     }));
 
     it('should disable the prev-button when the current question is the first', () => {
       route.testParams = { uuid: 1, question_id: 1 };
       fixture.detectChanges();
 
-      let buttonEl = fixture.debugElement.query(By.css('[prev]')).nativeElement;
+      const buttonEl = fixture.debugElement.query(By.css('[prev]')).nativeElement;
 
       expect(buttonEl.disabled).toEqual(true);
     });
