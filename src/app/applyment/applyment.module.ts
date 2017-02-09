@@ -15,7 +15,7 @@ import { CoreModule } from '../core/core.module';
 import { StudentAuthenticationPageComponent } from './student-authentication-page/student-authentication-page.component';
 import { PageLogosComponent } from './shared/page-logos/page-logos.component';
 import { ProgressionPathComponent } from './question-page/progression-path/progression-path.component';
-import { NoConnectionModalComponent } from './instructions-page/modal/no-connection-modal.component';
+import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
 
 @NgModule({
   imports: [
@@ -37,13 +37,11 @@ import { NoConnectionModalComponent } from './instructions-page/modal/no-connect
     CongratulationsPageComponent,
     PageLogosComponent,
     ProgressionPathComponent,
-    NoConnectionModalComponent,
-    NoConnectionModalComponent,
+    NoConnectionModalComponent
   ],
   entryComponents: [
     ReviewModalComponent,
-    InstructionsModalComponent,
-    NoConnectionModalComponent
+    InstructionsModalComponent
   ],
   exports: [
     ApplymentComponent,
