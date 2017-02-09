@@ -4,11 +4,13 @@ import { Question } from '../../shared/model/question';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ReviewModalComponent } from './modal/review-modal.component';
 import { ApplymentService } from '../../core/shared/applyment.service';
+import { NoConnectionModalComponent } from "../shared/no-connection-modal/no-connection-modal.component";
 
 @Component({
   selector: 'qp-review-page',
   templateUrl: './review-page.component.html',
-  styleUrls: ['./review-page.component.sass']
+  styleUrls: ['./review-page.component.sass'],
+  entryComponents: [NoConnectionModalComponent]
 })
 export class ReviewPageComponent implements OnInit {
   questions: Question[];

@@ -12,11 +12,11 @@ export class InstructionsModalComponent {
   constructor () {
   }
 
-  close () {
+  cancel () {
     this.onClose.emit();
   }
 
-  confirmStart () {
+  confirm () {
     this.onConfirm.emit();
   }
 }
