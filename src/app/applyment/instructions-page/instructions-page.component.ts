@@ -6,13 +6,16 @@ import { InstructionsModalComponent } from './modal/instructions-modal.component
 import { ApplymentService } from '../../core/shared/applyment.service';
 import { ConnectionService } from '../../core/shared/connection.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
-import { HasModal } from "../../core/shared/has-modal/has-modal";
+import { HasModal } from '../../core/shared/has-modal/has-modal';
 
 @Component({
   selector: 'qp-instructions-page',
   templateUrl: 'instructions-page.component.html',
   styleUrls: ['instructions-page.component.sass'],
-  entryComponents: [NoConnectionModalComponent]
+  entryComponents: [
+    NoConnectionModalComponent,
+    InstructionsModalComponent
+  ]
 })
 export class InstructionsPageComponent extends HasModal implements OnInit {
   assessment: Assessment;
@@ -49,16 +52,15 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
   openModalProceed() {
     this.openModal(InstructionsModalComponent, {
       onConfirm: () => {
-        this.connection.getStatusOnce().subscribe((status) => {
-          if ( status ) {
-            this.initAssessment();
-          } else {
-            this.closeModal();
-            setTimeout(() => {
+        this.connection
+          .getStatusOnce()
+          .subscribe((status) => {
+            if ( status ) {
+              this.initAssessment();
+            } else {
               this.openModalConnectionError();
-            }, 300);
-          }
-        });
+            }
+          });
       },
       onClose: () => {
         this.closeModal();
@@ -70,10 +72,13 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
    * Show no-connection modal
    */
   openModalConnectionError() {
-    this.openModal(NoConnectionModalComponent, {
-      onClose: () => {
-        this.closeModal();
-      }
-    });
+    this.closeModal();
+    setTimeout(() => {
+      this.openModal(NoConnectionModalComponent, {
+        onClose: () => {
+          this.closeModal();
+        }
+      });
+    }, 300);
   }
 }

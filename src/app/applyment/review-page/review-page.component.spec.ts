@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReviewPageComponent } from './review-page.component';
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,12 +9,12 @@ import { ApplymentModule } from '../applyment.module';
 import { ComponentRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ApplymentService } from '../../core/shared/applyment.service';
-import { SharedModule } from '../../shared/shared.module';
 // Rxjs
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 // Utils
 import * as json from '../../utils/json';
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 const db = require('../../../../mock/db.json');
 
 describe('ReviewPageComponent', () => {
@@ -30,8 +30,6 @@ describe('ReviewPageComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ApplymentModule,
-        SharedModule,
-        // RouterTestingModule.withRoutes([])
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
@@ -97,6 +95,12 @@ describe('ReviewPageComponent', () => {
 
     expect(tableItems).toEqual(mockQuestions.length);
     expect(tableItemsAnswered).toEqual(2);
+  }));
+
+  it('should create warning modal when offline', fakeAsync(() => {
+    component.openNoConnectionModal();
+    tick(300);
+    expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
 
 });

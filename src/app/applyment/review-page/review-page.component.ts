@@ -1,30 +1,37 @@
-import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, ViewChild, ComponentRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../shared/model/question';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ReviewModalComponent } from './modal/review-modal.component';
 import { ApplymentService } from '../../core/shared/applyment.service';
-import { NoConnectionModalComponent } from "../shared/no-connection-modal/no-connection-modal.component";
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
+import { HasModal } from '../../core/shared/has-modal/has-modal';
+import { ConnectionService } from '../../core/shared/connection.service';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'qp-review-page',
   templateUrl: './review-page.component.html',
   styleUrls: ['./review-page.component.sass'],
-  entryComponents: [NoConnectionModalComponent]
+  entryComponents: [
+    ReviewModalComponent,
+    NoConnectionModalComponent
+  ]
 })
-export class ReviewPageComponent implements OnInit {
+export class ReviewPageComponent extends HasModal implements OnInit {
   questions: Question[];
   answers: number[] = [];
   answersLength = 0;
   questionsLength = 0;
-  @ViewChild('modal') modalRef: ComponentRef<ReviewModalComponent>;
 
   constructor(private viewContainer: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
               private assessmentService: AssessmentService,
               private applymentService: ApplymentService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private connection: ConnectionService) {
+    super(viewContainer, componentFactoryResolver);
   }
 
   ngOnInit() {
@@ -53,17 +60,39 @@ export class ReviewPageComponent implements OnInit {
     this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', questionNumber.toString()]);
   }
 
-  openDialog() {
-    this.closeDialog();
-    const modalFactory = this.componentFactoryResolver.resolveComponentFactory(ReviewModalComponent);
-    this.modalRef = this.viewContainer.createComponent(modalFactory);
-    this.modalRef.instance.onClose.subscribe(() => {
-      this.viewContainer.clear();
+  openFinishModal() {
+    this.openModal(ReviewModalComponent, {
+      'onConfirm': () => {
+        this.finish();
+      },
+      'onCancel': () => {
+        this.closeModal();
+      }
     });
   }
 
-  closeDialog() {
-    this.viewContainer.clear();
+  openNoConnectionModal() {
+    this.closeModal();
+
+    setTimeout(() => {
+      this.openModal(NoConnectionModalComponent, {
+        onClose: () => {
+          this.closeModal();
+        }
+      });
+    }, 300);
   }
 
+  submit() {
+    // TODO
+    // Send data to API
+    const uuid = this.route.snapshot.params['uuid'];
+    this.router.navigate(['prova', uuid, 'parabens']);
+  }
+
+  finish() {
+    this.connection
+      .getStatusOnce()
+      .subscribe(status => status ? this.submit() : this.openNoConnectionModal());
+  }
 }

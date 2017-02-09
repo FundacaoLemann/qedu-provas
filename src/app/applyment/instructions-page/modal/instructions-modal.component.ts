@@ -9,9 +9,6 @@ export class InstructionsModalComponent {
   onClose: EventEmitter<any> = new EventEmitter();
   onConfirm: EventEmitter<any> = new EventEmitter();
 
-  constructor () {
-  }
-
   cancel () {
     this.onClose.emit();
   }

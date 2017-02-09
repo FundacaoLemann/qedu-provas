@@ -1,28 +1,19 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'qp-review-modal',
   templateUrl: 'review-modal.component.html',
   styleUrls: ['review-modal.component.sass']
 })
-export class ReviewModalComponent implements OnInit {
-  onClose: EventEmitter<null> = new EventEmitter<null>();
+export class ReviewModalComponent {
+  onCancel = new EventEmitter<null>();
+  onConfirm = new EventEmitter<null>();
 
-  constructor (private router: Router,
-               private route: ActivatedRoute) {
+  confirm () {
+    this.onConfirm.emit();
   }
 
-  ngOnInit () {
+  cancel () {
+    this.onCancel.emit();
   }
-
-  finish () {
-    const uuid = this.route.snapshot.params['uuid'];
-    this.router.navigate(['prova', uuid , 'parabens']);
-  }
-
-  close () {
-    this.onClose.emit();
-  }
-
 }

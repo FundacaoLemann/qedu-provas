@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +13,9 @@ import { dispatchEvent } from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
 import json from '../../utils/json';
 import { ApplymentService } from '../../core/shared/applyment.service';
+import { InstructionsModalComponent } from './modal/instructions-modal.component';
+import { ConnectionService } from '../../core/shared/connection.service';
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 
 const db = require('../../../../mock/db.json');
 
@@ -23,6 +26,7 @@ describe('InstructionsPageComponent', () => {
   let route: ActivatedRouteStub;
   let assessmentService: AssessmentServiceStub;
   let applyment: ApplymentService;
+  let connection: ConnectionService;
   const mockAssessment = json.camelizeObject(db.assessments[0]);
 
   beforeEach(async(() => {
@@ -48,6 +52,7 @@ describe('InstructionsPageComponent', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
     applyment = fixture.debugElement.injector.get(ApplymentService);
+    connection = fixture.debugElement.injector.get(ConnectionService);
 
     spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
 
@@ -71,12 +76,6 @@ describe('InstructionsPageComponent', () => {
     expect(itemsCountEl.textContent).toEqual(`${mockAssessment.itemsCount} questões`);
   });
 
-  it('should open modal when click on start', () => {
-    dispatchEvent(fixture, 'button.continue', 'click');
-    fixture.detectChanges();
-
-    expect(component.modalRef).toBeTruthy();
-  });
 
   it('initAssessment', async(() => {
     spyOn(applyment, 'initAnswers');
@@ -87,5 +86,21 @@ describe('InstructionsPageComponent', () => {
     expect(applyment.initAnswers).toHaveBeenCalledWith(mockAssessment.itemsCount);
     expect(router.navigate).toHaveBeenCalledWith(['prova', mockAssessment.id.toString(), 'questao', '1']);
   }));
+
+  describe('modals', () => {
+    it('should open confirmation modal when click on start', () => {
+      dispatchEvent(fixture, 'button.continue', 'click');
+      fixture.detectChanges();
+
+      expect(component.modalRef.instance).toEqual(jasmine.any(InstructionsModalComponent));
+    });
+
+    it('should open warning modal when have no connection', fakeAsync(() => {
+      component.openModalConnectionError();
+      tick(300);
+      fixture.detectChanges();
+      expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
+    }));
+  });
 
 });

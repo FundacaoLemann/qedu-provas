@@ -1,10 +1,10 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReviewModalComponent } from './review-modal.component';
 import { dispatchEvent } from '../../../../testing/testing-helper';
 import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
+import { By } from '@angular/platform-browser';
 
 describe('ReviewModalComponent', () => {
   let component: ReviewModalComponent;
@@ -36,14 +36,15 @@ describe('ReviewModalComponent', () => {
   });
 
   it('should emit onClose when click on cancel button', () => {
-    spyOn(component.onClose, 'emit');
+    spyOn(component.onCancel, 'emit');
     dispatchEvent(fixture, '[close-button]', 'click');
-    expect(component.onClose.emit).toHaveBeenCalled();
+    expect(component.onCancel.emit).toHaveBeenCalled();
   });
 
-  it('should redirect to congratulations screen on click', () => {
-    spyOn(router, 'navigate');
-    dispatchEvent(fixture, '[finishButton]', 'click');
-    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'parabens']);
-  });
+  it('should emit onConfirm', async(() => {
+    spyOn(component.onConfirm, 'emit');
+
+    fixture.debugElement.query(By.css('[finishButton]')).nativeElement.click();
+    expect(component.onConfirm.emit).toHaveBeenCalled();
+  }));
 });

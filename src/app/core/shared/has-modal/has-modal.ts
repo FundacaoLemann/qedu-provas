@@ -1,5 +1,4 @@
 import { Component, ViewChild, ComponentRef, ComponentFactoryResolver, ViewContainerRef, Type } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 export abstract class HasModal {
   @ViewChild('modal') modalRef: ComponentRef<any>;
@@ -12,7 +11,7 @@ export abstract class HasModal {
    * Generic function to open modal
    * @param modalComponent Modal component to be appended
    */
-  protected openModal(modalComponent: Type<Component>, events: {[key: string]: Function}) {
+  protected openModal(modalComponent: Type<Component>, events: { [key: string]: Function }) {
     // Close the current modal
     this.closeModal();
 
@@ -31,8 +30,8 @@ export abstract class HasModal {
   bindEvents(events: { [key: string]: Function }) {
     const viewInstance = this.modalRef.instance;
 
-    for(const event in events) {
-      if(viewInstance[event]) {
+    for (const event in events) {
+      if ( viewInstance[event] ) {
         viewInstance[event].subscribe(events[event]);
       }
     }

@@ -32,16 +32,16 @@ import { NoConnectionModalComponent } from './shared/no-connection-modal/no-conn
     QuestionPageComponent,
     AnswerComponent,
     ReviewPageComponent,
-    ReviewModalComponent,
     CurrentQuestionComponent,
     CongratulationsPageComponent,
     PageLogosComponent,
     ProgressionPathComponent,
-    NoConnectionModalComponent
+    NoConnectionModalComponent,
+    ReviewModalComponent,
+    InstructionsModalComponent,
   ],
   entryComponents: [
-    ReviewModalComponent,
-    InstructionsModalComponent
+    ReviewModalComponent
   ],
   exports: [
     ApplymentComponent,
