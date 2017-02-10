@@ -16,6 +16,7 @@ import { StudentAuthenticationPageComponent } from './student-authentication-pag
 import { PageLogosComponent } from './shared/page-logos/page-logos.component';
 import { ProgressionPathComponent } from './question-page/progression-path/progression-path.component';
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
+import { ConnectionStatusComponent } from './shared/connection-status/connection-status.component';
 
 @NgModule({
   imports: [
@@ -39,12 +40,14 @@ import { NoConnectionModalComponent } from './shared/no-connection-modal/no-conn
     NoConnectionModalComponent,
     ReviewModalComponent,
     InstructionsModalComponent,
+    ConnectionStatusComponent,
   ],
   entryComponents: [
     ReviewModalComponent
   ],
   exports: [
     ApplymentComponent,
+    ConnectionStatusComponent,
   ]
 })
 export class ApplymentModule {

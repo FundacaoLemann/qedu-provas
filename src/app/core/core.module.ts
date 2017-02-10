@@ -12,15 +12,18 @@ import { ConnectionService } from './shared/connection.service';
 @NgModule({
   imports: [
     HttpModule,
-    SharedModule
+    SharedModule,
   ],
-  declarations: [HeaderComponent, FooterComponent],
   providers: [
     StoreService,
     AssessmentService,
     ApplymentService,
     StudentService,
     ConnectionService
+  ],
+  declarations: [
+    HeaderComponent,
+    FooterComponent
   ],
   exports: [
     HeaderComponent,
