@@ -3,4 +3,5 @@ export class Student {
   access_token?: string;
   name: string;
   matricula: string;
+  class: string;
 }
