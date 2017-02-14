@@ -40,7 +40,7 @@ describe('ReviewPageComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(ReviewPageComponent);
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
@@ -58,13 +58,13 @@ describe('ReviewPageComponent', () => {
     spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
 
     fixture.detectChanges();
-  }));
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
-  it('should return to the last question when back is clicked', () => {
+  it('should create', async(() => {
+    expect(component).toBeTruthy();
+  }));
+
+  it('should return to the last question when back is clicked', async(() => {
     component.questions = mockQuestions;
 
     spyOn(router, 'navigate');
@@ -73,10 +73,11 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
 
     expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', mockQuestions.length]);
-  });
+  }));
 
-  it('should create a modal when the finish button is clicked', async(() => {
+  it('should create a modal when the finish button is clicked', fakeAsync(() => {
     dispatchEvent(fixture, '[button-finish]', 'click');
+    tick(301);
     fixture.detectChanges();
     expect(component.modalRef).toEqual(jasmine.any(ComponentRef));
   }));

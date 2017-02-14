@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 const API_URL = 'http://localhost:3000';
 
@@ -40,7 +40,7 @@ export class ConnectionService {
     }
   }
 
-  startWatch(interval: number = 500, limit: number = 0): Observable<boolean> {
+  startWatch(interval = 500, limit = 0): Observable<boolean> {
     if ( this._isFetching ) {
       throw new Error('Already watching status. Stop the watching if you want to reinitialize.');
     } else {

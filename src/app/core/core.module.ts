@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { StudentService } from './shared/student.service';
 import { ConnectionService } from './shared/connection.service';
+import { ConnectionStatusComponent } from './shared/connection-status/connection-status.component';
 
 @NgModule({
   imports: [
@@ -23,11 +24,13 @@ import { ConnectionService } from './shared/connection.service';
   ],
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ConnectionStatusComponent
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ConnectionStatusComponent
   ]
 })
 export class CoreModule {

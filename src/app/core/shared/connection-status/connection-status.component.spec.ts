@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { ConnectionStatusComponent } from './connection-status.component';
-import { ConnectionService } from '../../../core/shared/connection.service';
+import { ConnectionService } from '../connection.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../../shared/shared.module';
 import { By } from '@angular/platform-browser';
 
-fdescribe('ConnectionStatusComponent', () => {
+describe('ConnectionStatusComponent', () => {
   let component: ConnectionStatusComponent;
   let fixture: ComponentFixture<ConnectionStatusComponent>;
   let connection: ConnectionService;
@@ -68,6 +68,7 @@ fdescribe('ConnectionStatusComponent', () => {
         const rootEl = fixture.debugElement.query(By.css('.connection-status.offline'));
 
         expect(rootEl).toBeTruthy();
+        expect(rootEl.nativeElement.attributes.title.value).toEqual('SEM conexão com a internet');
       }
     )
   );
@@ -82,8 +83,8 @@ fdescribe('ConnectionStatusComponent', () => {
         fixture.detectChanges();
 
         const rootEl = fixture.debugElement.query(By.css('.connection-status.online'));
-
         expect(rootEl).toBeTruthy();
+        expect(rootEl.nativeElement.attributes.title.value).toEqual('COM conexão com a internet');
       }
     )
   );

@@ -2,7 +2,7 @@ import { TestBed, async, inject, fakeAsync, tick, discardPeriodicTasks } from '@
 import { ConnectionService } from './connection.service';
 import { BaseRequestOptions, Http, ResponseOptions, Response } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 describe('ConnectionService', () => {
   beforeEach(() => {
@@ -100,7 +100,7 @@ describe('ConnectionService', () => {
         tick(100);
 
         expect(() => {
-          connection.startWatch(500)
+          connection.startWatch(500);
         }).toThrow();
 
         discardPeriodicTasks();
