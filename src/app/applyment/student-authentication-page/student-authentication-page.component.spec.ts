@@ -11,12 +11,14 @@ import { StudentService } from '../../core/shared/student.service';
 import { camelizeObject } from '../../utils/json';
 import * as test from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
+import { By } from '@angular/platform-browser';
 
 const mockStudent = {
   id: '1234',
   access_token: '1234',
   name: 'John Doe',
   matricula: '98765',
+  class: '6º Ano - C'
 };
 
 describe('StudentAuthenticationPageComponent', () => {
@@ -95,6 +97,11 @@ describe('StudentAuthenticationPageComponent', () => {
     it('should display student data', () => {
       expect(test.getNativeElement(fixture, '[studentName]').textContent).toEqual(mockStudent.name);
       expect(test.getNativeElement(fixture, '[studentMatricula]').textContent).toEqual(mockStudent.matricula);
+    });
+
+    it('should display student class', () => {
+      const studentClass = fixture.debugElement.query(By.css('[studentClass]')).nativeElement.textContent;
+      expect(studentClass).toEqual(mockStudent.class);
     });
 
     it('should continue to the next page', () => {

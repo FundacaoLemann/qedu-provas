@@ -300,7 +300,8 @@
       "id": "12345",
       "access_token": "12345",
       "name": "John Doe",
-      "matricula": "98765"
+      "matricula": "98765",
+      "class": "6º Ano - C"
     }
   ],
   "status": {
