@@ -6,7 +6,7 @@
     <div class="pull-right" *ngIf="student">
       <div class="student">
         <span studentName><strong>{{student?.name}}</strong></span>
-        <span *ngIf="student.matricula" studentMatricula> - {{student?.matricula}}</span>
+        <span *ngIf="student.matricula" > - <span studentMatricula>{{student?.matricula}}</span></span>
         | <span studentClass>{{student?.class}}</span>
       </div>
     </div>
