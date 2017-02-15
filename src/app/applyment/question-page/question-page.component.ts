@@ -23,12 +23,11 @@ export class QuestionPageComponent implements OnInit {
   constructor(private assessmentService: AssessmentService,
               private route: ActivatedRoute,
               private router: Router,
-              private applymentService: ApplymentService,
-  ) {
+              private applymentService: ApplymentService) {
   }
 
   ngOnInit() {
-    //Load the assessment
+    // Load the assessment
     this.assessmentService
       .getAssessment(this.route.snapshot.params['uuid'])
       .subscribe(assessment => this.assessment = assessment);

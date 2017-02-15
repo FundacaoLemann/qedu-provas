@@ -34,7 +34,7 @@ describe('ReviewPageComponent', () => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
 
-    //Services
+    // Services
     store = fixture.debugElement.injector.get(StoreService);
     store.setStudent(mockStudent);
 
