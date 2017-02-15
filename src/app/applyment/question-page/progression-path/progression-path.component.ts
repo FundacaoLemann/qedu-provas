@@ -23,6 +23,10 @@ export class ProgressionPathComponent implements OnInit {
     });
   }
 
+  buttonTitle(answered: boolean, index: number): string {
+    return answered ? `Questão ${index} respondida` : `Questão ${index} sem resposta`;
+  }
+
   // Events
   onItemClick (index: number) {
     this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', index.toString()]);

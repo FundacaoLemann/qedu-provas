@@ -7,6 +7,7 @@
   list-style: none
   flex-flow: row wrap
   justify-content: center
+  align-items: center
 
   .progression-path-item
     width: 32px
@@ -32,9 +33,16 @@
         border-bottom: 0
 
     &.answered
+      width: 26px
+      height: 26px
       background-color: $color-primary-blue
       color: $color-white
       box-shadow: none
+      margin-left: 6px
+
+      span
+        font-size: 12px
+        margin-top: -2px
 
       .status
         display: block

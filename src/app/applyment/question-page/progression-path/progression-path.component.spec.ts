@@ -1,13 +1,12 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProgressionPathComponent } from './progression-path.component';
-import * as test from '../../../../testing/testing-helper';
 import { By } from '@angular/platform-browser';
 import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
 import { ApplymentService } from '../../../core/shared/applyment.service';
 import { AppModule } from '../../../app.module';
+import * as test from '../../../../testing/testing-helper';
 
 const db = require('../../../../../mock/db.json');
 const mockQuestions = db.questions;
