@@ -22,19 +22,19 @@ describe('QuestionPageComponent', () => {
   let applymentService: ApplymentService;
   let assessmentService: AssessmentService;
   const mockQuestions = json.camelizeObject(db.questions);
+  const mockAssessment = json.camelizeObject(db.assessments)[0];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ApplymentModule, CoreModule],
       providers: [
-        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() },
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1', question_id: '1' }) },
         { provide: Router, useClass: RouterStub },
       ]
     })
       .compileComponents();
-
-
   }));
+
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionPageComponent);
     component = fixture.componentInstance;
@@ -46,6 +46,7 @@ describe('QuestionPageComponent', () => {
     route.testParams = { uuid: '1', question_id: '1' };
 
     spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(mockQuestions));
+    spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
     applymentService.initAnswers(mockQuestions.length);
 
     fixture.detectChanges();
@@ -83,6 +84,14 @@ describe('QuestionPageComponent', () => {
     expect(component.checkedAnswer).toEqual(1);
   });
 
+  it('should display the assessment title being applied', () => {
+    route.testParams = { uuid: '1', question_id: '1' };
+    fixture.detectChanges();
+
+    const title = fixture.debugElement.query(By.css('[mainTitle]'));
+    expect(title.nativeElement.textContent.trim()).toEqual(mockAssessment.mainTitle);
+  });
+
   describe('navigation buttons', () => {
     it('should navigate to the next question when clicked', async(() => {
       route.testParams = { uuid: '1', question_id: 1 };
@@ -111,11 +120,8 @@ describe('QuestionPageComponent', () => {
     }));
 
     it('should disable the prev-button when the current question is the first', () => {
-      route.testParams = { uuid: 1, question_id: 1 };
       fixture.detectChanges();
-
       const buttonEl = fixture.debugElement.query(By.css('[prev]')).nativeElement;
-
       expect(buttonEl.disabled).toEqual(true);
     });
   });

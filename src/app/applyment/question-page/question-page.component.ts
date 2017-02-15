@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Question } from '../../shared/model/question';
-import 'rxjs/add/operator/switchMap';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ApplymentService } from '../../core/shared/applyment.service';
+import { Assessment } from '../../shared/model/assessment';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'qp-question-page',
@@ -17,14 +18,22 @@ export class QuestionPageComponent implements OnInit {
   answers: any[];
   checkedAnswer = 0;
   questionIndex = 0;
+  assessment: Assessment;
 
   constructor(private assessmentService: AssessmentService,
               private route: ActivatedRoute,
               private router: Router,
-              private applymentService: ApplymentService) {
+              private applymentService: ApplymentService,
+  ) {
   }
 
   ngOnInit() {
+    //Load the assessment
+    this.assessmentService
+      .getAssessment(this.route.snapshot.params['uuid'])
+      .subscribe(assessment => this.assessment = assessment);
+
+    // Update question based on the url change
     this.route.params
       .switchMap(
         (params: Params) => {
