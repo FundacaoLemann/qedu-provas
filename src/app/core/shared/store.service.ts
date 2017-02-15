@@ -27,7 +27,7 @@ export class StoreService {
   }
 
   getStudent(): Student {
-    return this._student$.getValue() as Student;
+    return this._student$.getValue();
   }
 
   get student(): Observable<Student> {
