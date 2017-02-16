@@ -1,18 +1,36 @@
 <div class="page">
   <qp-header></qp-header>
-  <main class="container">
+  <main class="container text-center">
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="col-xs-12">
-          <h3>Parabéns!</h3>
-          <hr>
+          <h1><strong>Parabéns!</strong></h1>
+          <div class="smile">
+            <i class="fa fa-smile-o"></i>
+          </div>
+          <h1><strong>Sua prova foi entregue!</strong></h1>
+          <br>
+          <h4>
+            Agora você merece um descanso! <br>
+            Aproveite para se divertir enquanto os outros alunos terminam a prova.
+          </h4>
+          <br>
+          <h4>
+            <strong>Lembre-se: </strong> Mantenha o silêncio para não atrapalhar seus colegas.
+          </h4>
+
+          <button
+            class="btn btn-success btn-lg"
+            (click)="snake()"
+          >
+            E agora?
+          </button>
+
         </div>
-        <div class="col-xs-12">
-          <p>
-            Você finalizou a sua prova! <br>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ea excepturi mollitia?
-          </p>
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+          <div id="stage"></div>
         </div>
+
       </div>
       <div class="panel-footer">
         <div class="row">

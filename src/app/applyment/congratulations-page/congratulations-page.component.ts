@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import snake from '../../utils/snake';
 
 @Component({
   selector: 'qp-congratulations-page',
@@ -11,5 +12,9 @@ export class CongratulationsPageComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  snake() {
+    snake('stage');
   }
 }
