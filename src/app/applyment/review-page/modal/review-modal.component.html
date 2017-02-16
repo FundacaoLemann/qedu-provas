@@ -2,11 +2,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <h3>Atenção</h3>
+        <h3><i class="fa fa-exclamation-triangle"></i> Atenção</h3>
         <hr>
         <p>
-          Ao clicar em <b>Sim</b> sua prova será finalizada e não será mais possível realizar alterações.<br>
-          Deseja continuar?
+          Ao <strong>entregar</strong>, a prova será encerrada e não você não poderá modificar as respostas. <br>
+          Você quer mesmo <strong>entregar</strong> sua prova?
         </p>
       </div>
       <div class="modal-footer">
@@ -14,11 +14,11 @@
           <div class="col-xs-6 text-left">
             <button class="btn btn-default"
                     close-button
-                    (click)="cancel()">Cancelar
+                    (click)="cancel()">Não
             </button>
           </div>
           <div class="col-xs-6">
-            <button class="btn btn-success" finishButton (click)="confirm()">Sim, eu terminei!</button>
+            <button class="btn btn-success" finishButton (click)="confirm()">Sim</button>
           </div>
         </div>
       </div>

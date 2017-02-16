@@ -2,25 +2,30 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <h3>Atenção</h3>
+        <h3><i class="fa fa-exclamation-triangle"></i> Atenção</h3>
         <hr>
         <p>
-          Ao clicar em <b>Confirmar</b> sua prova será iniciada e o tempo sera contabilizado.<br>
-          Deseja continuar?
+          Ao <strong>começar</strong> sua prova não será possível voltar atrás.<br>
+          Você está pronto para <strong>começar</strong>?
         </p>
       </div>
       <div class="modal-footer">
         <div class="row">
           <div class="col-xs-6 text-left">
             <button
-                    class="btn btn-default"
-                    close-button
-                    (click)="cancel()">
-              Cancelar
+              close-button
+              class="btn btn-default"
+              (click)="cancel()">
+              Não
             </button>
           </div>
           <div class="col-xs-6">
-            <button class="btn btn-success" confirm (click)="confirm()">Confirmar!</button>
+            <button
+              confirm
+              class="btn btn-success"
+              (click)="confirm()">
+              Sim
+            </button>
           </div>
         </div>
       </div>
