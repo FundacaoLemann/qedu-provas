@@ -8,6 +8,7 @@ import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-con
 import { HasModal } from '../../core/shared/has-modal/has-modal';
 import { ConnectionService } from '../../core/shared/connection.service';
 import 'rxjs/add/operator/catch';
+import { Assessment } from '../../shared/model/assessment';
 
 @Component({
   selector: 'qp-review-page',
@@ -23,6 +24,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   answers: number[] = [];
   answersLength = 0;
   questionsLength = 0;
+  assessment: Assessment;
 
   constructor(private viewContainer: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -39,6 +41,10 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   load() {
+    this.assessmentService
+      .getAssessment(this.route.snapshot.params['uuid'])
+      .subscribe(assessment => this.assessment = assessment);
+
     this.assessmentService.getQuestions(this.route.snapshot.params['uuid'])
       .subscribe(
         (questions) => {

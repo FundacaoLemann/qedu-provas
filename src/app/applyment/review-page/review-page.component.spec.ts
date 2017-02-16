@@ -25,6 +25,7 @@ describe('ReviewPageComponent', () => {
   let assessmentService: AssessmentService;
   let applymentService: ApplymentService;
   const mockQuestions = db.questions;
+  const mockAssessment = json.camelizeObject(db.assessments[0]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -56,6 +57,7 @@ describe('ReviewPageComponent', () => {
     applymentService.setAnswer(3, 2);
 
     spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
+    spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
 
     fixture.detectChanges();
   });
