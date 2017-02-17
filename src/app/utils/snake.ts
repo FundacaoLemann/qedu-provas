@@ -6,9 +6,9 @@ export default function init(stage) {
   const queue = [];
   let elements = 1;
   const map = [];
-  let X = 5 + (Math.random() * (45 - 10)) ? Math.random() * (45 - 10) : 0;
-  let Y = 5 + (Math.random() * (30 - 10)) ? Math.random() * (30 - 10) : 0;
-  let direction = (Math.random() * 3) ? Math.random() * 3 : 0;
+  let X = 5 + Math.floor(Math.random() * (45 - 10));
+  let Y = 5 + Math.floor(Math.random() * (30 - 10));
+  let direction = Math.floor(Math.random() * 3);
   let interval: any;
   let score = 0;
   let inc_score = 50;
@@ -30,8 +30,8 @@ export default function init(stage) {
   function placeFood() {
     let x, y;
     do {
-      x = (Math.random() * 45) ? (Math.random() * 45) : 0;
-      y = (Math.random() * 30) ? Math.random() * 30 : 0;
+      x = Math.floor(Math.random() * 45);
+      y = Math.floor(Math.random() * 30);
     } while (map[x][y]);
     map[x][y] = 1;
     ctx.strokeRect(x * 10 + 1, y * 10 + 1, 10 - 2, 10 - 2);
