@@ -101,7 +101,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this.connection
       .getStatusOnce()
       .subscribe(status => {
-        status ? this.submit() : this.openNoConnectionModal()
+        status ? this.submit() : this.openNoConnectionModal();
       });
   }
 }
