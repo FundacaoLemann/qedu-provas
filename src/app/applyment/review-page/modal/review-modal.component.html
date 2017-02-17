@@ -12,13 +12,27 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-xs-6 text-left">
-            <button class="btn btn-default"
-                    close-button
-                    (click)="cancel()">Não
+            <button
+              close-button
+              class="btn btn-default"
+              [ngClass]="{disabled: isSubmitting}"
+              [disabled]="isSubmitting"
+              (click)="cancel()">
+              Não
             </button>
           </div>
           <div class="col-xs-6">
-            <button class="btn btn-success" finishButton (click)="confirm()">Sim</button>
+            <button
+              finishButton
+              class="btn btn-success"
+              [ngClass]="{disabled: isSubmitting}"
+              [disabled]="isSubmitting"
+              (click)="confirm()">
+              <span *ngIf="! isSubmitting">Sim</span>
+              <span *ngIf="isSubmitting">
+                Enviando <i class="fa fa-spinner spinning" ></i>
+              </span>
+            </button>
           </div>
         </div>
       </div>

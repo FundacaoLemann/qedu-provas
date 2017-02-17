@@ -62,6 +62,7 @@ export class ConnectionService {
       }
     };
 
+    request();
     this._reference = setInterval(request, this.interval);
 
     return this.status;

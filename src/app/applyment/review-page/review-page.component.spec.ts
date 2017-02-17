@@ -102,7 +102,8 @@ describe('ReviewPageComponent', () => {
 
   it('should create warning modal when offline', fakeAsync(() => {
     component.openNoConnectionModal();
-    tick(300);
+    tick(10000);
+    fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
 

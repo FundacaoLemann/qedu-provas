@@ -8,6 +8,7 @@ import { Component, EventEmitter } from '@angular/core';
 export class ReviewModalComponent {
   onCancel = new EventEmitter<null>();
   onConfirm = new EventEmitter<null>();
+  isSubmitting = false;
 
   confirm () {
     this.onConfirm.emit();

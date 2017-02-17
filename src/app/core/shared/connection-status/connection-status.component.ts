@@ -7,7 +7,7 @@ import { ConnectionService } from '../connection.service';
   styleUrls: ['connection-status.component.sass']
 })
 export class ConnectionStatusComponent implements OnInit {
-  status: boolean;
+  status: boolean = null;
   message = '';
 
   constructor(private connection: ConnectionService) {
@@ -16,7 +16,7 @@ export class ConnectionStatusComponent implements OnInit {
   ngOnInit() {
     this.connection.stopWatch();
     this.connection
-      .startWatch(500)
+      .startWatch(30000)
       .subscribe(status => {
         this.status = status;
         this.message = ((status) ? 'COM' : 'SEM') + ' conexão com a internet';

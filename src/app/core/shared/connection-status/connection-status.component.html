@@ -1,4 +1,4 @@
 <div class="connection-status"
-     [ngClass]="{'offline': status === false, 'online': status === true}"
+     [ngClass]="{'default': status === null, 'offline': status === false, 'online': status === true}"
      [title]="message"
 ></div>

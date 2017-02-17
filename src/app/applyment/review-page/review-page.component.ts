@@ -79,7 +79,6 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   openNoConnectionModal() {
     this.closeModal();
-
     setTimeout(() => {
       this.openModal(NoConnectionModalComponent, {
         onClose: () => {
@@ -87,6 +86,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         }
       });
     }, 300);
+
   }
 
   submit() {
@@ -97,8 +97,11 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   finish() {
+    this.modalRef.instance.isSubmitting = true;
     this.connection
       .getStatusOnce()
-      .subscribe(status => status ? this.submit() : this.openNoConnectionModal());
+      .subscribe(status => {
+        status ? this.submit() : this.openNoConnectionModal()
+      });
   }
 }
