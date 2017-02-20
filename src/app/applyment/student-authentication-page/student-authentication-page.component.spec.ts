@@ -53,8 +53,8 @@ describe('StudentAuthenticationPageComponent', () => {
     router = fixture.debugElement.injector.get(Router);
   });
 
-  it('should load student data from service', async(() => {
-    spyOn(applymentService, 'student').and.returnValue(mockStudent);
+  it('should load getStudent data from service', async(() => {
+    spyOn(applymentService, 'getStudent').and.returnValue(mockStudent);
     component.student = null;
     component.ngOnInit();
     expect(component.student).toEqual(mockStudent);
@@ -69,7 +69,7 @@ describe('StudentAuthenticationPageComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should fetch student data when submit', async(() => {
+    it('should fetch getStudent data when submit', async(() => {
       spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.of(mockStudent));
       component.accessToken = '12345';
       component.onSubmit();
@@ -86,20 +86,20 @@ describe('StudentAuthenticationPageComponent', () => {
     }));
   });
 
-  describe('Displaying student data', () => {
+  describe('Displaying getStudent data', () => {
     beforeEach(() => {
-      spyOn(applymentService, 'student').and.returnValue(mockStudent);
+      spyOn(applymentService, 'getStudent').and.returnValue(mockStudent);
       spyOn(router, 'navigate');
       component.student = mockStudent;
       fixture.detectChanges();
     });
 
-    it('should display student data', () => {
+    it('should display getStudent data', () => {
       expect(test.getNativeElement(fixture, '[studentName]').textContent).toEqual(mockStudent.name);
       expect(test.getNativeElement(fixture, '[studentMatricula]').textContent).toEqual(mockStudent.matricula);
     });
 
-    it('should display student class', () => {
+    it('should display getStudent class', () => {
       const studentClass = fixture.debugElement.query(By.css('[studentClass]')).nativeElement.textContent;
       expect(studentClass).toEqual(mockStudent.class);
     });
@@ -109,7 +109,7 @@ describe('StudentAuthenticationPageComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'instrucoes']);
     });
 
-    it('should clear student data and go back to search', () => {
+    it('should clear getStudent data and go back to search', () => {
       test.dispatchEvent(fixture, '[cancel]', 'click');
       expect(component.student).toEqual(null);
       expect(component.accessToken).toEqual(null);

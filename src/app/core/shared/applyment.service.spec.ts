@@ -16,7 +16,7 @@ describe('ApplymentService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should hold student data', inject([ApplymentService], (service: ApplymentService) => {
+  it('should hold getStudent data', inject([ApplymentService], (service: ApplymentService) => {
     const student = {
       name: 'John Doe',
       matricula: '12345',
@@ -24,7 +24,7 @@ describe('ApplymentService', () => {
     };
 
     service.setStudent(student);
-    expect(service.student()).toEqual(student);
+    expect(service.getStudent()).toEqual(student);
   }));
 
   it('should initialize the answers store', inject([ApplymentService], (service: ApplymentService) => {

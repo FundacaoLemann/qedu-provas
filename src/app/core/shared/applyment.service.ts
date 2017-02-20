@@ -23,34 +23,38 @@ export class ApplymentService {
     this._store.setState(newState);
   }
 
-  student(): Student {
-    return this._store.state.applyment.student;
+  getStudent(): Student {
+    try {
+      return this._store.state.applyment.student;
+    } catch (err) {
+      return null;
+    }
   }
 
   // OLD
 
-  setAnswer (questionId: number, answerId: number) {
+  setAnswer(questionId: number, answerId: number) {
     const answers = this._store.getAnswers();
     answers[questionId] = answerId;
 
     this._store.setAnswers(answers);
   }
 
-  initAnswers (length: number) {
+  initAnswers(length: number) {
     const initialAnswers = Array(length).fill(0);
     this._store.setAnswers(initialAnswers);
   }
 
-  getAnswer (questionId: number): number {
+  getAnswer(questionId: number): number {
     const answers = this._store.getAnswers();
     return answers[questionId];
   }
 
-  getAnswers (): Array<number> {
+  getAnswers(): Array<number> {
     return this._store.getAnswers();
   }
 
-  getAnswersAsObservable (): Observable<number[]> {
+  getAnswersAsObservable(): Observable<number[]> {
     return this._store.answers;
   }
 

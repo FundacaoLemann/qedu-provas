@@ -12,8 +12,8 @@ describe('StoreService', () => {
 
   it('should hold data', inject([StoreService], (store: StoreService) => {
     const student = { name: 'John Doe', matricula: '12345' };
-    store.setValue('student', student);
-    expect(store.getValue('student')).toEqual(student);
+    store.setValue('getStudent', student);
+    expect(store.getValue('getStudent')).toEqual(student);
   }));
 
   it('should return an observable of answers', inject([StoreService], (store: StoreService) => {

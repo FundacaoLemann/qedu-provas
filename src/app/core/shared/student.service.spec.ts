@@ -31,7 +31,7 @@ describe('StudentService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should return an student', async(inject([
+  it('should return an getStudent', async(inject([
     StudentService,
     MockBackend
   ], (service: StudentService, mockBackend: MockBackend) => {

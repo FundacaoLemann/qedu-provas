@@ -26,7 +26,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.student = this.applymentService.student() || null;
+    this.student = this.applymentService.getStudent() || null;
 
     this.assessmentService.getAssessment(this.route.snapshot.params['uuid'])
       .subscribe(

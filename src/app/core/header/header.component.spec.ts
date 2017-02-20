@@ -45,21 +45,21 @@ describe('ReviewPageComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should get student data from service', () => {
+  it('should get getStudent data from service', () => {
     expect(component.student).toEqual(store.state.applyment.student);
   });
 
-  it('should display student name', () => {
+  it('should display getStudent name', () => {
     const name = fixture.debugElement.query(By.css('[studentName]'));
     expect(name.nativeElement.textContent.trim()).toEqual(mockStudent.name);
   });
 
-  it('should display student matricula', () => {
+  it('should display getStudent matricula', () => {
     const matricula = fixture.debugElement.query(By.css('[studentMatricula]'));
     expect(matricula.nativeElement.textContent.trim()).toEqual(mockStudent.matricula);
   });
 
-  it('should display student class', () => {
+  it('should display getStudent class', () => {
     const klass = fixture.debugElement.query(By.css('[studentClass]'));
     expect(klass.nativeElement.textContent.trim()).toEqual(mockStudent.class);
   });
