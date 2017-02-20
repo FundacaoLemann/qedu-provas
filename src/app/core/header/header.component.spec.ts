@@ -4,27 +4,24 @@ import { ConnectionStatusComponent } from '../shared/connection-status/connectio
 import { ConnectionService } from '../shared/connection.service';
 import { HttpModule } from '@angular/http';
 import { By } from '@angular/platform-browser';
-import { StoreService } from '../shared/store.service';
+import { ApplymentService } from '../../applyment/shared/applyment.service';
+import { ApplymentModule } from '../../applyment/applyment.module';
 
 const mockStudent = require('../../../../mock/db.json').students[0];
 
-describe('ReviewPageComponent', () => {
+describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let store: StoreService;
+  let applyment: ApplymentService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpModule
-      ],
-      declarations: [
-        HeaderComponent,
-        ConnectionStatusComponent
+        ApplymentModule
       ],
       providers: [
         ConnectionService,
-        StoreService
+        ApplymentService
       ]
     })
       .compileComponents();
@@ -35,8 +32,8 @@ describe('ReviewPageComponent', () => {
     component = fixture.componentInstance;
 
     // Services
-    store = fixture.debugElement.injector.get(StoreService);
-    store.setState({ applyment: { student: mockStudent } });
+    applyment = fixture.debugElement.injector.get(ApplymentService);
+    applyment.setStudent(mockStudent);
 
     fixture.detectChanges();
   });
@@ -46,7 +43,7 @@ describe('ReviewPageComponent', () => {
   }));
 
   it('should get getStudent data from service', () => {
-    expect(component.student).toEqual(store.state.applyment.student);
+    expect(component.student).toEqual(mockStudent);
   });
 
   it('should display getStudent name', () => {

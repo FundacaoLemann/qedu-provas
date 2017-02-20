@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApplymentService } from '../../../core/shared/applyment.service';
+import { ApplymentService } from '../../shared/applyment.service';
 
 @Component({
   selector: 'qp-progression-path',
@@ -17,8 +17,8 @@ export class ProgressionPathComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.answers = this.applymentService.getAnswers();
-    this.applymentService.getAnswersAsObservable().subscribe(answers => {
+    this.answers = this.applymentService.getAllAnswers();
+    this.applymentService.answersAsObservable().subscribe(answers => {
       this.answers = answers;
     });
   }

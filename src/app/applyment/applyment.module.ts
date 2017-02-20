@@ -16,7 +16,7 @@ import { StudentAuthenticationPageComponent } from './student-authentication-pag
 import { PageLogosComponent } from './shared/page-logos/page-logos.component';
 import { ProgressionPathComponent } from './question-page/progression-path/progression-path.component';
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
-import { ConnectionStatusComponent } from '../core/shared/connection-status/connection-status.component';
+import { ApplymentService } from './shared/applyment.service';
 
 @NgModule({
   imports: [
@@ -46,6 +46,9 @@ import { ConnectionStatusComponent } from '../core/shared/connection-status/conn
   ],
   exports: [
     ApplymentComponent,
+  ],
+  providers: [
+    ApplymentService
   ]
 })
 export class ApplymentModule {

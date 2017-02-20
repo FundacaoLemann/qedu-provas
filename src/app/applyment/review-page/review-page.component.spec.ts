@@ -5,16 +5,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { RouterStub } from '../../../testing/router-stub';
-import { ApplymentModule } from '../applyment.module';
 import { ComponentRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
+import { ApplymentModule } from '../applyment.module';
 // Rxjs
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 // Utils
 import * as json from '../../utils/json';
-import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
+
 const db = require('../../../../mock/db.json');
 
 describe('ReviewPageComponent', () => {
@@ -30,13 +31,12 @@ describe('ReviewPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        ApplymentModule,
+        ApplymentModule
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
-        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1' }) },
-        ApplymentService
-      ]
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1' }) }
+      ],
     })
       .compileComponents();
   }));
@@ -53,14 +53,16 @@ describe('ReviewPageComponent', () => {
     // init questions with 10
     applymentService.initAnswers(mockQuestions.length);
     // Set two correct answers
-    applymentService.setAnswer(0, 1);
-    applymentService.setAnswer(3, 2);
+    applymentService.setSingleAnswer(0, 1);
+    applymentService.setSingleAnswer(3, 2);
 
     spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
     spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
 
     fixture.detectChanges();
   });
+
+
 
   it('should create', async(() => {
     expect(component).toBeTruthy();
@@ -106,5 +108,4 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
-
 });

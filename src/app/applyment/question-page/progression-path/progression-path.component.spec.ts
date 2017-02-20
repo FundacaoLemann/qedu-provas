@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
-import { ApplymentService } from '../../../core/shared/applyment.service';
+import { ApplymentService } from '../../shared/applyment.service';
 import { AppModule } from '../../../app.module';
 import * as test from '../../../../testing/testing-helper';
 
@@ -65,9 +65,9 @@ describe('ProgressionPathComponent', () => {
   });
 
   it('should display the answers with .answered', async(() => {
-    applymentService.setAnswer(0, 3);
-    applymentService.setAnswer(1, 3);
-    applymentService.setAnswer(2, 3);
+    applymentService.setSingleAnswer(0, 3);
+    applymentService.setSingleAnswer(1, 3);
+    applymentService.setSingleAnswer(2, 3);
     fixture.detectChanges();
 
     const match = fixture.debugElement.queryAll(By.css('ul li.answered')).length;

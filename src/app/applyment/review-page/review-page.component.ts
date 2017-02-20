@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../shared/model/question';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ReviewModalComponent } from './modal/review-modal.component';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { HasModal } from '../../core/shared/has-modal/has-modal';
 import { ConnectionService } from '../../core/shared/connection.service';
@@ -50,7 +50,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         (questions) => {
           this.questions = questions;
           this.questionsLength = questions.length;
-          this.answers = this.applymentService.getAnswers();
+          this.answers = this.applymentService.getAllAnswers();
           this.answersLength = this.answers.filter((answer) => !!answer).length;
         },
         error => this.questions = []

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { ConnectionService } from '../../core/shared/connection.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { HasModal } from '../../core/shared/has-modal/has-modal';

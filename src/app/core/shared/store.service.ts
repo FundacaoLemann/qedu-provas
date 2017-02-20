@@ -13,6 +13,7 @@ export class StoreService {
   }
 
   setState(newState: any) {
+    // console.log(newState);
     this._store$.next(newState);
   }
 
@@ -20,20 +21,11 @@ export class StoreService {
     return this._store$.getValue();
   }
 
+  asObservable(): Observable<any> {
+    return this._store$.asObservable();
+  }
+
   // Answers
-  getAnswers(): number[] {
-    return this._answers$.getValue();
-  }
-
-  setAnswers(answers: number[]) {
-    const newAnswers = Object.assign([], this._answers$.getValue(), answers);
-    this._answers$.next(newAnswers);
-  }
-
-  get answers(): Observable<number[]> {
-    return this._answers$.asObservable();
-  }
-
   setValue(branch: string, value: {}) {
     const _value = {};
     _value[branch] = value;

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { StudentService } from '../../core/shared/student.service';
 
 @Component({

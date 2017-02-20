@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { RouterStub } from '../../../testing/router-stub';
 import { StudentAuthenticationPageComponent } from './student-authentication-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { StoreService } from '../../core/shared/store.service';
 import { StudentService } from '../../core/shared/student.service';
 import { camelizeObject } from '../../utils/json';

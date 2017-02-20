@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Student } from '../../shared/model/student';
-import { StoreService } from '../shared/store.service';
+import { ApplymentService } from '../../applyment/shared/applyment.service';
 
 @Component({
   selector: 'qp-header',
@@ -12,15 +12,11 @@ export class HeaderComponent implements OnInit {
 
   student: Student;
 
-  constructor (private store: StoreService) {
+  constructor (private applymentService: ApplymentService) {
   }
 
   ngOnInit () {
-    try {
-      this.student = this.store.state.applyment.student;
-    } catch (err) {
-      this.student = null;
-    }
+    this.student = this.applymentService.getStudent();
   }
 
 }

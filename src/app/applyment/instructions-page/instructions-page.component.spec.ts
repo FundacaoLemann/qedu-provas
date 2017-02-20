@@ -12,7 +12,7 @@ import { AssessmentServiceStub } from '../../../testing/assessment-service-stub'
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
 import json from '../../utils/json';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
 import { ConnectionService } from '../../core/shared/connection.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';

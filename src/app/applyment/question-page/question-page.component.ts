@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Question } from '../../shared/model/question';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { Assessment } from '../../shared/model/assessment';
 import 'rxjs/add/operator/switchMap';
 
@@ -52,7 +52,7 @@ export class QuestionPageComponent implements OnInit {
             this.question = new Question();
             this.answers = [];
           } finally {
-            this.checkedAnswer = this.applymentService.getAnswer(this.questionIndex) || 0;
+            this.checkedAnswer = this.applymentService.getSingleAnswer(this.questionIndex) || 0;
           }
         },
         error => {
@@ -79,7 +79,7 @@ export class QuestionPageComponent implements OnInit {
 
   updateChecked(answerId: number) {
     this.checkedAnswer = answerId;
-    this.applymentService.setAnswer(this.questionIndex, answerId);
+    this.applymentService.setSingleAnswer(this.questionIndex, answerId);
   }
 
   next() {

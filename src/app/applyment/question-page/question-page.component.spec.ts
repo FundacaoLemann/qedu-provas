@@ -6,7 +6,7 @@ import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
 import { ApplymentModule } from '../applyment.module';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { ApplymentService } from '../../core/shared/applyment.service';
+import { ApplymentService } from '../shared/applyment.service';
 import { CoreModule } from '../../core/core.module';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -72,14 +72,14 @@ describe('QuestionPageComponent', () => {
   }));
 
   it('should store the answer in the data store service', () => {
-    spyOn(applymentService, 'setAnswer');
+    spyOn(applymentService, 'setSingleAnswer');
     route.testParams = { uuid: '1', question_id: 1 };
     component.updateChecked(1);
-    expect(applymentService.setAnswer).toHaveBeenCalledWith(0, 1);
+    expect(applymentService.setSingleAnswer).toHaveBeenCalledWith(0, 1);
   });
 
   it('should load and display the answer when already set', () => {
-    applymentService.setAnswer(0, 1);
+    applymentService.setSingleAnswer(0, 1);
     route.testParams = { uuid: '1', question_id: 1 };
     expect(component.checkedAnswer).toEqual(1);
   });
