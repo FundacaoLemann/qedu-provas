@@ -5,41 +5,53 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ApplymentService {
+  initialState = {
+    applyment: {
+      assessment: null,
+      questions: [],
+      answers: [],
+      student: null
+    }
+  };
 
-  constructor (private store: StoreService) {
+  constructor(private _store: StoreService) {
+    this._store.setState(this.initialState);
   }
 
-  setStudent (student: Student) {
-    this.store.setStudent(student);
+  setStudent(student: Student) {
+    const newState = Object.assign({}, this._store.state, { applyment: { student } });
+    this._store.setState(newState);
   }
 
-  getStudent (): Student {
-    return this.store.getStudent();
+  student(): Student {
+    return this._store.state.applyment.student;
   }
+
+  // OLD
 
   setAnswer (questionId: number, answerId: number) {
-    const answers = this.store.getAnswers();
+    const answers = this._store.getAnswers();
     answers[questionId] = answerId;
 
-    this.store.setAnswers(answers);
+    this._store.setAnswers(answers);
   }
 
   initAnswers (length: number) {
     const initialAnswers = Array(length).fill(0);
-    this.store.setAnswers(initialAnswers);
+    this._store.setAnswers(initialAnswers);
   }
 
   getAnswer (questionId: number): number {
-    const answers = this.store.getAnswers();
+    const answers = this._store.getAnswers();
     return answers[questionId];
   }
 
   getAnswers (): Array<number> {
-    return this.store.getAnswers();
+    return this._store.getAnswers();
   }
 
   getAnswersAsObservable (): Observable<number[]> {
-    return this.store.answers;
+    return this._store.answers;
   }
 
 }

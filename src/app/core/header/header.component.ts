@@ -16,7 +16,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.student = this.store.getStudent();
+    try {
+      this.student = this.store.state.applyment.student;
+    } catch (err) {
+      this.student = null;
+    }
   }
 
 }

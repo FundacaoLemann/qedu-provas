@@ -19,11 +19,12 @@ describe('ApplymentService', () => {
   it('should hold student data', inject([ApplymentService], (service: ApplymentService) => {
     const student = {
       name: 'John Doe',
-      matricula: '12345'
+      matricula: '12345',
+      class: ''
     };
 
     service.setStudent(student);
-    expect(service.getStudent()).toEqual(student);
+    expect(service.student()).toEqual(student);
   }));
 
   it('should initialize the answers store', inject([ApplymentService], (service: ApplymentService) => {

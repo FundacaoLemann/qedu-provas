@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 // App
 import { CongratulationsPageComponent } from './congratulations-page.component';
-import { ApplymentModule } from '../applyment.module';
 import * as test from '../../../testing/testing-helper';
+import { AppModule } from '../../app.module';
 
 describe('CongratulationsPageComponent', () => {
   let component: CongratulationsPageComponent;
@@ -12,7 +12,7 @@ describe('CongratulationsPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
-          ApplymentModule,
+          AppModule,
           RouterTestingModule.withRoutes([])
         ],
       })

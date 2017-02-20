@@ -36,7 +36,7 @@ describe('ReviewPageComponent', () => {
 
     // Services
     store = fixture.debugElement.injector.get(StoreService);
-    store.setStudent(mockStudent);
+    store.setState({ applyment: { student: mockStudent } });
 
     fixture.detectChanges();
   });
@@ -46,7 +46,7 @@ describe('ReviewPageComponent', () => {
   }));
 
   it('should get student data from service', () => {
-    expect(component.student).toEqual(store.getStudent());
+    expect(component.student).toEqual(store.state.applyment.student);
   });
 
   it('should display student name', () => {

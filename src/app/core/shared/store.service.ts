@@ -1,37 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Student } from '../../shared/model/student';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class StoreService {
-  private _student$: BehaviorSubject<Student>;
   private _answers$: BehaviorSubject<Array<any>>;
 
-  private _store$: BehaviorSubject<{}>;
-  public store;
+  private _store$ = new BehaviorSubject(null);
 
   constructor() {
-    this._student$ = new BehaviorSubject(null);
-
     this._answers$ = new BehaviorSubject([]);
-
-    this._store$ = new BehaviorSubject({});
-    this.store = this._store$.asObservable();
   }
 
-  // Students
-  setStudent(student: Student) {
-    const newStudent = Object.assign({}, this._student$.getValue(), student);
-    this._student$.next(newStudent);
+  setState(newState: any) {
+    this._store$.next(newState);
   }
 
-  getStudent(): Student {
-    return this._student$.getValue();
-  }
-
-  get student(): Observable<Student> {
-    return this._student$.asObservable();
+  get state() {
+    return this._store$.getValue();
   }
 
   // Answers

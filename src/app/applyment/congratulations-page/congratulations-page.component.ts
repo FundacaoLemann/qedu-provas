@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import snake from '../../utils/snake';
 
 @Component({
@@ -6,12 +6,9 @@ import snake from '../../utils/snake';
   templateUrl: './congratulations-page.component.html',
   styleUrls: ['./congratulations-page.component.sass']
 })
-export class CongratulationsPageComponent implements OnInit {
+export class CongratulationsPageComponent {
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   snake() {

@@ -53,12 +53,12 @@ describe('StudentAuthenticationPageComponent', () => {
     router = fixture.debugElement.injector.get(Router);
   });
 
-  it('should load student data from service', () => {
-    spyOn(applymentService, 'getStudent').and.returnValue(mockStudent);
+  it('should load student data from service', async(() => {
+    spyOn(applymentService, 'student').and.returnValue(mockStudent);
     component.student = null;
     component.ngOnInit();
     expect(component.student).toEqual(mockStudent);
-  });
+  }));
 
   describe('Submitting form', () => {
     beforeEach(() => {
@@ -88,7 +88,7 @@ describe('StudentAuthenticationPageComponent', () => {
 
   describe('Displaying student data', () => {
     beforeEach(() => {
-      spyOn(applymentService, 'getStudent').and.returnValue(mockStudent);
+      spyOn(applymentService, 'student').and.returnValue(mockStudent);
       spyOn(router, 'navigate');
       component.student = mockStudent;
       fixture.detectChanges();
