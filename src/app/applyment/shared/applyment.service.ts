@@ -52,7 +52,7 @@ export class ApplymentService {
     return this._store.state.applyment.answers[questionId];
   }
 
-  getAllAnswers(): Array<number> {
+  getAllAnswers(): number[] {
     return this._store.state.applyment.answers;
   }
 

@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
 import { StoreService } from '../../core/shared/store.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 const mockStudent = require('../../../../mock/db.json').students[0];
 
@@ -60,7 +60,6 @@ describe('ApplymentService', () => {
 
   it('should return all the answers', inject(
     [ApplymentService],
-
     (service: ApplymentService) => {
       prepareAnswers(service);
       expect(service.getAllAnswers()).toEqual([1, 2, 5, 0]);
