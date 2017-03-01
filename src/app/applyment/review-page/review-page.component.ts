@@ -26,14 +26,13 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   questionsLength = 0;
   assessment: Assessment;
 
-  constructor(private viewContainer: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver,
-              private assessmentService: AssessmentService,
-              private applymentService: ApplymentService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private connection: ConnectionService) {
-    super(viewContainer, componentFactoryResolver);
+  constructor(protected _viewContainer: ViewContainerRef,
+              protected _componentFactoryResolver: ComponentFactoryResolver,
+              private _applymentService: ApplymentService,
+              private _route: ActivatedRoute,
+              private _router: Router,
+              private _connection: ConnectionService) {
+    super(_viewContainer, _componentFactoryResolver);
   }
 
   ngOnInit() {
@@ -41,29 +40,20 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   load() {
-    this.assessmentService
-      .fetchAssessment(this.route.snapshot.params['uuid'])
-      .subscribe(assessment => this.assessment = assessment);
-
-    this.assessmentService.fetchAssessmentQuestions(this.route.snapshot.params['uuid'])
-      .subscribe(
-        (questions) => {
-          this.questions = questions;
-          this.questionsLength = questions.length;
-          this.answers = this.applymentService.getAllAnswers();
-          this.answersLength = this.answers.filter((answer) => !!answer).length;
-        },
-        error => this.questions = []
-      );
+    this.assessment = this._applymentService.getAssessment();
+    this.questions = this._applymentService.getQuestions();
+    this.questionsLength = this.questions.length;
+    this.answers = this._applymentService.getAllAnswers();
+    this.answersLength = this.answers.filter((answer) => !!answer).length;
   }
 
   back() {
-    const uuid = this.route.snapshot.params['uuid'];
-    this.router.navigate(['prova', uuid, 'questao', this.questions.length]);
+    const uuid = this._route.snapshot.params['uuid'];
+    this._router.navigate(['prova', uuid, 'questao', this.questions.length]);
   }
 
   navigate(questionNumber: number) {
-    this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', questionNumber.toString()]);
+    this._router.navigate(['prova', this._route.snapshot.params['uuid'], 'questao', questionNumber.toString()]);
   }
 
   openFinishModal() {
@@ -92,13 +82,13 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   submit() {
     // TODO
     // Send data to API
-    const uuid = this.route.snapshot.params['uuid'];
-    this.router.navigate(['prova', uuid, 'parabens']);
+    const uuid = this._route.snapshot.params['uuid'];
+    this._router.navigate(['prova', uuid, 'parabens']);
   }
 
   finish() {
     this.modalRef.instance.isSubmitting = true;
-    this.connection
+    this._connection
       .getStatusOnce()
       .subscribe(status => {
         status ? this.submit() : this.openNoConnectionModal();

@@ -3,7 +3,6 @@ import { ReviewPageComponent } from './review-page.component';
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
-import { AssessmentService } from '../../core/shared/assessment.service';
 import { RouterStub } from '../../../testing/router-stub';
 import { ComponentRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -11,10 +10,8 @@ import { ApplymentService } from '../shared/applyment.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentModule } from '../applyment.module';
 // Rxjs
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-// Utils
-import * as json from '../../utils/json';
+import { camelizeObject } from '../../utils/json';
 
 const db = require('../../../../mock/db.json');
 
@@ -23,10 +20,9 @@ describe('ReviewPageComponent', () => {
   let fixture: ComponentFixture<ReviewPageComponent>;
   let router: Router;
   let route: ActivatedRouteStub;
-  let assessmentService: AssessmentService;
   let applymentService: ApplymentService;
-  const mockQuestions = db.questions;
-  const mockAssessment = json.camelizeObject(db.assessments[0]);
+  const QUESTIONS = db.questions;
+  const ASSESSMENT = db.assessments[0];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,37 +42,31 @@ describe('ReviewPageComponent', () => {
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-
-    assessmentService = fixture.debugElement.injector.get(AssessmentService);
-
     applymentService = fixture.debugElement.injector.get(ApplymentService);
-    // init questions with 10
-    applymentService.initAnswers(mockQuestions.length);
-    // Set two correct answers
-    applymentService.setSingleAnswer(0, 1);
-    applymentService.setSingleAnswer(3, 2);
 
-    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
-    spyOn(assessmentService, 'fetchAssessment').and.returnValue(Observable.of(mockAssessment));
+    applymentService.setAssessment(camelizeObject(ASSESSMENT));
+    applymentService.setQuestions(camelizeObject(QUESTIONS));
+    applymentService.initAnswers(QUESTIONS.length);
+    applymentService.setSingleAnswer(0, 1);
+    applymentService.setSingleAnswer(1, 3);
+    applymentService.setSingleAnswer(2, 5);
 
     fixture.detectChanges();
   });
-
-
 
   it('should create', async(() => {
     expect(component).toBeTruthy();
   }));
 
   it('should return to the last question when back is clicked', async(() => {
-    component.questions = mockQuestions;
+    component.questions = QUESTIONS;
 
     spyOn(router, 'navigate');
 
     dispatchEvent(fixture, '[back]', 'click');
     fixture.detectChanges();
 
-    expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'questao', mockQuestions.length]);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.id.toString(), 'questao', QUESTIONS.length]);
   }));
 
   it('should create a modal when the finish button is clicked', fakeAsync(() => {
@@ -87,19 +77,21 @@ describe('ReviewPageComponent', () => {
   }));
 
   it('should display the amount of answered questions', async(() => {
-    component.load();
+    component.ngOnInit();
     fixture.detectChanges();
-    const answeredQuestions = fixture.debugElement.query(By.css('.items_count')).nativeElement.innerHTML;
 
-    expect(answeredQuestions).toEqual('2 de 10 questões');
+    const answeredQuestions = fixture.debugElement.query(By.css('.items_count')).nativeElement.innerHTML;
+    const message = `3 de ${QUESTIONS.length} questões`;
+
+    expect(answeredQuestions).toEqual(message);
   }));
 
   it('should display the answers', async(() => {
     const tableItems = fixture.debugElement.queryAll(By.css('tbody tr')).length;
     const tableItemsAnswered = fixture.debugElement.queryAll(By.css('tbody tr:not(.danger)')).length;
 
-    expect(tableItems).toEqual(mockQuestions.length);
-    expect(tableItemsAnswered).toEqual(2);
+    expect(tableItems).toEqual(QUESTIONS.length);
+    expect(tableItemsAnswered).toEqual(3);
   }));
 
   it('should create warning modal when offline', fakeAsync(() => {
