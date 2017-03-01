@@ -14,29 +14,32 @@ import { StudentService } from '../../core/shared/student.service';
 
 export class StudentAuthenticationPageComponent implements OnInit {
   student = null;
-  error =  '';
+  error = '';
   assessment: Assessment;
   accessToken: string;
 
-  constructor(private assessmentService: AssessmentService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private applymentService: ApplymentService,
-              private studentService: StudentService) {
+  constructor(private _assessmentService: AssessmentService,
+              private _router: Router,
+              private _route: ActivatedRoute,
+              private _applymentService: ApplymentService,
+              private _studentService: StudentService) {
   }
 
   ngOnInit() {
-    this.student = this.applymentService.getStudent() || null;
+    this.student = this._applymentService.getStudent();
+    this.assessment = this._applymentService.getAssessment();
 
-    this.assessmentService.getAssessment(this.route.snapshot.params['uuid'])
-      .subscribe(
-        assessment => {
-          this.assessment = assessment;
-        },
-        error => {
-          this.assessment = null;
-        }
-      );
+    if ( !this.assessment ) {
+      const token = this._route.snapshot.params['uuid'];
+      this._assessmentService.fetchAssessment(token)
+        .subscribe(
+          assessment => {
+            this.assessment = assessment;
+            this._applymentService.setAssessment(assessment);
+          },
+          error => this.assessment = null
+        );
+    }
   }
 
   onSubmit() {
@@ -51,7 +54,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
           student => {
             if ( student ) {
               this.student = student;
-              this.applymentService.setStudent(student);
+              this._applymentService.setStudent(student);
               this.error = '';
             } else {
               setError();
@@ -66,7 +69,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
 
   onContinue() {
     if ( this.student ) {
-      this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'instrucoes']);
+      this._router.navigate(['prova', this._route.snapshot.params['uuid'], 'instrucoes']);
     }
   }
 
@@ -77,7 +80,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
   }
 
   fetchUser(accessToken: string) {
-    return this.studentService.getStudentByToken(accessToken);
+    return this._studentService.getStudentByToken(accessToken);
   }
 }
 

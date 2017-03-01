@@ -56,8 +56,8 @@ describe('ReviewPageComponent', () => {
     applymentService.setSingleAnswer(0, 1);
     applymentService.setSingleAnswer(3, 2);
 
-    spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
-    spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
+    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(json.camelizeObject(mockQuestions)));
+    spyOn(assessmentService, 'fetchAssessment').and.returnValue(Observable.of(mockAssessment));
 
     fixture.detectChanges();
   });

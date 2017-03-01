@@ -12,31 +12,20 @@ const apiUrl = 'http://localhost:3000';
 
 @Injectable()
 export class AssessmentService {
-  private _assessment: Assessment;
-  private _questions: Question[];
-
   constructor(protected http: Http) {
   }
 
-  getAssessment(assessment_id: string): Observable<Assessment> {
-    if ( this._assessment ) {
-      return Observable.of(this._assessment);
-    }
-
+  fetchAssessment(assessment_id: string): Observable<Assessment> {
     return this.http
       .get(`${apiUrl}/assessments/${assessment_id}`)
-      .map(resp => this._assessment = jsonFn.camelizeObject(resp.json()).data)
+      .map(resp => jsonFn.camelizeObject(resp.json()).data)
       .catch(this._handleError);
   }
 
-  getQuestions(assessment_id: string): Observable<Question[]> {
-    if ( this._questions ) {
-      return Observable.of(this._questions);
-    }
-
+  fetchAssessmentQuestions(assessment_id: string): Observable<Question[]> {
     return this.http
       .get(`${apiUrl}/assessment/${assessment_id}/questions`)
-      .map(resp => this._questions = jsonFn.camelizeObject(resp.json()).data)
+      .map(resp => jsonFn.camelizeObject(resp.json()).data)
       .catch(this._handleError);
   }
 

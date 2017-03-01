@@ -1,47 +1,73 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 import { AssessmentService } from './assessment.service';
-import { HttpModule } from '@angular/http';
-import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
+import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+
+const mock = require('../../../../mock/db.json');
+const ASSESSMENT = mock.assessments[0];
+const QUESTIONS = mock.questions;
+
 
 describe('AssessmentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: AssessmentService, useClass: AssessmentServiceStub }
+        AssessmentService,
+        MockBackend,
+        BaseRequestOptions,
+        {
+          provide: Http,
+          useFactory: (backend, options) => new Http(backend, options),
+          deps: [MockBackend, BaseRequestOptions]
+        },
       ],
       imports: [HttpModule]
     });
   });
 
-  it('should construct service', inject([AssessmentService], (service: AssessmentService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should construct service', inject(
+    [AssessmentService],
+    (service: AssessmentService) => {
 
-  it('.getAssessment(assessment_id) should return an Assessment', async(inject([AssessmentService], (service: AssessmentService) => {
-    service.getAssessment('1').subscribe(assessment => expect(assessment.mainTitle).toEqual('Língua Portuguesa'));
-  })));
+      expect(service).toBeTruthy();
 
-  it('.getAssessment(assessment_id) should catch an error when id is invalid',
-    async(
-      inject([AssessmentService], (service: AssessmentService) => {
-        service.getAssessment('10').subscribe(
-          () => {
-          },
-          error => expect(error).toEqual('404 - Not Found')
-        );
-      })
-    )
-  );
+    }
+  ));
 
-  it('.getQuestions(assessment_id) should return an array of Questions', async(inject([AssessmentService], (service: AssessmentService) => {
-    service.getQuestions('1').subscribe(questions => {
-      let match = 'Wow, courage!Lord, ye cold jack- set sails for adventure! ' +
-        'Dozens of anomalies will be lost in plasmas like attitudes in alarms';
-      expect(questions[0].text).toEqual(match);
+  describe('fetchAssessment()', () => {
+    it('should return an Assessment', async(inject(
+      [AssessmentService, MockBackend],
+      (service: AssessmentService, mockBackend: MockBackend) => {
 
-      match = 'Consectetur adipisicing elit. Ab autem ducimus ea fuga nesciunt nulla sed voluptatibus?';
-      expect(questions[1].text).toEqual(match);
-    });
-  })));
+        mockBackend.connections.subscribe(connection => {
+          connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: ASSESSMENT }) })));
+        });
+
+        service.fetchAssessment('1')
+          .subscribe(assessment =>
+            expect(assessment).toEqual(ASSESSMENT)
+          );
+
+      }
+    )));
+
+  });
+
+  describe('fetchAssessmentQuestions()', () => {
+    it('should return an array of Questions', async(inject(
+      [AssessmentService, MockBackend],
+      (service: AssessmentService, mockBackend: MockBackend) => {
+
+        mockBackend.connections.subscribe(connection => {
+          connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: QUESTIONS }) })));
+        });
+
+        service.fetchAssessmentQuestions('1')
+          .subscribe(questions => {
+            expect(questions).toEqual(QUESTIONS);
+          });
+
+      })));
+  });
 
 });

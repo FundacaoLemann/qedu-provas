@@ -25,9 +25,11 @@ describe('InstructionsPageComponent', () => {
   let router: Router;
   let route: ActivatedRouteStub;
   let assessmentService: AssessmentServiceStub;
+  let applymentService: ApplymentService;
   let applyment: ApplymentService;
   let connection: ConnectionService;
-  const mockAssessment = json.camelizeObject(db.assessments[0]);
+  const ASSESSMENT = json.camelizeObject(db.assessments[0]);
+  const QUESTIONS = db.questions;
 
   beforeEach(async(() => {
     const routeStub = new ActivatedRouteStub();
@@ -51,10 +53,12 @@ describe('InstructionsPageComponent', () => {
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
+    applymentService = fixture.debugElement.injector.get(ApplymentService);
     applyment = fixture.debugElement.injector.get(ApplymentService);
     connection = fixture.debugElement.injector.get(ConnectionService);
 
-    spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
+    spyOn(applymentService, 'getAssessment').and.returnValue(ASSESSMENT);
+    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(QUESTIONS));
 
     route.testParams = { uuid: '1' };
     fixture.detectChanges();
@@ -67,13 +71,13 @@ describe('InstructionsPageComponent', () => {
 
   it('should display an assessment details', () => {
     const instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
-    expect(instructionEl.innerHTML).toEqual(mockAssessment.instructions);
+    expect(instructionEl.innerHTML).toEqual(ASSESSMENT.instructions);
 
     const durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
-    expect(durationEl.textContent).toEqual(`${mockAssessment.duration} minutos`);
+    expect(durationEl.textContent).toEqual(`${ASSESSMENT.duration} minutos`);
 
     const itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
-    expect(itemsCountEl.textContent).toEqual(`${mockAssessment.itemsCount} questões`);
+    expect(itemsCountEl.textContent).toEqual(`${ASSESSMENT.itemsCount} questões`);
   });
 
 
@@ -81,10 +85,11 @@ describe('InstructionsPageComponent', () => {
     spyOn(applyment, 'initAnswers');
     spyOn(router, 'navigate');
 
+    applymentService.setAssessment(ASSESSMENT);
     component.initAssessment();
 
-    expect(applyment.initAnswers).toHaveBeenCalledWith(mockAssessment.itemsCount);
-    expect(router.navigate).toHaveBeenCalledWith(['prova', mockAssessment.id.toString(), 'questao', '1']);
+    expect(applyment.initAnswers).toHaveBeenCalledWith(ASSESSMENT.itemsCount);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.id.toString(), 'questao', '1']);
   }));
 
   describe('modals', () => {

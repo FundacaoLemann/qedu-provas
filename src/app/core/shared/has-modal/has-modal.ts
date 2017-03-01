@@ -3,8 +3,8 @@ import { Component, ViewChild, ComponentRef, ComponentFactoryResolver, ViewConta
 export abstract class HasModal {
   @ViewChild('modal') modalRef: ComponentRef<any>;
 
-  constructor(private _viewContainerRef: ViewContainerRef,
-              private _componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(protected _viewContainerRef: ViewContainerRef,
+              protected _componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   /**

@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, Type } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
-import { AssessmentService } from '../../core/shared/assessment.service';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
 import { ApplymentService } from '../shared/applyment.service';
 import { ConnectionService } from '../../core/shared/connection.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { HasModal } from '../../core/shared/has-modal/has-modal';
+import { AssessmentService } from '../../core/shared/assessment.service';
 
 @Component({
   selector: 'qp-instructions-page',
@@ -20,30 +20,37 @@ import { HasModal } from '../../core/shared/has-modal/has-modal';
 export class InstructionsPageComponent extends HasModal implements OnInit {
   assessment: Assessment;
 
-  constructor(private assessmentService: AssessmentService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private applymentService: ApplymentService,
-              private connection: ConnectionService,
-              private viewContainerRef: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver) {
-    super(viewContainerRef, componentFactoryResolver);
+  constructor(private _router: Router,
+              private _route: ActivatedRoute,
+              private _applymentService: ApplymentService,
+              private _assessmentService: AssessmentService,
+              private _connection: ConnectionService,
+              protected _viewContainerRef: ViewContainerRef,
+              protected _componentFactoryResolver: ComponentFactoryResolver) {
+    super(_viewContainerRef, _componentFactoryResolver);
   }
 
   ngOnInit() {
-    const assessmentUUID = this.route.snapshot.params['uuid'];
-    this.assessmentService.getAssessment(assessmentUUID).subscribe(
-      assessment => this.assessment = assessment,
-      error => this.assessment = null
-    );
+    this.assessment = this._applymentService.getAssessment();
   }
 
   /**
    * Start the assessment
    */
   initAssessment() {
-    this.applymentService.initAnswers(this.assessment.itemsCount);
-    this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', '1']);
+    const token = this._route.snapshot.params['uuid'];
+
+    this._applymentService.initAnswers(this.assessment.itemsCount);
+    this._assessmentService.fetchAssessmentQuestions(token)
+      .subscribe(
+        questions => {
+          this._applymentService.setQuestions(questions);
+          this._router.navigate(['prova', token, 'questao', '1']);
+        },
+        error => {
+          this.openModalConnectionError();
+        }
+      )
   }
 
   /**
@@ -52,7 +59,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
   openModalProceed() {
     this.openModal(InstructionsModalComponent, {
       onConfirm: () => {
-        this.connection
+        this._connection
           .getStatusOnce()
           .subscribe((status) => {
             if ( status ) {

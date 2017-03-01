@@ -42,10 +42,10 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   load() {
     this.assessmentService
-      .getAssessment(this.route.snapshot.params['uuid'])
+      .fetchAssessment(this.route.snapshot.params['uuid'])
       .subscribe(assessment => this.assessment = assessment);
 
-    this.assessmentService.getQuestions(this.route.snapshot.params['uuid'])
+    this.assessmentService.fetchAssessmentQuestions(this.route.snapshot.params['uuid'])
       .subscribe(
         (questions) => {
           this.questions = questions;

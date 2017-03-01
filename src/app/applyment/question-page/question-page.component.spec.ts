@@ -21,8 +21,8 @@ describe('QuestionPageComponent', () => {
   let router: RouterStub;
   let applymentService: ApplymentService;
   let assessmentService: AssessmentService;
-  const mockQuestions = json.camelizeObject(db.questions);
-  const mockAssessment = json.camelizeObject(db.assessments)[0];
+  const QUESTIONS = json.camelizeObject(db.questions);
+  const ASSESSMENT = json.camelizeObject(db.assessments)[0];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -45,9 +45,9 @@ describe('QuestionPageComponent', () => {
 
     route.testParams = { uuid: '1', question_id: '1' };
 
-    spyOn(assessmentService, 'getQuestions').and.returnValue(Observable.of(mockQuestions));
-    spyOn(assessmentService, 'getAssessment').and.returnValue(Observable.of(mockAssessment));
-    applymentService.initAnswers(mockQuestions.length);
+    applymentService.setAssessment(ASSESSMENT);
+    applymentService.setQuestions(QUESTIONS);
+    applymentService.initAnswers(QUESTIONS.length);
 
     fixture.detectChanges();
   });
@@ -61,7 +61,7 @@ describe('QuestionPageComponent', () => {
     fixture.detectChanges();
 
     const questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
-    expect(questionEl.innerHTML).toEqual(mockQuestions[1].text);
+    expect(questionEl.innerHTML).toEqual(QUESTIONS[1].text);
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(4);
   }));
 
@@ -89,7 +89,7 @@ describe('QuestionPageComponent', () => {
     fixture.detectChanges();
 
     const title = fixture.debugElement.query(By.css('[mainTitle]'));
-    expect(title.nativeElement.textContent.trim()).toEqual(mockAssessment.mainTitle);
+    expect(title.nativeElement.textContent.trim()).toEqual(ASSESSMENT.mainTitle);
   });
 
   describe('navigation buttons', () => {

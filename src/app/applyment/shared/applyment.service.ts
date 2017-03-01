@@ -3,15 +3,17 @@ import { Student } from '../../shared/model/student';
 import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
+import { Assessment } from '../../shared/model/assessment';
+import { Question } from '../../shared/model/question';
 
 @Injectable()
 export class ApplymentService {
   initialState = {
     applyment: {
+      student: null,
       assessment: null,
       questions: [],
       answers: [],
-      student: null
     }
   };
 
@@ -19,6 +21,7 @@ export class ApplymentService {
     this._store.setState(this.initialState);
   }
 
+  // Student
   setStudent(student: Student) {
     const newState = _.merge({}, this._store.state, { applyment: { student } });
     this._store.setState(newState);
@@ -31,6 +34,27 @@ export class ApplymentService {
       return null;
     }
   }
+
+  //Assessment
+  setAssessment(assessment: Assessment) {
+    const newState = _.merge({}, this._store.state, { applyment: { assessment } });
+    this._store.setState(newState);
+  }
+
+  getAssessment(): Assessment {
+    return this._store.state.applyment.assessment;
+  }
+
+  //Questions
+  setQuestions(questions: Question[]) {
+    const newState = _.merge({}, this._store.state, { applyment: { questions } });
+    this._store.setState(newState);
+  }
+
+  getQuestions(): Question[] {
+    return this._store.state.applyment.questions;
+  }
+
 
   // Answers
   initAnswers(length: number) {
