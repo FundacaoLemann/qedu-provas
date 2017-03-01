@@ -50,7 +50,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
         error => {
           this.openModalConnectionError();
         }
-      )
+      );
   }
 
   /**

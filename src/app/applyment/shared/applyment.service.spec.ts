@@ -97,7 +97,7 @@ describe('ApplymentService', () => {
     ));
 
     it('should return null on error', inject(
-      [ApplymentService,],
+      [ApplymentService],
       (service: ApplymentService) => {
         expect(service.getAssessment).toThrow();
         expect(service.getAssessment()).toEqual(null);

@@ -35,7 +35,7 @@ export class ApplymentService {
     }
   }
 
-  //Assessment
+  // Assessment
   setAssessment(assessment: Assessment) {
     const newState = _.merge({}, this._store.state, { applyment: { assessment } });
     this._store.setState(newState);
@@ -45,7 +45,7 @@ export class ApplymentService {
     return this._store.state.applyment.assessment;
   }
 
-  //Questions
+  // Questions
   setQuestions(questions: Question[]) {
     const newState = _.merge({}, this._store.state, { applyment: { questions } });
     this._store.setState(newState);
