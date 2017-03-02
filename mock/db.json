@@ -1,14 +1,30 @@
 {
   "assessments": [
     {
-      "id": 1,
-      "uuid": "89sj0j201j",
-      "main_title": "Língua Portuguesa - 6º ano",
-      "secundary_title": "Avaliação da Educação Básica do Município de Barueri",
-      "description": "",
-      "instructions": "<p>1. Esta prova contém 25 (vinte e cinco) questões objetivas.</p> <p>2. Cada questão contém 4 (quatro) alternativas (A), (B), (C) e (D); apenas UMA ALTERNATIVA é a correta. Clique na opção que que você escolher como certa para registrar sua resposta.</p> <p>3. Leia com atenção antes de responder e selecione sua resposta após ler a questão. Procure não deixar questão sem resposta.</p> <p>4. Caso o texto ou a imagem estejam pequenos ou difíceis de ler, pressione as teclas \"ctrl\" e \"+\" para aumentar o zoom para aproximar. Caso queira reduzir o zoom, basta usar as teclas \"ctrl\" e \"-\".</p> <p>5. Você pode navegar entre as questões ao longo da prova, indo e voltando para qualquer uma delas. No entanto, depois de responder a última questão, a prova será entregue e você não poderá mais modificar as suas respostas.</p> <p>6. Não atualize e nem saia da página durante a realização da prova. Isso irá fazer com que o resultado seja perdido e sua nota desconsiderada. A prova só é considerada entregue quando a última questão for enviada.</p> <p>7. A avaliação terá duração máxima de três (3) horas.</p>",
-      "duration": 60,
-      "items_count": 10
+      "id": "qedu1",
+      "token": "qedu1",
+      "mainTitle": "Sistema de Avaliação da Educação Básica do Município de Jacareacanga",
+      "secondaryTitle": "Ensino Fundamental II - 6º ano - Caderno B",
+      "description": "Matemática / Ciências / Geografia / Educação Física",
+      "instructions": "1. Esta prova contém 25 (vinte e cinco) questões objetivas. <br/>2. Cada questão contém 4 (quatro) alternativas (A), (B), (C) e (D); apenas UMA ALTERNATIVA é a correta. Clique na opção que que você escolher como certa para registrar sua resposta.<br/>3. Leia com atenção antes de responder e selecione sua resposta após ler a questão. Procure não deixar questão sem resposta.<br/>4. Caso o texto ou a imagem estejam pequenos ou difíceis de ler, pressione as teclas \"ctrl\" e \"+\" para aumentar o zoom para aproximar. Caso queira reduzir o zoom, basta usar as teclas \"ctrl\" e \"-\".<br/>5. Você pode navegar entre as questões ao longo da prova, indo e voltando para qualquer uma delas. No entanto, depois de responder a última questão, a prova será entregue e você não poderá mais modificar as suas respostas.<br/>6. Não atualize e nem saia da página durante a realização da prova. Isso irá fazer com que o resultado seja perdido e sua nota desconsiderada. A prova só é considerada entregue quando a última questão for enviada.</br>7. A avaliação terá duração máxima de três (3) horas.",
+      "duration": 120,
+      "numberOfItems": 60,
+      "subjects": [
+        "Matemática",
+        "Ciências",
+        "Geografia",
+        "Educação Física"
+      ],
+      "school": {
+        "id": "58af4c1732a1eb0010645233",
+        "description": "Escola Municipal Ernesto Che Guevara",
+        "image": "http://4.bp.blogspot.com/-I7AnIAt_TJI/UTM2Wf4m1WI/AAAAAAAAAKs/y543MqiHzFk/s1600/clemenceaulogo.jpg"
+      },
+      "department": {
+        "id": "58af4c1632a1eb0010645231",
+        "description": "Secretaria de Educação Básica do Município de Jacareacanga",
+        "image": "http://www.santosavozblog.com/wp-content/uploads/2016/11/BANDEIRA-DE-JACAREACANGA-400x300.jpg"
+      }
     }
   ],
   "questions": [
