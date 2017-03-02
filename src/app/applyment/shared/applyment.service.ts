@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
 import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
-import * as _ from 'lodash';
 import { Assessment } from '../../shared/model/assessment';
 import { Question } from '../../shared/model/question';
+import { ApplymentStatus } from '../../shared/model/applyment-status';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ApplymentService {
@@ -28,11 +29,7 @@ export class ApplymentService {
   }
 
   getStudent(): Student {
-    try {
-      return this._store.state.applyment.student;
-    } catch (err) {
-      return null;
-    }
+    return this._store.state.applyment.student;
   }
 
   // Assessment
@@ -84,6 +81,23 @@ export class ApplymentService {
     return this._store.asObservable().map(state => {
       return state.applyment.answers;
     });
+  }
+
+  // Status
+  getApplymentStatus(): ApplymentStatus {
+    const { assessment, student, answers } = this._store.state.applyment;
+
+    const status = new ApplymentStatus();
+    status.assessmentToken = assessment.id.toString();
+    status.studentToken = student.id.toString();
+    status.answers = [];
+    for (const questionId in answers) {
+      if ( answers[questionId] ) {
+        status.answers.push({ questionId: questionId.toString(), value: answers[questionId].toString() });
+      }
+    }
+
+    return status;
   }
 
 }

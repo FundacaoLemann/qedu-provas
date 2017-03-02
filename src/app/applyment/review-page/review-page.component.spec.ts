@@ -12,6 +12,8 @@ import { ApplymentModule } from '../applyment.module';
 // Rxjs
 import 'rxjs/add/observable/of';
 import { camelizeObject } from '../../utils/json';
+import { Observable } from 'rxjs/Observable';
+import { AssessmentService } from '../../core/shared/assessment.service';
 
 const db = require('../../../../mock/db.json');
 
@@ -21,8 +23,10 @@ describe('ReviewPageComponent', () => {
   let router: Router;
   let route: ActivatedRouteStub;
   let applymentService: ApplymentService;
-  const QUESTIONS = db.questions;
+  let assessmentService: AssessmentService;
   const ASSESSMENT = db.assessments[0];
+  const STUDENT = db.students[0];
+  const QUESTIONS = db.questions;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,14 +46,17 @@ describe('ReviewPageComponent', () => {
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    applymentService = fixture.debugElement.injector.get(ApplymentService);
 
+    applymentService = fixture.debugElement.injector.get(ApplymentService);
     applymentService.setAssessment(camelizeObject(ASSESSMENT));
+    applymentService.setStudent(camelizeObject(STUDENT));
     applymentService.setQuestions(camelizeObject(QUESTIONS));
     applymentService.initAnswers(QUESTIONS.length);
     applymentService.setSingleAnswer(0, 1);
     applymentService.setSingleAnswer(1, 3);
     applymentService.setSingleAnswer(2, 5);
+
+    assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
     fixture.detectChanges();
   });
@@ -100,4 +107,13 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
+
+  it('should finish the assessment', () => {
+    spyOn(assessmentService, 'postAssessment').and.returnValue(Observable.of({ status: 201, statusText: 'Created' }));
+
+    const post = applymentService.getApplymentStatus();
+
+    component.submitAssessment();
+    expect(assessmentService.postAssessment).toHaveBeenCalledWith(post);
+  });
 });

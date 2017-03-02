@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Student } from '../../shared/model/student';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { camelizeObject } from '../../utils/json';
+import { environment } from '../../../environments/environment';
 
-import json from '../../utils/json';
-
-import { Student } from '../../shared/model/student';
-
-const apiUrl = 'http://localhost:3000';
+const { API_URL } = environment;
 
 @Injectable()
 export class StudentService {
@@ -16,8 +15,8 @@ export class StudentService {
   }
 
   getStudentByToken(token: string): Observable<Student> {
-    return this.http.get(`${apiUrl}/students/${token}`)
-      .map(response => json.camelizeObject(response.json()).data as Student);
+    return this.http.get(`${API_URL}/students/${token}`)
+      .map(response => camelizeObject(response.json()).data as Student);
   }
 
 }

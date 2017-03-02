@@ -6,26 +6,49 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import jsonFn from '../../utils/json';
+import { camelizeObject } from '../../utils/json';
+import { ApplymentStatus } from '../../shared/model/applyment-status';
+import { environment } from '../../../environments/environment';
 
-const apiUrl = 'http://localhost:3000';
+const { API_URL } = environment;
 
 @Injectable()
 export class AssessmentService {
-  constructor(protected http: Http) {
+
+  constructor(private _http: Http) {
   }
 
   fetchAssessment(assessment_id: string): Observable<Assessment> {
-    return this.http
-      .get(`${apiUrl}/assessments/${assessment_id}`)
-      .map(resp => jsonFn.camelizeObject(resp.json()).data)
+    return this._http
+      .get(`${API_URL}/assessments/${assessment_id}`)
+      .map(resp => camelizeObject(resp.json()).data)
       .catch(this._handleError);
   }
 
   fetchAssessmentQuestions(assessment_id: string): Observable<Question[]> {
-    return this.http
-      .get(`${apiUrl}/assessment/${assessment_id}/questions`)
-      .map(resp => jsonFn.camelizeObject(resp.json()).data)
+    return this._http
+      .get(`${API_URL}/assessment/${assessment_id}/questions`)
+      .map(resp => camelizeObject(resp.json()).data)
+      .catch(this._handleError);
+  }
+
+  postAssessment(assessment: ApplymentStatus): Observable<{ status: number, statusText: string, message?: string }> {
+    return this._http
+      .post(`${API_URL}/assessment`, { data: { assessment } })
+      .map(response => {
+        if ( response.status === 201 ) {
+          return {
+            status: 201,
+            statusText: 'Created'
+          };
+        } else {
+          return {
+            status: response.status,
+            statusText: response.statusText,
+            message: response.json().data
+          };
+        }
+      })
       .catch(this._handleError);
   }
 

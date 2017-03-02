@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
 import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
+import { ApplymentStatus } from '../../shared/model/applyment-status';
 
 const mock = require('../../../../mock/db.json');
 const STUDENT = mock.students[0];
@@ -129,6 +130,28 @@ describe('ApplymentService', () => {
       (service: ApplymentService) => {
         expect(service.getQuestions).toThrow();
         expect(service.getQuestions()).toEqual([]);
+      }
+    ));
+  });
+
+  describe('getApplymentStatus()', () => {
+    it('should return the current data of the applyment', inject(
+      [ApplymentService],
+      (service: ApplymentService) => {
+        service.setAssessment(ASSESSMENT);
+        service.setStudent(STUDENT);
+        service.setQuestions(QUESTIONS);
+        service.initAnswers(1);
+        service.setSingleAnswer(0, 1);
+
+        const applymentStatus = new ApplymentStatus();
+        applymentStatus.assessmentToken = ASSESSMENT.id.toString();
+        applymentStatus.studentToken = STUDENT.id.toString();
+        applymentStatus.answers = [
+          { questionId: (QUESTIONS[0].id - 1).toString(), value: '1' }
+        ];
+
+        expect(service.getApplymentStatus()).toEqual(applymentStatus);
       }
     ));
   });

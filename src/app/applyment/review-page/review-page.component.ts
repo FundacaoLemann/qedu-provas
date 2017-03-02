@@ -29,6 +29,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   constructor(protected _viewContainer: ViewContainerRef,
               protected _componentFactoryResolver: ComponentFactoryResolver,
               private _applymentService: ApplymentService,
+              private _assessmentService: AssessmentService,
               private _route: ActivatedRoute,
               private _router: Router,
               private _connection: ConnectionService) {
@@ -93,5 +94,10 @@ export class ReviewPageComponent extends HasModal implements OnInit {
       .subscribe(status => {
         status ? this.submit() : this.openNoConnectionModal();
       });
+  }
+
+  submitAssessment() {
+    const status = this._applymentService.getApplymentStatus();
+    this._assessmentService.postAssessment(status);
   }
 }

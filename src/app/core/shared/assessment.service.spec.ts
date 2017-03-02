@@ -70,4 +70,27 @@ describe('AssessmentService', () => {
       })));
   });
 
+  describe('postAssessment()', () => {
+    it('should post to the API', async(inject(
+      [AssessmentService, MockBackend],
+      (service: AssessmentService, mockBackend: MockBackend) => {
+
+        const response = { status: 201, statusText: 'Created' };
+        mockBackend.connections.subscribe(connection => {
+          connection.mockRespond(new Response(new ResponseOptions(response)));
+        });
+
+        const assessment = {
+          assessmentToken: '1235',
+          studentToken: '12345',
+          answers: []
+        };
+
+        service.postAssessment(assessment)
+          .subscribe(resp => {
+            expect(resp).toEqual({ status: 201, statusText: 'Created' });
+          });
+      })));
+  });
+
 });
