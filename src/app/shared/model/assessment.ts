@@ -2,11 +2,13 @@ import { Question } from './question';
 
 export class Assessment {
   id: number;
-  uuid: string;
+  token: string;
   mainTitle: string;
   instructions: string;
   description: string;
   duration: number;
   itemsCount: number;
-  questions?: Question[];
+  subjects?: string[];
+  school?: { id: string, description: string, image: string };
+  department?: { id: string, description: string, image: string };
 }

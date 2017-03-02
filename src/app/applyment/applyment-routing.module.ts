@@ -14,11 +14,11 @@ const routes: Routes = [
     path: '', component: ApplymentComponent,
     children: [
       { path: '', component: SearchAssessmentPageComponent },
-      { path: 'prova/:uuid', component: StudentAuthenticationPageComponent },
-      { path: 'prova/:uuid/instrucoes', component: InstructionsPageComponent },
-      { path: 'prova/:uuid/questao/:question_id', component: QuestionPageComponent },
-      { path: 'prova/:uuid/revisao', component: ReviewPageComponent },
-      { path: 'prova/:uuid/parabens', component: CongratulationsPageComponent },
+      { path: 'prova/:token', component: StudentAuthenticationPageComponent },
+      { path: 'prova/:token/instrucoes', component: InstructionsPageComponent },
+      { path: 'prova/:token/questao/:question_id', component: QuestionPageComponent },
+      { path: 'prova/:token/revisao', component: ReviewPageComponent },
+      { path: 'prova/:token/parabens', component: CongratulationsPageComponent },
     ]
   },
 ];

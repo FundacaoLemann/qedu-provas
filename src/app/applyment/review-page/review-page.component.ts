@@ -49,12 +49,12 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   back() {
-    const uuid = this._route.snapshot.params['uuid'];
+    const uuid = this._route.snapshot.params['token'];
     this._router.navigate(['prova', uuid, 'questao', this.questions.length]);
   }
 
   navigate(questionNumber: number) {
-    this._router.navigate(['prova', this._route.snapshot.params['uuid'], 'questao', questionNumber.toString()]);
+    this._router.navigate(['prova', this._route.snapshot.params['token'], 'questao', questionNumber.toString()]);
   }
 
   openFinishModal() {
@@ -83,7 +83,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   submit() {
     // TODO
     // Send data to API
-    const uuid = this._route.snapshot.params['uuid'];
+    const uuid = this._route.snapshot.params['token'];
     this._router.navigate(['prova', uuid, 'parabens']);
   }
 

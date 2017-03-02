@@ -35,7 +35,7 @@ describe('ReviewPageComponent', () => {
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
-        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1' }) }
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: '1' }) }
       ],
     })
       .compileComponents();

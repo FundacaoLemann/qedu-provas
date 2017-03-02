@@ -15,7 +15,7 @@ export class SearchAssessmentPageComponent implements OnInit {
                private fb: FormBuilder) {
 
     this.form = this.fb.group({
-      'uuid': ['', Validators.required]
+      'assessmentToken': ['', Validators.required]
     });
 
   }
@@ -25,8 +25,7 @@ export class SearchAssessmentPageComponent implements OnInit {
 
   onSubmit () {
     if (this.form.valid) {
-      this.router.navigate(['prova', this.form.get('uuid').value]);
+      this.router.navigate(['prova', this.form.get('assessmentToken').value]);
     }
   }
-
 }

@@ -30,7 +30,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
     this.assessment = this._applymentService.getAssessment();
 
     if ( !this.assessment ) {
-      const token = this._route.snapshot.params['uuid'];
+      const token = this._route.snapshot.params['token'];
       this._assessmentService.fetchAssessment(token)
         .subscribe(
           assessment => {
@@ -69,7 +69,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
 
   onContinue() {
     if ( this.student ) {
-      this._router.navigate(['prova', this._route.snapshot.params['uuid'], 'instrucoes']);
+      this._router.navigate(['prova', this._route.snapshot.params['token'], 'instrucoes']);
     }
   }
 

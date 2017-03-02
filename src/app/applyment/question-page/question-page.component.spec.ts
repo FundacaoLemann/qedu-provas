@@ -28,7 +28,7 @@ describe('QuestionPageComponent', () => {
     TestBed.configureTestingModule({
       imports: [ApplymentModule, CoreModule],
       providers: [
-        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ uuid: '1', question_id: '1' }) },
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: '1', question_id: '1' }) },
         { provide: Router, useClass: RouterStub },
       ]
     })
@@ -43,7 +43,7 @@ describe('QuestionPageComponent', () => {
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
     applymentService = fixture.debugElement.injector.get(ApplymentService);
 
-    route.testParams = { uuid: '1', question_id: '1' };
+    route.testParams = { token: '1', question_id: '1' };
 
     applymentService.setAssessment(ASSESSMENT);
     applymentService.setQuestions(QUESTIONS);
@@ -57,7 +57,7 @@ describe('QuestionPageComponent', () => {
   });
 
   it('should display a question', async(() => {
-    route.testParams = { uuid: '1', question_id: '2' };
+    route.testParams = { token: '1', question_id: '2' };
     fixture.detectChanges();
 
     const questionEl = fixture.debugElement.query(By.css('[question]')).nativeElement;
@@ -73,19 +73,19 @@ describe('QuestionPageComponent', () => {
 
   it('should store the answer in the data store service', () => {
     spyOn(applymentService, 'setSingleAnswer');
-    route.testParams = { uuid: '1', question_id: 1 };
+    route.testParams = { token: '1', question_id: 1 };
     component.updateChecked(1);
     expect(applymentService.setSingleAnswer).toHaveBeenCalledWith(0, 1);
   });
 
   it('should load and display the answer when already set', () => {
     applymentService.setSingleAnswer(0, 1);
-    route.testParams = { uuid: '1', question_id: 1 };
+    route.testParams = { token: '1', question_id: 1 };
     expect(component.checkedAnswer).toEqual(1);
   });
 
   it('should display the assessment title being applied', () => {
-    route.testParams = { uuid: '1', question_id: '1' };
+    route.testParams = { token: '1', question_id: '1' };
     fixture.detectChanges();
 
     const title = fixture.debugElement.query(By.css('[mainTitle]'));
@@ -94,7 +94,7 @@ describe('QuestionPageComponent', () => {
 
   describe('navigation buttons', () => {
     it('should navigate to the next question when clicked', async(() => {
-      route.testParams = { uuid: '1', question_id: 1 };
+      route.testParams = { token: '1', question_id: 1 };
       spyOn(router, 'navigate');
       dispatchEvent(fixture, '[next]', 'click');
 
@@ -102,7 +102,7 @@ describe('QuestionPageComponent', () => {
     }));
 
     it('should navigate to review page when the current question is the last', async(() => {
-      route.testParams = { uuid: '1', question_id: '10' };
+      route.testParams = { token: '1', question_id: '10' };
 
       spyOn(router, 'navigate');
       dispatchEvent(fixture, '[next]', 'click');
@@ -111,7 +111,7 @@ describe('QuestionPageComponent', () => {
     }));
 
     it('should navigate to the previous question when previous is clicked', async(() => {
-      route.testParams = { uuid: '1', question_id: '9' };
+      route.testParams = { token: '1', question_id: '9' };
 
       spyOn(router, 'navigate');
       dispatchEvent(fixture, '[prev]', 'click');

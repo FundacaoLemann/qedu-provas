@@ -38,7 +38,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
    * Start the assessment
    */
   initAssessment() {
-    const token = this._route.snapshot.params['uuid'];
+    const token = this._route.snapshot.params['token'];
 
     this._applymentService.initAnswers(this.assessment.itemsCount);
     this._assessmentService.fetchAssessmentQuestions(token)

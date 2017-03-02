@@ -60,7 +60,7 @@ describe('InstructionsPageComponent', () => {
     spyOn(applymentService, 'getAssessment').and.returnValue(ASSESSMENT);
     spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(QUESTIONS));
 
-    route.testParams = { uuid: '1' };
+    route.testParams = { token: '1' };
     fixture.detectChanges();
   });
 

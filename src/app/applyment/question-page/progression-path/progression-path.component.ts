@@ -29,7 +29,7 @@ export class ProgressionPathComponent implements OnInit {
 
   // Events
   onItemClick (index: number) {
-    this.router.navigate(['prova', this.route.snapshot.params['uuid'], 'questao', index.toString()]);
+    this.router.navigate(['prova', this.route.snapshot.params['token'], 'questao', index.toString()]);
   }
 
 }

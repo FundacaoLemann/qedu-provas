@@ -82,7 +82,7 @@ export class QuestionPageComponent implements OnInit {
 
   next() {
     const nextQuestion = (+this._route.snapshot.params['question_id']) + 1;
-    const uuid = this._route.snapshot.params['uuid'];
+    const uuid = this._route.snapshot.params['token'];
 
     if ( nextQuestion > this.questionsLength ) {
       this._router.navigate(['prova', uuid, 'revisao']);
@@ -95,7 +95,7 @@ export class QuestionPageComponent implements OnInit {
     const prevQuestion = (+this._route.snapshot.params['question_id']) - 1;
 
     if ( prevQuestion >= 1 ) {
-      const uuid = this._route.snapshot.params['uuid'];
+      const uuid = this._route.snapshot.params['token'];
       this._router.navigate(['prova', uuid, 'questao', prevQuestion]);
     }
   }

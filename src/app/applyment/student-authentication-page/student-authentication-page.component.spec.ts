@@ -28,7 +28,7 @@ describe('StudentAuthenticationPageComponent', () => {
   let studentService: StudentService;
   let router: Router;
   const route = new ActivatedRouteStub();
-  route.testParams = { 'uuid': '1' };
+  route.testParams = { 'token': '1' };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
