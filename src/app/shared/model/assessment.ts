@@ -1,5 +1,3 @@
-import { Question } from './question';
-
 export class Assessment {
   id: number;
   token: string;
