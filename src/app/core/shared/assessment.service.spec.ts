@@ -2,6 +2,7 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { AssessmentService } from './assessment.service';
 import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { createResponse } from '../../../testing/testing-helper';
 
 const mock = require('../../../../mock/db.json');
 const ASSESSMENT = mock.assessments[0];
@@ -44,9 +45,9 @@ describe('AssessmentService', () => {
         });
 
         service.fetchAssessment('1')
-          .subscribe(assessment =>
-            expect(assessment).toEqual(ASSESSMENT)
-          );
+               .subscribe(assessment =>
+                 expect(assessment).toEqual(ASSESSMENT)
+               );
 
       }
     )));
@@ -63,9 +64,9 @@ describe('AssessmentService', () => {
         });
 
         service.fetchAssessmentQuestions('1')
-          .subscribe(questions => {
-            expect(questions).toEqual(QUESTIONS);
-          });
+               .subscribe(questions => {
+                 expect(questions).toEqual(QUESTIONS);
+               });
 
       })));
   });
@@ -87,10 +88,46 @@ describe('AssessmentService', () => {
         };
 
         service.postAssessment(assessment)
-          .subscribe(resp => {
-            expect(resp).toEqual({ status: 201, statusText: 'Created' });
-          });
+               .subscribe(resp => {
+                 expect(resp).toEqual({ status: 201, statusText: 'Created' });
+               });
       })));
+  });
+
+  fdescribe('extractData()', () => {
+    it('should return an Assessment',
+      inject([AssessmentService], (service: AssessmentService) => {
+        const body = `{"data": ${JSON.stringify(ASSESSMENT)}}`;
+        const options = {
+          status: 200,
+          statusText: 'OK',
+          body: body
+        };
+        const response = new Response(new ResponseOptions(options));
+
+        expect(service.extractData(response)).toEqual(ASSESSMENT);
+      })
+    );
+  });
+
+  fdescribe('handleError()', () => {
+    it('should return an error message',
+      async(inject([AssessmentService], (service: AssessmentService) => {
+        const respBody = {
+          error: {
+            code: 404,
+            message: "Prova não encontrada"
+          }
+        };
+        const response = createResponse(404, 'Not Found', respBody);
+        const expectation = error => {
+          expect(error).toEqual('Prova não encontrada');
+        };
+
+        service.handleError(response)
+               .subscribe(() => {}, expectation);
+      }))
+    );
   });
 
 });
