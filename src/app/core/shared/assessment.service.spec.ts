@@ -116,7 +116,7 @@ describe('AssessmentService', () => {
         const respBody = {
           error: {
             code: 404,
-            message: "Prova não encontrada"
+            message: 'Prova não encontrada'
           }
         };
         const response = createResponse(404, 'Not Found', respBody);
