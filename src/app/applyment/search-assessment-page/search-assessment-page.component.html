@@ -3,7 +3,7 @@
     <div class="container">
       <div class="col-xs-12 col-md-6 col-md-offset-3 no-h-padding">
         <div class="panel panel-default">
-          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+          <form (ngSubmit)="onSubmit()" novalidate>
             <div class="panel-body">
               <div class="row">
                 <div class="col-xs-12 text-center">
@@ -18,15 +18,20 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <div class="form-group">
+                  <div class="form-group" [ngClass]="{'has-error': formError}">
                     <div class="row">
                       <div class="col-xs-8 col-xs-offset-2 text-center">
                         <label for="assessmentToken">Código da Prova</label>
-                        <input type="text"
-                               id="assessmentToken"
-                               class="form-control"
-                               formControlName="assessmentToken"
-                               required>
+                        <input
+                          assessmentToken
+                          type="text"
+                          id="assessmentToken"
+                          class="form-control"
+                          name="assessmentToken"
+                          [(ngModel)]="assessmentToken"
+                          required
+                        >
+                        <div class="error form-field-error">{{formError}}</div>
                       </div>
                     </div>
                   </div>

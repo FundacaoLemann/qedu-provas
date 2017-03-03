@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AssessmentService } from '../../core/shared/assessment.service';
+import { Assessment } from '../../shared/model/assessment';
+import { ApplymentService } from '../shared/applyment.service';
+import APIError from '../../shared/model/api-error';
 
 @Component({
   selector: 'qp-search-assessment-page',
@@ -8,24 +11,33 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['search-assessment-page.component.sass']
 })
 export class SearchAssessmentPageComponent implements OnInit {
-  form: FormGroup;
-  formErrors: string[];
+  assessmentToken = '';
+  formError = '';
 
-  constructor (private router: Router,
-               private fb: FormBuilder) {
-
-    this.form = this.fb.group({
-      'assessmentToken': ['', Validators.required]
-    });
-
-  }
+  constructor (private _router: Router,
+               private _assessmentService: AssessmentService,
+               private _applymentService: ApplymentService) {}
 
   ngOnInit () {
   }
 
+  onFetchAssessmentSuccess (assessment: Assessment) {
+    this._applymentService.setAssessment(assessment);
+    this._router.navigate(['prova', assessment.token]);
+  }
+
+  onFetchAssessmentFail (error: APIError) {
+    this.formError = error.message;
+  }
+
   onSubmit () {
-    if (this.form.valid) {
-      this.router.navigate(['prova', this.form.get('assessmentToken').value]);
+    if ( this.assessmentToken.length ) {
+      return this._assessmentService
+                 .fetchAssessment(this.assessmentToken)
+                 .subscribe(
+                   this.onFetchAssessmentSuccess.bind(this),
+                   this.onFetchAssessmentFail.bind(this)
+                 );
     }
   }
 }
