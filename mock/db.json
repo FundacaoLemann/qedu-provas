@@ -29,7 +29,7 @@
   ],
   "questions": [
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 1,
       "text": "As pinturas gregas tinham como temas: a mitologia e as cenas da vida cotidiana e das batalhas do exército grego. Assinale a alternativa que identifica onde as mesmas eram realizadas.",
       "media": [],
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 2,
       "text": "<p>I) No período clássico, os escultores gregos retratavam o homem com perfeição, nas proporções perfeitas.</p> <p>II) As esculturas do período helenístico, na Grécia antiga, representavam o homem com movimento, demonstrando suas emoções e angústias.</p> <p>III) Os arquitetos gregos desenvolveram os arcos e as abóbodas nas construções de templos.</p> <p>IV) As esculturas chamadas de “Os Kouros” eram feitas em bronze e representavam somente mulheres jovens. </p> <p>Em relação à arte grega, marque a alternativa correta quanto às afirmações acima.</p>",
       "media": [],
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 3,
       "text": "{{questao-3}}\nO Império Romano formou-se como uns dos mais importantes da Antiguidade. Os romanos conquistaram vários povos e a Arte nas suas linguagens sofreu, na maioria das vezes, grandes influências deles. Pode-se afirmar que a arquitetura romana, por exemplo, foi marcada:",
       "media": [
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 4,
       "text": "{{questao-4}}Carybé foi o nome popular de Hector Julio Páride Bernabó, um pintor, gravador, ceramista,ilustrador e desenhista argentino (naturalizado brasileiro) com grande destaque em obras artísticas. Seus temas eram direcionados à",
       "media": [
@@ -137,7 +137,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 5,
       "text": "{{questao-5}}Instrumento musical composto por uma cabaça pequena redonda revestido geralmente por miçangas. Assinale a alternativa que corresponde a esse instrumento.",
       "media": [
@@ -167,7 +167,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 6,
       "text": "{{questao-6}}A imagem e o texto ao lado revelam aspectos de uma das mais conhecidas pólis da Grécia Antiga.Trata-se",
       "media": [
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 7,
       "text": "{{questao-7}}A região destacada em vermelho no mapa representa",
       "media": [
@@ -227,7 +227,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 8,
       "text": "<p>a) ______________ a cat in the yard?</p> <p>b) ______________ a living room in your house.</p> <p>c) ______________ four armchairs in the living room.</p> <p>d) ______________ two apples in the basket?</p> <p>Complete as frases acima com \"there to be\". Depois, assinale a alternativa correta.</p>",
       "media": [],
@@ -251,7 +251,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 9,
       "text": "{{questao-9}}Qual assunto é discutido na tira?",
       "media": [
@@ -281,7 +281,7 @@
       ]
     },
     {
-      "assessmentId": 1,
+      "assessmentId": "qedu1",
       "id": 10,
       "text": "{{questao-10}}Qual é o formato desse objeto? Assinale a resposta correta.",
       "media": [
