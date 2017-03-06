@@ -5,7 +5,6 @@ import { ApplymentService } from '../shared/applyment.service';
 import { Assessment } from '../../shared/model/assessment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
-import { AssessmentService } from '../../core/shared/assessment.service';
 
 @Component({
   selector: 'qp-question-page',
@@ -23,41 +22,37 @@ export class QuestionPageComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
-              private _applymentService: ApplymentService,
-              private _assessmentService: AssessmentService
-  ) {
-  }
+              private _applymentService: ApplymentService,) {}
 
   ngOnInit() {
-    // Load the assessment
     this.assessment = this._applymentService.getAssessment();
 
     // Update question based on the url change
     this._route.params
-      .switchMap(params => Observable.of(+params['question_id'] - 1))
-      .subscribe(
-        questionIndex => {
-          try {
-            const questions = this._applymentService.getQuestions();
+        .switchMap(params => Observable.of(+params['question_id'] - 1))
+        .subscribe(
+          questionIndex => {
+            try {
+              const questions = this._applymentService.getQuestions();
 
-            this.questionIndex = questionIndex;
-            this.questionsLength = questions.length;
-            this.question = questions[this.questionIndex];
-            this.questionText = this.questionHTMLText();
-            this.answers = this.question.answers;
-            document.body.scrollTop = 0;
-          } catch (err) {
+              this.questionIndex = questionIndex;
+              this.questionsLength = questions.length;
+              this.question = questions[this.questionIndex];
+              this.questionText = this.questionHTMLText();
+              this.answers = this.question.answers;
+              document.body.scrollTop = 0;
+            } catch (err) {
+              this.question = new Question();
+              this.answers = [];
+            } finally {
+              this.checkedAnswer = this._applymentService.getSingleAnswer(this.questionIndex) || 0;
+            }
+          },
+          error => {
             this.question = new Question();
             this.answers = [];
-          } finally {
-            this.checkedAnswer = this._applymentService.getSingleAnswer(this.questionIndex) || 0;
           }
-        },
-        error => {
-          this.question = new Question();
-          this.answers = [];
-        }
-      );
+        );
   }
 
   questionHTMLText(): string {
