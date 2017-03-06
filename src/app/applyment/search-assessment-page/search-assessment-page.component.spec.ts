@@ -6,7 +6,7 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 import { ApplymentService } from '../shared/applyment.service';
 import { ApplymentModule } from '../applyment.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import APIError from '../../shared/model/api-error';
 import { By } from '@angular/platform-browser';
 

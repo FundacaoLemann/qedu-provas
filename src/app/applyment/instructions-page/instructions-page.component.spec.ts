@@ -69,7 +69,7 @@ describe('InstructionsPageComponent', () => {
     const instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
     const durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
     const itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
-    expect(instructionEl.innerHTML.substr(0,10)).toEqual(ASSESSMENT.instructions.substr(0,10));
+    expect(instructionEl.innerHTML.substr(0, 10)).toEqual(ASSESSMENT.instructions.substr(0, 10));
     expect(durationEl.textContent.trim()).toEqual(`${ASSESSMENT.duration} minutos`);
     expect(itemsCountEl.textContent.trim()).toEqual(`${ASSESSMENT.numberOfItems} questões`);
   });

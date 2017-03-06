@@ -22,7 +22,7 @@ export class QuestionPageComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
-              private _applymentService: ApplymentService,) {}
+              private _applymentService: ApplymentService) {}
 
   ngOnInit() {
     this.assessment = this._applymentService.getAssessment();
