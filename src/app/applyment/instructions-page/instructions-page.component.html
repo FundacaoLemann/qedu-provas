@@ -4,7 +4,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-12">
-            <qp-page-logos></qp-page-logos>
+            <qp-page-logos [assessment]="assessment"></qp-page-logos>
           </div>
         </div>
 
@@ -27,7 +27,7 @@
           </div>
           <div class="col-xs-12 col-md-3">
             <h4><i class="fa fa-check-square-o"></i> Questões</h4>
-            <h5 class="items_count">{{ assessment?.itemsCount }} questões</h5>
+            <h5 class="items_count">{{ assessment?.numberOfItems }} questões</h5>
           </div>
         </div>
 

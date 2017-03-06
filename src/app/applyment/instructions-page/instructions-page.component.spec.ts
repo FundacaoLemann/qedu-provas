@@ -11,7 +11,6 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
-import json from '../../utils/json';
 import { ApplymentService } from '../shared/applyment.service';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
 import { ConnectionService } from '../../core/shared/connection.service';
@@ -28,23 +27,21 @@ describe('InstructionsPageComponent', () => {
   let applymentService: ApplymentService;
   let applyment: ApplymentService;
   let connection: ConnectionService;
-  const ASSESSMENT = json.camelizeObject(db.assessments[0]);
+  const ASSESSMENT = db.assessments[0];
   const QUESTIONS = db.questions;
 
   beforeEach(async(() => {
-    const routeStub = new ActivatedRouteStub();
-    routeStub.testParams = { uuid: '1' };
     TestBed.configureTestingModule({
-      imports: [
-        ApplymentModule
-      ],
-      providers: [
-        { provide: Router, useValue: new RouterStub() },
-        { provide: ActivatedRoute, useValue: routeStub },
-        AssessmentService
-      ]
-    })
-      .compileComponents();
+             imports: [
+               ApplymentModule
+             ],
+             providers: [
+               { provide: Router, useValue: new RouterStub() },
+               { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) },
+               AssessmentService
+             ]
+           })
+           .compileComponents();
   }));
 
   beforeEach(() => {
@@ -60,7 +57,6 @@ describe('InstructionsPageComponent', () => {
     spyOn(applymentService, 'getAssessment').and.returnValue(ASSESSMENT);
     spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(QUESTIONS));
 
-    route.testParams = { token: '1' };
     fixture.detectChanges();
   });
 
@@ -71,15 +67,12 @@ describe('InstructionsPageComponent', () => {
 
   it('should display an assessment details', () => {
     const instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
-    expect(instructionEl.innerHTML).toEqual(ASSESSMENT.instructions);
-
     const durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
-    expect(durationEl.textContent).toEqual(`${ASSESSMENT.duration} minutos`);
-
     const itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
-    expect(itemsCountEl.textContent).toEqual(`${ASSESSMENT.itemsCount} questões`);
+    expect(instructionEl.innerHTML.substr(0,10)).toEqual(ASSESSMENT.instructions.substr(0,10));
+    expect(durationEl.textContent.trim()).toEqual(`${ASSESSMENT.duration} minutos`);
+    expect(itemsCountEl.textContent.trim()).toEqual(`${ASSESSMENT.numberOfItems} questões`);
   });
-
 
   it('initAssessment', async(() => {
     spyOn(applyment, 'initAnswers');
@@ -88,8 +81,8 @@ describe('InstructionsPageComponent', () => {
     applymentService.setAssessment(ASSESSMENT);
     component.initAssessment();
 
-    expect(applyment.initAnswers).toHaveBeenCalledWith(ASSESSMENT.itemsCount);
-    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.id.toString(), 'questao', '1']);
+    expect(applyment.initAnswers).toHaveBeenCalledWith(ASSESSMENT.numberOfItems);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', '1']);
   }));
 
   describe('modals', () => {

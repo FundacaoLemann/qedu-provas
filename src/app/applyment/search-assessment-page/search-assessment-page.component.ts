@@ -21,23 +21,23 @@ export class SearchAssessmentPageComponent implements OnInit {
   ngOnInit () {
   }
 
-  onFetchAssessmentSuccess (assessment: Assessment) {
+  fillAssessmentAndNavigate (assessment: Assessment) {
     this._applymentService.setAssessment(assessment);
     this._router.navigate(['prova', assessment.token]);
   }
 
-  onFetchAssessmentFail (error: APIError) {
+  setFormError (error: APIError) {
     this.formError = error.message;
   }
 
-  onSubmit () {
+  validateAndRequestAssessment () {
     if ( this.assessmentToken.length ) {
-      return this._assessmentService
-                 .fetchAssessment(this.assessmentToken)
-                 .subscribe(
-                   this.onFetchAssessmentSuccess.bind(this),
-                   this.onFetchAssessmentFail.bind(this)
-                 );
+      this._assessmentService
+          .fetchAssessment(this.assessmentToken)
+          .subscribe(
+            this.fillAssessmentAndNavigate.bind(this),
+            this.setFormError.bind(this)
+          );
     }
   }
 }

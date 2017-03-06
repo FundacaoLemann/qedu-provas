@@ -1,12 +1,14 @@
+import EducationalEntity from './educational-entity';
 export class Assessment {
   id: number;
   token: string;
   mainTitle: string;
+  secondaryTitle: string;
   instructions: string;
   description: string;
   duration: number;
-  itemsCount: number;
+  numberOfItems: number;
   subjects?: string[];
-  school?: { id: string, description: string, image: string };
-  department?: { id: string, description: string, image: string };
+  school?: EducationalEntity;
+  department?: EducationalEntity;
 }

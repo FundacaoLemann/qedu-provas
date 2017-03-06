@@ -3,7 +3,7 @@
     <div class="container">
       <div class="col-xs-12 col-md-6 col-md-offset-3 no-h-padding">
         <div class="panel panel-default">
-          <form (ngSubmit)="onSubmit()" novalidate>
+          <form (ngSubmit)="validateAndRequestAssessment()" novalidate>
             <div class="panel-body">
               <div class="row">
                 <div class="col-xs-12 text-center">
@@ -39,7 +39,12 @@
               </div>
             </div>
             <div class="panel-footer text-center">
-              <button class="btn btn-success search" type="button" (click)="onSubmit()">Continuar</button>
+              <button
+                class="btn btn-success search"
+                type="button"
+                (click)="validateAndRequestAssessment()">
+                Continuar
+              </button>
             </div>
           </form>
         </div>

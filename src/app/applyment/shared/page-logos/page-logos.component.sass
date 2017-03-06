@@ -1,15 +1,31 @@
+@import '../../../../assets/scss/styles/variables'
+
+img
+  max-width: 120px
+  max-height: 120px
+
 .logos
   display: flex
   align-items: center
-  justify-content: space-between
-  padding: 0 5px
-  margin-top: 0.5rem
 
-  .logo
-    max-width: 240px
+.logo
+  max-width: 180px
 
-    img
-      max-width: 100%
+.separator
+  height: 80px
+  width: 40px
+  position: relative
 
-    &.logo-qedu
-      max-width: 120px
+  &:before
+    content: ''
+    position: absolute
+    height: 100%
+    border-right: 1px solid rgba(85,85,85,0.3)
+    left: 50%
+    top: 0
+
+.description
+  text-align: center
+
+.logo-qedu
+  margin-left: auto

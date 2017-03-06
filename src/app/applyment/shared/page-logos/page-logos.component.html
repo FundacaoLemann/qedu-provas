@@ -1,11 +1,32 @@
 <div class="logos">
   <div class="logo">
-
-    <img src="http://static.wixstatic.com/media/30d283_5186d1e399494ad69edb61b39a8b0fe4~mv2.jpg"
-         alt=""
-         class="img-responsive">
+    <img
+      *ngIf="department?.image"
+      [src]="department?.image"
+      [alt]="department?.description"
+      class="department-logo"
+    >
+    <div *ngIf="!department?.image" class="description">
+      {{department?.description}}
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="logo">
+    <img
+      *ngIf="school?.image"
+      [src]="school?.image"
+      [alt]="school?.description"
+      class="school-logo"
+    >
+    <div *ngIf="!school?.image" class="description">
+      {{school?.description}}
+    </div>
   </div>
   <div class="logo logo-qedu">
-    <img src="assets/images/qedu-logo-borderless.png" alt="QEdu Logo" class="img-responsive">
+    <img
+      src="assets/images/qedu-logo-borderless.png"
+      class="qedu"
+      alt="QEdu Logo"
+    >
   </div>
 </div>

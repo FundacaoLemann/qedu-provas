@@ -94,7 +94,7 @@ describe('AssessmentService', () => {
       })));
   });
 
-  fdescribe('extractData()', () => {
+  describe('extractData()', () => {
     it('should return an Assessment',
       inject([AssessmentService], (service: AssessmentService) => {
         const body = `{"data": ${JSON.stringify(ASSESSMENT)}}`;
@@ -110,7 +110,7 @@ describe('AssessmentService', () => {
     );
   });
 
-  fdescribe('handleError()', () => {
+  describe('handleError()', () => {
     it('should return an error message',
       async(inject([AssessmentService], (service: AssessmentService) => {
         const respBody = {

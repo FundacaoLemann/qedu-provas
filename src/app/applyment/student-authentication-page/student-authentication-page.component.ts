@@ -31,14 +31,15 @@ export class StudentAuthenticationPageComponent implements OnInit {
 
     if ( !this.assessment ) {
       const token = this._route.snapshot.params['token'];
-      this._assessmentService.fetchAssessment(token)
-        .subscribe(
-          assessment => {
-            this.assessment = assessment;
-            this._applymentService.setAssessment(assessment);
-          },
-          error => this.assessment = null
-        );
+      this._assessmentService
+          .fetchAssessment(token)
+          .subscribe(
+            assessment => {
+              this.assessment = assessment;
+              this._applymentService.setAssessment(assessment);
+            },
+            error => this.assessment = null
+          );
     }
   }
 
@@ -50,20 +51,20 @@ export class StudentAuthenticationPageComponent implements OnInit {
 
     if ( !this.student && this.accessToken ) {
       this.fetchUser(this.accessToken)
-        .subscribe(
-          student => {
-            if ( student ) {
-              this.student = student;
-              this._applymentService.setStudent(student);
-              this.error = '';
-            } else {
+          .subscribe(
+            student => {
+              if ( student ) {
+                this.student = student;
+                this._applymentService.setStudent(student);
+                this.error = '';
+              } else {
+                setError();
+              }
+            },
+            error => {
               setError();
             }
-          },
-          error => {
-            setError();
-          }
-        );
+          );
     }
   }
 

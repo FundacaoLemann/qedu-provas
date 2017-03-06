@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, Type } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
@@ -40,7 +40,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
   initAssessment() {
     const token = this._route.snapshot.params['token'];
 
-    this._applymentService.initAnswers(this.assessment.itemsCount);
+    this._applymentService.initAnswers(this.assessment.numberOfItems);
     this._assessmentService.fetchAssessmentQuestions(token)
       .subscribe(
         questions => {
@@ -75,9 +75,6 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
     });
   }
 
-  /**
-   * Show no-connection modal
-   */
   openModalConnectionError() {
     this.closeModal();
     setTimeout(() => {

@@ -42,11 +42,11 @@ describe('SearchAssessmentPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fdescribe('onSubmit()', () => {
+  describe('validateAndRequestAssessment()', () => {
     it('should not fetch an assessment', () => {
       spyOn(assessmentService, 'fetchAssessment');
 
-      component.onSubmit();
+      component.validateAndRequestAssessment();
       expect(assessmentService.fetchAssessment).not.toHaveBeenCalled();
     });
 
@@ -55,32 +55,32 @@ describe('SearchAssessmentPageComponent', () => {
         .and.returnValue(Observable.of(ASSESSMENT));
 
       component.assessmentToken = 'qedu1';
-      component.onSubmit();
+      component.validateAndRequestAssessment();
 
       expect(assessmentService.fetchAssessment).toHaveBeenCalledWith('qedu1');
     });
   });
 
-  fdescribe('onFetchAssessmentSuccess()', () => {
+  describe('fillAssessmentAndNavigate()', () => {
     it('should set the assessment and redirect', () => {
       spyOn(applymentService, 'setAssessment');
       spyOn(router, 'navigate');
 
-      component.onFetchAssessmentSuccess(ASSESSMENT);
+      component.fillAssessmentAndNavigate(ASSESSMENT);
 
       expect(applymentService.setAssessment).toHaveBeenCalledWith(ASSESSMENT);
       expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token]);
     });
   });
 
-  fdescribe('onFetchAssessmentFail()', () => {
+  describe('setFormError()', () => {
     it('should fill form error', () => {
       const error: APIError = {
         code: 404,
         message: 'Prova não encontrada'
       };
 
-      component.onFetchAssessmentFail(error);
+      component.setFormError(error);
       fixture.detectChanges();
       expect(component.formError).toEqual(error.message);
 
