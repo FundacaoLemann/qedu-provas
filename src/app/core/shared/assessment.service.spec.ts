@@ -2,12 +2,14 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { AssessmentService } from './assessment.service';
 import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
 
 const mock = require('../../../../mock/db.json');
 const ASSESSMENT = mock.assessments[0];
+const STUDENT = mock.students[0];
 const QUESTIONS = mock.questions;
-
+const { API_URL } = environment;
 
 describe('AssessmentService', () => {
   beforeEach(() => {
@@ -92,6 +94,31 @@ describe('AssessmentService', () => {
                  expect(resp).toEqual({ status: 201, statusText: 'Created' });
                });
       })));
+  });
+
+  describe('postAnswer', () => {
+    it('should send a PATCH to the API with an answer',
+      async(inject(
+        [AssessmentService, MockBackend, Http],
+        (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
+          spyOn(http, 'post').and.callThrough();
+          mockBackend.connections.subscribe(connection => {
+            connection.mockRespond(new Response(new ResponseOptions({ body: 'OK' })));
+          });
+          const url = `${API_URL}/assessment/${ASSESSMENT.token}/answer`;
+          const answer = {
+            assessmentToken: ASSESSMENT.token,
+            studentToken: STUDENT.token,
+            questionId: QUESTIONS[0].id,
+            value: '1'
+          };
+          const response = service.postAnswer(answer);
+          response.subscribe(resp => {
+            expect(resp).toEqual(jasmine.any(Response));
+            expect(http.post).toHaveBeenCalledWith(url, answer);
+          });
+        })
+      ));
   });
 
   describe('extractData()', () => {

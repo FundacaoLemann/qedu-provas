@@ -65,15 +65,12 @@ describe('ReviewPageComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should return to the last question when back is clicked', async(() => {
+  it('should return to the last question when [back] is clicked', async(() => {
     component.questions = QUESTIONS;
-
     spyOn(router, 'navigate');
-
     dispatchEvent(fixture, '[back]', 'click');
     fixture.detectChanges();
-
-    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.id.toString(), 'questao', QUESTIONS.length]);
+    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', QUESTIONS.length]);
   }));
 
   it('should create a modal when the finish button is clicked', fakeAsync(() => {

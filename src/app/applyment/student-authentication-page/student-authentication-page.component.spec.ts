@@ -109,7 +109,7 @@ describe('StudentAuthenticationPageComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'instrucoes']);
     });
 
-    it('should clear getStudent data and go back to search', () => {
+    it('should clear getStudent data and go submitAnswerAndNavigateBack to search', () => {
       test.dispatchEvent(fixture, '[cancel]', 'click');
       expect(component.student).toEqual(null);
       expect(component.accessToken).toEqual(null);
