@@ -32,7 +32,7 @@ export class SearchAssessmentPageComponent implements OnInit {
 
   validateAndRequestAssessment () {
     if ( this.assessmentToken.length ) {
-      this._assessmentService
+        this._assessmentService
           .fetchAssessment(this.assessmentToken)
           .subscribe(
             this.fillAssessmentAndNavigate.bind(this),

@@ -53,6 +53,8 @@ describe('SearchAssessmentPageComponent', () => {
     it('should try to fetch an assessment', () => {
       spyOn(assessmentService, 'fetchAssessment')
         .and.returnValue(Observable.of(ASSESSMENT));
+      spyOn(applymentService, 'setAssessment');
+      spyOn(router, 'navigate');
 
       component.assessmentToken = 'qedu1';
       component.validateAndRequestAssessment();

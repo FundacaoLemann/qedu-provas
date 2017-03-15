@@ -24,13 +24,15 @@
       ],
       "scripts": [
       ],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "stag": "environments/environment.stag.ts"
       }
     }
   ],
+  "poll": true,
   "addons": [
   ],
   "packages": [
@@ -70,6 +72,10 @@
       "module": false,
       "pipe": true,
       "service": true
+    },
+    "serve": {
+      "port": 4200,
+      "host": "0.0.0.0"
     }
   }
 }
