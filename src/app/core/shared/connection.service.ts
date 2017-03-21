@@ -5,8 +5,9 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs/Subject';
+import { environment } from '../../../environments/environment';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = environment.API_URL;
 
 @Injectable()
 export class ConnectionService {

@@ -60,7 +60,7 @@ Docker compose will configure all the containers at the same time and links them
 
 So, after enter into the machine using docker-machine command and run follow:
 ```sh
-$ docker-compose -f provision/docker-compose.yml -d
+$ docker-compose -f provision/docker-compose.yml up -d
 ```
 
 ## Get machine IP
@@ -70,14 +70,14 @@ $ docker-machine ip qedu-provas-front
 ```
 
 ## Define a dns for the machine
-Define www.qedu-provas.dev as hostname, so, put the public ip into local hosts to define a hostname, example:
+Define `provas.qedu.dev` as hostname, so, put the public ip into local hosts to define a hostname, example:
 ```
-192.168.99.100 www.qedu-provas.dev
+192.168.99.100 provas.qedu.dev
 ```
 
 ## Access development page
 
-<http://www.qedu-provas.dev>
+<http://provas.qedu.dev>
 
 ## Enter into container
 ```sh
