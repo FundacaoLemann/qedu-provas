@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start": "pm2 start process.json --only qedu-provas-front --no-daemon",
-    "start:dev": "ng serve",    
+    "start:dev": "pm2 start  --no-daemon ./node_modules/.bin/ng -- serve",
     "build:stag": "ng build --env=stag --aot=true",
     "build:prod": "ng build --env=prod --aot=true",
     "lint": "tslint \"src/**/*.ts\"",

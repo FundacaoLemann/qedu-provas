@@ -1,18 +1,18 @@
-FROM qedu/qedu-provas-base-front-infra:release-1.0.0
+FROM qedu/qedu-provas-base-front-infra:release-1.1.0
 
 USER root
 
 ADD . /var/www
 
-RUN  chown -R node\:node /var/www
+RUN chown -R node\:node /var/www
 
 USER node
 
-RUN cd /var/www &&\
-    yarn install &&\
-    yarn build:stag &&\
-    rm -fr src test mock build provision e2e
-
+RUN cd /var/www \
+    && yarn install \
+    && yarn test -- --watch=false\
+    && yarn build:stag \
+    && rm -fr src test mock build provision e2e
 
 WORKDIR "/var/www"
 
