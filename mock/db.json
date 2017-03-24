@@ -314,11 +314,13 @@
   ],
   "students": [
     {
-      "id": "12345",
-      "token": "12345",
-      "name": "John Doe",
-      "matricula": "98765",
-      "class": "6º Ano - C"
+      "id": "58d2f1af4a083c00194437c6",
+      "registrationNumber": "11223344",
+      "name": "Mario Junior Oliveira",
+      "class": {
+        "id": "58d2f1af4a083c00194437c5",
+        "description": "901A"
+      }
     }
   ],
   "status": {

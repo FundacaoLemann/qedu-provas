@@ -1,13 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
-import { ConnectionStatusComponent } from '../shared/connection-status/connection-status.component';
 import { ConnectionService } from '../shared/connection.service';
-import { HttpModule } from '@angular/http';
 import { By } from '@angular/platform-browser';
 import { ApplymentService } from '../../applyment/shared/applyment.service';
 import { ApplymentModule } from '../../applyment/applyment.module';
 
-const mockStudent = require('../../../../mock/db.json').students[0];
+const db = require('../../../../mock/db.json');
+const PARSED_STUDENT = {
+  name: 'John Doe',
+  matricula: '44256273',
+  class: '197A',
+};
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -33,7 +36,7 @@ describe('HeaderComponent', () => {
 
     // Services
     applyment = fixture.debugElement.injector.get(ApplymentService);
-    applyment.setStudent(mockStudent);
+    applyment.setStudent(PARSED_STUDENT);
 
     fixture.detectChanges();
   });
@@ -43,22 +46,22 @@ describe('HeaderComponent', () => {
   }));
 
   it('should get getStudent data from service', () => {
-    expect(component.student).toEqual(mockStudent);
+    expect(component.student).toEqual(PARSED_STUDENT);
   });
 
   it('should display getStudent name', () => {
     const name = fixture.debugElement.query(By.css('[studentName]'));
-    expect(name.nativeElement.textContent.trim()).toEqual(mockStudent.name);
+    expect(name.nativeElement.textContent.trim()).toEqual(PARSED_STUDENT.name);
   });
 
   it('should display getStudent matricula', () => {
     const matricula = fixture.debugElement.query(By.css('[studentMatricula]'));
-    expect(matricula.nativeElement.textContent.trim()).toEqual(mockStudent.matricula);
+    expect(matricula.nativeElement.textContent.trim()).toEqual(PARSED_STUDENT.matricula);
   });
 
   it('should display getStudent class', () => {
     const klass = fixture.debugElement.query(By.css('[studentClass]'));
-    expect(klass.nativeElement.textContent.trim()).toEqual(mockStudent.class);
+    expect(klass.nativeElement.textContent.trim()).toEqual(PARSED_STUDENT.class);
   });
 
 });

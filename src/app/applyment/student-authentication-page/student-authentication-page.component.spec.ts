@@ -13,13 +13,15 @@ import * as test from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
 import { By } from '@angular/platform-browser';
 
-const mockStudent = {
-  id: '1234',
-  access_token: '1234',
-  name: 'John Doe',
-  matricula: '98765',
-  class: '6º Ano - C'
+const db = require('../../../../mock/db.json');
+const RAW_STUDENT = db.students[0];
+const PARSED_STUDENT = {
+  id: '58d2f1af4a083c00194437c6',
+  matricula: '11223344',
+  name: 'Mario Junior Oliveira',
+  class: '901A'
 };
+const ASSESSMENT = db.assessments[0];
 
 describe('StudentAuthenticationPageComponent', () => {
   let component: StudentAuthenticationPageComponent;
@@ -32,16 +34,16 @@ describe('StudentAuthenticationPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [ApplymentModule],
-        providers: [
-          StoreService,
-          ApplymentService,
-          StudentService,
-          { provide: Router, useClass: RouterStub },
-          { provide: ActivatedRoute, useValue: route },
-        ]
-      })
-      .compileComponents();
+             imports: [ApplymentModule],
+             providers: [
+               StoreService,
+               ApplymentService,
+               StudentService,
+               { provide: Router, useClass: RouterStub },
+               { provide: ActivatedRoute, useValue: route },
+             ]
+           })
+           .compileComponents();
   }));
 
   beforeEach(() => {
@@ -49,15 +51,16 @@ describe('StudentAuthenticationPageComponent', () => {
     component = fixture.componentInstance;
 
     applymentService = fixture.debugElement.injector.get(ApplymentService);
+    applymentService.setAssessment(ASSESSMENT);
     studentService = fixture.debugElement.injector.get(StudentService);
     router = fixture.debugElement.injector.get(Router);
   });
 
   it('should load getStudent data from service', async(() => {
-    spyOn(applymentService, 'getStudent').and.returnValue(mockStudent);
+    spyOn(applymentService, 'getStudent').and.returnValue(RAW_STUDENT);
     component.student = null;
     component.ngOnInit();
-    expect(component.student).toEqual(mockStudent);
+    expect(component.student).toEqual(RAW_STUDENT);
   }));
 
   describe('Submitting form', () => {
@@ -70,10 +73,10 @@ describe('StudentAuthenticationPageComponent', () => {
     });
 
     it('should fetch getStudent data when submit', async(() => {
-      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.of(mockStudent));
-      component.accessToken = '12345';
+      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.of(PARSED_STUDENT));
+      component.accessToken = '1235';
       component.onSubmit();
-      expect(applymentService.setStudent).toHaveBeenCalledWith(camelizeObject(mockStudent));
+      expect(applymentService.setStudent).toHaveBeenCalledWith(PARSED_STUDENT);
     }));
 
     it('should display `Código inválido` when accessToken is invalid', async(() => {
@@ -88,20 +91,20 @@ describe('StudentAuthenticationPageComponent', () => {
 
   describe('Displaying getStudent data', () => {
     beforeEach(() => {
-      spyOn(applymentService, 'getStudent').and.returnValue(mockStudent);
+      applymentService.setStudent(PARSED_STUDENT);
       spyOn(router, 'navigate');
-      component.student = mockStudent;
+      component.student = PARSED_STUDENT;
       fixture.detectChanges();
     });
 
     it('should display getStudent data', () => {
-      expect(test.getNativeElement(fixture, '[studentName]').textContent).toEqual(mockStudent.name);
-      expect(test.getNativeElement(fixture, '[studentMatricula]').textContent).toEqual(mockStudent.matricula);
+      expect(test.getNativeElement(fixture, '[studentName]').textContent).toEqual(PARSED_STUDENT.name);
+      expect(test.getNativeElement(fixture, '[studentMatricula]').textContent).toEqual(PARSED_STUDENT.matricula);
     });
 
     it('should display getStudent class', () => {
       const studentClass = fixture.debugElement.query(By.css('[studentClass]')).nativeElement.textContent;
-      expect(studentClass).toEqual(mockStudent.class);
+      expect(studentClass).toEqual(PARSED_STUDENT.class);
     });
 
     it('should continue to the next page', () => {

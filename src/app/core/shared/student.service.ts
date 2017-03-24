@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Student } from '../../shared/model/student';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { camelizeObject } from '../../utils/json';
 import { environment } from '../../../environments/environment';
 
 const { API_URL } = environment;
@@ -14,9 +13,35 @@ export class StudentService {
   constructor(private http: Http) {
   }
 
-  getStudentByToken(token: string): Observable<Student> {
-    return this.http.get(`${API_URL}/students/${token}`)
-      .map(response => camelizeObject(response.json()).data as Student);
+  getStudentByToken(studentToken: string, assessmentToken: string): Observable<Student> {
+    let url = `${API_URL}/assessments/${assessmentToken}/students`;
+    let headers = new Headers({
+      'Authorization': studentToken
+    });
+
+    return this.http.get(url, { headers })
+               .catch(StudentService.errorHandler)
+               .map(StudentService.extractData);
+  }
+
+  static extractData(response: Response) {
+    if (response.status == 200) {
+      let studentRaw = response.json().data;
+      return {
+        id: studentRaw.id,
+        name: studentRaw.name,
+        matricula: studentRaw.registrationNumber,
+        class: studentRaw.class.description
+      }
+    }
+  }
+
+  static errorHandler(error: Response|any): Observable<any> {
+    if (error instanceof Response) {
+      return Observable.throw(`Not possible to fetch the student: ${error.json().message}`)
+    } else {
+      return Observable.throw('Not possible to fetch the student.')
+    }
   }
 
 }
