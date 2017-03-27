@@ -8,7 +8,6 @@ import { RouterStub } from '../../../testing/router-stub';
 import { InstructionsPageComponent } from './instructions-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { AssessmentServiceStub } from '../../../testing/assessment-service-stub';
 import { dispatchEvent } from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
 import { ApplymentService } from '../shared/applyment.service';
@@ -17,13 +16,20 @@ import { ConnectionService } from '../../core/shared/connection.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 
 const db = require('../../../../mock/db.json');
+const PARSED_STUDENT = {
+  id: '12345',
+  token: '12a11',
+  name: 'John Doe',
+  matricula: '12355',
+  class: '128hA'
+};
 
 describe('InstructionsPageComponent', () => {
   let component: InstructionsPageComponent;
   let fixture: ComponentFixture<InstructionsPageComponent>;
   let router: Router;
   let route: ActivatedRouteStub;
-  let assessmentService: AssessmentServiceStub;
+  let assessmentService: AssessmentService;
   let applymentService: ApplymentService;
   let applyment: ApplymentService;
   let connection: ConnectionService;
@@ -78,6 +84,7 @@ describe('InstructionsPageComponent', () => {
     spyOn(applyment, 'initAnswers');
     spyOn(router, 'navigate');
 
+    applymentService.setStudent(PARSED_STUDENT);
     applymentService.setAssessment(ASSESSMENT);
     component.initAssessment();
 

@@ -54,6 +54,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
           .subscribe(
             student => {
               if ( student ) {
+                student.token = this.accessToken;
                 this.student = student;
                 this._applymentService.setStudent(student);
                 this.error = '';

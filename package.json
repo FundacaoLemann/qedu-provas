@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start": "pm2 start process.json --only qedu-provas-front --no-daemon",
-    "start:dev": "ng serve",    
+    "start:dev": "ng serve",
     "build:stag": "ng build --env=stag --aot=true",
     "build:prod": "ng build --env=prod --aot=true",
     "lint": "tslint \"src/**/*.ts\"",
@@ -32,6 +32,7 @@
     "font-awesome": "^4.7.0",
     "global": "^4.3.1",
     "lodash": "^4.17.4",
+    "md5": "^2.2.1",
     "node-sass": "4.5.0",
     "rxjs": "5.2.0",
     "ts-helpers": "^1.1.2",

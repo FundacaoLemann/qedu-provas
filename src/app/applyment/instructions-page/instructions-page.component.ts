@@ -38,19 +38,22 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
    * Start the assessment
    */
   initAssessment() {
-    const token = this._route.snapshot.params['token'];
+    let assessmentToken = this._route.snapshot.params['token'];
+    let studentToken = this._applymentService.getStudent().token;
 
     this._applymentService.initAnswers(this.assessment.numberOfItems);
-    this._assessmentService.fetchAssessmentQuestions(token)
-      .subscribe(
-        questions => {
-          this._applymentService.setQuestions(questions);
-          this._router.navigate(['prova', token, 'questao', '1']);
-        },
-        error => {
-          this.openModalConnectionError();
-        }
-      );
+
+    this._assessmentService.fetchAssessmentQuestions(assessmentToken, studentToken)
+        .subscribe(
+          questions => {
+            console.log(questions);
+            this._applymentService.setQuestions(questions);
+            this._router.navigate(['prova', assessmentToken, 'questao', '1']);
+          },
+          error => {
+            this.openModalConnectionError();
+          }
+        );
   }
 
   /**
@@ -60,14 +63,14 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
     this.openModal(InstructionsModalComponent, {
       onConfirm: () => {
         this._connection
-          .getStatusOnce()
-          .subscribe((status) => {
-            if ( status ) {
-              this.initAssessment();
-            } else {
-              this.openModalConnectionError();
-            }
-          });
+            .getStatusOnce()
+            .subscribe((status) => {
+              if (status) {
+                this.initAssessment();
+              } else {
+                this.openModalConnectionError();
+              }
+            });
       },
       onClose: () => {
         this.closeModal();
