@@ -90,6 +90,11 @@ Run `yarn build` to build the project. The build artifacts will be stored in the
 
 ### Running unit tests
 
+`*IMPORTANT*`
+
+Some tests fails unexpectedly when running inside docker environment and break the execution.
+Due this strange behavior, run the tests locally:
+
 Run `yarn test` to execute the unit tests via [Karma].
 
 ### Running end-to-end tests
