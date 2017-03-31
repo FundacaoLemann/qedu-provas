@@ -5,7 +5,9 @@ import { MockBackend } from '@angular/http/testing';
 import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
 import { Question } from '../../shared/model/question';
+import Mock from '../../../../mock/mock';
 
+const md5 = require('md5');
 const mock = require('../../../../mock/db.json');
 const ASSESSMENT = mock.assessments[0];
 const STUDENT = mock.students[0];
@@ -70,7 +72,7 @@ describe('AssessmentService', () => {
         let expected = questions => {
           expect(questions.length).toEqual(3);
           expect(questions[0].id).toEqual('58d2f1af4a083c00194437c7');
-          expect(questions[0].text).toEqual('Qual o melhor time do Rio?');
+          expect(questions[0].text).toEqual('Qual o melhor time do Rio? {{' + md5(QUESTIONS[0].image) + '}}');
           expect(questions[0].answers.length).toEqual(5);
           expect(questions[0].media).toBeTruthy();
         };
