@@ -31,11 +31,17 @@ export default class Mock extends Question {
   }
 
   static mockMedia(questionIndex = 0): Media {
+    const question = mock.questions[questionIndex];
     let media = new Media();
-    media.id = md5(mock.questions[questionIndex].image);
-    media.type = 'image';
-    media.source = mock.questions[questionIndex].image;
-    return media;
+    if(question.image) {
+      media.id = md5(question.image);
+      media.type = 'image';
+      media.source = question.image;
+      return media;
+    }
+    else {
+      return null;
+    }
   }
 
   static mockAssessment(): Assessment {
