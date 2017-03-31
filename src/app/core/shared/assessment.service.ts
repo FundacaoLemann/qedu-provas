@@ -106,8 +106,6 @@ export class AssessmentService {
       questions.push(question);
     }
 
-    console.log(questions);
-
     return questions;
   }
 

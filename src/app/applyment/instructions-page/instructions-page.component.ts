@@ -46,7 +46,6 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
     this._assessmentService.fetchAssessmentQuestions(assessmentToken, studentToken)
         .subscribe(
           questions => {
-            console.log(questions);
             this._applymentService.setQuestions(questions);
             this._router.navigate(['prova', assessmentToken, 'questao', '1']);
           },
