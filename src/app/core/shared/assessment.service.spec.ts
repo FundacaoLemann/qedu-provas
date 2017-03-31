@@ -56,7 +56,7 @@ describe('AssessmentService', () => {
 
   });
 
-  fdescribe('fetchAssessmentQuestions()', () => {
+  describe('fetchAssessmentQuestions()', () => {
     it('should return an array of Questions', async(inject(
       [AssessmentService, MockBackend],
       (service: AssessmentService, mockBackend: MockBackend) => {
