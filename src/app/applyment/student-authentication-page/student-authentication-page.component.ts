@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
@@ -50,10 +49,12 @@ export class StudentAuthenticationPageComponent implements OnInit {
     };
 
     if ( !this.student && this.accessToken ) {
-      this.fetchUser(this.accessToken)
+      let assessmentToken = this._applymentService.getAssessment().token;
+      this.fetchUser(this.accessToken, assessmentToken)
           .subscribe(
             student => {
               if ( student ) {
+                student.token = this.accessToken;
                 this.student = student;
                 this._applymentService.setStudent(student);
                 this.error = '';
@@ -80,8 +81,8 @@ export class StudentAuthenticationPageComponent implements OnInit {
     this.student = null;
   }
 
-  fetchUser(accessToken: string) {
-    return this._studentService.getStudentByToken(accessToken);
+  fetchUser(studentToken: string, assessmentToken: string) {
+    return this._studentService.getStudentByToken(studentToken, assessmentToken);
   }
 }
 

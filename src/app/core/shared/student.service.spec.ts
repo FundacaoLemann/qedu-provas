@@ -2,13 +2,14 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { StudentService } from './student.service';
 import { Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import json from '../../utils/json';
 
-const mockStudent = {
-  id: '1234',
-  access_token: '1234',
-  name: 'John Doe',
-  matricula: '98765'
+const db = require('../../../../mock/db.json');
+const RAW_STUDENT = db.students[0];
+const PARSED_STUDENT = {
+  'id': '58d2f1af4a083c00194437c6',
+  'matricula': '11223344',
+  'name': 'Mario Junior Oliveira',
+  'class': '901A'
 };
 
 describe('StudentService', () => {
@@ -31,20 +32,24 @@ describe('StudentService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should return an getStudent', async(inject([
+  it('should return a parsed student', async(inject([
     StudentService,
     MockBackend
   ], (service: StudentService, mockBackend: MockBackend) => {
 
     mockBackend.connections.subscribe((connection) => {
       connection.mockRespond(new Response(new ResponseOptions({
-        body: JSON.stringify({ data: mockStudent })
+        status: 200,
+        body: JSON.stringify({ data: RAW_STUDENT })
       })));
     });
 
-    service.getStudentByToken('1234').subscribe((student) => {
-      expect(student).toEqual(json.camelizeObject(mockStudent));
-    });
-  })));
+    let expected = (student) => {
+      expect(student).toEqual(PARSED_STUDENT);
+    };
 
+    service.getStudentByToken('1234', '321')
+           .subscribe(expected);
+
+  })));
 });

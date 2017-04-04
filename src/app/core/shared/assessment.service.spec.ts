@@ -4,7 +4,10 @@ import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions } from 
 import { MockBackend } from '@angular/http/testing';
 import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
+import { Question } from '../../shared/model/question';
+import Mock from '../../../../mock/mock';
 
+const md5 = require('md5');
 const mock = require('../../../../mock/db.json');
 const ASSESSMENT = mock.assessments[0];
 const STUDENT = mock.students[0];
@@ -41,7 +44,6 @@ describe('AssessmentService', () => {
     it('should return an Assessment', async(inject(
       [AssessmentService, MockBackend],
       (service: AssessmentService, mockBackend: MockBackend) => {
-
         mockBackend.connections.subscribe(connection => {
           connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: ASSESSMENT }) })));
         });
@@ -61,15 +63,23 @@ describe('AssessmentService', () => {
       [AssessmentService, MockBackend],
       (service: AssessmentService, mockBackend: MockBackend) => {
 
-        mockBackend.connections.subscribe(connection => {
-          connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: QUESTIONS }) })));
-        });
+        mockBackend
+          .connections
+          .subscribe(connection => {
+            connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: { items: QUESTIONS } }) })));
+          });
 
-        service.fetchAssessmentQuestions('1')
-               .subscribe(questions => {
-                 expect(questions).toEqual(QUESTIONS);
-               });
+        let expected = questions => {
+          expect(questions.length).toEqual(3);
+          expect(questions[0].id).toEqual('58d2f1af4a083c00194437c7');
+          expect(questions[0].text).toEqual('Qual o melhor time do Rio? {{' + md5(QUESTIONS[0].image) + '}}');
+          expect(questions[0].answers.length).toEqual(5);
+          expect(questions[0].media).toBeTruthy();
+        };
 
+        service
+          .fetchAssessmentQuestions('AssessmentToken', 'studentToken')
+          .subscribe(expected);
       })));
   });
 
@@ -132,7 +142,7 @@ describe('AssessmentService', () => {
         };
         const response = new Response(new ResponseOptions(options));
 
-        expect(service.extractData(response)).toEqual(ASSESSMENT);
+        expect(AssessmentService.extractData(response)).toEqual(ASSESSMENT);
       })
     );
   });
@@ -151,8 +161,8 @@ describe('AssessmentService', () => {
           expect(error).toEqual('Prova não encontrada');
         };
 
-        service.handleError(response)
-               .subscribe(() => {}, expectation);
+        AssessmentService.handleError(response)
+                         .subscribe(() => {}, expectation);
       }))
     );
   });

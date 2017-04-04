@@ -148,7 +148,7 @@ describe('ApplymentService', () => {
         applymentStatus.assessmentToken = ASSESSMENT.id.toString();
         applymentStatus.studentToken = STUDENT.id.toString();
         applymentStatus.answers = [
-          { questionId: (QUESTIONS[0].id - 1).toString(), value: '1' }
+          { questionId: '0', value: '1' }
         ];
 
         expect(service.getApplymentStatus()).toEqual(applymentStatus);

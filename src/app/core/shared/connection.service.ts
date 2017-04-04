@@ -30,7 +30,7 @@ export class ConnectionService {
   getStatusOnce(): Observable<boolean> {
     try {
       return (
-        this.http.get(`${API_URL}/status`)
+        this.http.get(`${API_URL}`)
           .mapTo(true)
           .catch(e => {
             return Observable.of(false);
