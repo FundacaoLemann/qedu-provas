@@ -1,5 +1,5 @@
 import { Question } from '../src/app/shared/model/question';
-import { Answer } from '../src/app/shared/model/answer';
+import { Option } from '../src/app/shared/model/option';
 import { Media } from '../src/app/shared/model/media';
 import { Assessment } from '../src/app/shared/model/assessment';
 import EducationalEntity from '../src/app/shared/model/educational-entity';
@@ -19,10 +19,10 @@ export default class Mock extends Question {
     return question;
   }
 
-  static mockAnswers(questionIndex = 0): Answer[] {
+  static mockAnswers(questionIndex = 0): Option[] {
     let answers = [];
     for (let forAnswer of mock.questions[questionIndex].options) {
-      let answer = new Answer();
+      let answer = new Option();
       answer.id = forAnswer.id;
       answer.text = forAnswer.description;
       answers.push(answer);

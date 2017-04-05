@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Answer } from '../../shared/model/answer';
+import { Option } from '../../shared/model/option';
 
 @Component({
   selector: 'qp-answer',
@@ -7,7 +7,7 @@ import { Answer } from '../../shared/model/answer';
   styleUrls: ['./answer.component.sass']
 })
 export class AnswerComponent {
-  @Input() answer: Answer = { id: 0, text: '' };
+  @Input() answer: Option = { id: 0, text: '' };
   @Input() checked = false;
   @Output() onClicked: EventEmitter<number> = new EventEmitter<number>();
 

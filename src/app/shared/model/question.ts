@@ -1,9 +1,9 @@
-import { Answer } from './answer';
+import { Option } from './option';
 import { Media } from './media';
 
 export class Question {
   id: number;
   text: string;
-  answers: Answer[];
+  answers: Option[];
   media: Media[];
 }

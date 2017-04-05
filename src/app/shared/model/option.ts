@@ -1,4 +1,4 @@
-export class Answer {
+export class Option {
   id: number;
   text: string;
 }
