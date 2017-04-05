@@ -1,4 +1,4 @@
-import { Question } from '../src/app/shared/model/question';
+import { Item } from '../src/app/shared/model/item';
 import { Option } from '../src/app/shared/model/option';
 import { Media } from '../src/app/shared/model/media';
 import { Assessment } from '../src/app/shared/model/assessment';
@@ -8,10 +8,10 @@ import { Student } from '../src/app/shared/model/student';
 const md5 = require('md5');
 const mock = require('./db.json');
 
-export default class Mock extends Question {
+export default class Mock extends Item {
 
   static mockQuestion(index = 0) {
-    let question = new Question();
+    let question = new Item();
     question.id = mock.questions[index].id;
     question.text = mock.questions[index].stem;
     question.answers = Mock.mockAnswers(index);

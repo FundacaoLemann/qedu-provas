@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ReviewModalComponent } from './modal/review-modal.component';
 import { ApplymentService } from '../shared/applyment.service';
@@ -20,7 +20,7 @@ import { Assessment } from '../../shared/model/assessment';
   ]
 })
 export class ReviewPageComponent extends HasModal implements OnInit {
-  questions: Question[];
+  questions: Item[];
   answers: number[] = [];
   answersLength = 0;
   questionsLength = 0;

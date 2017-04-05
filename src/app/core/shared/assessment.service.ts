@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Assessment } from '../../shared/model/assessment';
 import { Http, Response, Headers } from '@angular/http';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -26,7 +26,7 @@ export class AssessmentService {
                .catch(AssessmentService.handleError);
   }
 
-  fetchAssessmentQuestions(assessmentToken: string, studentToken: string): Observable<Question[]> {
+  fetchAssessmentQuestions(assessmentToken: string, studentToken: string): Observable<Item[]> {
     let url = `${API_URL}/assessments/${assessmentToken}/items`;
     let headers = new Headers({
       'Authorization': studentToken
@@ -68,7 +68,7 @@ export class AssessmentService {
     return response.json().data;
   }
 
-  static extractQuestionData(response: Response): Question[] {
+  static extractQuestionData(response: Response): Item[] {
     let rawItems = response.json().data.items;
     let questions = [];
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import { ApplymentService } from '../shared/applyment.service';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./question-page.component.sass']
 })
 export class QuestionPageComponent implements OnInit {
-  question: Question;
+  question: Item;
   questionText = '';
   questionIndex = 0;
   questionsLength: number;
@@ -43,14 +43,14 @@ export class QuestionPageComponent implements OnInit {
               this.answers = this.question.answers;
               document.body.scrollTop = 0;
             } catch (err) {
-              this.question = new Question();
+              this.question = new Item();
               this.answers = [];
             } finally {
               this.checkedAnswer = this._applymentService.getSingleAnswer(this.questionIndex) || 0;
             }
           },
           error => {
-            this.question = new Question();
+            this.question = new Item();
             this.answers = [];
           }
         );

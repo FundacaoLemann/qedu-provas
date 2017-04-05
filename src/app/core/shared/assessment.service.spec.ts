@@ -4,7 +4,7 @@ import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions } from 
 import { MockBackend } from '@angular/http/testing';
 import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import Mock from '../../../../mock/mock';
 
 const md5 = require('md5');

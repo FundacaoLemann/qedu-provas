@@ -1,7 +1,7 @@
 import { Option } from './option';
 import { Media } from './media';
 
-export class Question {
+export class Item {
   id: number;
   text: string;
   answers: Option[];

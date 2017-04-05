@@ -3,7 +3,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 import { Subject } from 'rxjs/Subject';
 import { Assessment } from '../app/shared/model/assessment';
-import { Question } from '../app/shared/model/question';
+import { Item } from '../app/shared/model/item';
 
 export class AssessmentServiceStub {
   private assessmentSource: Subject<Assessment>;
@@ -26,7 +26,7 @@ export class AssessmentServiceStub {
     return Observable.of(assessment);
   }
 
-  getQuestions(assessmentId: string): Observable<Question[]> {
+  getQuestions(assessmentId: string): Observable<Item[]> {
     const questions = [
       {
         'assessmentId': 1,

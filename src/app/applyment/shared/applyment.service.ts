@@ -3,7 +3,7 @@ import { Student } from '../../shared/model/student';
 import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
 import { Assessment } from '../../shared/model/assessment';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import * as _ from 'lodash';
 
@@ -43,12 +43,12 @@ export class ApplymentService {
   }
 
   // Questions
-  setQuestions(questions: Question[]) {
+  setQuestions(questions: Item[]) {
     const newState = _.merge({}, this._store.state, { applyment: { questions } });
     this._store.setState(newState);
   }
 
-  getQuestions(): Question[] {
+  getQuestions(): Item[] {
     return this._store.state.applyment.questions;
   }
 
