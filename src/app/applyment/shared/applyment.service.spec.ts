@@ -106,30 +106,30 @@ describe('ApplymentService', () => {
     ));
   });
 
-  describe('setQuestions', () => {
+  describe('setItems', () => {
     it('should set questions', inject(
       [ApplymentService, StoreService],
       (service: ApplymentService, store: StoreService) => {
-        service.setQuestions(QUESTIONS);
+        service.setItems(QUESTIONS);
         expect(store.state.applyment.questions);
       }
     ));
   });
 
-  describe('getQuestions', () => {
+  describe('getItems', () => {
     it('should return questions', inject(
       [ApplymentService, StoreService],
       (service: ApplymentService, store: StoreService) => {
-        service.setQuestions(QUESTIONS);
-        expect(service.getQuestions()).toEqual(QUESTIONS);
+        service.setItems(QUESTIONS);
+        expect(service.getItems()).toEqual(QUESTIONS);
       }
     ));
 
     it('should return empty array on error', inject(
       [ApplymentService],
       (service: ApplymentService) => {
-        expect(service.getQuestions).toThrow();
-        expect(service.getQuestions()).toEqual([]);
+        expect(service.getItems).toThrow();
+        expect(service.getItems()).toEqual([]);
       }
     ));
   });
@@ -140,7 +140,7 @@ describe('ApplymentService', () => {
       (service: ApplymentService) => {
         service.setAssessment(ASSESSMENT);
         service.setStudent(STUDENT);
-        service.setQuestions(QUESTIONS);
+        service.setItems(QUESTIONS);
         service.initAnswers(1);
         service.setSingleAnswer(0, 1);
 

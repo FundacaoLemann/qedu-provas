@@ -52,7 +52,7 @@ describe('QuestionPageComponent', () => {
     route.testParams = { token: ASSESSMENT.token, question_id: QUESTIONS[0].id };
 
     applymentService.setAssessment(ASSESSMENT);
-    applymentService.setQuestions(QUESTIONS);
+    applymentService.setItems(QUESTIONS);
     applymentService.setStudent(STUDENT);
     applymentService.initAnswers(QUESTIONS.length);
 

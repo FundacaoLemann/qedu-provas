@@ -43,12 +43,12 @@ export class ApplymentService {
   }
 
   // Questions
-  setQuestions(questions: Item[]) {
+  setItems(questions: Item[]) {
     const newState = _.merge({}, this._store.state, { applyment: { questions } });
     this._store.setState(newState);
   }
 
-  getQuestions(): Item[] {
+  getItems(): Item[] {
     return this._store.state.applyment.questions;
   }
 

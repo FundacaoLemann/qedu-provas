@@ -35,7 +35,7 @@ export class QuestionPageComponent implements OnInit {
         .subscribe(
           questionIndex => {
             try {
-              const questions = this._applymentService.getQuestions();
+              const questions = this._applymentService.getItems();
               this.questionIndex = questionIndex;
               this.questionsLength = questions.length;
               this.question = questions[this.questionIndex];
