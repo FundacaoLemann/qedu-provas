@@ -7,16 +7,16 @@ import { Option } from '../../shared/model/option';
   styleUrls: ['./answer.component.sass']
 })
 export class AnswerComponent {
-  @Input() answer: Option = { id: 0, text: '' };
+  @Input() option: Option = { id: 0, text: '' };
   @Input() checked = false;
-  @Output() onClicked: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onClicked: EventEmitter<Option> = new EventEmitter<Option>();
 
   constructor () {
   }
 
   onClick () {
     this.checked = true;
-    this.onClicked.emit(this.answer.id);
+    this.onClicked.emit(this.option);
   }
 
 }

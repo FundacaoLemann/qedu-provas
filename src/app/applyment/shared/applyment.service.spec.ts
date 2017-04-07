@@ -39,7 +39,7 @@ describe('ApplymentService', () => {
   );
 
 
-  it('should set an answer', inject(
+  it('should set an option', inject(
     [ApplymentService, StoreService],
     (service: ApplymentService, store: StoreService) => {
       prepareAnswers(service);
@@ -47,7 +47,7 @@ describe('ApplymentService', () => {
     })
   );
 
-  it('should return a single answer', inject(
+  it('should return a single option', inject(
     [ApplymentService],
     (service: ApplymentService) => {
       prepareAnswers(service);

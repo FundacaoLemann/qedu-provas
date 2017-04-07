@@ -99,13 +99,13 @@ export class QuestionPageComponent implements OnInit {
 
   postAnswer() {
     const applymentStatus = this._applymentService.getApplymentStatus();
-    // const answer = {
+    // const option = {
     //   assessmentToken: applymentStatus.assessmentToken,
     //   studentToken: applymentStatus.studentToken,
     //   questionId: this.question.id.toString(),
     //   value: this.checkedAnswer.toString()
     // };
-    // this._assessmentService.postAnswer(answer);
+    // this._assessmentService.postAnswer(option);
   }
 
 

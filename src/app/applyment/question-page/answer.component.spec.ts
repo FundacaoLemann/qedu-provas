@@ -6,7 +6,7 @@ import { dispatchEvent } from '../../../testing/testing-helper';
 describe('AnswerComponent', () => {
   let component: AnswerComponent;
   let fixture: ComponentFixture<AnswerComponent>;
-  const answer = {
+  const option = {
     'id': 1,
     'text': 'Cum lumen assimilant, omnes rationees tractare fortis, neuter urbses.'
   };
@@ -14,15 +14,15 @@ describe('AnswerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [AnswerComponent]
-      })
-      .compileComponents();
+             declarations: [AnswerComponent]
+           })
+           .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AnswerComponent);
     component = fixture.componentInstance;
-    component.answer = answer;
+    component.option = option;
     fixture.detectChanges();
   });
 
@@ -32,10 +32,12 @@ describe('AnswerComponent', () => {
 
   describe('onClick event', () => {
     it('should emit `onClicked` event when clicked', (done) => {
-      component.onClicked.subscribe(answerSub => {
-        expect(answerSub).toEqual(answer.id);
-        done();
-      });
+      component
+        .onClicked
+        .subscribe(answerSub => {
+          expect(answerSub).toEqual(option);
+          done();
+        });
       dispatchEvent(fixture, '.answer', 'click');
     });
 
@@ -50,7 +52,7 @@ describe('AnswerComponent', () => {
   describe('display content', () => {
     it('should display the question text', () => {
       const labelEl = fixture.debugElement.query(By.css('label')).nativeElement;
-      expect(labelEl.textContent).toEqual(answer.text);
+      expect(labelEl.textContent).toEqual(option.text);
     });
   });
 

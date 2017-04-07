@@ -107,7 +107,7 @@ describe('AssessmentService', () => {
   });
 
   describe('postAnswer', () => {
-    it('should send a PATCH to the API with an answer',
+    it('should send a PATCH to the API with an option',
       async(inject(
         [AssessmentService, MockBackend, Http],
         (service: AssessmentService, mockBackend: MockBackend, http: Http) => {

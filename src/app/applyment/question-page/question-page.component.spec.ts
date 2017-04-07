@@ -72,7 +72,7 @@ describe('QuestionPageComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
   }));
 
-  it('should update the checkedAnswer answer when `onClicked` is fired', async(() => {
+  it('should update the checkedAnswer option when `onClicked` is fired', async(() => {
     const answer = Mock.mockAnswer();
 
     component.updateChecked(answer);
@@ -81,7 +81,7 @@ describe('QuestionPageComponent', () => {
     expect(component.checkedAnswer).toEqual(answer);
   }));
 
-  it('should store the answer in the data store service', () => {
+  it('should store the option in the data store service', () => {
     spyOn(applymentService, 'setAnswer');
     route.testParams = { token: '1', question_id: 1 };
     const answer = Mock.mockAnswer();
@@ -90,7 +90,7 @@ describe('QuestionPageComponent', () => {
     expect(applymentService.setAnswer).toHaveBeenCalledWith(0, answer);
   });
 
-  it('should load and display the answer when already set', () => {
+  it('should load and display the option when already set', () => {
     const answer = Mock.mockAnswer();
 
     applymentService.setAnswer(0, answer);
@@ -138,7 +138,7 @@ describe('QuestionPageComponent', () => {
     });
 
     describe('submitAnswerAndNavigateBack()', () => {
-      it('should submit the current answer and navigate', () => {
+      it('should submit the current option and navigate', () => {
         const response = createResponse(200, 'OK', { data: null });
         route.testParams = { token: ASSESSMENT.token, question_id: '1' };
         spyOn(assessmentService, 'postAnswer').and.returnValue(Observable.of(response));
