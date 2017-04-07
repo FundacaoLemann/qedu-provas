@@ -11,9 +11,9 @@ const QUESTIONS = mock.questions;
 
 function prepareAnswers(service) {
   service.initAnswers(4);
-  service.setSingleAnswer(0, 1);
-  service.setSingleAnswer(1, 2);
-  service.setSingleAnswer(2, 5);
+  service.setAnswer(0, 1);
+  service.setAnswer(1, 2);
+  service.setAnswer(2, 5);
 }
 
 describe('ApplymentService', () => {
@@ -51,7 +51,7 @@ describe('ApplymentService', () => {
     [ApplymentService],
     (service: ApplymentService) => {
       prepareAnswers(service);
-      expect(service.getSingleAnswer(2)).toEqual(5);
+      expect(service.getAnswer(2)).toEqual(5);
     })
   );
 
@@ -145,7 +145,7 @@ describe('ApplymentService', () => {
         service.setStudent(STUDENT);
         service.setItems(QUESTIONS);
         service.initAnswers(1);
-        service.setSingleAnswer(0, 1);
+        service.setAnswer(0, 1);
 
         const applymentStatus = new ApplymentStatus();
         applymentStatus.assessmentToken = ASSESSMENT.id.toString();

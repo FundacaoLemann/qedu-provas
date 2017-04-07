@@ -6,6 +6,7 @@ import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import Answer from '../../shared/model/answer';
 
 @Component({
   selector: 'qp-question-page',
@@ -18,7 +19,7 @@ export class QuestionPageComponent implements OnInit {
   questionIndex = 0;
   questionsLength: number;
   answers: any[];
-  checkedAnswer = 0;
+  checkedAnswer: Answer = null;
   assessment: Assessment;
 
   constructor(private _route: ActivatedRoute,
@@ -46,7 +47,7 @@ export class QuestionPageComponent implements OnInit {
               this.question = new Item();
               this.answers = [];
             } finally {
-              this.checkedAnswer = this._applymentService.getSingleAnswer(this.questionIndex) || 0;
+              this.checkedAnswer = this._applymentService.getAnswer(this.questionIndex) || null;
             }
           },
           error => {
@@ -71,9 +72,9 @@ export class QuestionPageComponent implements OnInit {
     return questionText;
   }
 
-  updateChecked(answerId: number) {
-    this.checkedAnswer = answerId;
-    this._applymentService.setSingleAnswer(this.questionIndex, answerId);
+  updateChecked(answer: Answer) {
+    this.checkedAnswer = answer;
+    this._applymentService.setAnswer(this.questionIndex, answer);
   }
 
   submitAnswerAndNavigateNext() {

@@ -73,22 +73,30 @@ describe('QuestionPageComponent', () => {
   }));
 
   it('should update the checkedAnswer answer when `onClicked` is fired', async(() => {
-    component.updateChecked(1);
+    const answer = Mock.mockAnswer();
+
+    component.updateChecked(answer);
     fixture.whenStable();
-    expect(component.checkedAnswer).toEqual(1);
+
+    expect(component.checkedAnswer).toEqual(answer);
   }));
 
   it('should store the answer in the data store service', () => {
-    spyOn(applymentService, 'setSingleAnswer');
+    spyOn(applymentService, 'setAnswer');
     route.testParams = { token: '1', question_id: 1 };
-    component.updateChecked(1);
-    expect(applymentService.setSingleAnswer).toHaveBeenCalledWith(0, 1);
+    const answer = Mock.mockAnswer();
+
+    component.updateChecked(answer);
+    expect(applymentService.setAnswer).toHaveBeenCalledWith(0, answer);
   });
 
   it('should load and display the answer when already set', () => {
-    applymentService.setSingleAnswer(0, 1);
+    const answer = Mock.mockAnswer();
+
+    applymentService.setAnswer(0, answer);
     route.testParams = { token: '1', question_id: 1 };
-    expect(component.checkedAnswer).toEqual(1);
+
+    expect(component.checkedAnswer).toEqual(answer);
   });
 
   it('should display the assessment title being applied', () => {

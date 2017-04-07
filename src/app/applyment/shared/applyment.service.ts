@@ -6,6 +6,7 @@ import { Assessment } from '../../shared/model/assessment';
 import { Item } from '../../shared/model/item';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import * as _ from 'lodash';
+import Answer from '../../shared/model/answer';
 
 @Injectable()
 export class ApplymentService {
@@ -60,16 +61,16 @@ export class ApplymentService {
     this._store.setState(newState);
   }
 
-  setSingleAnswer(questionId: number, answerId: number) {
+  setAnswer(itemIndex: number, answer: Answer) {
     const answers = this._store.state.applyment.answers;
-    answers[questionId] = answerId;
+    answers[itemIndex] = answer;
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
   }
 
-  getSingleAnswer(questionId: number): number {
-    return this._store.state.applyment.answers[questionId];
+  getAnswer(itemIndex: number): Answer {
+    return this._store.state.applyment.answers[itemIndex];
   }
 
   getAllAnswers(): number[] {

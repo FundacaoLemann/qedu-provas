@@ -52,9 +52,9 @@ describe('ReviewPageComponent', () => {
     applymentService.setStudent(camelizeObject(STUDENT));
     applymentService.setItems(camelizeObject(QUESTIONS));
     applymentService.initAnswers(QUESTIONS.length);
-    applymentService.setSingleAnswer(0, 1);
-    applymentService.setSingleAnswer(1, 3);
-    applymentService.setSingleAnswer(2, 5);
+    applymentService.setAnswer(0, 1);
+    applymentService.setAnswer(1, 3);
+    applymentService.setAnswer(2, 5);
 
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 

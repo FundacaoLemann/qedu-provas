@@ -65,9 +65,9 @@ describe('ProgressionPathComponent', () => {
   });
 
   it('should display the answers with .answered', async(() => {
-    applymentService.setSingleAnswer(0, 3);
-    applymentService.setSingleAnswer(1, 3);
-    applymentService.setSingleAnswer(2, 3);
+    applymentService.setAnswer(0, 3);
+    applymentService.setAnswer(1, 3);
+    applymentService.setAnswer(2, 3);
     fixture.detectChanges();
 
     const match = fixture.debugElement.queryAll(By.css('ul li.answered')).length;
