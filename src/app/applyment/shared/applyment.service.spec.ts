@@ -38,19 +38,12 @@ describe('ApplymentService', () => {
     })
   );
 
-  it('should init the answers array', inject(
-    [ApplymentService, StoreService],
-    (service: ApplymentService, store: StoreService) => {
-      prepareAnswers(service);
-      expect(store.state.applyment.answers.length).toEqual(4);
-    })
-  );
 
   it('should set an answer', inject(
     [ApplymentService, StoreService],
     (service: ApplymentService, store: StoreService) => {
       prepareAnswers(service);
-      expect(store.state.applyment.answers).toEqual([1, 2, 5, 0]);
+      expect(store.state.applyment.answers).toEqual([1, 2, 5, null]);
     })
   );
 
@@ -66,7 +59,7 @@ describe('ApplymentService', () => {
     [ApplymentService],
     (service: ApplymentService) => {
       prepareAnswers(service);
-      expect(service.getAllAnswers()).toEqual([1, 2, 5, 0]);
+      expect(service.getAllAnswers()).toEqual([1, 2, 5, null]);
     })
   );
 
@@ -77,6 +70,16 @@ describe('ApplymentService', () => {
       expect(service.answersAsObservable()).toEqual(jasmine.any(Observable));
     }
   ));
+
+  describe('initAnswers()', () => {
+    it('should initialize the answers container', inject(
+      [ApplymentService, StoreService],
+      (service: ApplymentService, store: StoreService) => {
+        service.initAnswers(4);
+        expect(store.state.applyment.answers).toEqual([null, null, null, null]);
+      })
+    );
+  });
 
   describe('setAssessment()', () => {
     it('should set an assessment', inject(

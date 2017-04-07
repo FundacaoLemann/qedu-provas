@@ -52,10 +52,9 @@ export class ApplymentService {
     return this._store.state.applyment.questions;
   }
 
-
   // Answers
   initAnswers(length: number) {
-    const answers = Array(length).fill(0);
+    const answers = Array(length).fill(null);
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
