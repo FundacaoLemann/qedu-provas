@@ -4,6 +4,7 @@ import { Media } from '../src/app/shared/model/media';
 import { Assessment } from '../src/app/shared/model/assessment';
 import EducationalEntity from '../src/app/shared/model/educational-entity';
 import { Student } from '../src/app/shared/model/student';
+import Answer from '../src/app/shared/model/answer';
 
 const md5 = require('md5');
 const mock = require('./db.json');
@@ -95,6 +96,27 @@ export default class Mock extends Item {
     s.matricula = S.registrationNumber;
 
     return s;
+  }
+
+  static mockAnswer(index = 0): Answer {
+    let ANSWER = mock.answers[index];
+    let answer = new Answer();
+    answer.itemId = ANSWER.itemId;
+    answer.optionId = ANSWER.optionId;
+    return answer;
+  }
+
+
+  static mockAnswers(): Answer[] {
+    let ANSWERS = mock.answers;
+    let answers = [];
+    for(const A of ANSWERS) {
+      const a = new Answer();
+      a.itemId = A.itemId;
+      a.optionId = A.optionId;
+      answers.push(a);
+    }
+    return answers;
   }
 
 }
