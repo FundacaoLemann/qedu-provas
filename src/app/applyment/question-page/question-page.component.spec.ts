@@ -23,7 +23,7 @@ describe('QuestionPageComponent', () => {
   let router: RouterStub;
   let applymentService: ApplymentService;
   let assessmentService: AssessmentService;
-  const QUESTIONS = [Mock.mockQuestion(), Mock.mockQuestion(1), Mock.mockQuestion(2)];
+  const QUESTIONS = [Mock.mockItem(), Mock.mockItem(1), Mock.mockItem(2)];
   const STUDENT = db.students[0];
   const ASSESSMENT = db.assessments[0];
 

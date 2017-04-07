@@ -10,24 +10,24 @@ const mock = require('./db.json');
 
 export default class Mock extends Item {
 
-  static mockQuestion(index = 0) {
-    let question = new Item();
-    question.id = mock.questions[index].id;
-    question.text = mock.questions[index].stem;
-    question.answers = Mock.mockAnswers(index);
-    question.media = [Mock.mockMedia(index)];
-    return question;
+  static mockItem(index = 0) {
+    let item = new Item();
+    item.id = mock.questions[index].id;
+    item.text = mock.questions[index].stem;
+    item.answers = Mock.mockOptions(index);
+    item.media = [Mock.mockMedia(index)];
+    return item;
   }
 
-  static mockAnswers(questionIndex = 0): Option[] {
-    let answers = [];
-    for (let forAnswer of mock.questions[questionIndex].options) {
-      let answer = new Option();
-      answer.id = forAnswer.id;
-      answer.text = forAnswer.description;
-      answers.push(answer);
+  static mockOptions(itemIndex = 0): Option[] {
+    let options = [];
+    for (let forAnswer of mock.questions[itemIndex].options) {
+      let option = new Option();
+      option.id = forAnswer.id;
+      option.text = forAnswer.description;
+      options.push(option);
     }
-    return answers;
+    return options;
   }
 
   static mockMedia(questionIndex = 0): Media {
