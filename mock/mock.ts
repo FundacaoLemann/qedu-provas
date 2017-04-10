@@ -9,7 +9,7 @@ import Answer from '../src/app/shared/model/answer';
 const md5 = require('md5');
 const mock = require('./db.json');
 
-export default class Mock extends Item {
+export default class Mock {
 
   static mockItem(index = 0) {
     let item = new Item();

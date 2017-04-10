@@ -14,6 +14,7 @@ import 'rxjs/add/observable/of';
 import { camelizeObject } from '../../utils/json';
 import { Observable } from 'rxjs/Observable';
 import { AssessmentService } from '../../core/shared/assessment.service';
+import Mock from '../../../../mock/mock';
 
 const db = require('../../../../mock/db.json');
 
@@ -52,9 +53,9 @@ describe('ReviewPageComponent', () => {
     applymentService.setStudent(camelizeObject(STUDENT));
     applymentService.setItems(camelizeObject(QUESTIONS));
     applymentService.initAnswers(QUESTIONS.length);
-    applymentService.setAnswer(0, 1);
-    applymentService.setAnswer(1, 3);
-    applymentService.setAnswer(2, 5);
+    applymentService.setAnswer(0, Mock.mockAnswer(0));
+    applymentService.setAnswer(1, Mock.mockAnswer(1));
+    applymentService.setAnswer(2, Mock.mockAnswer(2));
 
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 

@@ -7,9 +7,10 @@ import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
 import { ApplymentService } from '../../shared/applyment.service';
 import { AppModule } from '../../../app.module';
 import * as test from '../../../../testing/testing-helper';
+import Mock from '../../../../../mock/mock';
 
 const db = require('../../../../../mock/db.json');
-const mockQuestions = db.questions;
+const QUESTIONS = [Mock.mockItem(0), Mock.mockItem(1), Mock.mockItem(2)];
 
 describe('ProgressionPathComponent', () => {
   let component: ProgressionPathComponent;
@@ -37,7 +38,7 @@ describe('ProgressionPathComponent', () => {
     router = fixture.debugElement.injector.get(Router);
     applymentService = fixture.debugElement.injector.get(ApplymentService);
 
-    applymentService.initAnswers(mockQuestions.length);
+    applymentService.initAnswers(QUESTIONS.length);
 
     fixture.detectChanges();
   });
@@ -48,9 +49,9 @@ describe('ProgressionPathComponent', () => {
 
   it('should render the questions', async(() => {
     const debugEls = test.getAllDebugElements(fixture, 'ul li');
-    expect(debugEls.length).toEqual(mockQuestions.length);
+    expect(debugEls.length).toEqual(QUESTIONS.length);
 
-    for ( let i = 0; i < mockQuestions.length; i++ ) {
+    for (let i = 0; i < QUESTIONS.length; i++ ) {
       const match = debugEls[i].query(By.css(`.number`)).nativeElement.textContent;
       const expected = (i + 1).toString();
       expect(match).toEqual(expected);
@@ -65,9 +66,9 @@ describe('ProgressionPathComponent', () => {
   });
 
   it('should display the answers with .answered', async(() => {
-    applymentService.setAnswer(0, 3);
-    applymentService.setAnswer(1, 3);
-    applymentService.setAnswer(2, 3);
+    applymentService.setAnswer(0, Mock.mockAnswer(0));
+    applymentService.setAnswer(1, Mock.mockAnswer(1));
+    applymentService.setAnswer(2, Mock.mockAnswer(2));
     fixture.detectChanges();
 
     const match = fixture.debugElement.queryAll(By.css('ul li.answered')).length;

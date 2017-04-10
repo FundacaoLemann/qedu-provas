@@ -23,9 +23,9 @@
 
         <div class="col-xs-12 col-md-6">
           <qp-answer
-            *ngFor="let option of answers"
+            *ngFor="let option of options"
             [option]="option"
-            [checked]="option === checkedAnswer"
+            [checked]="option.id === checkedAnswer"
             (onClicked)="updateChecked($event)"
           ></qp-answer>
         </div>

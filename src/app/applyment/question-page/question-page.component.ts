@@ -18,8 +18,8 @@ export class QuestionPageComponent implements OnInit {
   questionText = '';
   questionIndex = 0;
   questionsLength: number;
-  answers: any[];
-  checkedAnswer: Answer = null;
+  options: any[];
+  checkedAnswer: number = null;
   assessment: Assessment;
 
   constructor(private _route: ActivatedRoute,
@@ -41,18 +41,19 @@ export class QuestionPageComponent implements OnInit {
               this.questionsLength = questions.length;
               this.question = questions[this.questionIndex];
               this.questionText = this.questionHTMLText();
-              this.answers = this.question.answers;
+              this.options = this.question.answers;
               document.body.scrollTop = 0;
             } catch (err) {
               this.question = new Item();
-              this.answers = [];
+              this.options = [];
             } finally {
-              this.checkedAnswer = this._applymentService.getAnswer(this.questionIndex) || null;
+              const answer = this._applymentService.getAnswer(this.questionIndex);
+              this.checkedAnswer = (answer && answer.optionId) ? answer.optionId : 0;
             }
           },
           error => {
             this.question = new Item();
-            this.answers = [];
+            this.options = [];
           }
         );
   }
@@ -72,8 +73,12 @@ export class QuestionPageComponent implements OnInit {
     return questionText;
   }
 
-  updateChecked(answer: Answer) {
-    this.checkedAnswer = answer;
+  updateChecked(optionId: number) {
+    const answer = new Answer();
+    answer.optionId = optionId;
+    answer.itemId = this.question.id;
+
+    this.checkedAnswer = optionId;
     this._applymentService.setAnswer(this.questionIndex, answer);
   }
 
@@ -107,6 +112,4 @@ export class QuestionPageComponent implements OnInit {
     // };
     // this._assessmentService.postAnswer(option);
   }
-
-
 }

@@ -70,7 +70,7 @@ export class ApplymentService {
   }
 
   getAnswer(itemIndex: number): Answer {
-    return this._store.state.applyment.answers[itemIndex];
+    return this._store.state.applyment.answers[itemIndex] || null;
   }
 
   getAllAnswers(): number[] {

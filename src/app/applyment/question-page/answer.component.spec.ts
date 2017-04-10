@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { AnswerComponent } from './answer.component';
 import Mock from '../../../../mock/mock';
 
-fdescribe('AnswerComponent', () => {
+describe('AnswerComponent', () => {
   let component: AnswerComponent;
   let fixture: ComponentFixture<AnswerComponent>;
   const OPTION = Mock.mockOptions()[0];

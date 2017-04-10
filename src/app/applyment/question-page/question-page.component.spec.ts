@@ -75,10 +75,10 @@ describe('QuestionPageComponent', () => {
   it('should update the checkedAnswer option when `onClicked` is fired', async(() => {
     const answer = Mock.mockAnswer();
 
-    component.updateChecked(answer);
+    component.updateChecked(answer.optionId);
     fixture.whenStable();
 
-    expect(component.checkedAnswer).toEqual(answer);
+    expect(component.checkedAnswer).toEqual(answer.optionId);
   }));
 
   it('should store the option in the data store service', () => {
@@ -86,7 +86,7 @@ describe('QuestionPageComponent', () => {
     route.testParams = { token: '1', question_id: 1 };
     const answer = Mock.mockAnswer();
 
-    component.updateChecked(answer);
+    component.updateChecked(answer.optionId);
     expect(applymentService.setAnswer).toHaveBeenCalledWith(0, answer);
   });
 
@@ -96,7 +96,7 @@ describe('QuestionPageComponent', () => {
     applymentService.setAnswer(0, answer);
     route.testParams = { token: '1', question_id: 1 };
 
-    expect(component.checkedAnswer).toEqual(answer);
+    expect(component.checkedAnswer).toEqual(answer.optionId);
   });
 
   it('should display the assessment title being applied', () => {

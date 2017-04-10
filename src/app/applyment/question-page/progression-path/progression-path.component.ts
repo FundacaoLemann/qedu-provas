@@ -11,16 +11,18 @@ export class ProgressionPathComponent implements OnInit {
   @Input() questionsLength = 0;
   answers: number[] = [];
 
-  constructor (private router: Router,
-               private route: ActivatedRoute,
-               private applymentService: ApplymentService) {
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private applymentService: ApplymentService) {
   }
 
-  ngOnInit () {
+  ngOnInit() {
     this.answers = this.applymentService.getAllAnswers();
-    this.applymentService.answersAsObservable().subscribe(answers => {
-      this.answers = answers;
-    });
+    this.applymentService
+        .answersAsObservable()
+        .subscribe(answers => {
+          this.answers = answers;
+        });
   }
 
   buttonTitle(answered: boolean, index: number): string {
@@ -28,7 +30,7 @@ export class ProgressionPathComponent implements OnInit {
   }
 
   // Events
-  onItemClick (index: number) {
+  onItemClick(index: number) {
     this.router.navigate(['prova', this.route.snapshot.params['token'], 'questao', index.toString()]);
   }
 
