@@ -93,10 +93,22 @@ export class ReviewPageComponent extends HasModal implements OnInit {
             if (response.status === 200 || response.status === 201) {
               this._router.navigate(['prova', assessmentToken, 'parabens']);
             } else {
+              /**
+               * TODO
+               * Treat response error
+               * QP-57
+               * QP-131
+               */
               console.log(response);
             }
           },
           (error) => {
+            /**
+             * TODO
+             * Treat response error
+             * QP-57
+             * QP-131
+             */
             console.log(error);
           }
         );
