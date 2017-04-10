@@ -82,13 +82,12 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   submit() {
-    // TODO
     const assessmentToken = this._route.snapshot.params['token'];
     const studentToken = this._applymentService.getStudent().token;
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
 
     this._assessmentService
-        .postAnswer(assessmentToken, studentToken, answers)
+        .postAnswers(assessmentToken, studentToken, answers)
         .subscribe(
           response => {
             if (response.status === 200 || response.status === 201) {

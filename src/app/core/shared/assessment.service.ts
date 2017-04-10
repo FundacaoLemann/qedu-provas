@@ -59,7 +59,7 @@ export class AssessmentService {
                .catch(AssessmentService.handleError);
   }
 
-  postAnswer(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<Response> {
+  postAnswers(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<Response> {
     const options = new BaseRequestOptions();
     options.headers = new Headers({
       'Authorization': studentToken,

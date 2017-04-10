@@ -108,7 +108,7 @@ describe('AssessmentService', () => {
       })));
   });
 
-  describe('postAnswer', () => {
+  describe('postAnswers', () => {
     it('should post answers to the API',
       async(inject(
         [AssessmentService, MockBackend, Http],
@@ -126,7 +126,7 @@ describe('AssessmentService', () => {
           const answers = Mock.mockAnswers();
 
           service
-            .postAnswer(assessment, student, answers)
+            .postAnswers(assessment, student, answers)
             .subscribe(response => {
               const url = `${API_URL}/assessments/${assessment}/answers`;
               const data = answers;
