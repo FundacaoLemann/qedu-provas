@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { AnswerComponent } from './answer.component';
 import Mock from '../../../../mock/mock';
 
-describe('AnswerComponent', () => {
+fdescribe('AnswerComponent', () => {
   let component: AnswerComponent;
   let fixture: ComponentFixture<AnswerComponent>;
   const OPTION = Mock.mockOptions()[0];
@@ -29,8 +29,8 @@ describe('AnswerComponent', () => {
 
   describe('onClick event', () => {
     it('should emit `onClicked` event when clicked', async(() => {
-      component.onClicked.subscribe((option) => {
-        expect(option).toEqual(OPTION);
+      component.onClicked.subscribe((optionId) => {
+        expect(optionId).toEqual(OPTION.id);
         expect(component.checked).toEqual(true);
       });
 

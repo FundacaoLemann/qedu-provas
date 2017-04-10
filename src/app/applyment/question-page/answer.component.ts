@@ -9,14 +9,13 @@ import { Option } from '../../shared/model/option';
 export class AnswerComponent {
   @Input() option: Option = { id: 0, text: '' };
   @Input() checked = false;
-  @Output() onClicked: EventEmitter<Option> = new EventEmitter<Option>();
+  @Output() onClicked = new EventEmitter<number>();
 
   constructor () {
   }
 
   onClick () {
     this.checked = true;
-    this.onClicked.emit(this.option);
+    this.onClicked.emit(this.option.id);
   }
-
 }
