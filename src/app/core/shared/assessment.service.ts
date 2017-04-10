@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Assessment } from '../../shared/model/assessment';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, BaseRequestOptions } from '@angular/http';
 import { Item } from '../../shared/model/item';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -9,6 +9,7 @@ import 'rxjs/add/observable/throw';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import { environment } from '../../../environments/environment';
 import AnswerPost from '../../shared/model/answer-post';
+import Answer from '../../shared/model/answer';
 
 const md5 = require('md5');
 const { API_URL } = environment;
@@ -58,9 +59,14 @@ export class AssessmentService {
                .catch(AssessmentService.handleError);
   }
 
-  postAnswer(answer: AnswerPost): Observable<Response> {
+  postAnswer(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<Response> {
+    const options = new BaseRequestOptions();
+    options.headers = new Headers({
+      'Authorization': studentToken,
+    });
+
     return this._http
-               .post(`${API_URL}/assessment/${answer.assessmentToken}/answer`, answer)
+               .post(`${API_URL}/assessments/${assessmentToken}/answers`, { answers }, options)
                .catch(AssessmentService.handleError);
   }
 
@@ -81,7 +87,7 @@ export class AssessmentService {
       };
 
       let answers = [];
-      for(let option of item.options) {
+      for (let option of item.options) {
         let answer = {
           id: option.id,
           text: option.description
@@ -90,7 +96,7 @@ export class AssessmentService {
       }
 
       let medias = [];
-      if(item.image) {
+      if (item.image) {
         let media = {
           id: md5(item.image),
           type: 'image',

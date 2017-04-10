@@ -83,22 +83,33 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   submit() {
     // TODO
-    // Send data to API
-    const uuid = this._route.snapshot.params['token'];
-    this._router.navigate(['prova', uuid, 'parabens']);
+    const assessmentToken = this._route.snapshot.params['token'];
+    const studentToken = this._applymentService.getStudent().token;
+    const answers = this._applymentService.getAllAnswers();
+
+    this._assessmentService
+        .postAnswer(assessmentToken, studentToken, answers)
+        .subscribe(
+          response => {
+            if (response.status === 200 || response.status === 201) {
+              this._router.navigate(['prova', assessmentToken, 'parabens']);
+            } else {
+              console.log(response);
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
   }
 
   finish() {
     this.modalRef.instance.isSubmitting = true;
     this._connection
-      .getStatusOnce()
-      .subscribe(status => {
-        status ? this.submit() : this.openNoConnectionModal();
-      });
+        .getStatusOnce()
+        .subscribe(status => {
+          status ? this.submit() : this.openNoConnectionModal();
+        });
   }
 
-  submitAssessment() {
-    const status = this._applymentService.getApplymentStatus();
-    this._assessmentService.postAssessment(status);
-  }
 }

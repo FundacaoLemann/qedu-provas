@@ -105,13 +105,4 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
-
-  it('should finish the assessment', () => {
-    spyOn(assessmentService, 'postAssessment').and.returnValue(Observable.of({ status: 201, statusText: 'Created' }));
-
-    const post = applymentService.getApplymentStatus();
-
-    component.submitAssessment();
-    expect(assessmentService.postAssessment).toHaveBeenCalledWith(post);
-  });
 });
