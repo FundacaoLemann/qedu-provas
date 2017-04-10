@@ -120,17 +120,17 @@ describe('AssessmentService', () => {
           }));
           spyOn(http, 'post').and.returnValue(Observable.of(response));
 
-          const assessment = Mock.mockAssessment().token;
-          const student = Mock.mockStudent().token;
+          const assessmentToken = Mock.mockAssessment().token;
+          const studentToken = Mock.mockStudent().token;
           const answers = Mock.mockAnswers();
 
           service
-            .postAnswers(assessment, student, answers)
+            .postAnswers(assessmentToken, studentToken, answers)
             .subscribe(response => {
-              const url = `${API_URL}/assessments/${assessment}/answers`;
+              const url = `${API_URL}/assessments/${assessmentToken}/answers`;
               const data = answers;
               const options = new BaseRequestOptions();
-              options.headers = new Headers({ 'Authorization': student });
+              options.headers = new Headers({ 'Authorization': studentToken });
 
               expect(http.post).toHaveBeenCalledWith(url, data, options);
               expect(response.status).toEqual(200);
