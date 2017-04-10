@@ -66,7 +66,7 @@ export class AssessmentService {
     });
 
     return this._http
-               .post(`${API_URL}/assessments/${assessmentToken}/answers`, { answers }, options)
+               .post(`${API_URL}/assessments/${assessmentToken}/answers`, answers, options)
                .catch(AssessmentService.handleError);
   }
 
