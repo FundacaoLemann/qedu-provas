@@ -77,7 +77,7 @@ export class ApplymentService {
     return this._store.state.applyment.answers;
   }
 
-  answersAsObservable(): Observable<number[]> {
+  answersAsObservable(): Observable<Answer[]> {
     return this._store.asObservable().map(state => {
       return state.applyment.answers;
     });

@@ -9,6 +9,7 @@ import { HasModal } from '../../core/shared/has-modal/has-modal';
 import { ConnectionService } from '../../core/shared/connection.service';
 import 'rxjs/add/operator/catch';
 import { Assessment } from '../../shared/model/assessment';
+import Answer from '../../shared/model/answer';
 
 @Component({
   selector: 'qp-review-page',
@@ -21,7 +22,7 @@ import { Assessment } from '../../shared/model/assessment';
 })
 export class ReviewPageComponent extends HasModal implements OnInit {
   questions: Item[];
-  answers: number[] = [];
+  answers: Answer[] = [];
   answersLength = 0;
   questionsLength = 0;
   assessment: Assessment;

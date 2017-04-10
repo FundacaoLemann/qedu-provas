@@ -70,10 +70,11 @@ describe('AssessmentService', () => {
           });
 
         let expected = questions => {
+          console.log(questions);
           expect(questions.length).toEqual(3);
           expect(questions[0].id).toEqual('58d2f1af4a083c00194437c7');
           expect(questions[0].text).toEqual('Qual o melhor time do Rio? {{' + md5(QUESTIONS[0].image) + '}}');
-          expect(questions[0].options.length).toEqual(5);
+          expect(questions[0].answers.length).toEqual(5);
           expect(questions[0].media).toBeTruthy();
         };
 
