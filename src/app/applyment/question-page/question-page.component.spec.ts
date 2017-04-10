@@ -23,7 +23,7 @@ describe('QuestionPageComponent', () => {
   let router: RouterStub;
   let applymentService: ApplymentService;
   let assessmentService: AssessmentService;
-  const QUESTIONS = [Mock.mockQuestion(), Mock.mockQuestion(1), Mock.mockQuestion(2)];
+  const QUESTIONS = [Mock.mockItem(), Mock.mockItem(1), Mock.mockItem(2)];
   const STUDENT = db.students[0];
   const ASSESSMENT = db.assessments[0];
 
@@ -52,7 +52,7 @@ describe('QuestionPageComponent', () => {
     route.testParams = { token: ASSESSMENT.token, question_id: QUESTIONS[0].id };
 
     applymentService.setAssessment(ASSESSMENT);
-    applymentService.setQuestions(QUESTIONS);
+    applymentService.setItems(QUESTIONS);
     applymentService.setStudent(STUDENT);
     applymentService.initAnswers(QUESTIONS.length);
 
@@ -72,23 +72,31 @@ describe('QuestionPageComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('qp-answer')).length).toEqual(5);
   }));
 
-  it('should update the checkedAnswer answer when `onClicked` is fired', async(() => {
-    component.updateChecked(1);
+  it('should update the checkedAnswer option when `onClicked` is fired', async(() => {
+    const answer = Mock.mockAnswer();
+
+    component.updateChecked(answer.optionId);
     fixture.whenStable();
-    expect(component.checkedAnswer).toEqual(1);
+
+    expect(component.checkedAnswer).toEqual(answer.optionId);
   }));
 
-  it('should store the answer in the data store service', () => {
-    spyOn(applymentService, 'setSingleAnswer');
+  it('should store the option in the data store service', () => {
+    spyOn(applymentService, 'setAnswer');
     route.testParams = { token: '1', question_id: 1 };
-    component.updateChecked(1);
-    expect(applymentService.setSingleAnswer).toHaveBeenCalledWith(0, 1);
+    const answer = Mock.mockAnswer();
+
+    component.updateChecked(answer.optionId);
+    expect(applymentService.setAnswer).toHaveBeenCalledWith(0, answer);
   });
 
-  it('should load and display the answer when already set', () => {
-    applymentService.setSingleAnswer(0, 1);
+  it('should load and display the option when already set', () => {
+    const answer = Mock.mockAnswer();
+
+    applymentService.setAnswer(0, answer);
     route.testParams = { token: '1', question_id: 1 };
-    expect(component.checkedAnswer).toEqual(1);
+
+    expect(component.checkedAnswer).toEqual(answer.optionId);
   });
 
   it('should display the assessment title being applied', () => {
@@ -130,13 +138,13 @@ describe('QuestionPageComponent', () => {
     });
 
     describe('submitAnswerAndNavigateBack()', () => {
-      it('should submit the current answer and navigate', () => {
+      it('should submit the current option and navigate', () => {
         const response = createResponse(200, 'OK', { data: null });
         route.testParams = { token: ASSESSMENT.token, question_id: '1' };
-        spyOn(assessmentService, 'postAnswer').and.returnValue(Observable.of(response));
+        spyOn(assessmentService, 'postAnswers').and.returnValue(Observable.of(response));
         spyOn(router, 'navigate').and.returnValue(Observable.of(response));
         component.submitAnswerAndNavigateNext();
-        // expect(assessmentService.postAnswer).toHaveBeenCalled();
+        // expect(assessmentService.postAnswers).toHaveBeenCalled();
         expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', 2]);
       });
     });

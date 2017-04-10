@@ -1,4 +1,8 @@
-<div class="answer" (click)="onClick()" [ngClass]="{active: checked}">
+<div
+  option
+  [ngClass]="{active: checked}"
+  (click)="onClick()"
+  class="answer">
   <input type="radio" name="" [checked]="checked">
-  <label>{{ answer.text }}</label>
+  <label>{{ option.text }}</label>
 </div>

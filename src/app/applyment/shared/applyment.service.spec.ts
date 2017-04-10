@@ -11,9 +11,9 @@ const QUESTIONS = mock.questions;
 
 function prepareAnswers(service) {
   service.initAnswers(4);
-  service.setSingleAnswer(0, 1);
-  service.setSingleAnswer(1, 2);
-  service.setSingleAnswer(2, 5);
+  service.setAnswer(0, 1);
+  service.setAnswer(1, 2);
+  service.setAnswer(2, 5);
 }
 
 describe('ApplymentService', () => {
@@ -38,27 +38,20 @@ describe('ApplymentService', () => {
     })
   );
 
-  it('should init the answers array', inject(
+
+  it('should set an option', inject(
     [ApplymentService, StoreService],
     (service: ApplymentService, store: StoreService) => {
       prepareAnswers(service);
-      expect(store.state.applyment.answers.length).toEqual(4);
+      expect(store.state.applyment.answers).toEqual([1, 2, 5, null]);
     })
   );
 
-  it('should set an answer', inject(
-    [ApplymentService, StoreService],
-    (service: ApplymentService, store: StoreService) => {
-      prepareAnswers(service);
-      expect(store.state.applyment.answers).toEqual([1, 2, 5, 0]);
-    })
-  );
-
-  it('should return a single answer', inject(
+  it('should return a single option', inject(
     [ApplymentService],
     (service: ApplymentService) => {
       prepareAnswers(service);
-      expect(service.getSingleAnswer(2)).toEqual(5);
+      expect(service.getAnswer(2)).toEqual(5);
     })
   );
 
@@ -66,7 +59,7 @@ describe('ApplymentService', () => {
     [ApplymentService],
     (service: ApplymentService) => {
       prepareAnswers(service);
-      expect(service.getAllAnswers()).toEqual([1, 2, 5, 0]);
+      expect(service.getAllAnswers()).toEqual([1, 2, 5, null]);
     })
   );
 
@@ -77,6 +70,16 @@ describe('ApplymentService', () => {
       expect(service.answersAsObservable()).toEqual(jasmine.any(Observable));
     }
   ));
+
+  describe('initAnswers()', () => {
+    it('should initialize the answers container', inject(
+      [ApplymentService, StoreService],
+      (service: ApplymentService, store: StoreService) => {
+        service.initAnswers(4);
+        expect(store.state.applyment.answers).toEqual([null, null, null, null]);
+      })
+    );
+  });
 
   describe('setAssessment()', () => {
     it('should set an assessment', inject(
@@ -106,30 +109,30 @@ describe('ApplymentService', () => {
     ));
   });
 
-  describe('setQuestions', () => {
+  describe('setItems', () => {
     it('should set questions', inject(
       [ApplymentService, StoreService],
       (service: ApplymentService, store: StoreService) => {
-        service.setQuestions(QUESTIONS);
+        service.setItems(QUESTIONS);
         expect(store.state.applyment.questions);
       }
     ));
   });
 
-  describe('getQuestions', () => {
+  describe('getItems', () => {
     it('should return questions', inject(
       [ApplymentService, StoreService],
       (service: ApplymentService, store: StoreService) => {
-        service.setQuestions(QUESTIONS);
-        expect(service.getQuestions()).toEqual(QUESTIONS);
+        service.setItems(QUESTIONS);
+        expect(service.getItems()).toEqual(QUESTIONS);
       }
     ));
 
     it('should return empty array on error', inject(
       [ApplymentService],
       (service: ApplymentService) => {
-        expect(service.getQuestions).toThrow();
-        expect(service.getQuestions()).toEqual([]);
+        expect(service.getItems).toThrow();
+        expect(service.getItems()).toEqual([]);
       }
     ));
   });
@@ -140,9 +143,9 @@ describe('ApplymentService', () => {
       (service: ApplymentService) => {
         service.setAssessment(ASSESSMENT);
         service.setStudent(STUDENT);
-        service.setQuestions(QUESTIONS);
+        service.setItems(QUESTIONS);
         service.initAnswers(1);
-        service.setSingleAnswer(0, 1);
+        service.setAnswer(0, 1);
 
         const applymentStatus = new ApplymentStatus();
         applymentStatus.assessmentToken = ASSESSMENT.id.toString();

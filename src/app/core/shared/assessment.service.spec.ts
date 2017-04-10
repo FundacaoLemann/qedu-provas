@@ -1,11 +1,12 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 import { AssessmentService } from './assessment.service';
-import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
+import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions, Headers } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import Mock from '../../../../mock/mock';
+import { Observable } from 'rxjs';
 
 const md5 = require('md5');
 const mock = require('../../../../mock/db.json');
@@ -106,27 +107,36 @@ describe('AssessmentService', () => {
       })));
   });
 
-  describe('postAnswer', () => {
-    it('should send a PATCH to the API with an answer',
+  describe('postAnswers', () => {
+    it('should post answers to the API',
       async(inject(
         [AssessmentService, MockBackend, Http],
         (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
-          spyOn(http, 'post').and.callThrough();
-          mockBackend.connections.subscribe(connection => {
-            connection.mockRespond(new Response(new ResponseOptions({ body: 'OK' })));
-          });
-          const url = `${API_URL}/assessment/${ASSESSMENT.token}/answer`;
-          const answer = {
-            assessmentToken: ASSESSMENT.token,
-            studentToken: STUDENT.token,
-            questionId: QUESTIONS[0].id,
-            value: '1'
-          };
-          const response = service.postAnswer(answer);
-          response.subscribe(resp => {
-            expect(resp).toEqual(jasmine.any(Response));
-            expect(http.post).toHaveBeenCalledWith(url, answer);
-          });
+
+          const response = new Response(new ResponseOptions({
+            status: 200,
+            statusText: 'OK',
+            body: JSON.stringify({ message: { data: 'Respostas salvas.' } })
+          }));
+          spyOn(http, 'post').and.returnValue(Observable.of(response));
+
+          const assessmentToken = Mock.mockAssessment().token;
+          const studentToken = Mock.mockStudent().token;
+          const answers = Mock.mockAnswers();
+
+          service
+            .postAnswers(assessmentToken, studentToken, answers)
+            .subscribe(response => {
+              const url = `${API_URL}/assessments/${assessmentToken}/answers`;
+              const data = answers;
+              const options = new BaseRequestOptions();
+              options.headers = new Headers({ 'Authorization': studentToken });
+
+              expect(http.post).toHaveBeenCalledWith(url, data, options);
+              expect(response.status).toEqual(200);
+              expect(response.statusText).toEqual('OK');
+              expect(response.json().message.data).toEqual('Respostas salvas.');
+            });
         })
       ));
   });

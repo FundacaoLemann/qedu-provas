@@ -123,5 +123,19 @@
   ],
   "status": {
     "status": "OK"
-  }
+  },
+  "answers": [
+    {
+      "itemId": "58d2f1af4a083c00194437c7",
+      "optionId": 4
+    },
+    {
+      "itemId": "58d2f1af4a083c00194437c8",
+      "optionId": 7
+    },
+    {
+      "itemId": "58d2f1af4a083c00194437c9",
+      "optionId": "12"
+    }
+  ]
 }

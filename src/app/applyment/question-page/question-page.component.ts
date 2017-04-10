@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import { ApplymentService } from '../shared/applyment.service';
 import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import Answer from '../../shared/model/answer';
 
 @Component({
   selector: 'qp-question-page',
@@ -13,12 +14,12 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./question-page.component.sass']
 })
 export class QuestionPageComponent implements OnInit {
-  question: Question;
+  question: Item;
   questionText = '';
   questionIndex = 0;
   questionsLength: number;
-  answers: any[];
-  checkedAnswer = 0;
+  options: any[];
+  checkedAnswer: number = null;
   assessment: Assessment;
 
   constructor(private _route: ActivatedRoute,
@@ -35,23 +36,24 @@ export class QuestionPageComponent implements OnInit {
         .subscribe(
           questionIndex => {
             try {
-              const questions = this._applymentService.getQuestions();
+              const questions = this._applymentService.getItems();
               this.questionIndex = questionIndex;
               this.questionsLength = questions.length;
               this.question = questions[this.questionIndex];
               this.questionText = this.questionHTMLText();
-              this.answers = this.question.answers;
+              this.options = this.question.answers;
               document.body.scrollTop = 0;
             } catch (err) {
-              this.question = new Question();
-              this.answers = [];
+              this.question = new Item();
+              this.options = [];
             } finally {
-              this.checkedAnswer = this._applymentService.getSingleAnswer(this.questionIndex) || 0;
+              const answer = this._applymentService.getAnswer(this.questionIndex);
+              this.checkedAnswer = (answer && answer.optionId) ? answer.optionId : 0;
             }
           },
           error => {
-            this.question = new Question();
-            this.answers = [];
+            this.question = new Item();
+            this.options = [];
           }
         );
   }
@@ -71,9 +73,13 @@ export class QuestionPageComponent implements OnInit {
     return questionText;
   }
 
-  updateChecked(answerId: number) {
-    this.checkedAnswer = answerId;
-    this._applymentService.setSingleAnswer(this.questionIndex, answerId);
+  updateChecked(optionId: number) {
+    const answer = new Answer();
+    answer.optionId = optionId;
+    answer.itemId = this.question.id;
+
+    this.checkedAnswer = optionId;
+    this._applymentService.setAnswer(this.questionIndex, answer);
   }
 
   submitAnswerAndNavigateNext() {
@@ -98,14 +104,5 @@ export class QuestionPageComponent implements OnInit {
 
   postAnswer() {
     const applymentStatus = this._applymentService.getApplymentStatus();
-    // const answer = {
-    //   assessmentToken: applymentStatus.assessmentToken,
-    //   studentToken: applymentStatus.studentToken,
-    //   questionId: this.question.id.toString(),
-    //   value: this.checkedAnswer.toString()
-    // };
-    // this._assessmentService.postAnswer(answer);
   }
-
-
 }

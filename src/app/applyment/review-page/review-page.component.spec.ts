@@ -14,6 +14,7 @@ import 'rxjs/add/observable/of';
 import { camelizeObject } from '../../utils/json';
 import { Observable } from 'rxjs/Observable';
 import { AssessmentService } from '../../core/shared/assessment.service';
+import Mock from '../../../../mock/mock';
 
 const db = require('../../../../mock/db.json');
 
@@ -50,11 +51,11 @@ describe('ReviewPageComponent', () => {
     applymentService = fixture.debugElement.injector.get(ApplymentService);
     applymentService.setAssessment(camelizeObject(ASSESSMENT));
     applymentService.setStudent(camelizeObject(STUDENT));
-    applymentService.setQuestions(camelizeObject(QUESTIONS));
+    applymentService.setItems(camelizeObject(QUESTIONS));
     applymentService.initAnswers(QUESTIONS.length);
-    applymentService.setSingleAnswer(0, 1);
-    applymentService.setSingleAnswer(1, 3);
-    applymentService.setSingleAnswer(2, 5);
+    applymentService.setAnswer(0, Mock.mockAnswer(0));
+    applymentService.setAnswer(1, Mock.mockAnswer(1));
+    applymentService.setAnswer(2, Mock.mockAnswer(2));
 
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
@@ -104,13 +105,4 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
-
-  it('should finish the assessment', () => {
-    spyOn(assessmentService, 'postAssessment').and.returnValue(Observable.of({ status: 201, statusText: 'Created' }));
-
-    const post = applymentService.getApplymentStatus();
-
-    component.submitAssessment();
-    expect(assessmentService.postAssessment).toHaveBeenCalledWith(post);
-  });
 });

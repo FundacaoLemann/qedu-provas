@@ -50,11 +50,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let answer of answers; let _index = index" [ngClass]="{danger: !answer}">
+                <tr *ngFor="let option of answers; let _index = index" [ngClass]="{danger: !option}">
                   <td><strong>#{{_index+1}}</strong></td>
-                  <td> {{ answer ? 'Sim' : 'Não'}}</td>
+                  <td> {{ option ? 'Sim' : 'Não'}}</td>
                   <td class="text-right">
-                    <a (click)="navigate(_index+1)" class="btn btn-primary btn-xs" *ngIf="!answer">Responder</a>
+                    <a (click)="navigate(_index+1)" class="btn btn-primary btn-xs" *ngIf="!option">Responder</a>
                   </td>
                 </tr>
                 </tbody>

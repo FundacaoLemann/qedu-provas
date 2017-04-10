@@ -1,4 +1,4 @@
-export class Answer {
-  id: number;
-  text: string;
+export default class Answer {
+  itemId: string;
+  optionId: number;
 }

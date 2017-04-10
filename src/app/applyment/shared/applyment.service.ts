@@ -3,9 +3,10 @@ import { Student } from '../../shared/model/student';
 import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
 import { Assessment } from '../../shared/model/assessment';
-import { Question } from '../../shared/model/question';
+import { Item } from '../../shared/model/item';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import * as _ from 'lodash';
+import Answer from '../../shared/model/answer';
 
 @Injectable()
 export class ApplymentService {
@@ -43,41 +44,40 @@ export class ApplymentService {
   }
 
   // Questions
-  setQuestions(questions: Question[]) {
+  setItems(questions: Item[]) {
     const newState = _.merge({}, this._store.state, { applyment: { questions } });
     this._store.setState(newState);
   }
 
-  getQuestions(): Question[] {
+  getItems(): Item[] {
     return this._store.state.applyment.questions;
   }
 
-
   // Answers
   initAnswers(length: number) {
-    const answers = Array(length).fill(0);
+    const answers = Array(length).fill(null);
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
   }
 
-  setSingleAnswer(questionId: number, answerId: number) {
+  setAnswer(itemIndex: number, answer: Answer) {
     const answers = this._store.state.applyment.answers;
-    answers[questionId] = answerId;
+    answers[itemIndex] = answer;
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
   }
 
-  getSingleAnswer(questionId: number): number {
-    return this._store.state.applyment.answers[questionId];
+  getAnswer(itemIndex: number): Answer {
+    return this._store.state.applyment.answers[itemIndex] || null;
   }
 
-  getAllAnswers(): number[] {
+  getAllAnswers(): Answer[] {
     return this._store.state.applyment.answers;
   }
 
-  answersAsObservable(): Observable<number[]> {
+  answersAsObservable(): Observable<Answer[]> {
     return this._store.asObservable().map(state => {
       return state.applyment.answers;
     });

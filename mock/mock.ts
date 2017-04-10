@@ -1,33 +1,34 @@
-import { Question } from '../src/app/shared/model/question';
-import { Answer } from '../src/app/shared/model/answer';
+import { Item } from '../src/app/shared/model/item';
+import { Option } from '../src/app/shared/model/option';
 import { Media } from '../src/app/shared/model/media';
 import { Assessment } from '../src/app/shared/model/assessment';
 import EducationalEntity from '../src/app/shared/model/educational-entity';
 import { Student } from '../src/app/shared/model/student';
+import Answer from '../src/app/shared/model/answer';
 
 const md5 = require('md5');
 const mock = require('./db.json');
 
-export default class Mock extends Question {
+export default class Mock {
 
-  static mockQuestion(index = 0) {
-    let question = new Question();
-    question.id = mock.questions[index].id;
-    question.text = mock.questions[index].stem;
-    question.answers = Mock.mockAnswers(index);
-    question.media = [Mock.mockMedia(index)];
-    return question;
+  static mockItem(index = 0) {
+    let item = new Item();
+    item.id = mock.questions[index].id;
+    item.text = mock.questions[index].stem;
+    item.answers = Mock.mockOptions(index);
+    item.media = [Mock.mockMedia(index)];
+    return item;
   }
 
-  static mockAnswers(questionIndex = 0): Answer[] {
-    let answers = [];
-    for (let forAnswer of mock.questions[questionIndex].options) {
-      let answer = new Answer();
-      answer.id = forAnswer.id;
-      answer.text = forAnswer.description;
-      answers.push(answer);
+  static mockOptions(itemIndex = 0): Option[] {
+    let options = [];
+    for (let forAnswer of mock.questions[itemIndex].options) {
+      let option = new Option();
+      option.id = forAnswer.id;
+      option.text = forAnswer.description;
+      options.push(option);
     }
-    return answers;
+    return options;
   }
 
   static mockMedia(questionIndex = 0): Media {
@@ -95,6 +96,27 @@ export default class Mock extends Question {
     s.matricula = S.registrationNumber;
 
     return s;
+  }
+
+  static mockAnswer(index = 0): Answer {
+    let ANSWER = mock.answers[index];
+    let answer = new Answer();
+    answer.itemId = ANSWER.itemId;
+    answer.optionId = ANSWER.optionId;
+    return answer;
+  }
+
+
+  static mockAnswers(): Answer[] {
+    let ANSWERS = mock.answers;
+    let answers = [];
+    for(const A of ANSWERS) {
+      const a = new Answer();
+      a.itemId = A.itemId;
+      a.optionId = A.optionId;
+      answers.push(a);
+    }
+    return answers;
   }
 
 }
