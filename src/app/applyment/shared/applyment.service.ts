@@ -73,7 +73,7 @@ export class ApplymentService {
     return this._store.state.applyment.answers[itemIndex] || null;
   }
 
-  getAllAnswers(): number[] {
+  getAllAnswers(): Answer[] {
     return this._store.state.applyment.answers;
   }
 
