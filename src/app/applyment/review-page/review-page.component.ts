@@ -61,7 +61,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   openFinishModal() {
     this.openModal(ReviewModalComponent, {
       'onConfirm': () => {
-        this.finish();
+        this.deliver();
       },
       'onCancel': () => {
         this.closeModal();
@@ -78,7 +78,6 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         }
       });
     }, 300);
-
   }
 
   submit() {
@@ -92,6 +91,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
           response => {
             if (response.status === 200 || response.status === 201) {
               this._router.navigate(['prova', assessmentToken, 'parabens']);
+
             } else {
               /**
                * TODO
@@ -115,6 +115,10 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   finish() {
+
+  }
+
+  deliver() {
     this.modalRef.instance.isSubmitting = true;
     this._connection
         .getStatusOnce()

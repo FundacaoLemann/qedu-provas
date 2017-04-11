@@ -9,10 +9,7 @@ import { By } from '@angular/platform-browser';
 import { ApplymentService } from '../shared/applyment.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentModule } from '../applyment.module';
-// Rxjs
-import 'rxjs/add/observable/of';
 import { camelizeObject } from '../../utils/json';
-import { Observable } from 'rxjs/Observable';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import Mock from '../../../../mock/mock';
 
@@ -74,8 +71,8 @@ describe('ReviewPageComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', QUESTIONS.length]);
   }));
 
-  it('should create a modal when the finish button is clicked', fakeAsync(() => {
-    dispatchEvent(fixture, '[button-finish]', 'click');
+  it('should create a modal when the [button-deliver] is clicked', fakeAsync(() => {
+    dispatchEvent(fixture, '[button-deliver]', 'click');
     tick(301);
     fixture.detectChanges();
     expect(component.modalRef).toEqual(jasmine.any(ComponentRef));
