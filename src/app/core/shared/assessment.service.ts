@@ -126,7 +126,7 @@ export class AssessmentService {
                .catch(AssessmentService.handleError);
   }
 
-  finishAssessment(assessmentToken: string, studentToken: string) {
+  finishAssessment(assessmentToken: string, studentToken: string): Observable<string> {
     const url = `${API_URL}/assessments/${assessmentToken}/students`;
     const options = new BaseRequestOptions();
     options.headers = new Headers({
