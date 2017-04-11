@@ -58,7 +58,7 @@ export function getAllDebugElements(fixture: ComponentFixture<any>, selector: st
  */
 export function createResponse(status: number, statusText: string, body: {}|string, headers?: Headers): Response {
   const respBody = (typeof body === 'object') ? JSON.stringify(body) : body;
-  let options = {
+  const options = {
     status: status,
     statusText: statusText,
     body: respBody,

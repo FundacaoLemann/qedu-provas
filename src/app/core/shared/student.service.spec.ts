@@ -44,7 +44,7 @@ describe('StudentService', () => {
       })));
     });
 
-    let expected = (student) => {
+    const expected = (student) => {
       expect(student).toEqual(PARSED_STUDENT);
     };
 
