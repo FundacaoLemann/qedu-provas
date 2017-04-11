@@ -132,7 +132,7 @@ export class AssessmentService {
     options.headers = new Headers({
       'Authorization': studentToken
     });
-    const body = { data: { finished: true } };
+    const body = { finished: true };
 
     return this._http
                .put(url, body, options)

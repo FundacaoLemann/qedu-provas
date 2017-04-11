@@ -158,7 +158,7 @@ describe('AssessmentService', () => {
                 'Authorization': studentToken
               });
 
-              expect(http.put).toHaveBeenCalledWith(url, { data: { finished: true } }, options);
+              expect(http.put).toHaveBeenCalledWith(url, { finished: true } , options);
               expect(response.message).toEqual('Prova Finalizada');
             });
         })
