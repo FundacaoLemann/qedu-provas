@@ -85,17 +85,13 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   submit() {
-    const assessmentToken = this._route.snapshot.params['token'];
-    const studentToken = this._applymentService.getStudent().token;
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
-
     this._assessmentService
-        .postAnswers(assessmentToken, studentToken, answers)
+        .postAnswers(this.assessment.token, this.student.token, answers)
         .subscribe(
           response => {
             if (response.status === 200 || response.status === 201) {
-              this._router.navigate(['prova', assessmentToken, 'parabens']);
-
+              this.finishAndRedirect();
             } else {
               /**
                * TODO
@@ -118,13 +114,12 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         );
   }
 
-  finish(): Observable<any> {
-    return this._assessmentService
-               .finishAssessment(this.assessment.token, this.student.token)
-               .map(message => {
-                 this._router.navigate(['provas', this.assessment.token, 'parabens']);
-                 return message;
-               });
+  finishAndRedirect() {
+    this._assessmentService
+        .finishAssessment(this.assessment.token, this.student.token)
+        .subscribe(() => {
+          this._router.navigate(['provas', this.assessment.token, 'parabens']);
+        });
   }
 
   deliver() {

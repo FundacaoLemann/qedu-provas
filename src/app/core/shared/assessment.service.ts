@@ -136,7 +136,7 @@ export class AssessmentService {
 
     return this._http
                .put(url, body, options)
-               .map(response => response.json().message)
+               .map(response => response.json().message.data)
                .catch(AssessmentService.handleError);
   }
 

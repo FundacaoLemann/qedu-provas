@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReviewPageComponent } from './review-page.component';
-import { dispatchEvent } from '../../../testing/testing-helper';
+import { dispatchEvent, createResponse } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
@@ -104,8 +104,21 @@ describe('ReviewPageComponent', () => {
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
 
-  describe('finish()', () => {
-    it('should send a finish request and redirect on success', () => {
+  describe('submit()', () => {
+    it('should post a request the answers', async(() => {
+      const fakeResponse = createResponse(200, 'OK', null);
+
+      spyOn(assessmentService, 'postAnswers').and.returnValue(Observable.of(fakeResponse));
+      spyOn(component, 'finishAndRedirect');
+
+      component.submit();
+
+      expect(component.finishAndRedirect).toHaveBeenCalled();
+    }));
+  });
+
+  describe('finishAndRedirect()', () => {
+    it('should put a finish request and redirect on success', async(() => {
       const fakeMessage = 'Prova finalizada com sucesso';
       spyOn(assessmentService, 'finishAssessment').and.returnValue(Observable.of(fakeMessage));
       spyOn(router, 'navigate');
@@ -113,12 +126,10 @@ describe('ReviewPageComponent', () => {
       const assessmentToken = applymentService.getAssessment().token;
       const studentToken = applymentService.getStudent().token;
 
-      component
-        .finish()
-        .subscribe(message => {
-          expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
-          expect(router.navigate).toHaveBeenCalledWith(['provas', assessmentToken, 'parabens']);
-        });
-    });
+      component.finishAndRedirect();
+
+      expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
+      expect(router.navigate).toHaveBeenCalledWith(['provas', assessmentToken, 'parabens']);
+    }));
   });
 });
