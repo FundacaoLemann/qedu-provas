@@ -70,6 +70,20 @@ export class AssessmentService {
                .catch(AssessmentService.handleError);
   }
 
+  finishAssessment(assessmentToken: string, studentToken: string) {
+    const url = `${API_URL}/assessments/${assessmentToken}/students`;
+    const options = new BaseRequestOptions();
+    options.headers = new Headers({
+      'Authorization': studentToken
+    });
+    const body = { data: { finished: true } };
+
+    return this._http
+               .put(url, body, options)
+               .map(response => response.json().message)
+               .catch(AssessmentService.handleError);
+  }
+
   static extractData(response: Response): any {
     return response.json().data;
   }
