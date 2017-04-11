@@ -12,6 +12,7 @@ import { ApplymentModule } from '../applyment.module';
 import { camelizeObject } from '../../utils/json';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import Mock from '../../../../mock/mock';
+import { Observable } from 'rxjs/Observable';
 
 const db = require('../../../../mock/db.json');
 
@@ -28,15 +29,15 @@ describe('ReviewPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ApplymentModule
-      ],
-      providers: [
-        { provide: Router, useClass: RouterStub },
-        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) }
-      ],
-    })
-      .compileComponents();
+             imports: [
+               ApplymentModule
+             ],
+             providers: [
+               { provide: Router, useClass: RouterStub },
+               { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) }
+             ],
+           })
+           .compileComponents();
   }));
 
   beforeEach(() => {
@@ -102,4 +103,22 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
+
+  describe('finish()', () => {
+    it('should send a finish request and redirect on success', () => {
+      const fakeMessage = 'Prova finalizada com sucesso';
+      spyOn(assessmentService, 'finishAssessment').and.returnValue(Observable.of(fakeMessage));
+      spyOn(router, 'navigate');
+
+      const assessmentToken = applymentService.getAssessment().token;
+      const studentToken = applymentService.getStudent().token;
+
+      component
+        .finish()
+        .subscribe(message => {
+          expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
+          expect(router.navigate).toHaveBeenCalledWith(['provas', assessmentToken, 'parabens']);
+        });
+    });
+  });
 });

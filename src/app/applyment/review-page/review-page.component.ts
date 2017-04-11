@@ -10,6 +10,8 @@ import { ConnectionService } from '../../core/shared/connection.service';
 import 'rxjs/add/operator/catch';
 import { Assessment } from '../../shared/model/assessment';
 import Answer from '../../shared/model/answer';
+import { Student } from '../../shared/model/student';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'qp-review-page',
@@ -26,6 +28,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   answersLength = 0;
   questionsLength = 0;
   assessment: Assessment;
+  student: Student;
 
   constructor(protected _viewContainer: ViewContainerRef,
               protected _componentFactoryResolver: ComponentFactoryResolver,
@@ -43,6 +46,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   load() {
     this.assessment = this._applymentService.getAssessment();
+    this.student = this._applymentService.getStudent();
     this.questions = this._applymentService.getItems();
     this.questionsLength = this.questions.length;
     this.answers = this._applymentService.getAllAnswers();
@@ -114,8 +118,13 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         );
   }
 
-  finish() {
-
+  finish(): Observable<any> {
+    return this._assessmentService
+               .finishAssessment(this.assessment.token, this.student.token)
+               .map(message => {
+                 this._router.navigate(['provas', this.assessment.token, 'parabens']);
+                 return message;
+               });
   }
 
   deliver() {
@@ -123,7 +132,12 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this._connection
         .getStatusOnce()
         .subscribe(status => {
-          status ? this.submit() : this.openNoConnectionModal();
+          if (status) {
+            this.submit()
+          }
+          else {
+            this.openNoConnectionModal();
+          }
         });
   }
 
