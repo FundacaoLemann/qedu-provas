@@ -143,7 +143,7 @@ describe('AssessmentService', () => {
       async(inject(
         [AssessmentService, MockBackend, Http],
         (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
-          const mockResponse = createResponse(200, 'OK', { message: { message: 'Prova Finalizada' } });
+          const mockResponse = createResponse(200, 'OK', { message: { data: 'Prova Finalizada' } });
           spyOn(http, 'put').and.returnValue(Observable.of(mockResponse));
 
           const assessmentToken = Mock.mockAssessment().token;
@@ -159,7 +159,7 @@ describe('AssessmentService', () => {
               });
 
               expect(http.put).toHaveBeenCalledWith(url, { finished: true } , options);
-              expect(response.message).toEqual('Prova Finalizada');
+              expect(response).toEqual('Prova Finalizada');
             });
         })
       ));
