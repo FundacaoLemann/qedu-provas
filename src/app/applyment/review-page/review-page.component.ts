@@ -118,7 +118,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this._assessmentService
         .finishAssessment(this.assessment.token, this.student.token)
         .subscribe(() => {
-          this._router.navigate(['provas', this.assessment.token, 'parabens']);
+          this._router.navigate(['prova', this.assessment.token, 'parabens']);
         });
   }
 

@@ -129,7 +129,7 @@ describe('ReviewPageComponent', () => {
       component.finishAndRedirect();
 
       expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
-      expect(router.navigate).toHaveBeenCalledWith(['provas', assessmentToken, 'parabens']);
+      expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
     }));
   });
 });
