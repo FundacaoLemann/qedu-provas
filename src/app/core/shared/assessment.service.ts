@@ -17,6 +17,62 @@ const { API_URL } = environment;
 @Injectable()
 export class AssessmentService {
 
+  static extractData(response: Response): any {
+    return response.json().data;
+  }
+
+  static extractQuestionData(response: Response): Item[] {
+    const rawItems = response.json().data.items;
+    const questions = [];
+
+    for (const item of rawItems) {
+      const question = {
+        id: item.id,
+        text: item.stem,
+        answers: [],
+        media: []
+      };
+
+      const answers = [];
+      for (const option of item.options) {
+        const answer = {
+          id: option.id,
+          text: option.description
+        };
+        answers.push(answer);
+      }
+
+      const medias = [];
+      if (item.image) {
+        const media = {
+          id: md5(item.image),
+          type: 'image',
+          source: item.image
+        };
+        question.text += ` {{${media.id}}}`;
+        medias.push(media);
+      }
+
+      question.answers = answers;
+      question.media = medias;
+
+      questions.push(question);
+    }
+
+    return questions;
+  }
+
+  static handleError(error: Response | any) {
+    let errorMessage = '';
+    if (error instanceof Response) {
+      errorMessage = error.json().error.message;
+    } else {
+      errorMessage = error.message || JSON.stringify(error);
+    }
+
+    return Observable.throw(errorMessage);
+  }
+
   constructor(private _http: Http) {
   }
 
@@ -28,8 +84,8 @@ export class AssessmentService {
   }
 
   fetchAssessmentQuestions(assessmentToken: string, studentToken: string): Observable<Item[]> {
-    let url = `${API_URL}/assessments/${assessmentToken}/items`;
-    let headers = new Headers({
+    const url = `${API_URL}/assessments/${assessmentToken}/items`;
+    const headers = new Headers({
       'Authorization': studentToken
     });
 
@@ -70,59 +126,18 @@ export class AssessmentService {
                .catch(AssessmentService.handleError);
   }
 
-  static extractData(response: Response): any {
-    return response.json().data;
+  finishAssessment(assessmentToken: string, studentToken: string): Observable<string> {
+    const url = `${API_URL}/assessments/${assessmentToken}/students`;
+    const options = new BaseRequestOptions();
+    options.headers = new Headers({
+      'Authorization': studentToken
+    });
+    const body = { finished: true };
+
+    return this._http
+               .put(url, body, options)
+               .map(response => response.json().message.data)
+               .catch(AssessmentService.handleError);
   }
 
-  static extractQuestionData(response: Response): Item[] {
-    let rawItems = response.json().data.items;
-    let questions = [];
-
-    for (let item of rawItems) {
-      let question = {
-        id: item.id,
-        text: item.stem,
-        answers: [],
-        media: []
-      };
-
-      let answers = [];
-      for (let option of item.options) {
-        let answer = {
-          id: option.id,
-          text: option.description
-        };
-        answers.push(answer);
-      }
-
-      let medias = [];
-      if (item.image) {
-        let media = {
-          id: md5(item.image),
-          type: 'image',
-          source: item.image
-        };
-        question.text += ` {{${media.id}}}`;
-        medias.push(media);
-      }
-
-      question.answers = answers;
-      question.media = medias;
-
-      questions.push(question);
-    }
-
-    return questions;
-  }
-
-  static handleError(error: Response | any) {
-    let errorMessage = '';
-    if (error instanceof Response) {
-      errorMessage = error.json().error.message;
-    } else {
-      errorMessage = error.message || JSON.stringify(error);
-    }
-
-    return Observable.throw(errorMessage);
-  }
 }

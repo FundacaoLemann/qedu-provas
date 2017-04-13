@@ -49,7 +49,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
     };
 
     if ( !this.student && this.accessToken ) {
-      let assessmentToken = this._applymentService.getAssessment().token;
+      const assessmentToken = this._applymentService.getAssessment().token;
       this.fetchUser(this.accessToken, assessmentToken)
           .subscribe(
             student => {

@@ -2,16 +2,14 @@ import { TestBed, inject, async } from '@angular/core/testing';
 import { AssessmentService } from './assessment.service';
 import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions, Headers } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
-import { Item } from '../../shared/model/item';
 import Mock from '../../../../mock/mock';
-import { Observable } from 'rxjs';
 
 const md5 = require('md5');
 const mock = require('../../../../mock/db.json');
 const ASSESSMENT = mock.assessments[0];
-const STUDENT = mock.students[0];
 const QUESTIONS = mock.questions;
 const { API_URL } = environment;
 
@@ -70,7 +68,7 @@ describe('AssessmentService', () => {
             connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify({ data: { items: QUESTIONS } }) })));
           });
 
-        let expected = questions => {
+        const expected = questions => {
           expect(questions.length).toEqual(3);
           expect(questions[0].id).toEqual('58d2f1af4a083c00194437c7');
           expect(questions[0].text).toEqual('Qual o melhor time do Rio? {{' + md5(QUESTIONS[0].image) + '}}');
@@ -112,13 +110,12 @@ describe('AssessmentService', () => {
       async(inject(
         [AssessmentService, MockBackend, Http],
         (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
-
-          const response = new Response(new ResponseOptions({
+          const mockResponse = new Response(new ResponseOptions({
             status: 200,
             statusText: 'OK',
             body: JSON.stringify({ message: { data: 'Respostas salvas.' } })
           }));
-          spyOn(http, 'post').and.returnValue(Observable.of(response));
+          spyOn(http, 'post').and.returnValue(Observable.of(mockResponse));
 
           const assessmentToken = Mock.mockAssessment().token;
           const studentToken = Mock.mockStudent().token;
@@ -136,6 +133,33 @@ describe('AssessmentService', () => {
               expect(response.status).toEqual(200);
               expect(response.statusText).toEqual('OK');
               expect(response.json().message.data).toEqual('Respostas salvas.');
+            });
+        })
+      ));
+  });
+
+  describe('finishAssessment()', () => {
+    it('should PUT to /student',
+      async(inject(
+        [AssessmentService, MockBackend, Http],
+        (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
+          const mockResponse = createResponse(200, 'OK', { message: { data: 'Prova Finalizada' } });
+          spyOn(http, 'put').and.returnValue(Observable.of(mockResponse));
+
+          const assessmentToken = Mock.mockAssessment().token;
+          const studentToken = Mock.mockStudent().token;
+
+          service
+            .finishAssessment(assessmentToken, studentToken)
+            .subscribe(response => {
+              const url = `${API_URL}/assessments/${assessmentToken}/students`;
+              const options = new BaseRequestOptions();
+              options.headers = new Headers({
+                'Authorization': studentToken
+              });
+
+              expect(http.put).toHaveBeenCalledWith(url, { finished: true } , options);
+              expect(response).toEqual('Prova Finalizada');
             });
         })
       ));

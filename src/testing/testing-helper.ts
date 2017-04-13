@@ -1,7 +1,7 @@
-import {ComponentFixture} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
-import { Response, ResponseOptions } from '@angular/http';
+import { ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { Response, ResponseOptions, Headers } from '@angular/http';
 
 export function setInputValue(fixture: ComponentFixture<any>, selector: string, value: any): Promise<any> {
   const el = fixture.debugElement.query(By.css(selector)).nativeElement;
@@ -56,12 +56,13 @@ export function getAllDebugElements(fixture: ComponentFixture<any>, selector: st
  * @param body
  * @returns {Response}
  */
-export function createResponse (status: number, statusText: string, body: {} | string): Response {
+export function createResponse(status: number, statusText: string, body: {}|string, headers?: Headers): Response {
   const respBody = (typeof body === 'object') ? JSON.stringify(body) : body;
   const options = {
     status: status,
     statusText: statusText,
-    body: respBody
+    body: respBody,
+    headers: (headers) ? new Headers(headers) : null
   };
 
   return new Response(new ResponseOptions(options));

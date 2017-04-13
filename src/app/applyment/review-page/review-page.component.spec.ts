@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReviewPageComponent } from './review-page.component';
-import { dispatchEvent } from '../../../testing/testing-helper';
+import { dispatchEvent, createResponse } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
@@ -9,12 +9,10 @@ import { By } from '@angular/platform-browser';
 import { ApplymentService } from '../shared/applyment.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentModule } from '../applyment.module';
-// Rxjs
-import 'rxjs/add/observable/of';
 import { camelizeObject } from '../../utils/json';
-import { Observable } from 'rxjs/Observable';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import Mock from '../../../../mock/mock';
+import { Observable } from 'rxjs/Observable';
 
 const db = require('../../../../mock/db.json');
 
@@ -31,15 +29,15 @@ describe('ReviewPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ApplymentModule
-      ],
-      providers: [
-        { provide: Router, useClass: RouterStub },
-        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) }
-      ],
-    })
-      .compileComponents();
+             imports: [
+               ApplymentModule
+             ],
+             providers: [
+               { provide: Router, useClass: RouterStub },
+               { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) }
+             ],
+           })
+           .compileComponents();
   }));
 
   beforeEach(() => {
@@ -74,8 +72,8 @@ describe('ReviewPageComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', QUESTIONS.length]);
   }));
 
-  it('should create a modal when the finish button is clicked', fakeAsync(() => {
-    dispatchEvent(fixture, '[button-finish]', 'click');
+  it('should create a modal when the [button-deliver] is clicked', fakeAsync(() => {
+    dispatchEvent(fixture, '[button-deliver]', 'click');
     tick(301);
     fixture.detectChanges();
     expect(component.modalRef).toEqual(jasmine.any(ComponentRef));
@@ -105,4 +103,33 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
     expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
   }));
+
+  describe('submit()', () => {
+    it('should post a request the answers', async(() => {
+      const fakeResponse = createResponse(200, 'OK', null);
+
+      spyOn(assessmentService, 'postAnswers').and.returnValue(Observable.of(fakeResponse));
+      spyOn(component, 'finishAndRedirect');
+
+      component.submit();
+
+      expect(component.finishAndRedirect).toHaveBeenCalled();
+    }));
+  });
+
+  describe('finishAndRedirect()', () => {
+    it('should put a finish request and redirect on success', async(() => {
+      const fakeMessage = 'Prova finalizada com sucesso';
+      spyOn(assessmentService, 'finishAssessment').and.returnValue(Observable.of(fakeMessage));
+      spyOn(router, 'navigate');
+
+      const assessmentToken = applymentService.getAssessment().token;
+      const studentToken = applymentService.getStudent().token;
+
+      component.finishAndRedirect();
+
+      expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
+      expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
+    }));
+  });
 });
