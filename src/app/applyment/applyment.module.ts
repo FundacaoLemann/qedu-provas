@@ -17,6 +17,7 @@ import { PageLogosComponent } from './shared/page-logos/page-logos.component';
 import { ProgressionPathComponent } from './question-page/progression-path/progression-path.component';
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentService } from './shared/applyment.service';
+import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
 
 @NgModule({
   imports: [
@@ -40,9 +41,11 @@ import { ApplymentService } from './shared/applyment.service';
     NoConnectionModalComponent,
     ReviewModalComponent,
     InstructionsModalComponent,
+    ErrorModalComponent
   ],
   entryComponents: [
-    ReviewModalComponent
+    ReviewModalComponent,
+    ErrorModalComponent
   ],
   exports: [
     ApplymentComponent,
