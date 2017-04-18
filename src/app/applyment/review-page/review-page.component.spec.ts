@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
 import { ReviewPageComponent } from './review-page.component';
 import { dispatchEvent, createResponse } from '../../../testing/testing-helper';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,6 +15,7 @@ import Mock from '../../../../mock/mock';
 import { Observable } from 'rxjs/Observable';
 import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { Http } from '@angular/http';
 
 const db = require('../../../../mock/db.json');
 
@@ -107,7 +108,7 @@ describe('ReviewPageComponent', () => {
   }));
 
   describe('submit()', () => {
-    it('should post a request the answers', async(() => {
+    it('should successfully post a request the answers', async(() => {
       const fakeResponse = createResponse(200, 'OK', null);
 
       spyOn(assessmentService, 'postAnswers').and.returnValue(Observable.of(fakeResponse));
@@ -117,6 +118,20 @@ describe('ReviewPageComponent', () => {
 
       expect(component.finishAndRedirect).toHaveBeenCalled();
     }));
+
+    it('should display modal error on failure',
+      async(inject([Http], (http: Http) => {
+        const message = 'Você não tem autorização para fazer essa prova';
+
+        spyOn(http, 'post').and.returnValue(Observable.throw(message));
+
+        component.submit();
+
+        const modalInstance = component.modalRef.instance;
+        expect(modalInstance).toEqual(jasmine.any(ErrorModalComponent));
+        expect(modalInstance.message.replace(/"/g, '')).toEqual(message);
+      }))
+    );
   });
 
   describe('finishAndRedirect()', () => {
@@ -142,7 +157,7 @@ describe('ReviewPageComponent', () => {
 
       const modalInstance = component.modalRef.instance;
       expect(modalInstance).toEqual(jasmine.any(ErrorModalComponent));
-      expect(modalInstance.message).toEqual(message);
+      expect(modalInstance.message.replace(/"/g, '')).toEqual(message);
     });
   });
 });

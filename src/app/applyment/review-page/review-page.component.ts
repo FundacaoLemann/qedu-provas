@@ -87,7 +87,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   openErrorModal(message: string) {
     this.closeModal();
-    this.openModal(ErrorModalComponent, {}, (modalInstance) => {
+    this.openModal(ErrorModalComponent, { 'onClose': this.closeModal.bind(this) }, (modalInstance) => {
       modalInstance.message = message;
     });
   }
@@ -101,17 +101,11 @@ export class ReviewPageComponent extends HasModal implements OnInit {
             if (response.status === 200 || response.status === 201) {
               this.finishAndRedirect();
             } else {
-              /**
-               * TODO
-               * Treat response error
-               * QP-57
-               * QP-131
-               */
-              console.log(response);
+              this.openErrorModal(response.json().message);
             }
           },
           (error) => {
-            console.log(error);
+            this.openErrorModal(error);
           }
         );
   }
@@ -119,9 +113,12 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   finishAndRedirect() {
     this._assessmentService
         .finishAssessment(this.assessment.token, this.student.token)
-        .subscribe(() => {
-          this._router.navigate(['prova', this.assessment.token, 'parabens']);
-        });
+        .subscribe(
+          () => {
+            this._router.navigate(['prova', this.assessment.token, 'parabens']);
+          },
+          this.openErrorModal.bind(this)
+        );
   }
 
   deliver() {
