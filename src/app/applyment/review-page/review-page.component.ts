@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 import { Assessment } from '../../shared/model/assessment';
 import Answer from '../../shared/model/answer';
 import { Student } from '../../shared/model/student';
-import { Observable } from 'rxjs/Observable';
+import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
 
 @Component({
   selector: 'qp-review-page',
@@ -19,7 +19,8 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./review-page.component.sass'],
   entryComponents: [
     ReviewModalComponent,
-    NoConnectionModalComponent
+    NoConnectionModalComponent,
+    ErrorModalComponent
   ]
 })
 export class ReviewPageComponent extends HasModal implements OnInit {
@@ -84,6 +85,13 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     }, 300);
   }
 
+  openErrorModal(message: string) {
+    this.closeModal();
+    this.openModal(ErrorModalComponent, {}, (modalInstance) => {
+      modalInstance.message = message;
+    });
+  }
+
   submit() {
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
     this._assessmentService
@@ -103,12 +111,6 @@ export class ReviewPageComponent extends HasModal implements OnInit {
             }
           },
           (error) => {
-            /**
-             * TODO
-             * Treat response error
-             * QP-57
-             * QP-131
-             */
             console.log(error);
           }
         );

@@ -13,6 +13,8 @@ import { camelizeObject } from '../../utils/json';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import Mock from '../../../../mock/mock';
 import { Observable } from 'rxjs/Observable';
+import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 const db = require('../../../../mock/db.json');
 
@@ -28,16 +30,16 @@ describe('ReviewPageComponent', () => {
   const QUESTIONS = db.questions;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-             imports: [
-               ApplymentModule
-             ],
-             providers: [
-               { provide: Router, useClass: RouterStub },
-               { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) }
-             ],
-           })
-           .compileComponents();
+    TestBed
+      .configureTestingModule({
+        imports: [
+          ApplymentModule
+        ],
+        providers: [
+          { provide: Router, useClass: RouterStub },
+          { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) }
+        ]
+      }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -131,5 +133,16 @@ describe('ReviewPageComponent', () => {
       expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
       expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
     }));
+  });
+
+  describe('openErrorModal()', () => {
+    it('should create a modal with custom message', () => {
+      const message = 'Assessment not found.';
+      component.openErrorModal(message);
+
+      const modalInstance = component.modalRef.instance;
+      expect(modalInstance).toEqual(jasmine.any(ErrorModalComponent));
+      expect(modalInstance.message).toEqual(message);
+    });
   });
 });
