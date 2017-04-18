@@ -65,7 +65,7 @@ export class AssessmentService {
   static handleError(error: Response | any) {
     let errorMessage = '';
     if (error instanceof Response) {
-      errorMessage = error.json().error.message;
+      errorMessage = error.json().message;
     } else {
       errorMessage = error.message || JSON.stringify(error);
     }
