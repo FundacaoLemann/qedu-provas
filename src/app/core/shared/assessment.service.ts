@@ -17,6 +17,8 @@ const { API_URL } = environment;
 @Injectable()
 export class AssessmentService {
 
+  downloadCode = 'offjkl9';
+
   static extractData(response: Response): any {
     return response.json().data;
   }
@@ -138,6 +140,22 @@ export class AssessmentService {
                .put(url, body, options)
                .map(response => response.json().message.data)
                .catch(AssessmentService.handleError);
+  }
+
+  downloadBackup(password: string): string | boolean {
+    if (password === this.downloadCode) {
+      const anchor = document.createElement('a');
+      const content = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(window.localStorage));
+      anchor.setAttribute('href', content);
+      anchor.setAttribute('download', 'backup.txt');
+      anchor.style.display = 'none';
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      return content;
+    } else {
+      return false;
+    }
   }
 
 }

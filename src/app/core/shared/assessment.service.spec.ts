@@ -201,4 +201,18 @@ describe('AssessmentService', () => {
     );
   });
 
+  describe('downloadBackup()', () => {
+    it('should return base64 string with student answers',
+      inject([AssessmentService], (service: AssessmentService) => {
+          window.localStorage.setItem('answers-PXK-9997', 'W3sib3B0aW9uSWQiOjMsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZCJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZSJ9LHsib3B0aW9uSWQiOjIsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZiJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE4MCJ9XQ==');
+          window.localStorage.setItem('assessmentToken', 'caieiras8240a');
+          window.localStorage.setItem('studentToken', 'PXK-9997');
+
+          const content = service.downloadBackup('offjkl9');
+
+          expect(content).toEqual('data:text/plain;charset=utf-8,' + encodeURIComponent('{"answers-PXK-9997":"W3sib3B0aW9uSWQiOjMsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZCJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZSJ9LHsib3B0aW9uSWQiOjIsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZiJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE4MCJ9XQ==","assessmentToken":"caieiras8240a","studentToken":"PXK-9997"}'));
+      })
+    );
+  });
+
 });
