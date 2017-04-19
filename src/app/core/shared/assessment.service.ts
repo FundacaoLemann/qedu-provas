@@ -12,12 +12,10 @@ import AnswerPost from '../../shared/model/answer-post';
 import Answer from '../../shared/model/answer';
 
 const md5 = require('md5');
-const { API_URL } = environment;
+const { API_URL, DOWNLOAD_CODE } = environment;
 
 @Injectable()
 export class AssessmentService {
-
-  downloadCode = 'offjkl9';
 
   static extractData(response: Response): any {
     return response.json().data;
@@ -143,7 +141,7 @@ export class AssessmentService {
   }
 
   downloadBackup(password: string): string | boolean {
-    if (password === this.downloadCode) {
+    if (password === DOWNLOAD_CODE) {
       const anchor = document.createElement('a');
       const content = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(window.localStorage));
       anchor.setAttribute('href', content);

@@ -1,5 +1,7 @@
 import {Component, EventEmitter} from '@angular/core';
-import {AssessmentService} from '../../../core/shared/assessment.service';
+import {environment} from '../../../../environments/environment';
+
+const {DOWNLOAD_CODE} = environment;
 
 @Component({
   selector: 'qp-no-connection-modal',
@@ -12,7 +14,7 @@ export class NoConnectionModalComponent {
   downloadCode = '';
   error = false;
 
-  constructor(private _assessmentService: AssessmentService) {
+  constructor() {
   }
 
   close() {
@@ -20,7 +22,7 @@ export class NoConnectionModalComponent {
   }
 
   download() {
-    if (this.downloadCode === this._assessmentService.downloadCode) {
+    if (this.downloadCode === DOWNLOAD_CODE) {
       this.onDownload.emit(this.downloadCode);
       this.error = false;
     } else {
