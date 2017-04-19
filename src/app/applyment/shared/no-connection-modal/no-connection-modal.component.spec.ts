@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { NoConnectionModalComponent } from './no-connection-modal.component';
+import {ApplymentModule} from "../../applyment.module";
 
 describe('NoConnectionModalComponent', () => {
   let component: NoConnectionModalComponent;
@@ -9,7 +10,7 @@ describe('NoConnectionModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NoConnectionModalComponent ]
+      imports: [ApplymentModule]
     })
     .compileComponents();
   }));

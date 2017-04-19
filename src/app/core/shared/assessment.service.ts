@@ -12,7 +12,7 @@ import AnswerPost from '../../shared/model/answer-post';
 import Answer from '../../shared/model/answer';
 
 const md5 = require('md5');
-const { API_URL } = environment;
+const { API_URL, DOWNLOAD_CODE } = environment;
 
 @Injectable()
 export class AssessmentService {
@@ -138,6 +138,22 @@ export class AssessmentService {
                .put(url, body, options)
                .map(response => response.json().message.data)
                .catch(AssessmentService.handleError);
+  }
+
+  downloadBackup(password: string): string | boolean {
+    if (password === DOWNLOAD_CODE) {
+      const anchor = document.createElement('a');
+      const content = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(window.localStorage));
+      anchor.setAttribute('href', content);
+      anchor.setAttribute('download', 'backup.txt');
+      anchor.style.display = 'none';
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      return content;
+    } else {
+      return false;
+    }
   }
 
 }

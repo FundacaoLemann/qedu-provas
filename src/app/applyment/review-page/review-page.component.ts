@@ -79,6 +79,9 @@ export class ReviewPageComponent extends HasModal implements OnInit {
       this.openModal(NoConnectionModalComponent, {
         onClose: () => {
           this.closeModal();
+        },
+        onDownload: (code) => {
+          this._assessmentService.downloadBackup(code);
         }
       });
     }, 300);
@@ -124,16 +127,23 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   deliver() {
     this.modalRef.instance.isSubmitting = true;
+    this.writeBackup();
+
     this._connection
         .getStatusOnce()
         .subscribe(status => {
           if (status) {
-            this.submit()
-          }
-          else {
+            this.submit();
+          } else {
             this.openNoConnectionModal();
           }
         });
   }
 
+  writeBackup() {
+    const answers = this._applymentService.getAllAnswers().filter(answer => answer);
+    window.localStorage.setItem('studentToken', this.student.token);
+    window.localStorage.setItem('assessmentToken', this.assessment.token);
+    window.localStorage.setItem('answers-' + this.student.token, btoa(JSON.stringify(answers)));
+  }
 }
