@@ -125,7 +125,7 @@ describe('AssessmentService', () => {
             .postAnswers(assessmentToken, studentToken, answers)
             .subscribe(response => {
               const url = `${API_URL}/assessments/${assessmentToken}/answers`;
-              const data = answers;
+              const data = { answers };
               const options = new BaseRequestOptions();
               options.headers = new Headers({ 'Authorization': studentToken });
 
