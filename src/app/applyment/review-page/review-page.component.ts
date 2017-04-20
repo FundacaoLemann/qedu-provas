@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 import { Assessment } from '../../shared/model/assessment';
 import Answer from '../../shared/model/answer';
 import { Student } from '../../shared/model/student';
-import { Observable } from 'rxjs/Observable';
+import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
 
 @Component({
   selector: 'qp-review-page',
@@ -19,7 +19,8 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./review-page.component.sass'],
   entryComponents: [
     ReviewModalComponent,
-    NoConnectionModalComponent
+    NoConnectionModalComponent,
+    ErrorModalComponent
   ]
 })
 export class ReviewPageComponent extends HasModal implements OnInit {
@@ -87,6 +88,13 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     }, 300);
   }
 
+  openErrorModal(message: string) {
+    this.closeModal();
+    this.openModal(ErrorModalComponent, { 'onClose': this.closeModal.bind(this) }, (modalInstance) => {
+      modalInstance.message = message;
+    });
+  }
+
   submit() {
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
     this._assessmentService
@@ -96,23 +104,11 @@ export class ReviewPageComponent extends HasModal implements OnInit {
             if (response.status === 200 || response.status === 201) {
               this.finishAndRedirect();
             } else {
-              /**
-               * TODO
-               * Treat response error
-               * QP-57
-               * QP-131
-               */
-              console.log(response);
+              this.openErrorModal(response.json().message);
             }
           },
           (error) => {
-            /**
-             * TODO
-             * Treat response error
-             * QP-57
-             * QP-131
-             */
-            console.log(error);
+            this.openErrorModal(error);
           }
         );
   }
@@ -120,9 +116,12 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   finishAndRedirect() {
     this._assessmentService
         .finishAssessment(this.assessment.token, this.student.token)
-        .subscribe(() => {
-          this._router.navigate(['prova', this.assessment.token, 'parabens']);
-        });
+        .subscribe(
+          () => {
+            this._router.navigate(['prova', this.assessment.token, 'parabens']);
+          },
+          this.openErrorModal.bind(this)
+        );
   }
 
   deliver() {

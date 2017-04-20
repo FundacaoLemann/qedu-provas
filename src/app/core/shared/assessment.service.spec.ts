@@ -125,7 +125,7 @@ describe('AssessmentService', () => {
             .postAnswers(assessmentToken, studentToken, answers)
             .subscribe(response => {
               const url = `${API_URL}/assessments/${assessmentToken}/answers`;
-              const data = answers;
+              const data = { answers };
               const options = new BaseRequestOptions();
               options.headers = new Headers({ 'Authorization': studentToken });
 
@@ -185,10 +185,7 @@ describe('AssessmentService', () => {
     it('should return an error message',
       async(inject([AssessmentService], (service: AssessmentService) => {
         const respBody = {
-          error: {
-            code: 404,
-            message: 'Prova não encontrada'
-          }
+          message: 'Prova não encontrada'
         };
         const response = createResponse(404, 'Not Found', respBody);
         const expectation = error => {

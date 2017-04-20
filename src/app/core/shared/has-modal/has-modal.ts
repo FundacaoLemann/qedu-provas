@@ -10,14 +10,20 @@ export abstract class HasModal {
   /**
    * Generic function to open modal
    * @param modalComponent Modal component to be appended
+   * @param events Object containing the events to be bound
+   * @param [afterInit] callback called after creating the component, passing its instance as first param
    */
-  protected openModal(modalComponent: Type<Component>, events: { [key: string]: Function }) {
+  openModal(modalComponent: Type<Component>, events: { [key: string]: Function }, afterInit?: Function) {
     // Close the current modal
     this.closeModal();
 
     // Instantiate the modal by factoring
     const modalFactory = this._componentFactoryResolver.resolveComponentFactory(modalComponent);
     this.modalRef = this._viewContainerRef.createComponent(modalFactory);
+
+    if(afterInit && afterInit.call) {
+      afterInit(this.modalRef.instance);
+    }
 
     // Subscribe to events of modal
     this.bindEvents(events);
@@ -40,7 +46,7 @@ export abstract class HasModal {
   /**
    * Close the modal
    */
-  protected closeModal() {
+  closeModal() {
     this._viewContainerRef.clear();
   }
 }

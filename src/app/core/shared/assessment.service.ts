@@ -65,7 +65,7 @@ export class AssessmentService {
   static handleError(error: Response | any) {
     let errorMessage = '';
     if (error instanceof Response) {
-      errorMessage = error.json().error.message;
+      errorMessage = error.json().message;
     } else {
       errorMessage = error.message || JSON.stringify(error);
     }
@@ -122,7 +122,7 @@ export class AssessmentService {
     });
 
     return this._http
-               .post(`${API_URL}/assessments/${assessmentToken}/answers`, answers, options)
+               .post(`${API_URL}/assessments/${assessmentToken}/answers`, { answers }, options)
                .catch(AssessmentService.handleError);
   }
 
