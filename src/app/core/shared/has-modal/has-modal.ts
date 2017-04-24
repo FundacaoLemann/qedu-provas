@@ -1,4 +1,5 @@
 import { Component, ViewChild, ComponentRef, ComponentFactoryResolver, ViewContainerRef, Type } from '@angular/core';
+import { ErrorModalComponent } from '../../../applyment/shared/error-modal/error-modal.component';
 
 export abstract class HasModal {
   @ViewChild('modal') modalRef: ComponentRef<any>;
@@ -48,5 +49,12 @@ export abstract class HasModal {
    */
   closeModal() {
     this._viewContainerRef.clear();
+  }
+
+  openErrorModal(message: string) {
+    this.closeModal();
+    this.openModal(ErrorModalComponent, { 'onClose': this.closeModal.bind(this) }, (modalInstance) => {
+      modalInstance.message = message;
+    });
   }
 }

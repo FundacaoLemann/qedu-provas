@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import { Student } from '../../shared/model/student';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
+import { Student } from '../../shared/model/student';
+import { RequestService } from './request.service';
 
 const { API_URL } = environment;
 
 @Injectable()
-export class StudentService {
+export class StudentService extends RequestService {
 
   static extractData(response: Response) {
     if (response.status === 200) {
@@ -22,17 +23,9 @@ export class StudentService {
     }
   }
 
-  static errorHandler(error: Response|any): Observable<any> {
-    if (error instanceof Response) {
-      return Observable.throw(`Not possible to fetch the student: ${error.json().message}`);
-    } else {
-      return Observable.throw('Not possible to fetch the student.');
-    }
-  }
-
   constructor(private http: Http) {
+    super();
   }
-
 
   getStudentByToken(studentToken: string, assessmentToken: string): Observable<Student> {
     const url = `${API_URL}/assessments/${assessmentToken}/students`;
@@ -41,7 +34,7 @@ export class StudentService {
     });
 
     return this.http.get(url, { headers })
-               .catch(StudentService.errorHandler)
-               .map(StudentService.extractData);
+      .catch(this.handleError)
+      .map(StudentService.extractData);
   }
 }

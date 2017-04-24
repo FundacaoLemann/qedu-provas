@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Assessment } from '../../shared/model/assessment';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import { ApplymentService } from '../shared/applyment.service';
 import { StudentService } from '../../core/shared/student.service';
+import { Assessment } from '../../shared/model/assessment';
+import { Student } from '../../shared/model/student';
+import { ApplymentService } from '../shared/applyment.service';
 
 @Component({
   selector: 'qp-student-form',
@@ -28,44 +29,42 @@ export class StudentAuthenticationPageComponent implements OnInit {
     this.student = this._applymentService.getStudent();
     this.assessment = this._applymentService.getAssessment();
 
+
     if ( !this.assessment.token ) {
       const token = this._route.snapshot.params['token'];
       this._assessmentService
-          .fetchAssessment(token)
-          .subscribe(
-            assessment => {
-              this.assessment = assessment;
-              this._applymentService.setAssessment(assessment);
-            },
-            error => this.assessment = null
-          );
+        .fetchAssessment(token)
+        .subscribe(
+          assessment => {
+            this.assessment = assessment;
+            this._applymentService.setAssessment(assessment);
+          },
+          error => this.assessment = null
+        );
     }
   }
 
-  onSubmit() {
-    const setError = () => {
-      this.accessToken = '';
-      this.error = 'Código inválido';
-    };
+  setFormError(message: string) {
+    this.accessToken = '';
+    this.error = message;
+  }
 
+  setStudentData(student: Student) {
+    student.token = this.accessToken;
+    this.student = student;
+    this._applymentService.setStudent(student);
+    this.error = '';
+  }
+
+  onSubmit() {
     if ( !this.student.token && this.accessToken ) {
       const assessmentToken = this._applymentService.getAssessment().token;
+
       this.fetchUser(this.accessToken, assessmentToken)
-          .subscribe(
-            student => {
-              if ( student ) {
-                student.token = this.accessToken;
-                this.student = student;
-                this._applymentService.setStudent(student);
-                this.error = '';
-              } else {
-                setError();
-              }
-            },
-            error => {
-              setError();
-            }
-          );
+        .subscribe(
+          this.setStudentData.bind(this),
+          this.setFormError.bind(this)
+        );
     }
   }
 

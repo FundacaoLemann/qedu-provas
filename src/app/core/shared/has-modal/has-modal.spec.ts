@@ -1,7 +1,7 @@
 import { TestBed, inject, ComponentFixture } from '@angular/core/testing';
 import { HasModal } from './has-modal';
 import { ViewContainerRef, Component, ComponentFactoryResolver } from '@angular/core';
-
+import { ErrorModalComponent } from '../../../applyment/shared/error-modal/error-modal.component';
 
 @Component({
   selector: 'qp-modal',
@@ -14,23 +14,24 @@ class ModalComponent {
 @Component({
   selector: 'qp-has-modal',
   template: '<div class="has-modal"></div>',
-  entryComponents: [ModalComponent]
+  entryComponents: [ModalComponent, ErrorModalComponent]
 })
-class HasModalComponentImpl extends HasModal {
+class HasModalComponent extends HasModal {
   constructor(viewContainerRef: ViewContainerRef, componentFactoryResolver: ComponentFactoryResolver) {
     super(viewContainerRef, componentFactoryResolver);
   }
 }
 
 describe('HasModal', () => {
-  let component: HasModalComponentImpl;
-  let fixture: ComponentFixture<HasModalComponentImpl>;
+  let component: HasModalComponent;
+  let fixture: ComponentFixture<HasModalComponent>;
 
   beforeEach(() => {
     TestBed
       .configureTestingModule({
         declarations: [
-          HasModalComponentImpl,
+          HasModalComponent,
+          ErrorModalComponent,
           ModalComponent
         ],
         providers: [
@@ -42,7 +43,7 @@ describe('HasModal', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HasModalComponentImpl);
+    fixture = TestBed.createComponent(HasModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -78,6 +79,17 @@ describe('HasModal', () => {
       });
 
       expect(component.modalRef.instance.message).toEqual(newMessage);
+    });
+  });
+
+  describe('openErrorModal()', () => {
+    it('should create a modal with custom message', () => {
+      const message = 'Assessment not found.';
+      component.openErrorModal(message);
+
+      const modalInstance = component.modalRef.instance;
+      expect(modalInstance).toEqual(jasmine.any(ErrorModalComponent));
+      expect(modalInstance.message.replace(/"/g, '')).toEqual(message);
     });
   });
 });

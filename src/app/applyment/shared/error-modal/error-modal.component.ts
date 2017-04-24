@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-error-modal',
+  selector: 'qp-error-modal',
   templateUrl: './error-modal.component.html',
   styleUrls: ['./error-modal.component.sass']
 })

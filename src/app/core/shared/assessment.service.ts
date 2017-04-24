@@ -8,14 +8,14 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import { environment } from '../../../environments/environment';
-import AnswerPost from '../../shared/model/answer-post';
 import Answer from '../../shared/model/answer';
+import { RequestService } from './request.service';
 
 const md5 = require('md5');
-const { API_URL, DOWNLOAD_CODE } = environment;
+const {API_URL, DOWNLOAD_CODE} = environment;
 
 @Injectable()
-export class AssessmentService {
+export class AssessmentService extends RequestService {
 
   static extractData(response: Response): any {
     return response.json().data;
@@ -62,25 +62,15 @@ export class AssessmentService {
     return questions;
   }
 
-  static handleError(error: Response | any) {
-    let errorMessage = '';
-    if (error instanceof Response) {
-      errorMessage = error.json().message;
-    } else {
-      errorMessage = error.message || JSON.stringify(error);
-    }
-
-    return Observable.throw(errorMessage);
-  }
-
   constructor(private _http: Http) {
+    super();
   }
 
   fetchAssessment(assessment_id: string): Observable<Assessment> {
     return this._http
-               .get(`${API_URL}/assessments/${assessment_id}`)
-               .map(AssessmentService.extractData)
-               .catch(AssessmentService.handleError);
+      .get(`${API_URL}/assessments/${assessment_id}`)
+      .map(AssessmentService.extractData)
+      .catch(this.handleError);
   }
 
   fetchAssessmentQuestions(assessmentToken: string, studentToken: string): Observable<Item[]> {
@@ -90,29 +80,29 @@ export class AssessmentService {
     });
 
     return this._http
-               .get(url, { headers })
-               .map(AssessmentService.extractQuestionData)
-               .catch(AssessmentService.handleError);
+      .get(url, {headers})
+      .map(AssessmentService.extractQuestionData)
+      .catch(this.handleError);
   }
 
   postAssessment(assessment: ApplymentStatus): Observable<{ status: number, statusText: string, message?: string }> {
     return this._http
-               .post(`${API_URL}/assessment`, { data: { assessment } })
-               .map(response => {
-                 if (response.status === 201) {
-                   return {
-                     status: 201,
-                     statusText: 'Created'
-                   };
-                 } else {
-                   return {
-                     status: response.status,
-                     statusText: response.statusText,
-                     message: response.json().data
-                   };
-                 }
-               })
-               .catch(AssessmentService.handleError);
+      .post(`${API_URL}/assessment`, {data: {assessment}})
+      .map(response => {
+        if (response.status === 201) {
+          return {
+            status: 201,
+            statusText: 'Created'
+          };
+        } else {
+          return {
+            status: response.status,
+            statusText: response.statusText,
+            message: response.json().data
+          };
+        }
+      })
+      .catch(this.handleError);
   }
 
   postAnswers(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<Response> {
@@ -122,8 +112,8 @@ export class AssessmentService {
     });
 
     return this._http
-               .post(`${API_URL}/assessments/${assessmentToken}/answers`, { answers }, options)
-               .catch(AssessmentService.handleError);
+      .post(`${API_URL}/assessments/${assessmentToken}/answers`, {answers}, options)
+      .catch(this.handleError);
   }
 
   finishAssessment(assessmentToken: string, studentToken: string): Observable<string> {
@@ -132,15 +122,15 @@ export class AssessmentService {
     options.headers = new Headers({
       'Authorization': studentToken
     });
-    const body = { finished: true };
+    const body = {finished: true};
 
     return this._http
-               .put(url, body, options)
-               .map(response => response.json().message.data)
-               .catch(AssessmentService.handleError);
+      .put(url, body, options)
+      .map(response => response.json().message.data)
+      .catch(this.handleError);
   }
 
-  downloadBackup(password: string): string | boolean {
+  downloadBackup(password: string): string|boolean {
     if (password === DOWNLOAD_CODE) {
       const anchor = document.createElement('a');
       const content = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(window.localStorage));

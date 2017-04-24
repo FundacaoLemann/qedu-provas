@@ -1,17 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, ActivatedRoute } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-// App
-import { RouterStub } from '../../../testing/router-stub';
-import { StudentAuthenticationPageComponent } from './student-authentication-page.component';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
-import { ApplymentService } from '../shared/applyment.service';
+import { RouterStub } from '../../../testing/router-stub';
+import * as test from '../../../testing/testing-helper';
 import { StoreService } from '../../core/shared/store.service';
 import { StudentService } from '../../core/shared/student.service';
-import { camelizeObject } from '../../utils/json';
-import * as test from '../../../testing/testing-helper';
 import { ApplymentModule } from '../applyment.module';
-import { By } from '@angular/platform-browser';
+import { ApplymentService } from '../shared/applyment.service';
+import { StudentAuthenticationPageComponent } from './student-authentication-page.component';
 
 const db = require('../../../../mock/db.json');
 const RAW_STUDENT = db.students[0];
@@ -34,16 +32,16 @@ describe('StudentAuthenticationPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-             imports: [ApplymentModule],
-             providers: [
-               StoreService,
-               ApplymentService,
-               StudentService,
-               { provide: Router, useClass: RouterStub },
-               { provide: ActivatedRoute, useValue: route },
-             ]
-           })
-           .compileComponents();
+      imports: [ApplymentModule],
+      providers: [
+        StoreService,
+        ApplymentService,
+        StudentService,
+        { provide: Router, useClass: RouterStub },
+        { provide: ActivatedRoute, useValue: route },
+      ]
+    })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -80,7 +78,7 @@ describe('StudentAuthenticationPageComponent', () => {
     }));
 
     it('should display `Código inválido` when accessToken is invalid', async(() => {
-      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.of(null));
+      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.throw('Código inválido'));
       component.accessToken = '000';
       component.onSubmit();
       fixture.detectChanges();

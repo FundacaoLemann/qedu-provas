@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { Assessment } from '../../shared/model/assessment';
 import { ApplymentService } from '../shared/applyment.service';
-import APIError from '../../shared/model/api-error';
 
 @Component({
   selector: 'qp-search-assessment-page',
@@ -26,8 +25,8 @@ export class SearchAssessmentPageComponent implements OnInit {
     this._router.navigate(['prova', assessment.token]);
   }
 
-  setFormError (error: APIError) {
-    this.formError = error.message;
+  setFormError (error: string) {
+    this.formError = error;
   }
 
   validateAndRequestAssessment () {

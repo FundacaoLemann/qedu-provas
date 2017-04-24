@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Assessment } from '../../shared/model/assessment';
-import { InstructionsModalComponent } from './modal/instructions-modal.component';
-import { ApplymentService } from '../shared/applyment.service';
-import { ConnectionService } from '../../core/shared/connection.service';
-import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
-import { HasModal } from '../../core/shared/has-modal/has-modal';
+import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../../core/shared/assessment.service';
+import { ConnectionService } from '../../core/shared/connection.service';
+import { HasModal } from '../../core/shared/has-modal/has-modal';
+import { Assessment } from '../../shared/model/assessment';
+import { ApplymentService } from '../shared/applyment.service';
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
+import { InstructionsModalComponent } from './modal/instructions-modal.component';
+import MESSAGES from '../../core/shared/messages/messages';
 
 @Component({
   selector: 'qp-instructions-page',
@@ -43,16 +44,16 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
 
     this._applymentService.initAnswers(this.assessment.numberOfItems);
 
-    this._assessmentService.fetchAssessmentQuestions(assessmentToken, studentToken)
-        .subscribe(
-          questions => {
-            this._applymentService.setItems(questions);
-            this._router.navigate(['prova', assessmentToken, 'questao', '1']);
-          },
-          error => {
-            this.openModalConnectionError();
-          }
-        );
+    this._assessmentService
+      .fetchAssessmentQuestions(assessmentToken, studentToken)
+      .subscribe(
+        questions => {
+          this._applymentService.setItems(questions);
+          this._router.navigate(['prova', assessmentToken, 'questao', '1']);
+        },
+        this.openErrorModal.bind(this)
+      );
+    ;
   }
 
   /**
@@ -62,14 +63,14 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
     this.openModal(InstructionsModalComponent, {
       onConfirm: () => {
         this._connection
-            .getStatusOnce()
-            .subscribe((status) => {
-              if (status) {
-                this.initAssessment();
-              } else {
-                this.openModalConnectionError();
-              }
-            });
+          .getStatusOnce()
+          .subscribe((status) => {
+            if (status) {
+              this.initAssessment();
+            } else {
+              this.openErrorModal(MESSAGES.SYSTEM_NOT_AVAILABLE);
+            }
+          });
       },
       onClose: () => {
         this.closeModal();

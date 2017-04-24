@@ -91,12 +91,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     }, 300);
   }
 
-  openErrorModal(message: string) {
-    this.closeModal();
-    this.openModal(ErrorModalComponent, { 'onClose': this.closeModal.bind(this) }, (modalInstance) => {
-      modalInstance.message = message;
-    });
-  }
+
 
   submit() {
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
