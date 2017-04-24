@@ -150,14 +150,4 @@ describe('ReviewPageComponent', () => {
     }));
   });
 
-  describe('openErrorModal()', () => {
-    it('should create a modal with custom message', () => {
-      const message = 'Assessment not found.';
-      component.openErrorModal(message);
-
-      const modalInstance = component.modalRef.instance;
-      expect(modalInstance).toEqual(jasmine.any(ErrorModalComponent));
-      expect(modalInstance.message.replace(/"/g, '')).toEqual(message);
-    });
-  });
 });
