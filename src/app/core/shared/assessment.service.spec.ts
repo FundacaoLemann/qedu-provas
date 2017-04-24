@@ -181,23 +181,6 @@ describe('AssessmentService', () => {
     );
   });
 
-  describe('handleError()', () => {
-    it('should return an error message',
-      async(inject([AssessmentService], (service: AssessmentService) => {
-        const respBody = {
-          message: 'Prova não encontrada'
-        };
-        const response = createResponse(404, 'Not Found', respBody);
-        const expectation = error => {
-          expect(error).toEqual('Prova não encontrada');
-        };
-
-        AssessmentService.handleError(response)
-                         .subscribe(() => {}, expectation);
-      }))
-    );
-  });
-
   describe('downloadBackup()', () => {
     it('should return base64 string with student answers',
       inject([AssessmentService], (service: AssessmentService) => {
