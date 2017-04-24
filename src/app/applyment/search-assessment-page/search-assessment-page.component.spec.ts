@@ -77,17 +77,14 @@ describe('SearchAssessmentPageComponent', () => {
 
   describe('setFormError()', () => {
     it('should fill form error', () => {
-      const error: APIError = {
-        code: 404,
-        message: 'Prova não encontrada'
-      };
+      const error = 'Prova não encontrada';
 
       component.setFormError(error);
       fixture.detectChanges();
-      expect(component.formError).toEqual(error.message);
+      expect(component.formError).toEqual(error);
 
       const errorEl = fixture.debugElement.query(By.css('.error')).nativeElement;
-      expect(errorEl.textContent).toEqual(error.message);
+      expect(errorEl.textContent).toEqual(error);
     });
   });
 
