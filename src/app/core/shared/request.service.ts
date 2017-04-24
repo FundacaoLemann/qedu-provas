@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import MESSAGES from './messages/messages';
 
 @Injectable()
 export abstract class RequestService {
@@ -11,7 +12,7 @@ export abstract class RequestService {
     let errorMessage = '';
 
     if (error instanceof Response && error.status === 0) {
-      errorMessage = 'Sistema temporariamente indisponível. Tente novamente mais tarde.';
+      errorMessage = MESSAGES.SYSTEM_NOT_AVAILABLE;
     } else if (error instanceof Response && error.status !== 0) {
       errorMessage = error.json()['message'];
     } else {
