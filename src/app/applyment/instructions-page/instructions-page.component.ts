@@ -7,6 +7,7 @@ import { Assessment } from '../../shared/model/assessment';
 import { ApplymentService } from '../shared/applyment.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
+import MESSAGES from '../../core/shared/messages/messages';
 
 @Component({
   selector: 'qp-instructions-page',
@@ -67,7 +68,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
             if (status) {
               this.initAssessment();
             } else {
-              this.openModalConnectionError();
+              this.openErrorModal(MESSAGES.SYSTEM_NOT_AVAILABLE);
             }
           });
       },
