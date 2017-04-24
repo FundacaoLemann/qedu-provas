@@ -1,5 +1,7 @@
+import Answer from './answer';
+
 export class ApplymentStatus {
   assessmentToken: string;
   studentToken: string;
-  answers: { questionId: string, value: string }[];
+  answers: Answer[];
 }

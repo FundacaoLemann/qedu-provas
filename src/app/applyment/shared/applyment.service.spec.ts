@@ -3,6 +3,8 @@ import { ApplymentService } from './applyment.service';
 import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
+import {Assessment} from '../../shared/model/assessment';
+import {Student} from "app/shared";
 
 const mock = require('../../../../mock/db.json');
 const STUDENT = mock.students[0];
@@ -104,7 +106,7 @@ describe('ApplymentService', () => {
       [ApplymentService],
       (service: ApplymentService) => {
         expect(service.getAssessment).toThrow();
-        expect(service.getAssessment()).toEqual(null);
+        expect(service.getAssessment()).toEqual(<Assessment>{});
       }
     ));
   });
@@ -145,18 +147,32 @@ describe('ApplymentService', () => {
         service.setStudent(STUDENT);
         service.setItems(QUESTIONS);
         service.initAnswers(1);
-        service.setAnswer(0, 1);
+        service.setAnswer(0, {itemId: '0', optionId: 1});
 
         const applymentStatus = new ApplymentStatus();
         applymentStatus.assessmentToken = ASSESSMENT.id.toString();
         applymentStatus.studentToken = STUDENT.id.toString();
         applymentStatus.answers = [
-          { questionId: '0', value: '1' }
+          { itemId: '0', optionId: 1 }
         ];
 
         expect(service.getApplymentStatus()).toEqual(applymentStatus);
       }
     ));
   });
+
+  describe('resetInitialState()', () => {
+    it('should reset the initial state of assessment', inject(
+      [ApplymentService],
+      (service: ApplymentService) => {
+        service.resetInitialState()
+
+        expect(service.getAllAnswers()).toEqual([]);
+        expect(service.getStudent()).toEqual(<Student>{});
+        expect(service.getAssessment()).toEqual(<Assessment>{});
+      }
+    ));
+  });
+
 });
 

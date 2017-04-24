@@ -28,7 +28,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
     this.student = this._applymentService.getStudent();
     this.assessment = this._applymentService.getAssessment();
 
-    if ( !this.assessment ) {
+    if ( !this.assessment.token ) {
       const token = this._route.snapshot.params['token'];
       this._assessmentService
           .fetchAssessment(token)
@@ -48,7 +48,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
       this.error = 'Código inválido';
     };
 
-    if ( !this.student && this.accessToken ) {
+    if ( !this.student.token && this.accessToken ) {
       const assessmentToken = this._applymentService.getAssessment().token;
       this.fetchUser(this.accessToken, assessmentToken)
           .subscribe(
@@ -70,7 +70,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
   }
 
   onContinue() {
-    if ( this.student ) {
+    if ( this.student.token ) {
       this._router.navigate(['prova', this._route.snapshot.params['token'], 'instrucoes']);
     }
   }
