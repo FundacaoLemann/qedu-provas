@@ -33,13 +33,22 @@ describe('RequestService', () => {
       const expected = error => {
         expect(error).toEqual('Prova não encontrada');
       };
+      source
+        .catch(service.handleError)
+        .subscribe(() => {}, expected);
+    }));
+
+    it('should return an error status code 0', () => {
+      const response = createResponse(0, undefined, null);
+      const source = Observable.throw(response);
+
+      const expected = error => {
+        expect(error).toEqual('Sistema temporariamente indisponível. Tente novamente mais tarde.');
+      };
 
       source
         .catch(service.handleError)
-        .subscribe(
-          () => {},
-          expected
-        );
-    }));
+        .subscribe(() => {}, expected);
+    });
   });
 });
