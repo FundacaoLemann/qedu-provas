@@ -19,7 +19,7 @@
           </div>
         </div>
         <hr>
-        <div class="row" *ngIf="student">
+        <div class="row" *ngIf="student.token">
           <div class="col-xs-12 col-md-4">
             <div class="form-group">
               <label>Nome</label> <br>
@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-        <div class="row" *ngIf="! student">
+        <div class="row" *ngIf="! student.token">
           <form (submit)="onSubmit()">
             <div class="col-xs-12 col-md-4 col-md-offset-4 text-center" [ngClass]="{'has-error': error}">
               <label>Código do Estudante</label>
@@ -60,7 +60,7 @@
       <div class="panel-footer">
         <div class="row">
 
-          <div *ngIf="! student">
+          <div *ngIf="! student.token">
             <div class="col-xs-12 text-center">
               <button submit
                       type="button"
@@ -70,7 +70,7 @@
             </div>
           </div>
 
-          <div *ngIf="student">
+          <div *ngIf="student.token">
             <div class="col-xs-12 clearfix">
               <button cancel
                       type="button"

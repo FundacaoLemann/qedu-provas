@@ -12,8 +12,8 @@ import Answer from '../../shared/model/answer';
 export class ApplymentService {
   initialState = {
     applyment: {
-      student: null,
-      assessment: null,
+      student: <Student>{},
+      assessment: <Assessment>{},
       questions: [],
       answers: [],
     }
@@ -90,14 +90,13 @@ export class ApplymentService {
     const status = new ApplymentStatus();
     status.assessmentToken = assessment.id.toString();
     status.studentToken = student.id.toString();
-    status.answers = [];
-    for (const questionId in answers) {
-      if ( answers[questionId] ) {
-        status.answers.push({ questionId: questionId.toString(), value: answers[questionId].toString() });
-      }
-    }
+    status.answers = answers;
 
     return status;
+  }
+
+  resetInitialState() {
+    this._store.setState(_.create(this.initialState));
   }
 
 }

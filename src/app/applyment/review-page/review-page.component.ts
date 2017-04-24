@@ -47,6 +47,9 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   load() {
     this.assessment = this._applymentService.getAssessment();
+    if (this.assessment.token === undefined || this.assessment.token == null) {
+      this._router.navigate(['']);
+    }
     this.student = this._applymentService.getStudent();
     this.questions = this._applymentService.getItems();
     this.questionsLength = this.questions.length;
