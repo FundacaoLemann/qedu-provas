@@ -18,7 +18,7 @@ export class SearchAssessmentPageComponent implements OnInit {
                private _applymentService: ApplymentService) {}
 
   ngOnInit () {
-    this._applymentService.setStudent(null);
+    this._applymentService.resetInitialState();
   }
 
   fillAssessmentAndNavigate (assessment: Assessment) {
