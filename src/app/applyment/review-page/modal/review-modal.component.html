@@ -5,8 +5,8 @@
         <h3><i class="fa fa-exclamation-triangle"></i> Atenção</h3>
         <hr>
         <p>
-          Ao <strong>entregar</strong>, a prova será encerrada e não você não poderá modificar as respostas. <br>
-          Você quer mesmo <strong>entregar</strong> sua prova?
+          Entregando sua prova, você não poderá mais alterar as respostas. <br>
+          <strong>Você quer mesmo entregar sua prova</strong>?
         </p>
       </div>
       <div class="modal-footer">
@@ -18,7 +18,7 @@
               [ngClass]="{disabled: isSubmitting}"
               [disabled]="isSubmitting"
               (click)="cancel()">
-              Não
+              Ainda não
             </button>
           </div>
           <div class="col-xs-6">
@@ -28,7 +28,7 @@
               [ngClass]="{disabled: isSubmitting}"
               [disabled]="isSubmitting"
               (click)="confirm()">
-              <span *ngIf="! isSubmitting">Sim</span>
+              <span *ngIf="! isSubmitting">Sim, eu quero</span>
               <span *ngIf="isSubmitting">
                 Enviando <i class="fa fa-spinner spinning" ></i>
               </span>
