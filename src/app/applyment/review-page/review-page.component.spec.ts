@@ -52,7 +52,7 @@ describe('ReviewPageComponent', () => {
     applymentService.setAssessment(camelizeObject(ASSESSMENT));
     applymentService.setStudent(camelizeObject(STUDENT));
     applymentService.setItems(camelizeObject(QUESTIONS));
-    applymentService.initAnswers(QUESTIONS.length);
+    applymentService.initAnswers(5);
     applymentService.setAnswer(0, Mock.mockAnswer(0));
     applymentService.setAnswer(1, Mock.mockAnswer(1));
     applymentService.setAnswer(2, Mock.mockAnswer(2));
@@ -89,14 +89,6 @@ describe('ReviewPageComponent', () => {
     const message = `3 de ${QUESTIONS.length} questões`;
 
     expect(answeredQuestions).toEqual(message);
-  }));
-
-  it('should display the answers', async(() => {
-    const tableItems = fixture.debugElement.queryAll(By.css('tbody tr')).length;
-    const tableItemsAnswered = fixture.debugElement.queryAll(By.css('tbody tr:not(.danger)')).length;
-
-    expect(tableItems).toEqual(QUESTIONS.length);
-    expect(tableItemsAnswered).toEqual(3);
   }));
 
   it('should create warning modal when offline', fakeAsync(() => {
@@ -147,6 +139,16 @@ describe('ReviewPageComponent', () => {
       expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
       expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
     }));
+  });
+
+  describe('notAnswered', () => {
+    it('should set not answered indexes', () => {
+      const answers = applymentService.getAllAnswers();
+
+      component.setNotAnswered(answers);
+
+      expect(component.notAnswered).toEqual([4, 5]);
+    });
   });
 
 });

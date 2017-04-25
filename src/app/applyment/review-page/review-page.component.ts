@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Item } from '../../shared/model/item';
-import { AssessmentService } from '../../core/shared/assessment.service';
-import { ReviewModalComponent } from './modal/review-modal.component';
-import { ApplymentService } from '../shared/applyment.service';
-import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
-import { HasModal } from '../../core/shared/has-modal/has-modal';
-import { ConnectionService } from '../../core/shared/connection.service';
 import 'rxjs/add/operator/catch';
-import { Assessment } from '../../shared/model/assessment';
+import { AssessmentService } from '../../core/shared/assessment.service';
+import { ConnectionService } from '../../core/shared/connection.service';
+import { HasModal } from '../../core/shared/has-modal/has-modal';
 import Answer from '../../shared/model/answer';
+import { Assessment } from '../../shared/model/assessment';
+import { Item } from '../../shared/model/item';
 import { Student } from '../../shared/model/student';
+import { ApplymentService } from '../shared/applyment.service';
 import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
+import { ReviewModalComponent } from './modal/review-modal.component';
 
 @Component({
   selector: 'qp-review-page',
@@ -26,6 +26,7 @@ import { ErrorModalComponent } from '../shared/error-modal/error-modal.component
 export class ReviewPageComponent extends HasModal implements OnInit {
   questions: Item[];
   answers: Answer[] = [];
+  notAnswered: number[] = [];
   answersLength = 0;
   questionsLength = 0;
   assessment: Assessment;
@@ -53,8 +54,10 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this.student = this._applymentService.getStudent();
     this.questions = this._applymentService.getItems();
     this.questionsLength = this.questions.length;
-    this.answers = this._applymentService.getAllAnswers();
-    this.answersLength = this.answers.filter((answer) => !!answer).length;
+    const answers = this._applymentService.getAllAnswers();
+    this.answers = answers;
+    this.setNotAnswered(answers);
+    this.answersLength = answers.length - this.notAnswered.length;
   }
 
   back() {
@@ -91,35 +94,33 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     }, 300);
   }
 
-
-
   submit() {
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
     this._assessmentService
-        .postAnswers(this.assessment.token, this.student.token, answers)
-        .subscribe(
-          response => {
-            if (response.status === 200 || response.status === 201) {
-              this.finishAndRedirect();
-            } else {
-              this.openErrorModal(response.json().message);
-            }
-          },
-          (error) => {
-            this.openErrorModal(error);
+      .postAnswers(this.assessment.token, this.student.token, answers)
+      .subscribe(
+        response => {
+          if (response.status === 200 || response.status === 201) {
+            this.finishAndRedirect();
+          } else {
+            this.openErrorModal(response.json().message);
           }
-        );
+        },
+        (error) => {
+          this.openErrorModal(error);
+        }
+      );
   }
 
   finishAndRedirect() {
     this._assessmentService
-        .finishAssessment(this.assessment.token, this.student.token)
-        .subscribe(
-          () => {
-            this._router.navigate(['prova', this.assessment.token, 'parabens']);
-          },
-          this.openErrorModal.bind(this)
-        );
+      .finishAssessment(this.assessment.token, this.student.token)
+      .subscribe(
+        () => {
+          this._router.navigate(['prova', this.assessment.token, 'parabens']);
+        },
+        this.openErrorModal.bind(this)
+      );
   }
 
   deliver() {
@@ -127,14 +128,14 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this.writeBackup();
 
     this._connection
-        .getStatusOnce()
-        .subscribe(status => {
-          if (status) {
-            this.submit();
-          } else {
-            this.openNoConnectionModal();
-          }
-        });
+      .getStatusOnce()
+      .subscribe(status => {
+        if (status) {
+          this.submit();
+        } else {
+          this.openNoConnectionModal();
+        }
+      });
   }
 
   writeBackup() {
@@ -142,5 +143,14 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     window.localStorage.setItem('studentToken', this.student.token);
     window.localStorage.setItem('assessmentToken', this.assessment.token);
     window.localStorage.setItem('answers-' + this.student.token, btoa(JSON.stringify(answers)));
+  }
+
+  setNotAnswered(allAnswers: Answer[]) {
+    this.notAnswered = [];
+    allAnswers.map((answer, index) => {
+      if (!answer) {
+        this.notAnswered.push(index + 1);
+      }
+    });
   }
 }
