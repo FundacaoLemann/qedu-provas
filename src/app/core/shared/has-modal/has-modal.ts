@@ -1,4 +1,4 @@
-import { Component, ViewChild, ComponentRef, ComponentFactoryResolver, ViewContainerRef, Type } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { ErrorModalComponent } from '../../../applyment/shared/error-modal/error-modal.component';
 
 export abstract class HasModal {
@@ -22,7 +22,7 @@ export abstract class HasModal {
     const modalFactory = this._componentFactoryResolver.resolveComponentFactory(modalComponent);
     this.modalRef = this._viewContainerRef.createComponent(modalFactory);
 
-    if(afterInit && afterInit.call) {
+    if (afterInit && afterInit.call) {
       afterInit(this.modalRef.instance);
     }
 
@@ -38,7 +38,7 @@ export abstract class HasModal {
     const viewInstance = this.modalRef.instance;
 
     for (const event in events) {
-      if ( viewInstance[event] ) {
+      if (viewInstance[event]) {
         viewInstance[event].subscribe(events[event]);
       }
     }
