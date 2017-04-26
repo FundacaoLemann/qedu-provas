@@ -77,7 +77,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
   onCancel() {
     this.accessToken = null;
     this.error = null;
-    this.student = null;
+    this.student = {};
   }
 
   fetchUser(studentToken: string, assessmentToken: string) {
