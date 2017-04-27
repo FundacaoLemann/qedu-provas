@@ -1,21 +1,20 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
-import { ReviewPageComponent } from './review-page.component';
-import { dispatchEvent, createResponse } from '../../../testing/testing-helper';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ComponentRef } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { Http } from '@angular/http';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import Mock from '../../../../mock/mock';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
-import { ComponentRef } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ApplymentService } from '../shared/applyment.service';
-import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
-import { ApplymentModule } from '../applyment.module';
-import { camelizeObject } from '../../utils/json';
+import { createResponse, dispatchEvent } from '../../../testing/testing-helper';
 import { AssessmentService } from '../../core/shared/assessment.service';
-import Mock from '../../../../mock/mock';
-import { Observable } from 'rxjs/Observable';
+import { camelizeObject } from '../../utils/json';
+import { ApplymentModule } from '../applyment.module';
+import { ApplymentService } from '../shared/applyment.service';
 import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { Http } from '@angular/http';
+import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
+import { ReviewPageComponent } from './review-page.component';
 
 const db = require('../../../../mock/db.json');
 
@@ -53,7 +52,7 @@ describe('ReviewPageComponent', () => {
     applymentService.setAssessment(camelizeObject(ASSESSMENT));
     applymentService.setStudent(camelizeObject(STUDENT));
     applymentService.setItems(camelizeObject(QUESTIONS));
-    applymentService.initAnswers(QUESTIONS.length);
+    applymentService.initAnswers(5);
     applymentService.setAnswer(0, Mock.mockAnswer(0));
     applymentService.setAnswer(1, Mock.mockAnswer(1));
     applymentService.setAnswer(2, Mock.mockAnswer(2));
@@ -90,14 +89,6 @@ describe('ReviewPageComponent', () => {
     const message = `3 de ${QUESTIONS.length} questões`;
 
     expect(answeredQuestions).toEqual(message);
-  }));
-
-  it('should display the answers', async(() => {
-    const tableItems = fixture.debugElement.queryAll(By.css('tbody tr')).length;
-    const tableItemsAnswered = fixture.debugElement.queryAll(By.css('tbody tr:not(.danger)')).length;
-
-    expect(tableItems).toEqual(QUESTIONS.length);
-    expect(tableItemsAnswered).toEqual(3);
   }));
 
   it('should create warning modal when offline', fakeAsync(() => {
@@ -148,6 +139,16 @@ describe('ReviewPageComponent', () => {
       expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
       expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
     }));
+  });
+
+  describe('notAnswered', () => {
+    it('should set not answered indexes', () => {
+      const answers = applymentService.getAllAnswers();
+
+      component.setNotAnswered(answers);
+
+      expect(component.notAnswered).toEqual([4, 5]);
+    });
   });
 
 });
