@@ -5,7 +5,6 @@ import { StudentService } from '../../core/shared/student.service';
 import { Assessment } from '../../shared/model/assessment';
 import { Student } from '../../shared/model/student';
 import { ApplymentService } from '../shared/applyment.service';
-import {MaskedInputDirective} from "angular2-text-mask";
 
 @Component({
   selector: 'qp-student-form',
