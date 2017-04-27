@@ -112,7 +112,7 @@ describe('StudentAuthenticationPageComponent', () => {
 
     it('should clear getStudent data and go submitAnswerAndNavigateBack to search', () => {
       test.dispatchEvent(fixture, '[cancel]', 'click');
-      expect(component.student).toEqual(null);
+      expect(component.student).toEqual({});
       expect(component.accessToken).toEqual(null);
       expect(component.error).toEqual(null);
     });
