@@ -13,7 +13,7 @@
             <h1 class="title">{{assessment?.mainTitle}}</h1>
             <hr>
             <h3 class="secundary-title">{{assessment?.secondaryTitle}}</h3>
-            <p>
+            <p class="description">
               {{assessment?.description}}
             </p>
           </div>
@@ -43,12 +43,14 @@
           <form (submit)="onSubmit()">
             <div class="col-xs-12 col-md-4 col-md-offset-4 text-center" [ngClass]="{'has-error': error}">
               <label>Código do Estudante</label>
-              <input [(ngModel)]="accessToken"
+              <input
+                     [qpMask]="'###-####'"
+                     [(ngModel)]="accessToken"
                      name="accessToken"
                      id="accessToken"
                      type="text"
-                     placeholder="Código do Estudante"
-                     class="form-control">
+                     placeholder="Informe seu código: Ex.: AAA-9999"
+                     class="form-control input-lg">
 
               <div class="error form-field-error">{{error}}</div>
             </div>

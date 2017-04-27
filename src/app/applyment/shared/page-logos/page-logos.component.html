@@ -11,16 +11,17 @@
     </div>
   </div>
   <div class="separator"></div>
-  <div class="logo">
-    <img
-      *ngIf="school?.image"
-      [src]="school?.image"
-      [alt]="school?.description"
-      class="school-logo"
-    >
+  <div class="desc-school">
     <div *ngIf="!school?.image" class="description">
       {{school?.description}}
     </div>
+  </div>
+  <div class="logo" *ngIf="school?.image">
+    <img
+            [src]="school?.image"
+            [alt]="school?.description"
+            class="school-logo"
+    >
   </div>
   <div class="logo logo-qedu">
     <img

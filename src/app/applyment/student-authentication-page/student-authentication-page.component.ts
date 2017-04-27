@@ -5,6 +5,7 @@ import { StudentService } from '../../core/shared/student.service';
 import { Assessment } from '../../shared/model/assessment';
 import { Student } from '../../shared/model/student';
 import { ApplymentService } from '../shared/applyment.service';
+import {MaskedInputDirective} from "angular2-text-mask";
 
 @Component({
   selector: 'qp-student-form',
@@ -17,6 +18,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
   error = '';
   assessment: Assessment;
   accessToken: string;
+  mask = [/[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, '-', /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/];
 
   constructor(private _assessmentService: AssessmentService,
               private _router: Router,

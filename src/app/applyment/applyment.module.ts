@@ -18,6 +18,7 @@ import { ProgressionPathComponent } from './question-page/progression-path/progr
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentService } from './shared/applyment.service';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
+import {MaskDirective} from '../shared/directives/mask.directive';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { ErrorModalComponent } from './shared/error-modal/error-modal.component'
     NoConnectionModalComponent,
     ReviewModalComponent,
     InstructionsModalComponent,
-    ErrorModalComponent
+    ErrorModalComponent,
+    MaskDirective
   ],
   entryComponents: [
     ReviewModalComponent,
