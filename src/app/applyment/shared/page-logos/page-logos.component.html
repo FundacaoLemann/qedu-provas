@@ -11,8 +11,8 @@
     </div>
   </div>
   <div class="separator"></div>
-  <div class="desc-school">
-    <div *ngIf="!school?.image" class="description">
+  <div class="desc-school" *ngIf="!school?.image">
+    <div class="description">
       {{school?.description}}
     </div>
   </div>

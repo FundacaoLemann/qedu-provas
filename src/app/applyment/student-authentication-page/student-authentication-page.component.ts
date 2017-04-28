@@ -17,7 +17,6 @@ export class StudentAuthenticationPageComponent implements OnInit {
   error = '';
   assessment: Assessment;
   accessToken: string;
-  mask = [/[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, '-', /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/, /[A-Z0-9]/];
 
   constructor(private _assessmentService: AssessmentService,
               private _router: Router,
