@@ -98,7 +98,6 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
 
     const onError = (error: any) => {
-      console.log(error);
       if (error.name === 'ConnectionError') {
         this.openNoConnectionModal();
       } else {
