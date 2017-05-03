@@ -1,9 +1,9 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import 'rxjs/add/operator/catch';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ConnectionService } from '../../core/shared/connection.service';
 import { HasModal } from '../../core/shared/has-modal/has-modal';
+import { ConnectionError } from '../../shared/errors/connection-error';
 import Answer from '../../shared/model/answer';
 import { Assessment } from '../../shared/model/assessment';
 import { Item } from '../../shared/model/item';
@@ -96,31 +96,33 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   submit() {
     const answers = this._applymentService.getAllAnswers().filter(answer => answer);
+
+    const onError = (error: any) => {
+      console.log(error);
+      if (error instanceof ConnectionError) {
+        this.openNoConnectionModal();
+      } else {
+        this.openErrorModal(error.message);
+      }
+    };
+
     this._assessmentService
-      .postAnswers(this.assessment.token, this.student.token, answers)
-      .subscribe(
-        response => {
-          if (response.status === 200 || response.status === 201) {
-            this.finishAndRedirect();
-          } else {
-            this.openErrorModal(response.json().message);
-          }
-        },
-        (error) => {
-          this.openErrorModal(error);
-        }
-      );
+        .postAnswers(this.assessment.token, this.student.token, answers)
+        .subscribe(
+          this.finishAndRedirect.bind(this),
+          onError.bind(this)
+        );
   }
 
   finishAndRedirect() {
     this._assessmentService
-      .finishAssessment(this.assessment.token, this.student.token)
-      .subscribe(
-        () => {
-          this._router.navigate(['prova', this.assessment.token, 'parabens']);
-        },
-        this.openErrorModal.bind(this)
-      );
+        .finishAssessment(this.assessment.token, this.student.token)
+        .subscribe(
+          () => {
+            this._router.navigate(['prova', this.assessment.token, 'parabens']);
+          },
+          this.openErrorModal.bind(this)
+        );
   }
 
   deliver() {
@@ -128,14 +130,14 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this.writeBackup();
 
     this._connection
-      .getStatusOnce()
-      .subscribe(status => {
-        if (status) {
-          this.submit();
-        } else {
-          this.openNoConnectionModal();
-        }
-      });
+        .getStatusOnce()
+        .subscribe(status => {
+          if (status) {
+            this.submit();
+          } else {
+            this.openNoConnectionModal();
+          }
+        });
   }
 
   writeBackup() {

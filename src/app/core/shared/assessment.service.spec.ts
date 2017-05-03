@@ -1,11 +1,12 @@
-import { TestBed, inject, async } from '@angular/core/testing';
-import { AssessmentService } from './assessment.service';
-import { HttpModule, Http, BaseRequestOptions, Response, ResponseOptions, Headers } from '@angular/http';
+import { async, discardPeriodicTasks, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { BaseRequestOptions, Headers, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
+import Mock from '../../../../mock/mock';
 import { environment } from '../../../environments/environment';
 import { createResponse } from '../../../testing/testing-helper';
-import Mock from '../../../../mock/mock';
+import { AssessmentService } from './assessment.service';
+import { ConnectionError } from '../../shared/errors/connection-error';
 
 const md5 = require('md5');
 const mock = require('../../../../mock/db.json');
@@ -48,9 +49,9 @@ describe('AssessmentService', () => {
         });
 
         service.fetchAssessment('1')
-               .subscribe(assessment =>
-                 expect(assessment).toEqual(ASSESSMENT)
-               );
+          .subscribe(assessment =>
+            expect(assessment).toEqual(ASSESSMENT)
+          );
 
       }
     )));
@@ -82,32 +83,10 @@ describe('AssessmentService', () => {
       })));
   });
 
-  describe('postAssessment()', () => {
-    it('should post to the API', async(inject(
-      [AssessmentService, MockBackend],
-      (service: AssessmentService, mockBackend: MockBackend) => {
-
-        const response = { status: 201, statusText: 'Created' };
-        mockBackend.connections.subscribe(connection => {
-          connection.mockRespond(new Response(new ResponseOptions(response)));
-        });
-
-        const assessment = {
-          assessmentToken: '1235',
-          studentToken: '12345',
-          answers: []
-        };
-
-        service.postAssessment(assessment)
-               .subscribe(resp => {
-                 expect(resp).toEqual({ status: 201, statusText: 'Created' });
-               });
-      })));
-  });
 
   describe('postAnswers', () => {
     it('should post answers to the API',
-      async(inject(
+      fakeAsync(inject(
         [AssessmentService, MockBackend, Http],
         (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
           const mockResponse = new Response(new ResponseOptions({
@@ -134,8 +113,38 @@ describe('AssessmentService', () => {
               expect(response.statusText).toEqual('OK');
               expect(response.json().message.data).toEqual('Respostas salvas.');
             });
+
+          discardPeriodicTasks();
         })
       ));
+
+    it('should timeout',
+      fakeAsync(inject(
+        [AssessmentService, MockBackend, Http],
+        (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
+          mockBackend.connections.subscribe(connection => {
+            setTimeout(() => {
+              connection.mockRespond({});
+            }, 60001);
+          });
+
+          let error = null;
+          const request = service.postAnswers('aToken', 'sToken', []);
+
+          const onError = err => error = err;
+
+          request.subscribe(null, onError);
+
+          tick(59999);
+          expect(error).toEqual(null);
+
+          tick(1);
+          expect(error.name).toEqual('ConnectionError');
+
+          tick(1);
+          discardPeriodicTasks();
+        }))
+    );
   });
 
   describe('finishAssessment()', () => {
@@ -158,7 +167,7 @@ describe('AssessmentService', () => {
                 'Authorization': studentToken
               });
 
-              expect(http.put).toHaveBeenCalledWith(url, { finished: true } , options);
+              expect(http.put).toHaveBeenCalledWith(url, { finished: true }, options);
               expect(response).toEqual('Prova Finalizada');
             });
         })
@@ -184,15 +193,14 @@ describe('AssessmentService', () => {
   describe('downloadBackup()', () => {
     it('should return base64 string with student answers',
       inject([AssessmentService], (service: AssessmentService) => {
-          window.localStorage.setItem('answers-PXK-9997', 'W3sib3B0aW9uSWQiOjMsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZCJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZSJ9LHsib3B0aW9uSWQiOjIsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZiJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE4MCJ9XQ==');
-          window.localStorage.setItem('assessmentToken', 'caieiras8240a');
-          window.localStorage.setItem('studentToken', 'PXK-9997');
+        window.localStorage.setItem('answers-PXK-9997', 'W3sib3B0aW9uSWQiOjMsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZCJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZSJ9LHsib3B0aW9uSWQiOjIsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZiJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE4MCJ9XQ==');
+        window.localStorage.setItem('assessmentToken', 'caieiras8240a');
+        window.localStorage.setItem('studentToken', 'PXK-9997');
 
-          const content = service.downloadBackup('offjkl9');
+        const content = service.downloadBackup('offjkl9');
 
-          expect(content).toEqual('data:text/plain;charset=utf-8,' + encodeURIComponent('{"answers-PXK-9997":"W3sib3B0aW9uSWQiOjMsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZCJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZSJ9LHsib3B0aW9uSWQiOjIsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZiJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE4MCJ9XQ==","assessmentToken":"caieiras8240a","studentToken":"PXK-9997"}'));
+        expect(content).toEqual('data:text/plain;charset=utf-8,' + encodeURIComponent('{"answers-PXK-9997":"W3sib3B0aW9uSWQiOjMsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZCJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZSJ9LHsib3B0aW9uSWQiOjIsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE3ZiJ9LHsib3B0aW9uSWQiOjQsIml0ZW1JZCI6IjU4ZWQzMGExOTk3ZTIxMGFjYTA5MDE4MCJ9XQ==","assessmentToken":"caieiras8240a","studentToken":"PXK-9997"}'));
       })
     );
   });
-
 });

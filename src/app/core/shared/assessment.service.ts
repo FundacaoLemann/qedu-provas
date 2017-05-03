@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Assessment } from '../../shared/model/assessment';
-import { Http, Response, Headers, BaseRequestOptions } from '@angular/http';
-import { Item } from '../../shared/model/item';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { BaseRequestOptions, Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/observable/throw';
-import { ApplymentStatus } from '../../shared/model/applyment-status';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import Answer from '../../shared/model/answer';
+import { Assessment } from '../../shared/model/assessment';
+import { Item } from '../../shared/model/item';
 import { RequestService } from './request.service';
 
 const md5 = require('md5');
-const {API_URL, DOWNLOAD_CODE} = environment;
+const { API_URL, DOWNLOAD_CODE } = environment;
 
 @Injectable()
 export class AssessmentService extends RequestService {
@@ -68,9 +68,9 @@ export class AssessmentService extends RequestService {
 
   fetchAssessment(assessment_id: string): Observable<Assessment> {
     return this._http
-      .get(`${API_URL}/assessments/${assessment_id}`)
-      .map(AssessmentService.extractData)
-      .catch(this.handleError);
+               .get(`${API_URL}/assessments/${assessment_id}`)
+               .map(AssessmentService.extractData)
+               .catch(this.handleError);
   }
 
   fetchAssessmentQuestions(assessmentToken: string, studentToken: string): Observable<Item[]> {
@@ -80,29 +80,9 @@ export class AssessmentService extends RequestService {
     });
 
     return this._http
-      .get(url, {headers})
-      .map(AssessmentService.extractQuestionData)
-      .catch(this.handleError);
-  }
-
-  postAssessment(assessment: ApplymentStatus): Observable<{ status: number, statusText: string, message?: string }> {
-    return this._http
-      .post(`${API_URL}/assessment`, {data: {assessment}})
-      .map(response => {
-        if (response.status === 201) {
-          return {
-            status: 201,
-            statusText: 'Created'
-          };
-        } else {
-          return {
-            status: response.status,
-            statusText: response.statusText,
-            message: response.json().data
-          };
-        }
-      })
-      .catch(this.handleError);
+               .get(url, { headers })
+               .map(AssessmentService.extractQuestionData)
+               .catch(this.handleError);
   }
 
   postAnswers(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<Response> {
@@ -111,9 +91,12 @@ export class AssessmentService extends RequestService {
       'Authorization': studentToken,
     });
 
+    const url = `${API_URL}/assessments/${assessmentToken}/answers`;
+
     return this._http
-      .post(`${API_URL}/assessments/${assessmentToken}/answers`, {answers}, options)
-      .catch(this.handleError);
+               .post(url, { answers }, options)
+               .timeout(60000)
+               .catch(this.handleError);
   }
 
   finishAssessment(assessmentToken: string, studentToken: string): Observable<string> {
@@ -122,15 +105,15 @@ export class AssessmentService extends RequestService {
     options.headers = new Headers({
       'Authorization': studentToken
     });
-    const body = {finished: true};
+    const body = { finished: true };
 
     return this._http
-      .put(url, body, options)
-      .map(response => response.json().message.data)
-      .catch(this.handleError);
+               .put(url, body, options)
+               .map(response => response.json().message.data)
+               .catch(this.handleError);
   }
 
-  downloadBackup(password: string): string|boolean {
+  downloadBackup(password: string): string | boolean {
     if (password === DOWNLOAD_CODE) {
       const anchor = document.createElement('a');
       const content = 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(window.localStorage));
