@@ -99,7 +99,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
     const onError = (error: any) => {
       console.log(error);
-      if (error instanceof ConnectionError) {
+      if (error.name === 'ConnectionError') {
         this.openNoConnectionModal();
       } else {
         this.openErrorModal(error.message);
