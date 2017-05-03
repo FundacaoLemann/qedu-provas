@@ -3,7 +3,7 @@ import { Component, EventEmitter } from '@angular/core';
 @Component({
   selector: 'qp-instructions-modal',
   templateUrl: 'instructions-modal.component.html',
-  styles: []
+  styleUrls: ['instructions-modal.component.sass']
 })
 export class InstructionsModalComponent {
   onClose: EventEmitter<any> = new EventEmitter();

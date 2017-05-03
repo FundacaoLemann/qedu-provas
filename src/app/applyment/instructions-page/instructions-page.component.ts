@@ -20,6 +20,7 @@ import MESSAGES from '../../core/shared/messages/messages';
 })
 export class InstructionsPageComponent extends HasModal implements OnInit {
   assessment: Assessment;
+  showLoading = false;
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
@@ -39,6 +40,8 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
    * Start the assessment
    */
   initAssessment() {
+    this.closeModal();
+    this.showLoading = true;
     const assessmentToken = this._route.snapshot.params['token'];
     const studentToken = this._applymentService.getStudent().token;
 
@@ -49,6 +52,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
       .subscribe(
         questions => {
           this._applymentService.setItems(questions);
+          this.showLoading = false;
           this._router.navigate(['prova', assessmentToken, 'questao', '1']);
         },
         this.openErrorModal.bind(this)

@@ -13,6 +13,7 @@ import {MaskDirective} from "../../shared/directives/mask.directive";
 export class SearchAssessmentPageComponent implements OnInit {
   assessmentToken = '';
   formError = '';
+  showLoading = false;
 
   constructor (private _router: Router,
                private _assessmentService: AssessmentService,
@@ -24,6 +25,7 @@ export class SearchAssessmentPageComponent implements OnInit {
 
   fillAssessmentAndNavigate (assessment: Assessment) {
     this._applymentService.setAssessment(assessment);
+    this.showLoading = false;
     this._router.navigate(['prova', assessment.token]);
   }
 
