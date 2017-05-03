@@ -10,6 +10,7 @@ import { StudentService } from '../../core/shared/student.service';
 import { ApplymentModule } from '../applyment.module';
 import { ApplymentService } from '../shared/applyment.service';
 import { StudentAuthenticationPageComponent } from './student-authentication-page.component';
+import { ResponseError } from 'app/shared/errors/response-error';
 
 const db = require('../../../../mock/db.json');
 const RAW_STUDENT = db.students[0];
@@ -78,7 +79,7 @@ describe('StudentAuthenticationPageComponent', () => {
     }));
 
     it('should display `Código inválido` when accessToken is invalid', async(() => {
-      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.throw('Código inválido'));
+      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.throw(new ResponseError('Código inválido')));
       component.accessToken = '000';
       component.onSubmit();
       fixture.detectChanges();

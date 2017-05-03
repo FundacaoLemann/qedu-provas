@@ -102,7 +102,7 @@ describe('ApplymentService', () => {
       }
     ));
 
-    it('should return null on error', inject(
+    it('should return null on errors', inject(
       [ApplymentService],
       (service: ApplymentService) => {
         expect(service.getAssessment).toThrow();
@@ -130,7 +130,7 @@ describe('ApplymentService', () => {
       }
     ));
 
-    it('should return empty array on error', inject(
+    it('should return empty array on errors', inject(
       [ApplymentService],
       (service: ApplymentService) => {
         expect(service.getItems).toThrow();

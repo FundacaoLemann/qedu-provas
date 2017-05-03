@@ -72,7 +72,7 @@ describe('HasModal', () => {
     });
 
     it('should be able to change the values of created component', () => {
-      const newMessage = 'New message error after init';
+      const newMessage = 'New message errors after init';
 
       component.openModal(ModalComponent, {}, (modalComponent) => {
         modalComponent.message = newMessage;

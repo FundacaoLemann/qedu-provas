@@ -29,8 +29,8 @@ export class SearchAssessmentPageComponent implements OnInit {
     this._router.navigate(['prova', assessment.token]);
   }
 
-  setFormError (error: string) {
-    this.formError = error;
+  setFormError (error: Error) {
+    this.formError = error.message;
   }
 
   validateAndRequestAssessment () {

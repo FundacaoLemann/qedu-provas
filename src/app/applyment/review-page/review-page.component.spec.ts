@@ -15,6 +15,7 @@ import { ApplymentService } from '../shared/applyment.service';
 import { ErrorModalComponent } from '../shared/error-modal/error-modal.component';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { ReviewPageComponent } from './review-page.component';
+import { ResponseError } from '../../shared/errors/response-error';
 
 const db = require('../../../../mock/db.json');
 
@@ -110,11 +111,11 @@ describe('ReviewPageComponent', () => {
       expect(component.finishAndRedirect).toHaveBeenCalled();
     }));
 
-    it('should display modal error on failure',
+    it('should display modal errors on failure',
       async(inject([Http], (http: Http) => {
         const message = 'Você não tem autorização para fazer essa prova';
 
-        spyOn(http, 'post').and.returnValue(Observable.throw(message));
+        spyOn(http, 'post').and.returnValue(Observable.throw(new ResponseError(message)));
 
         component.submit();
 

@@ -26,24 +26,24 @@ describe('RequestService', () => {
   });
 
   describe('handleError()', () => {
-    it('should return an error message from response', async(() => {
+    it('should return an errors message from response', async(() => {
       const response = createResponse(404, 'Not found', { message: 'Prova não encontrada' });
       const source = Observable.throw(response);
 
       const expected = error => {
-        expect(error).toEqual('Prova não encontrada');
+        expect(error.message).toEqual('Prova não encontrada');
       };
       source
         .catch(service.handleError)
         .subscribe(() => {}, expected);
     }));
 
-    it('should return an error status code 0', () => {
+    it('should return an errors status code 0', () => {
       const response = createResponse(0, undefined, null);
       const source = Observable.throw(response);
 
       const expected = error => {
-        expect(error).toEqual('Sistema temporariamente indisponível. Tente novamente mais tarde.');
+        expect(error.message).toEqual('Sistema temporariamente indisponível. Tente novamente mais tarde.');
       };
 
       source
