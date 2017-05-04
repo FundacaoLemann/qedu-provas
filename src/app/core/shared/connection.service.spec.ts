@@ -83,7 +83,7 @@ describe('ConnectionService', () => {
     )
   ));
 
-  it('should throw an error when already watching', fakeAsync(
+  it('should throw an errors when already watching', fakeAsync(
     inject(
       [ConnectionService],
       (connection: ConnectionService) => {

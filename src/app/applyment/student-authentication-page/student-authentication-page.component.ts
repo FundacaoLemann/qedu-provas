@@ -44,9 +44,9 @@ export class StudentAuthenticationPageComponent implements OnInit {
     }
   }
 
-  setFormError(message: string) {
+  setFormError(error: Error) {
     this.accessToken = '';
-    this.error = message;
+    this.error = error.message;
   }
 
   setStudentData(student: Student) {

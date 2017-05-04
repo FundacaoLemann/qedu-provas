@@ -7,8 +7,8 @@ import { ApplymentService } from '../shared/applyment.service';
 import { ApplymentModule } from '../applyment.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
-import APIError from '../../shared/model/api-error';
 import { By } from '@angular/platform-browser';
+import { ResponseError } from '../../shared/errors/response-error';
 
 const db = require('../../../../mock/db.json');
 const ASSESSMENT = db.assessments[0];
@@ -76,15 +76,16 @@ describe('SearchAssessmentPageComponent', () => {
   });
 
   describe('setFormError()', () => {
-    it('should fill form error', () => {
-      const error = 'Prova não encontrada';
+    it('should fill form errors', () => {
+      const message = 'Prova não encontrada';
+      const error = new ResponseError(message);
 
       component.setFormError(error);
       fixture.detectChanges();
-      expect(component.formError).toEqual(error);
+      expect(component.formError).toEqual(message);
 
       const errorEl = fixture.debugElement.query(By.css('.error')).nativeElement;
-      expect(errorEl.textContent).toEqual(error);
+      expect(errorEl.textContent).toEqual(message);
     });
   });
 

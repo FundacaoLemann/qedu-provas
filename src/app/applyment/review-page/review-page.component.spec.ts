@@ -1,5 +1,5 @@
 import { ComponentRef } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { Http } from '@angular/http';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -110,17 +110,21 @@ describe('ReviewPageComponent', () => {
       expect(component.finishAndRedirect).toHaveBeenCalled();
     }));
 
-    it('should display modal error on failure',
-      async(inject([Http], (http: Http) => {
+    it('should display modal error on response failure',
+      fakeAsync(inject([Http], (http: Http) => {
         const message = 'Você não tem autorização para fazer essa prova';
+        const response = createResponse(403, 'Forbidden', { message });
 
-        spyOn(http, 'post').and.returnValue(Observable.throw(message));
+        spyOn(http, 'post').and.returnValue(Observable.throw(response));
 
         component.submit();
+        tick(300);
 
         const modalInstance = component.modalRef.instance;
         expect(modalInstance).toEqual(jasmine.any(ErrorModalComponent));
         expect(modalInstance.message.replace(/"/g, '')).toEqual(message);
+
+        discardPeriodicTasks();
       }))
     );
   });

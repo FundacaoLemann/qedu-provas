@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import MESSAGES from './messages/messages';
+import { TimeoutError } from 'rxjs/Rx';
+import { ConnectionError } from '../../shared/errors/connection-error';
+import { ResponseError } from '../../shared/errors/response-error';
 
 @Injectable()
 export abstract class RequestService {
@@ -9,16 +11,21 @@ export abstract class RequestService {
   constructor() { }
 
   public handleError(error: Response | any): Observable<any> {
-    let errorMessage = '';
+    let errorToThrow: any;
 
     if (error instanceof Response && error.status === 0) {
-      errorMessage = MESSAGES.SYSTEM_NOT_AVAILABLE;
+      errorToThrow = new ConnectionError();
+
     } else if (error instanceof Response && error.status !== 0) {
-      errorMessage = error.json()['message'];
+      errorToThrow = new ResponseError(error.json()['message']);
+
+    } else if (error.name === 'TimeoutError') {
+      errorToThrow = new ConnectionError();
+
     } else {
-      errorMessage = error.message || JSON.stringify(error);
+      errorToThrow = new Error(error);
     }
 
-    return Observable.throw(errorMessage);
+    return Observable.throw(errorToThrow);
   }
 }
