@@ -4,5 +4,5 @@
   (click)="onClick()"
   class="answer">
   <input type="radio" name="" [checked]="checked">
-  <label>{{ option.text }}</label>
+  <label [innerHTML]="option.text"></label>
 </div>
