@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {StoreService} from './core/shared/store.service';
 
@@ -10,6 +10,10 @@ import {StoreService} from './core/shared/store.service';
 
 export class AppComponent implements OnInit {
   current_date: Date;
+
+  @HostListener('window:beforeunload', ['$event']) beforeUnload(e) {
+    return false;
+  }
 
   constructor (public store: StoreService, private _router: Router) {
   }
