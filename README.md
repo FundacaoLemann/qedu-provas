@@ -36,6 +36,7 @@ $ curl -L http://bit.do/dm-lin-home | docker-machine ssh ${MACHINE:-qedu-provas-
 $ docker-machine ssh ${MACHINE:-qedu-provas-front} sudo chmod +x /var/lib/boot2docker/bootlocal.sh
 $ docker-machine ssh ${MACHINE:-qedu-provas-front} sudo /var/lib/boot2docker/bootlocal.sh
 ```
+After run this commands, restart your machine to apply the modifications.
 
 #### Step 2
 After this, we need to tell Docker to talke to the new machine:
