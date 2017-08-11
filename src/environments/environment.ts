@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://api-provas.qedu.dev',
+  API_URL: 'http://api.qedu.dev:8080',
   DOWNLOAD_CODE: 'offjkl9'
 };

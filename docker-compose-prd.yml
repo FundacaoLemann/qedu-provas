@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  provas:
+    extends:
+      file: docker-compose.yml
+      service: provas
+    command: ["yarn", "start"]
+    ports:
+      - "4200:4200"
+
+  nginx:
+    image: nginx:1.13-alpine
+    container_name: qedu_provas_front_nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - provas
+    volumes:
+      - ./nginx/logs/:/var/log/nginx
+      - ./nginx/qedu.conf:/etc/nginx/conf.d/default.conf

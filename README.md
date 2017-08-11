@@ -4,6 +4,8 @@ This app is written in *Angular 2* with *Angular-cli* and *Docker*.
 
 # MAC and Windows
 
+If you prefer or already use the Docker MacOS client, follow the steps decribed into the [README DOCKER OSX](README_DOCKER_OSX.md)
+
 At first, it will be necessary to get and install [docker-toolbox], this toolbox has important tools to up, deploy and handle the project.
 
  - Docker Engine
