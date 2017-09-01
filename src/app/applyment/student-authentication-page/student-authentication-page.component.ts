@@ -5,6 +5,7 @@ import { StudentService } from '../../core/shared/student.service';
 import { Assessment } from '../../shared/model/assessment';
 import { Student } from '../../shared/model/student';
 import { ApplymentService } from '../shared/applyment.service';
+import { AnalyticsService } from '../../core/shared/analytics.service';
 
 @Component({
   selector: 'qp-student-form',
@@ -19,6 +20,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
   accessToken: string;
 
   constructor(private _assessmentService: AssessmentService,
+              private _analyticsService: AnalyticsService,
               private _router: Router,
               private _route: ActivatedRoute,
               private _applymentService: ApplymentService,
@@ -54,6 +56,7 @@ export class StudentAuthenticationPageComponent implements OnInit {
     this.student = student;
     this._applymentService.setStudent(student);
     this.error = '';
+    this._analyticsService.setStudentToken(this.student.token)
   }
 
   onSubmit() {
