@@ -46,7 +46,7 @@ export class QuestionPageComponent implements OnInit {
                         this.question = questions[this.questionIndex];
                         this.questionText = this.questionHTMLText();
                         this.options = this.question.answers;
-                        this.initialTime = new Date().getTime()
+                        this.initialTime = new Date().getTime();
                         document.body.scrollTop = 0;
                     } catch (err) {
                         this.question = new Item();
@@ -96,7 +96,7 @@ export class QuestionPageComponent implements OnInit {
         } else {
             this._router.navigate(['prova', token, 'questao', nextQuestion]);
         }
-        this._analyticsService.eventTrack(this.assessment.token, 'BBB-1111', this.questionIndex, this.initialTime);
+        this._analyticsService.eventTrack(this.assessment.token, window.localStorage.getItem('studentToken'), this.questionIndex, this.initialTime);
     }
 
     submitAnswerAndNavigateBack() {

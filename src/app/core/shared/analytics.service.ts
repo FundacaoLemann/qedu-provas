@@ -11,7 +11,7 @@ export class AnalyticsService {
 
   eventTrack(assessmentToken: string, studentToken: string, questionNumber: number, initialTime: number) {
     const options: any = {
-      action: `Stundent: ${studentToken}, Assessment: ${assessmentToken}`,
+      action: `Student: ${studentToken}, Assessment: ${assessmentToken}`,
       properties: {
         category: `Question Number :${this.normalizeQuestion(questionNumber)}`,
         label: `Time: ${this.timeDiff(initialTime)}`
