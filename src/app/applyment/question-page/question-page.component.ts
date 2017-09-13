@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../shared/model/item';
 import { ApplymentService } from '../shared/applyment.service';
-import { AnalyticsService } from '../../core/shared/analytics.service';
 import { Assessment } from '../../shared/model/assessment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
@@ -22,10 +21,8 @@ export class QuestionPageComponent implements OnInit {
     options: any[];
     checkedAnswer: number = null;
     assessment: Assessment;
-    initialTime: number;
 
     constructor(private _route: ActivatedRoute,
-                private _analyticsService: AnalyticsService,
                 private _router: Router,
                 private _applymentService: ApplymentService,
                 private _sanitizer: DomSanitizer) {
@@ -46,7 +43,6 @@ export class QuestionPageComponent implements OnInit {
                         this.question = questions[this.questionIndex];
                         this.questionText = this.questionHTMLText();
                         this.options = this.question.answers;
-                        this.initialTime = new Date().getTime();
                         document.body.scrollTop = 0;
                     } catch (err) {
                         this.question = new Item();
@@ -96,7 +92,6 @@ export class QuestionPageComponent implements OnInit {
         } else {
             this._router.navigate(['prova', token, 'questao', nextQuestion]);
         }
-        this._analyticsService.eventTrack(this.assessment.token, window.localStorage.getItem('studentToken'), this.questionIndex, this.initialTime);
     }
 
     submitAnswerAndNavigateBack() {
@@ -106,7 +101,6 @@ export class QuestionPageComponent implements OnInit {
             const uuid = this._route.snapshot.params['token'];
             this._router.navigate(['prova', uuid, 'questao', prevQuestion]);
         }
-        this._analyticsService.eventTrack(this.assessment.token, window.localStorage.getItem('studentToken'), this.questionIndex, this.initialTime);
     }
 
     postAnswer() {

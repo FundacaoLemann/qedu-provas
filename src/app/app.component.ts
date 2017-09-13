@@ -1,7 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {StoreService} from './core/shared/store.service';
-import { Angulartics2GoogleAnalytics } from 'angulartics2';
 
 @Component({
   selector: 'qp-app',
@@ -16,7 +15,7 @@ export class AppComponent implements OnInit {
     return false;
   }
 
-  constructor (public store: StoreService, private _router: Router, angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics) {
+  constructor (public store: StoreService, private _router: Router) {
   }
 
   ngOnInit () {
