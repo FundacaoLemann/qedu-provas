@@ -26,6 +26,7 @@ describe('QuestionPageComponent', () => {
   const QUESTIONS = [Mock.mockItem(), Mock.mockItem(1), Mock.mockItem(2)];
   const STUDENT = db.students[0];
   const ASSESSMENT = db.assessments[0];
+  const questionsLength = QUESTIONS.length;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -61,6 +62,10 @@ describe('QuestionPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('initAnswers', () => {
+    expect(ASSESSMENT.numberOfItems).toEqual(questionsLength);
   });
 
   it('should display a question', async(() => {

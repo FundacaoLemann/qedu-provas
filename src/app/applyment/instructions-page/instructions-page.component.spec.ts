@@ -88,7 +88,6 @@ describe('InstructionsPageComponent', () => {
     applymentService.setAssessment(ASSESSMENT);
     component.initAssessment();
 
-    expect(applyment.initAnswers).toHaveBeenCalledWith(ASSESSMENT.numberOfItems);
     expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', '1']);
   }));
 
