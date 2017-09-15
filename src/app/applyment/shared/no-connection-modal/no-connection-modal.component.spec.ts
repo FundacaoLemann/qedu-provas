@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { NoConnectionModalComponent } from './no-connection-modal.component';
-import {ApplymentModule} from "../../applyment.module";
+import {ApplymentModule} from '../../applyment.module';
 
 describe('NoConnectionModalComponent', () => {
   let component: NoConnectionModalComponent;

@@ -4,7 +4,7 @@ import { StoreService } from '../../core/shared/store.service';
 import { Observable } from 'rxjs/Observable';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import {Assessment} from '../../shared/model/assessment';
-import {Student} from "app/shared";
+import {Student} from 'app/shared';
 
 const mock = require('../../../../mock/db.json');
 const STUDENT = mock.students[0];
@@ -165,7 +165,7 @@ describe('ApplymentService', () => {
     it('should reset the initial state of assessment', inject(
       [ApplymentService],
       (service: ApplymentService) => {
-        service.resetInitialState()
+        service.resetInitialState();
 
         expect(service.getAllAnswers()).toEqual([]);
         expect(service.getStudent()).toEqual(<Student>{});
