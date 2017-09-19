@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { QuestionPageComponent } from './question-page.component';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { RouterStub } from '../../../testing/router-stub';
 import { ApplymentModule } from '../applyment.module';
 import { AssessmentService } from '../../core/shared/assessment.service';
 import { ApplymentService } from '../shared/applyment.service';
+import { StoreService } from '../../core/shared/store.service';
 import { CoreModule } from '../../core/core.module';
 import * as test from '../../../testing/testing-helper';
 import { createResponse } from '../../../testing/testing-helper';
@@ -37,6 +38,7 @@ describe('QuestionPageComponent', () => {
                  useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token, question_id: '1' })
                },
                { provide: Router, useClass: RouterStub },
+               StoreService
              ]
            })
            .compileComponents();
@@ -55,7 +57,7 @@ describe('QuestionPageComponent', () => {
     applymentService.setAssessment(ASSESSMENT);
     applymentService.setItems(QUESTIONS);
     applymentService.setStudent(STUDENT);
-    applymentService.initAnswers(QUESTIONS.length);
+    applymentService.initAnswers(questionsLength);
 
     fixture.detectChanges();
   });
@@ -65,8 +67,32 @@ describe('QuestionPageComponent', () => {
   });
 
   it('initAnswers', () => {
-    expect(ASSESSMENT.numberOfItems).toEqual(questionsLength);
+    spyOn(applymentService, 'initAnswers');
+    applymentService.initAnswers(questionsLength);
+
+    expect(applymentService.initAnswers).toHaveBeenCalledWith(questionsLength);
   });
+
+  it('should be saved the answers in storage',
+    inject([ApplymentService, StoreService],
+    (service: ApplymentService, store: StoreService) => {
+      window.localStorage.clear();
+      service.setAnswer(0, { itemId: '0', optionId: 1 });
+      const storage = JSON.parse(atob(window.localStorage.getItem('answers-undefined')));
+
+      expect(store.state.applyment.answers).toEqual(storage);
+    })
+  );
+
+  it('should be loaded if there is storage',
+    inject([ApplymentService, StoreService],
+    (service: ApplymentService, store: StoreService) => {
+      service.getAnswer(0);
+      const storage = JSON.parse(atob(window.localStorage.getItem('answers-undefined')));
+
+      expect(store.state.applyment.answers).toEqual(storage);
+    })
+  );
 
   it('should display a question', async(() => {
     route.testParams = { token: '1', question_id: '2' };
@@ -153,7 +179,5 @@ describe('QuestionPageComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', 2]);
       });
     });
-
   });
 });
-
