@@ -179,5 +179,12 @@ describe('QuestionPageComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', 2]);
       });
     });
+
+    it('should show amount of progression items', () => {
+      const progressionItemLength = fixture.debugElement.queryAll(By.css('.progression-path-item')).length;
+      const itemLength = applymentService.getItems().length;
+
+      expect(progressionItemLength).toEqual(itemLength);
+    });
   });
 });
