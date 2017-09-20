@@ -88,7 +88,10 @@ export class ReviewPageComponent extends HasModal implements OnInit {
           this.closeModal();
         },
         onDownload: (code) => {
-          this._assessmentService.downloadBackup(code);
+          Promise.all([
+            this._assessmentService.downloadBackup(code),
+            window.localStorage.clear()
+          ])
         }
       });
     }, 300);
@@ -119,6 +122,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         .subscribe(
           () => {
             this._router.navigate(['prova', this.assessment.token, 'parabens']);
+            window.localStorage.clear();
           },
           this.openErrorModal.bind(this)
         );
@@ -126,7 +130,6 @@ export class ReviewPageComponent extends HasModal implements OnInit {
 
   deliver() {
     this.modalRef.instance.isSubmitting = true;
-    this.writeBackup();
 
     this._connection
         .getStatusOnce()
@@ -137,13 +140,6 @@ export class ReviewPageComponent extends HasModal implements OnInit {
             this.openNoConnectionModal();
           }
         });
-  }
-
-  writeBackup() {
-    const answers = this._applymentService.getAllAnswers().filter(answer => answer);
-    window.localStorage.setItem('studentToken', this.student.token);
-    window.localStorage.setItem('assessmentToken', this.assessment.token);
-    window.localStorage.setItem('answers-' + this.student.token, btoa(JSON.stringify(answers)));
   }
 
   setNotAnswered(allAnswers: Answer[]) {

@@ -64,12 +64,20 @@ export class ApplymentService {
   setAnswer(itemIndex: number, answer: Answer) {
     const answers = this._store.state.applyment.answers;
     answers[itemIndex] = answer;
+    window.localStorage.setItem(`answers-${this._store.state.applyment.student.token}`, window.btoa(JSON.stringify(answers)));
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
   }
 
   getAnswer(itemIndex: number): Answer {
+    const storage = window.localStorage.getItem(`answers-${this._store.state.applyment.student.token}`);
+    if (!!storage) {
+      const answers = JSON.parse(atob(storage));
+      const newState = _.merge({}, this._store.state, { applyment: { answers } });
+      this._store.setState(newState);
+    }
+
     return this._store.state.applyment.answers[itemIndex] || null;
   }
 

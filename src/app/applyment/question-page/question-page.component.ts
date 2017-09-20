@@ -44,6 +44,7 @@ export class QuestionPageComponent implements OnInit {
                         this.questionText = this.questionHTMLText();
                         this.options = this.question.answers;
                         document.body.scrollTop = 0;
+                        this._applymentService.initAnswers(this.questionsLength);
                     } catch (err) {
                         this.question = new Item();
                         this.options = [];

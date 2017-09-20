@@ -8,7 +8,7 @@
       "description": "Matemática / Ciências / Geografia / Educação Física",
       "instructions": "1. Esta prova contém 25 (vinte e cinco) questões objetivas. <br/>2. Cada questão contém 4 (quatro) alternativas (A), (B), (C) e (D); apenas UMA ALTERNATIVA é a correta. Clique na opção que que você escolher como certa para registrar sua resposta.<br/>3. Leia com atenção antes de responder e selecione sua resposta após ler a questão. Procure não deixar questão sem resposta.<br/>4. Caso o texto ou a imagem estejam pequenos ou difíceis de ler, pressione as teclas \"ctrl\" e \"+\" para aumentar o zoom para aproximar. Caso queira reduzir o zoom, basta usar as teclas \"ctrl\" e \"-\".<br/>5. Você pode navegar entre as questões ao longo da prova, indo e voltando para qualquer uma delas. No entanto, depois de responder a última questão, a prova será entregue e você não poderá mais modificar as suas respostas.<br/>6. Não atualize e nem saia da página durante a realização da prova. Isso irá fazer com que o resultado seja perdido e sua nota desconsiderada. A prova só é considerada entregue quando a última questão for enviada.</br>7. A avaliação terá duração máxima de três (3) horas.",
       "duration": 120,
-      "numberOfItems": 60,
+      "numberOfItems": 3,
       "subjects": [
         "Matemática",
         "Ciências",
