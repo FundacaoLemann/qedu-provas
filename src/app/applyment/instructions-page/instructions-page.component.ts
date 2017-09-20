@@ -54,6 +54,14 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
           this._applymentService.setItems(questions);
           this.showLoading = false;
           this._router.navigate(['prova', assessmentToken, 'questao', '1']);
+          questions
+            .filter(question => !!question && !!question.media && !!question.media[0] && !!question.media[0].source)
+            .map(question => {
+              let element = document.createElement('link');
+              element.rel = 'prefetch';
+              element.setAttribute('href', question.media[0].source);
+              document.getElementsByTagName('head')[0].appendChild(element);
+            });
         },
         this.openErrorModal.bind(this)
       );
