@@ -4,6 +4,7 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 import { ConnectionService } from '../../core/shared/connection.service';
 import { HasModal } from '../../core/shared/has-modal/has-modal';
 import { Assessment } from '../../shared/model/assessment';
+import { Item } from '../../shared/model/item';
 import { ApplymentService } from '../shared/applyment.service';
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
@@ -52,6 +53,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
           this._applymentService.setItems(questions);
           this.showLoading = false;
           this._router.navigate(['prova', assessmentToken, 'questao', '1']);
+          this.loadImageCache(questions);
         },
         this.openErrorModal.bind(this)
       );
@@ -89,5 +91,18 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
         }
       });
     }, 300);
+  }
+
+  loadImageCache(questions: Item[]) {
+    const head = document.getElementsByTagName('head')[0];
+    let element = document.createElement('link');
+    element.rel = 'prefetch';
+
+    questions
+      .filter(question => !!question && !!question.media && !!question.media[0] && !!question.media[0].source)
+      .map(question => {
+        element.setAttribute('href', question.media[0].source);
+        head.appendChild(element);
+      });
   }
 }
