@@ -3,6 +3,7 @@ import { ApplymentComponent } from './applyment.component';
 import { SharedModule } from '../shared/shared.module';
 import { ApplymentRoutingModule } from './applyment-routing.module';
 import { SearchAssessmentPageComponent } from './search-assessment-page/search-assessment-page.component';
+import { SearchAssessmentPageDirective } from './search-assessment-page/search-assessment-page.directive';
 import { InstructionsPageComponent } from './instructions-page/instructions-page.component';
 import { InstructionsModalComponent } from './instructions-page/modal/instructions-modal.component';
 import { QuestionPageComponent } from './question-page/question-page.component';
@@ -31,6 +32,7 @@ import { ErrorModalComponent } from './shared/error-modal/error-modal.component'
     StudentAuthenticationPageComponent,
     StudentAuthenticationPageDirective,
     SearchAssessmentPageComponent,
+    SearchAssessmentPageDirective,
     InstructionsPageComponent,
     InstructionsModalComponent,
     QuestionPageComponent,
