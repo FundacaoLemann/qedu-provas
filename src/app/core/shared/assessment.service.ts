@@ -53,6 +53,16 @@ export class AssessmentService extends RequestService {
         medias.push(media);
       }
 
+      let regex = /<img.+?src=[\"'](.+?)[\"'].*?>/igm;
+      let match;
+      while (match = regex.exec(item.stem)) {
+        medias.push({
+          id: md5(match[1]),
+          type: 'image',
+          source: match[1]
+        });
+      }
+
       question.answers = answers;
       question.media = medias;
 
