@@ -44,7 +44,7 @@
             <div class="col-xs-12 col-md-4 col-md-offset-4 text-center" [ngClass]="{'has-error': error}">
               <label>Código do Estudante</label>
               <input
-                     [qpMask]="'###-####'"
+                     [qpStudentTokenMask]="'###-####'"
                      [(ngModel)]="accessToken"
                      name="accessToken"
                      id="accessToken"

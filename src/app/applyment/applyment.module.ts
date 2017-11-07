@@ -3,6 +3,7 @@ import { ApplymentComponent } from './applyment.component';
 import { SharedModule } from '../shared/shared.module';
 import { ApplymentRoutingModule } from './applyment-routing.module';
 import { SearchAssessmentPageComponent } from './search-assessment-page/search-assessment-page.component';
+import { SearchAssessmentPageDirective } from './search-assessment-page/search-assessment-page.directive';
 import { InstructionsPageComponent } from './instructions-page/instructions-page.component';
 import { InstructionsModalComponent } from './instructions-page/modal/instructions-modal.component';
 import { QuestionPageComponent } from './question-page/question-page.component';
@@ -13,12 +14,12 @@ import { CurrentQuestionComponent } from './question-page/current-question.compo
 import { CongratulationsPageComponent } from './congratulations-page/congratulations-page.component';
 import { CoreModule } from '../core/core.module';
 import { StudentAuthenticationPageComponent } from './student-authentication-page/student-authentication-page.component';
+import { StudentAuthenticationPageDirective } from './student-authentication-page/student-authentication-page.directive';
 import { PageLogosComponent } from './shared/page-logos/page-logos.component';
 import { ProgressionPathComponent } from './question-page/progression-path/progression-path.component';
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentService } from './shared/applyment.service';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
-import { MaskDirective } from '../shared/directives/mask.directive';
 
 @NgModule({
   imports: [
@@ -29,7 +30,9 @@ import { MaskDirective } from '../shared/directives/mask.directive';
   declarations: [
     ApplymentComponent,
     StudentAuthenticationPageComponent,
+    StudentAuthenticationPageDirective,
     SearchAssessmentPageComponent,
+    SearchAssessmentPageDirective,
     InstructionsPageComponent,
     InstructionsModalComponent,
     QuestionPageComponent,
@@ -42,8 +45,7 @@ import { MaskDirective } from '../shared/directives/mask.directive';
     NoConnectionModalComponent,
     ReviewModalComponent,
     InstructionsModalComponent,
-    ErrorModalComponent,
-    MaskDirective
+    ErrorModalComponent
   ],
   entryComponents: [
     ReviewModalComponent,

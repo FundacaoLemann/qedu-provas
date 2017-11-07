@@ -28,7 +28,8 @@
                           id="assessmentToken"
                           class="form-control input-lg"
                           name="assessmentToken"
-                          [(ngModel)]="assessmentToken"
+                          (change)="assessmentToken = $event.target.value"
+                          [qpAssessmentTokenMask]
                           required
                         >
                       <div class="error form-field-error">{{formError}}</div>
