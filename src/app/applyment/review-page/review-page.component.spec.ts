@@ -103,11 +103,13 @@ describe('ReviewPageComponent', () => {
       const fakeResponse = createResponse(200, 'OK', null);
 
       spyOn(assessmentService, 'postAnswers').and.returnValue(Observable.of(fakeResponse));
-      spyOn(component, 'finishAndRedirect');
-
+      spyOn(router, 'navigate');
+      
       component.submit();
 
-      expect(component.finishAndRedirect).toHaveBeenCalled();
+      const assessmentToken = applymentService.getAssessment().token;
+
+      expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
     }));
 
     it('should display modal error on response failure',
@@ -127,22 +129,6 @@ describe('ReviewPageComponent', () => {
         discardPeriodicTasks();
       }))
     );
-  });
-
-  describe('finishAndRedirect()', () => {
-    it('should put a finish request and redirect on success', async(() => {
-      const fakeMessage = 'Prova finalizada com sucesso';
-      spyOn(assessmentService, 'finishAssessment').and.returnValue(Observable.of(fakeMessage));
-      spyOn(router, 'navigate');
-
-      const assessmentToken = applymentService.getAssessment().token;
-      const studentToken = applymentService.getStudent().token;
-
-      component.finishAndRedirect();
-
-      expect(assessmentService.finishAssessment).toHaveBeenCalledWith(assessmentToken, studentToken);
-      expect(router.navigate).toHaveBeenCalledWith(['prova', assessmentToken, 'parabens']);
-    }));
   });
 
   describe('notAnswered', () => {

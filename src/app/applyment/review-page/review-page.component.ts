@@ -111,20 +111,11 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     this._assessmentService
         .postAnswers(this.assessment.token, this.student.token, answers)
         .subscribe(
-          this.finishAndRedirect.bind(this),
-          onError.bind(this)
-        );
-  }
-
-  finishAndRedirect() {
-    this._assessmentService
-        .finishAssessment(this.assessment.token, this.student.token)
-        .subscribe(
           () => {
             this._router.navigate(['prova', this.assessment.token, 'parabens']);
             window.localStorage.clear();
           },
-          this.openErrorModal.bind(this)
+          onError.bind(this)
         );
   }
 

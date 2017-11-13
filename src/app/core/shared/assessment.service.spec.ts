@@ -147,33 +147,6 @@ describe('AssessmentService', () => {
     );
   });
 
-  describe('finishAssessment()', () => {
-    it('should PUT to /student',
-      async(inject(
-        [AssessmentService, MockBackend, Http],
-        (service: AssessmentService, mockBackend: MockBackend, http: Http) => {
-          const mockResponse = createResponse(200, 'OK', { message: { data: 'Prova Finalizada' } });
-          spyOn(http, 'put').and.returnValue(Observable.of(mockResponse));
-
-          const assessmentToken = Mock.mockAssessment().token;
-          const studentToken = Mock.mockStudent().token;
-
-          service
-            .finishAssessment(assessmentToken, studentToken)
-            .subscribe(response => {
-              const url = `${API_URL}/assessments/${assessmentToken}/students`;
-              const options = new BaseRequestOptions();
-              options.headers = new Headers({
-                'Authorization': studentToken
-              });
-
-              expect(http.put).toHaveBeenCalledWith(url, { finished: true }, options);
-              expect(response).toEqual('Prova Finalizada');
-            });
-        })
-      ));
-  });
-
   describe('extractData()', () => {
     it('should return an Assessment',
       inject([AssessmentService], (service: AssessmentService) => {
