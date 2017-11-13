@@ -94,13 +94,11 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
   }
 
   loadImageCache(questions: Item[]) {
-    const head = document.getElementsByTagName('head')[0];
-
     function injectLinkPrefetch (media: any) {
-      let element = document.createElement('link');
+      const element = document.createElement('link');
       element.rel = 'prefetch';
       element.href = media.source;
-      head.appendChild(element);
+      document.getElementsByTagName('head')[0].appendChild(element);
     }
 
     questions.map(question => question.media.filter(media => !!media.source).map(injectLinkPrefetch));

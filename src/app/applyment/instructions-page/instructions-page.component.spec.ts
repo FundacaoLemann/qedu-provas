@@ -35,6 +35,7 @@ describe('InstructionsPageComponent', () => {
   let connection: ConnectionService;
   const ASSESSMENT = db.assessments[0];
   const QUESTIONS = db.questions;
+  const ITEMS = db.items;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -61,7 +62,7 @@ describe('InstructionsPageComponent', () => {
     connection = fixture.debugElement.injector.get(ConnectionService);
 
     spyOn(applymentService, 'getAssessment').and.returnValue(ASSESSMENT);
-    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(QUESTIONS));
+    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(ITEMS));
 
     fixture.detectChanges();
   });
@@ -83,6 +84,7 @@ describe('InstructionsPageComponent', () => {
   it('initAssessment', async(() => {
     spyOn(applyment, 'initAnswers');
     spyOn(router, 'navigate');
+    // spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(ITEMS));
 
     applymentService.setStudent(PARSED_STUDENT);
     applymentService.setAssessment(ASSESSMENT);
