@@ -1,5 +1,6 @@
 {
-    "apps": [{
+    "apps": [
+        {
             "name": "qedu-provas-front",
             "script": "server.js",
             "instances": 0,
