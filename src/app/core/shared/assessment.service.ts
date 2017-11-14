@@ -109,20 +109,6 @@ export class AssessmentService extends RequestService {
                .catch(this.handleError);
   }
 
-  finishAssessment(assessmentToken: string, studentToken: string): Observable<string> {
-    const url = `${API_URL}/assessments/${assessmentToken}/students`;
-    const options = new BaseRequestOptions();
-    options.headers = new Headers({
-      'Authorization': studentToken
-    });
-    const body = { finished: true };
-
-    return this._http
-               .put(url, body, options)
-               .map(response => response.json().message.data)
-               .catch(this.handleError);
-  }
-
   downloadBackup(password: string): string | boolean {
     if (password === DOWNLOAD_CODE) {
       const anchor = document.createElement('a');
