@@ -1,28 +1,26 @@
 import { Injectable } from '@angular/core';
 import { BaseRequestOptions, Headers, Http, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import { Observable } from 'rxjs/Observable';
+import * as md5 from 'md5';
+
 import { environment } from '../../../environments/environment';
 import Answer from '../../shared/model/answer';
 import { Assessment } from '../../shared/model/assessment';
 import { Item } from '../../shared/model/item';
 import { RequestService } from './request.service';
 
-const md5 = require('md5');
 const { API_URL, DOWNLOAD_CODE } = environment;
 
 @Injectable()
 export class AssessmentService extends RequestService {
 
-  static extractData(response: Response): any {
-    return response.json().data;
-  }
-
-  static extractQuestionData(response: Response): Item[] {
-    const rawItems = response.json().data.items;
+  private extractQuestionData(response: any): Item[] {
+    const rawItems = response.items;
     const questions = [];
 
     for (const item of rawItems) {
@@ -53,7 +51,7 @@ export class AssessmentService extends RequestService {
         medias.push(media);
       }
 
-      let regex = /<img.+?src=[\"'](.+?)[\"'].*?>/igm;
+      const regex = /<img.+?src=[\"'](.+?)[\"'].*?>/igm;
       let match;
       while (match = regex.exec(item.stem)) {
         medias.push({
@@ -72,41 +70,39 @@ export class AssessmentService extends RequestService {
     return questions;
   }
 
-  constructor(private _http: Http) {
+  constructor(private _http: HttpClient) {
     super();
   }
 
   fetchAssessment(assessment_id: string): Observable<Assessment> {
     return this._http
-               .get(`${API_URL}/assessments/${assessment_id}`)
-               .map(AssessmentService.extractData)
-               .catch(this.handleError);
+      .get<{data: Assessment}>(`${API_URL}/assessments/${assessment_id}`)
+      .map((response) => response.data)
+      .catch(this.handleError);
   }
 
   fetchAssessmentQuestions(assessmentToken: string, studentToken: string): Observable<Item[]> {
     const url = `${API_URL}/assessments/${assessmentToken}/items`;
-    const headers = new Headers({
+    const headers = new HttpHeaders({
       'Authorization': studentToken
     });
 
     return this._http
-               .get(url, { headers })
-               .map(AssessmentService.extractQuestionData)
-               .catch(this.handleError);
+      .get(url, { headers })
+      .map((response: any) => this.extractQuestionData(response.data))
+      .catch(this.handleError);
   }
 
-  postAnswers(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<Response> {
-    const options = new BaseRequestOptions();
-    options.headers = new Headers({
+  postAnswers(assessmentToken: string, studentToken: string, answers: Answer[]): Observable<null> {
+    const url = `${API_URL}/assessments/${assessmentToken}/answers`;
+    const headers = new HttpHeaders({
       'Authorization': studentToken,
     });
 
-    const url = `${API_URL}/assessments/${assessmentToken}/answers`;
-
     return this._http
-               .post(url, { answers }, options)
-               .timeout(60000)
-               .catch(this.handleError);
+      .post(url, { answers }, { headers })
+      .timeout(60000)
+      .catch(this.handleError);
   }
 
   downloadBackup(password: string): string | boolean {

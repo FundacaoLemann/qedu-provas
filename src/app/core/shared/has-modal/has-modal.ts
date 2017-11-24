@@ -14,7 +14,7 @@ export abstract class HasModal {
    * @param events Object containing the events to be bound
    * @param [afterInit] callback called after creating the component, passing its instance as first param
    */
-  openModal(modalComponent: Type<Component>, events: { [key: string]: Function }, afterInit?: Function) {
+  openModal<T>(modalComponent: Type<T>, events: { [key: string]: Function }, afterInit?: Function) {
     // Close the current modal
     this.closeModal();
 

@@ -108,9 +108,9 @@ export default class Mock {
 
 
   static mockAnswers(): Answer[] {
-    let ANSWERS = mock.answers;
-    let answers = [];
-    for(const A of ANSWERS) {
+    const ANSWERS = mock.answers;
+    const answers = [];
+    for (const A of ANSWERS) {
       const a = new Answer();
       a.itemId = A.itemId;
       a.optionId = A.optionId;
