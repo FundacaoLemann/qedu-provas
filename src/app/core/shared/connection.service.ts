@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs/Subject';
 import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 const API_URL = environment.API_URL;
 
@@ -17,13 +17,13 @@ export class ConnectionService {
   limit = 0;
   private _reference = null;
   private _isFetching = false;
-  private _fetching$ = new Subject();
+  private _fetching$ = new Subject<boolean>();
 
   get isFetching() {
     return this._isFetching;
   }
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     this.status = this._fetching$.asObservable();
   }
 

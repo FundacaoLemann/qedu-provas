@@ -48,7 +48,7 @@ describe('QuestionPageComponent', () => {
     fixture = TestBed.createComponent(QuestionPageComponent);
     component = fixture.componentInstance;
     router = fixture.debugElement.injector.get(Router);
-    route = fixture.debugElement.injector.get(ActivatedRoute);
+    route = fixture.debugElement.injector.get(ActivatedRoute) as any;
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
     applymentService = fixture.debugElement.injector.get(ApplymentService);
 

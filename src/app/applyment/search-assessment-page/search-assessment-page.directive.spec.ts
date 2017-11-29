@@ -1,13 +1,14 @@
 import { SearchAssessmentPageDirective } from './search-assessment-page.directive';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 @Component({
   template: `
       <input [qpAssessmentTokenMask] />`
 })
-class TestComponent { }
+class TestComponent {
+}
 
 describe('Directive: SearchAssessmentPageDirective', () => {
   let fixture;
@@ -22,7 +23,7 @@ describe('Directive: SearchAssessmentPageDirective', () => {
         NO_ERRORS_SCHEMA
       ]
     })
-    .createComponent(TestComponent);
+      .createComponent(TestComponent);
 
     fixture.detectChanges();
   });
@@ -33,13 +34,14 @@ describe('Directive: SearchAssessmentPageDirective', () => {
     expect(placeholder).toBe(null);
   });
 
-  it('should be in uppercase without blank space', () => {
-    fixture.whenStable().then(() => {
-      const input = fixture.debugElement.query(By.css('input'));
-      input.nativeElement.value = 'São Paulo';
-      input.dispatchEvent(new Event('input'));
-      const value = input.nativeElement.getAttribute('value');
-      expect(value).toBe('SÃOPAULO');
-    });
-  });
+  it('should be in uppercase without blank space', fakeAsync(() => {
+    const input = fixture.debugElement.query(By.css('input'));
+    tick();
+    input.nativeElement.value = 'qedu';
+    input.nativeElement.dispatchEvent(new Event('input'));
+    tick();
+    fixture.detectChanges();
+
+    expect(input.nativeElement.value).toEqual('QEDU');
+  }));
 });
