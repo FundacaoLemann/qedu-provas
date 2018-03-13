@@ -7,10 +7,10 @@ import { SearchAssessmentPageDirective } from './search-assessment-page/search-a
 import { InstructionsPageComponent } from './instructions-page/instructions-page.component';
 import { InstructionsModalComponent } from './instructions-page/modal/instructions-modal.component';
 import { QuestionPageComponent } from './question-page/question-page.component';
-import { AnswerComponent } from './question-page/answer.component';
+import { AnswerComponent } from './question-page/answer/answer.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
 import { ReviewModalComponent } from './review-page/modal/review-modal.component';
-import { CurrentQuestionComponent } from './question-page/current-question.component';
+import { CurrentQuestionComponent } from './question-page/current-question/current-question.component';
 import { CongratulationsPageComponent } from './congratulations-page/congratulations-page.component';
 import { CoreModule } from '../core/core.module';
 import { StudentAuthenticationPageComponent } from './student-authentication-page/student-authentication-page.component';

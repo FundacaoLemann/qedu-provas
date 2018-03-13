@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CurrentQuestionComponent } from './current-question.component';
-import { ApplymentModule } from '../applyment.module';
+import { ApplymentModule } from '../../applyment.module';
 
 describe('CurrentQuestionComponent', () => {
   let component: CurrentQuestionComponent;
