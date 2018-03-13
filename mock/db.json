@@ -158,15 +158,27 @@
   "answers": [
     {
       "itemId": "58d2f1af4a083c00194437c7",
-      "optionId": 4
+      "optionId": 4,
+      "visualizedTimes": 1,
+      "spentTimeInSeconds": 32
     },
     {
       "itemId": "58d2f1af4a083c00194437c8",
-      "optionId": 7
+      "optionId": 7,
+      "visualizedTimes": 3,
+      "spentTimeInSeconds": 100
     },
     {
       "itemId": "58d2f1af4a083c00194437c9",
-      "optionId": "12"
+      "optionId": 12,
+      "visualizedTimes": 1,
+      "spentTimeInSeconds": 14
+    },
+    {
+      "itemId": "58d2f1af4a083c00194437c9",
+      "optionId": 0,
+      "visualizedTimes": 0,
+      "spentTimeInSeconds": 0
     }
   ]
 }

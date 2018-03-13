@@ -136,7 +136,7 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   setNotAnswered(allAnswers: Answer[]) {
     this.notAnswered = [];
     allAnswers.map((answer, index) => {
-      if (!answer) {
+      if (!answer.isAnswered()) {
         this.notAnswered.push(index + 1);
       }
     });

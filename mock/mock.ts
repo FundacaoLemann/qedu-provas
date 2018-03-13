@@ -12,7 +12,7 @@ const mock = require('./db.json');
 export default class Mock {
 
   static mockItem(index = 0) {
-    let item = new Item();
+    const item = new Item();
     item.id = mock.questions[index].id;
     item.text = mock.questions[index].stem;
     item.answers = Mock.mockOptions(index);
@@ -21,9 +21,9 @@ export default class Mock {
   }
 
   static mockOptions(itemIndex = 0): Option[] {
-    let options = [];
-    for (let forAnswer of mock.questions[itemIndex].options) {
-      let option = new Option();
+    const options = [];
+    for (const forAnswer of mock.questions[itemIndex].options) {
+      const option = new Option();
       option.id = forAnswer.id;
       option.text = forAnswer.description;
       options.push(option);
@@ -33,7 +33,7 @@ export default class Mock {
 
   static mockMedia(questionIndex = 0): Media {
     const question = mock.questions[questionIndex];
-    let media = new Media();
+    const media = new Media();
     if(question.image) {
       media.id = md5(question.image);
       media.type = 'image';
@@ -46,9 +46,9 @@ export default class Mock {
   }
 
   static mockAssessment(): Assessment {
-    let A = mock.assessments[0];
+    const A = mock.assessments[0];
 
-    let a = new Assessment();
+    const a = new Assessment();
     a.id = A.id;
     a.token = A.token;
     a.mainTitle = A.mainTitle;
@@ -64,9 +64,9 @@ export default class Mock {
   }
 
   static mockSchool(): EducationalEntity {
-    let S = mock.assessments[0].school;
+    const S = mock.assessments[0].school;
 
-    let s = new EducationalEntity();
+    const s = new EducationalEntity();
     s.id = S.id;
     s.description = S.description;
     s.image = S.image;
@@ -75,9 +75,9 @@ export default class Mock {
   }
 
   static mockDepartment(): EducationalEntity {
-    let D = mock.assessments[0].department;
+    const D = mock.assessments[0].department;
 
-    let d = new EducationalEntity();
+    const d = new EducationalEntity();
     d.id = D.id;
     d.description = D.description;
     d.image = D.image;
@@ -86,9 +86,9 @@ export default class Mock {
   }
 
   static mockStudent(): Student {
-    let S = mock.students[0];
+    const S = mock.students[0];
 
-    let s = new Student();
+    const s = new Student();
     s.id = S.id;
     s.token = '12a11';
     s.name = S.name;
@@ -99,21 +99,15 @@ export default class Mock {
   }
 
   static mockAnswer(index = 0): Answer {
-    let ANSWER = mock.answers[index];
-    let answer = new Answer();
-    answer.itemId = ANSWER.itemId;
-    answer.optionId = ANSWER.optionId;
-    return answer;
+    const ANSWER = mock.answers[index];
+    return new Answer({itemId: ANSWER.itemId, optionId: ANSWER.optionId});
   }
-
 
   static mockAnswers(): Answer[] {
     const ANSWERS = mock.answers;
     const answers = [];
     for (const A of ANSWERS) {
-      const a = new Answer();
-      a.itemId = A.itemId;
-      a.optionId = A.optionId;
+      const a = new Answer({ itemId: A.itemId, optionId: A.optionId });
       answers.push(a);
     }
     return answers;

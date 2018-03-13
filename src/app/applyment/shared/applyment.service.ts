@@ -16,7 +16,7 @@ export class ApplymentService {
       assessment: <Assessment>{},
       questions: [],
       answers: [],
-    }
+    },
   };
 
   constructor(private _store: StoreService) {
@@ -35,7 +35,9 @@ export class ApplymentService {
 
   // Assessment
   setAssessment(assessment: Assessment) {
-    const newState = _.merge({}, this._store.state, { applyment: { assessment } });
+    const newState = _.merge({}, this._store.state, {
+      applyment: { assessment },
+    });
     this._store.setState(newState);
   }
 
@@ -45,7 +47,9 @@ export class ApplymentService {
 
   // Questions
   setItems(questions: Item[]) {
-    const newState = _.merge({}, this._store.state, { applyment: { questions } });
+    const newState = _.merge({}, this._store.state, {
+      applyment: { questions },
+    });
     this._store.setState(newState);
   }
 
@@ -54,8 +58,8 @@ export class ApplymentService {
   }
 
   // Answers
-  initAnswers(length: number) {
-    const answers = Array(length).fill(null);
+  initAnswers(items: Item[]) {
+    const answers = items.map((item: Item) => new Answer({ itemId: item.id }));
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
@@ -64,17 +68,25 @@ export class ApplymentService {
   setAnswer(itemIndex: number, answer: Answer) {
     const answers = this._store.state.applyment.answers;
     answers[itemIndex] = answer;
-    window.localStorage.setItem(`answers-${this._store.state.applyment.student.token}`, window.btoa(JSON.stringify(answers)));
+    window.localStorage.setItem(
+      `answers-${this._store.state.applyment.student.token}`,
+      window.btoa(JSON.stringify(answers)),
+    );
 
     const newState = _.merge({}, this._store.state, { applyment: { answers } });
     this._store.setState(newState);
   }
 
   getAnswer(itemIndex: number): Answer {
-    const storage = window.localStorage.getItem(`answers-${this._store.state.applyment.student.token}`);
+    const storage = window.localStorage.getItem(
+      `answers-${this._store.state.applyment.student.token}`,
+    );
     if (!!storage) {
-      const answers = JSON.parse(atob(storage));
-      const newState = _.merge({}, this._store.state, { applyment: { answers } });
+      const rawAnswers = JSON.parse(atob(storage));
+      const answers = rawAnswers.map(answer => new Answer(answer));
+      const newState = _.merge({}, this._store.state, {
+        applyment: { answers },
+      });
       this._store.setState(newState);
     }
 
@@ -106,5 +118,4 @@ export class ApplymentService {
   resetInitialState() {
     this._store.setState(_.create(this.initialState));
   }
-
 }

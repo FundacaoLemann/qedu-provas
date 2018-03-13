@@ -1,10 +1,7 @@
-import { ComponentRef } from '@angular/core';
 import {
   async,
   ComponentFixture,
-  discardPeriodicTasks,
   fakeAsync,
-  inject,
   TestBed,
   tick,
 } from '@angular/core/testing';
@@ -23,11 +20,6 @@ import { ErrorModalComponent } from '../shared/error-modal/error-modal.component
 import { NoConnectionModalComponent } from '../shared/no-connection-modal/no-connection-modal.component';
 import { ReviewPageComponent } from './review-page.component';
 import { ReviewModalComponent } from './modal/review-modal.component';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 const db = require('../../../../mock/db.json');
 
@@ -68,10 +60,10 @@ describe('ReviewPageComponent', () => {
     applymentService.setAssessment(camelizeObject(ASSESSMENT));
     applymentService.setStudent(camelizeObject(STUDENT));
     applymentService.setItems(camelizeObject(QUESTIONS));
-    applymentService.initAnswers(5);
+    applymentService.initAnswers(QUESTIONS);
     applymentService.setAnswer(0, Mock.mockAnswer(0));
     applymentService.setAnswer(1, Mock.mockAnswer(1));
-    applymentService.setAnswer(2, Mock.mockAnswer(2));
+    applymentService.setAnswer(2, Mock.mockAnswer(3));
 
     assessmentService = fixture.debugElement.injector.get(AssessmentService);
 
@@ -118,7 +110,7 @@ describe('ReviewPageComponent', () => {
       const answeredQuestions = fixture.debugElement.query(
         By.css('.items_count'),
       ).nativeElement.innerHTML;
-      const message = `3 de ${QUESTIONS.length} questões`;
+      const message = `2 de ${QUESTIONS.length} questões`;
 
       expect(answeredQuestions).toEqual(message);
     }),
@@ -179,7 +171,7 @@ describe('ReviewPageComponent', () => {
 
       component.setNotAnswered(answers);
 
-      expect(component.notAnswered).toEqual([4, 5]);
+      expect(component.notAnswered).toEqual([3]);
     });
   });
 });

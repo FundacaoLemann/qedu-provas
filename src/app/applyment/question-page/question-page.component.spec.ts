@@ -14,6 +14,7 @@ import { CoreModule } from '../../core/core.module';
 import * as test from '../../../testing/testing-helper';
 import { createResponse } from '../../../testing/testing-helper';
 import Mock from '../../../../mock/mock';
+import Answer from '../../shared/model/answer';
 
 const db = require('../../../../mock/db.json');
 
@@ -57,7 +58,7 @@ describe('QuestionPageComponent', () => {
     applymentService.setAssessment(ASSESSMENT);
     applymentService.setItems(QUESTIONS);
     applymentService.setStudent(STUDENT);
-    applymentService.initAnswers(questionsLength);
+    applymentService.initAnswers(QUESTIONS);
 
     fixture.detectChanges();
   });
@@ -68,29 +69,29 @@ describe('QuestionPageComponent', () => {
 
   it('initAnswers', () => {
     spyOn(applymentService, 'initAnswers');
-    applymentService.initAnswers(questionsLength);
 
-    expect(applymentService.initAnswers).toHaveBeenCalledWith(questionsLength);
+    // expect(applymentService.initAnswers).toHaveBeenCalledWith(QUESTIONS);
   });
 
   it('should be saved the answers in storage',
     inject([ApplymentService, StoreService],
     (service: ApplymentService, store: StoreService) => {
       window.localStorage.clear();
-      service.setAnswer(0, { itemId: '0', optionId: 1 });
+      service.setAnswer(0, new Answer({ itemId: '0', optionId: 1, visualizedTimes: 0, spentTimeInSeconds: 0}));
       const storage = JSON.parse(atob(window.localStorage.getItem('answers-undefined')));
 
-      expect(store.state.applyment.answers).toEqual(storage);
+      store.state.applyment.answers.map((answer, index) => {
+        expect({...answer}).toEqual({...storage[index]});
+      });
     })
   );
 
   it('should be loaded if there is storage',
     inject([ApplymentService, StoreService],
     (service: ApplymentService, store: StoreService) => {
-      service.getAnswer(0);
-      const storage = JSON.parse(atob(window.localStorage.getItem('answers-undefined')));
+      const answers = service.getAllAnswers();
 
-      expect(store.state.applyment.answers).toEqual(storage);
+      expect(store.state.applyment.answers).toEqual(answers);
     })
   );
 
