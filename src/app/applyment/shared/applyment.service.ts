@@ -51,6 +51,8 @@ export class ApplymentService {
       applyment: { questions },
     });
     this._store.setState(newState);
+
+    this.initAnswers(questions);
   }
 
   getItems(): Item[] {

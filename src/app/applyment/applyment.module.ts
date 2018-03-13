@@ -55,7 +55,7 @@ import { ErrorModalComponent } from './shared/error-modal/error-modal.component'
     ApplymentComponent,
   ],
   providers: [
-    ApplymentService
+    ApplymentService,
   ]
 })
 export class ApplymentModule {

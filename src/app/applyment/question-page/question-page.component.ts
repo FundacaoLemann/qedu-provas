@@ -7,11 +7,13 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import Answer from '../../shared/model/answer';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AnswerStatisticsService } from './answer-statistics.service';
 
 @Component({
   selector: 'qp-question-page',
   templateUrl: './question-page.component.html',
   styleUrls: ['./question-page.component.sass'],
+  providers: [AnswerStatisticsService],
 })
 export class QuestionPageComponent implements OnInit {
   question: Item;
@@ -27,10 +29,12 @@ export class QuestionPageComponent implements OnInit {
     private _router: Router,
     private _applymentService: ApplymentService,
     private _sanitizer: DomSanitizer,
+    private answersStatistics: AnswerStatisticsService,
   ) {}
 
   ngOnInit() {
     this.assessment = this._applymentService.getAssessment();
+    const items = this._applymentService.getItems();
 
     // Update question based on the url change
     this._route.params
@@ -38,24 +42,24 @@ export class QuestionPageComponent implements OnInit {
       .subscribe(
         questionIndex => {
           try {
-            const questions = this._applymentService.getItems();
+            const answer = this._applymentService.getAnswer(questionIndex);
+            this.answersStatistics.track(answer);
+
             this.questionIndex = questionIndex;
-            this.questionsLength = questions.length;
-            this.question = questions[this.questionIndex];
+            this.questionsLength = items.length;
+            this.question = items[this.questionIndex];
             this.questionText = this.questionHTMLText();
             this.options = this.question.answers;
-            this._applymentService.initAnswers(questions);
+            this.checkedAnswer =
+              answer && answer.optionId ? answer.optionId : 0;
+
             document.body.scrollTop = 0;
           } catch (err) {
             this.question = new Item();
             this.options = [];
-          } finally {
-            const answer = this._applymentService.getAnswer(this.questionIndex);
-            this.checkedAnswer =
-              answer && answer.optionId ? answer.optionId : 0;
           }
         },
-        error => {
+        () => {
           this.question = new Item();
           this.options = [];
         },
@@ -82,10 +86,8 @@ export class QuestionPageComponent implements OnInit {
   }
 
   updateChecked(optionId: number) {
-    const answer = new Answer();
+    const answer = this.answersStatistics.getTrackAnswer();
     answer.optionId = optionId;
-    answer.itemId = this.question.id;
-
     this.checkedAnswer = optionId;
     this._applymentService.setAnswer(this.questionIndex, answer);
   }
