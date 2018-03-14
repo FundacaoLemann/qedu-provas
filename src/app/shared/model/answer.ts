@@ -1,4 +1,4 @@
-export default class Answer {
+export class Answer {
   itemId: string;
   optionId: number;
   visualizedTimes: number;
@@ -22,3 +22,6 @@ export default class Answer {
     return this.optionId !== 0;
   }
 }
+
+
+export default Answer;

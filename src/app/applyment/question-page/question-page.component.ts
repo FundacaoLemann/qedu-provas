@@ -7,16 +7,16 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import Answer from '../../shared/model/answer';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AnswerStatisticsService } from './answer-statistics.service';
+import { AnswerManagerService } from './answer-manager.service';
 
 @Component({
   selector: 'qp-question-page',
   templateUrl: './question-page.component.html',
   styleUrls: ['./question-page.component.sass'],
-  providers: [AnswerStatisticsService],
+  providers: [AnswerManagerService],
 })
 export class QuestionPageComponent implements OnInit {
-  question: Item;
+  question: Item = null;
   questionText: SafeHtml = null;
   questionIndex = 0;
   questionsLength: number;
@@ -29,7 +29,7 @@ export class QuestionPageComponent implements OnInit {
     private _router: Router,
     private _applymentService: ApplymentService,
     private _sanitizer: DomSanitizer,
-    private answersStatistics: AnswerStatisticsService,
+    private answerManager: AnswerManagerService,
   ) {}
 
   ngOnInit() {
@@ -43,7 +43,11 @@ export class QuestionPageComponent implements OnInit {
         questionIndex => {
           try {
             const answer = this._applymentService.getAnswer(questionIndex);
-            this.answersStatistics.track(answer);
+            this.answerManager
+              .register(answer)
+              .subscribe(_answer =>
+                this._applymentService.setAnswer(questionIndex, _answer),
+              );
 
             this.questionIndex = questionIndex;
             this.questionsLength = items.length;
@@ -85,13 +89,6 @@ export class QuestionPageComponent implements OnInit {
     return this._sanitizer.bypassSecurityTrustHtml(questionText);
   }
 
-  updateChecked(optionId: number) {
-    const answer = this.answersStatistics.getTrackAnswer();
-    answer.optionId = optionId;
-    this.checkedAnswer = optionId;
-    this._applymentService.setAnswer(this.questionIndex, answer);
-  }
-
   submitAnswerAndNavigateNext() {
     this.postAnswer();
     const nextQuestion = +this._route.snapshot.params['question_id'] + 1;
@@ -114,5 +111,9 @@ export class QuestionPageComponent implements OnInit {
 
   postAnswer() {
     const applymentStatus = this._applymentService.getApplymentStatus();
+  }
+
+  handleOptionClick(optionId: number) {
+    this.answerManager.setOption(optionId);
   }
 }
