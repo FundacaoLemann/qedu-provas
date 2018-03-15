@@ -8,6 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import Answer from '../../shared/model/answer';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AnswerManagerService } from './answer-manager.service';
+import { Option } from '../../shared/model/option';
 
 @Component({
   selector: 'qp-question-page',
@@ -17,12 +18,10 @@ import { AnswerManagerService } from './answer-manager.service';
 })
 export class QuestionPageComponent implements OnInit {
   question: Item = null;
-  questionText: SafeHtml = null;
   questionIndex = 0;
   questionsLength: number;
-  options: any[];
-  checkedAnswer: number = null;
   assessment: Assessment;
+  answer: Answer;
 
   constructor(
     private _route: ActivatedRoute,
@@ -33,44 +32,33 @@ export class QuestionPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.assessment = this._applymentService.getAssessment();
     this.assessment = this._applymentService.getAssessment();
-    const items = this._applymentService.getItems();
-
+    this.questionsLength = this._applymentService.getItems().length;
     // Update question based on the url change
     this._route.params
       .switchMap(params => Observable.of(+params['question_id'] - 1))
       .subscribe(
         questionIndex => {
           try {
-            const answer = this._applymentService.getAnswer(questionIndex);
-            this.answerManager
-              .register(answer)
-              .subscribe(_answer =>
-                this._applymentService.setAnswer(questionIndex, _answer),
-              );
-
-            this.questionIndex = questionIndex;
-            this.questionsLength = items.length;
-            this.question = items[this.questionIndex];
-            this.questionText = this.questionHTMLText();
-            this.options = this.question.answers;
-            this.checkedAnswer =
-              answer && answer.optionId ? answer.optionId : 0;
-
             document.body.scrollTop = 0;
+            this.questionIndex = questionIndex;
+            this.question = this._applymentService.getItems()[questionIndex];
+            this.answer = this._applymentService.getAnswer(questionIndex);
+            this.answerManager
+              .register(this.answer)
+              .subscribe(this.handleAnswerChange);
           } catch (err) {
             this.question = new Item();
-            this.options = [];
           }
         },
         () => {
           this.question = new Item();
-          this.options = [];
         },
       );
   }
 
-  questionHTMLText(): SafeHtml {
+  questionHTML(): SafeHtml {
     let questionText = this.question.text;
 
     this.question.media.map(media => {
@@ -115,5 +103,14 @@ export class QuestionPageComponent implements OnInit {
 
   handleOptionClick(optionId: number) {
     this.answerManager.setOption(optionId);
+  }
+
+  handleAnswerChange = (answer: Answer) => {
+    this.answer = answer;
+    this._applymentService.setAnswer(this.questionIndex, this.answer);
+  };
+
+  isCorrectOption(option: Option): boolean {
+    return option.id === this.answer.optionId;
   }
 }

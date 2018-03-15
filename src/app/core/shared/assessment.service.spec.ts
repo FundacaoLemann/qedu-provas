@@ -71,7 +71,7 @@ describe('AssessmentService', () => {
                     md5(QUESTIONS[0].image) +
                     '}}',
                 );
-                expect(questions[0].answers.length).toEqual(5);
+                expect(questions[0].answers.length).toEqual(4);
                 expect(questions[0].media).toBeTruthy();
               });
 
