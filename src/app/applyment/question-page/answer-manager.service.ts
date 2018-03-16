@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Answer } from '../../shared/model/answer';
 
 @Injectable()
 export class AnswerManagerService {
-  protected answer: Answer;
-  protected answer$: Subject<Answer>;
+  protected answer: Answer = new Answer();
+  protected answer$: BehaviorSubject<Answer>;
+  protected interval: any;
 
   register(answer: Answer): Observable<Answer> {
-    this.answer = new Answer({ ...answer });
-    this.answer$ = new Subject<Answer>();
+    this.answer = this.cloneAnswer({
+      ...answer,
+      visualizedTimes: answer.visualizedTimes + 1,
+    });
+    this.answer$ = new BehaviorSubject<Answer>(this.answer);
     return this.answer$.asObservable();
   }
 
   setOption(optionId: number) {
-    const answer = new Answer({ ...this.answer, optionId });
-    this.answer$.next(answer);
+    this.answer = this.cloneAnswer({ optionId });
+    this.answer$.next(this.answer);
+  }
+
+  private cloneAnswer(answer = {}): Answer {
+    return new Answer({ ...this.answer, ...answer });
   }
 }
