@@ -62,10 +62,6 @@ describe('QuestionPageComponent', () => {
     answerManagerService = fixture.debugElement.injector.get(
       AnswerManagerService,
     );
-    // route.testParams = {
-    //   token: ASSESSMENT.token,
-    //   question_id: QUESTIONS[0].id,
-    // }
 
     applymentService.setAssessment(ASSESSMENT);
     applymentService.setItems(QUESTIONS);
@@ -73,19 +69,6 @@ describe('QuestionPageComponent', () => {
 
     fixture.detectChanges();
   });
-
-  // it('update properties on route change', () => {
-  //   const question = QUESTIONS[0];
-  //   spyOn(answerManagerService, 'register').and.returnValue(Observable.of(null));
-  //
-  //   route.testParams = { token: 'qedu-1', question_id: '1' };
-  //
-  //   fixture.detectChanges();
-  //
-  //   expect(component.questionIndex).toEqual(0);
-  //   expect(component.question).toEqual(question);
-  //
-  // });
 
   it('renders a question', () => {
     const question = QUESTIONS[0];
