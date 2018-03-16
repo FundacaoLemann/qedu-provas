@@ -16,12 +16,23 @@ export class AnswerManagerService {
       visualizedTimes: answer.visualizedTimes + 1,
     });
     this.answer$ = new BehaviorSubject<Answer>(this.answer);
+    this.startTrackingTime();
     return this.answer$.asObservable();
   }
 
   setOption(optionId: number) {
     this.answer = this.cloneAnswer({ optionId });
     this.answer$.next(this.answer);
+  }
+
+  private startTrackingTime() {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.answer = this.cloneAnswer({
+        spentTimeInSeconds: this.answer.spentTimeInSeconds + 1,
+      });
+      this.answer$.next(this.answer);
+    }, 1000);
   }
 
   private cloneAnswer(answer = {}): Answer {

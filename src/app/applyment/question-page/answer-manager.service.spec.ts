@@ -1,4 +1,11 @@
-import { TestBed, inject, async } from '@angular/core/testing';
+import {
+  TestBed,
+  inject,
+  async,
+  tick,
+  fakeAsync,
+  discardPeriodicTasks,
+} from '@angular/core/testing';
 
 import { AnswerManagerService } from './answer-manager.service';
 import { Answer } from '../../shared/model/answer';
@@ -30,23 +37,42 @@ describe('AnswerManagerService', () => {
   );
 
   it(
-    'update option and emit',
+    'updates optionId and emit',
     async(
       inject([AnswerManagerService], (service: AnswerManagerService) => {
         const answer = new Answer();
         const expectedAnswers = [
-          new Answer({visualizedTimes: 1}), // first emission
-          new Answer({visualizedTimes: 1, optionId: 2})
+          new Answer({ visualizedTimes: 1 }), // first emission
+          new Answer({ visualizedTimes: 1, optionId: 2 }),
         ];
         const answers = [];
-        service
-          .register(answer)
-          .subscribe(updatedAnswer => {
-            answers.push(updatedAnswer);
-          });
+        service.register(answer).subscribe(updatedAnswer => {
+          answers.push(updatedAnswer);
+        });
 
         service.setOption(2);
         expect(answers).toEqual(expectedAnswers);
+      }),
+    ),
+  );
+
+  it(
+    'update spentTimeInSeconds by 3',
+    fakeAsync(
+      inject([AnswerManagerService], (service: AnswerManagerService) => {
+        const answer = new Answer();
+        let lastEmittedAnswer: Answer;
+
+        service
+          .register(answer)
+          .subscribe(emittedAnswer => lastEmittedAnswer = emittedAnswer);
+
+        tick(3000);
+        expect(lastEmittedAnswer).toEqual(new Answer({
+          visualizedTimes: 1,
+          spentTimeInSeconds: 3,
+        }));
+        discardPeriodicTasks();
       }),
     ),
   );
