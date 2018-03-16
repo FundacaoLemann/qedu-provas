@@ -25,6 +25,10 @@ export class AnswerManagerService {
     this.answer$.next(this.answer);
   }
 
+  unregister() {
+    clearInterval(this.interval);
+  }
+
   private startTrackingTime() {
     clearInterval(this.interval);
     this.interval = setInterval(() => {

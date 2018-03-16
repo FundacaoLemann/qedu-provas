@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed } from '@angular/core/testing';
 import { QuestionPageComponent } from './question-page.component';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -111,23 +111,35 @@ describe('QuestionPageComponent', () => {
     expect(answerManagerService.register).toHaveBeenCalledWith(mockAnswer);
   });
 
-  it('updates answer on options change', async(() => {
-    const mockAnswer = ANSWERS[0];
-    const updatedAnswer = new Answer({...mockAnswer, optionId: 1});
-    const mockedAnswerManager$ = new Subject();
-    spyOn(answerManagerService, 'register').and.returnValue(
-      mockedAnswerManager$.asObservable(),
-    );
-    spyOn(answerManagerService, 'setOption');
-    spyOn(applymentService, 'setAnswer');
+  it(
+    'updates answer on options change',
+    async(() => {
+      const mockAnswer = ANSWERS[0];
+      const updatedAnswer = new Answer({ ...mockAnswer, optionId: 1 });
+      const mockedAnswerManager$ = new Subject();
+      spyOn(answerManagerService, 'register').and.returnValue(
+        mockedAnswerManager$.asObservable(),
+      );
+      spyOn(answerManagerService, 'setOption');
+      spyOn(applymentService, 'setAnswer');
 
-    route.testParams = { token: 'prova-1', question_id: '1' };
+      route.testParams = { token: 'prova-1', question_id: '1' };
 
-    component.handleOptionClick(1);
-    mockedAnswerManager$.next(updatedAnswer);
+      component.handleOptionClick(1);
+      mockedAnswerManager$.next(updatedAnswer);
 
-    expect(answerManagerService.setOption).toHaveBeenCalledWith(1);
-    expect(applymentService.setAnswer).toHaveBeenCalledWith(0, updatedAnswer);
+      expect(answerManagerService.setOption).toHaveBeenCalledWith(1);
+      expect(applymentService.setAnswer).toHaveBeenCalledWith(0, updatedAnswer);
+    }),
+  );
+
+  it('stop tracking on destroy', fakeAsync(() => {
+    spyOn(answerManagerService, 'unregister');
+
+    component.ngOnDestroy();
+
+    expect(answerManagerService.unregister).toHaveBeenCalled();
+    discardPeriodicTasks();
   }));
 
   it('should create', () => {

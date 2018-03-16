@@ -1,7 +1,6 @@
 import {
   TestBed,
   inject,
-  async,
   tick,
   fakeAsync,
   discardPeriodicTasks,

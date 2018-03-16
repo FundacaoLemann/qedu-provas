@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../shared/model/item';
 import { ApplymentService } from '../shared/applyment.service';
@@ -16,7 +16,7 @@ import { Option } from '../../shared/model/option';
   styleUrls: ['./question-page.component.sass'],
   providers: [AnswerManagerService],
 })
-export class QuestionPageComponent implements OnInit {
+export class QuestionPageComponent implements OnInit, OnDestroy {
   question: Item = null;
   questionIndex = 0;
   questionsLength: number;
@@ -56,6 +56,10 @@ export class QuestionPageComponent implements OnInit {
           this.question = new Item();
         },
       );
+  }
+
+  ngOnDestroy() {
+    this.answerManager.unregister();
   }
 
   questionHTML(): SafeHtml {
