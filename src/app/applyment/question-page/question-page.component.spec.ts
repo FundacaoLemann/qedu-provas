@@ -32,6 +32,7 @@ describe('QuestionPageComponent', () => {
   const ASSESSMENT = db.assessments[0];
   const ANSWERS = [Mock.mockAnswer(), Mock.mockAnswer(1), Mock.mockAnswer(2)];
 
+
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -62,6 +63,8 @@ describe('QuestionPageComponent', () => {
     answerManagerService = fixture.debugElement.injector.get(
       AnswerManagerService,
     );
+
+    spyOn(window, 'scrollTo');
 
     applymentService.setAssessment(ASSESSMENT);
     applymentService.setItems(QUESTIONS);
@@ -111,6 +114,7 @@ describe('QuestionPageComponent', () => {
       component.handleOptionClick(1);
       mockedAnswerManager$.next(updatedAnswer);
 
+      expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
       expect(answerManagerService.setOption).toHaveBeenCalledWith(1);
       expect(applymentService.setAnswer).toHaveBeenCalledWith(0, updatedAnswer);
     }),
