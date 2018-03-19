@@ -41,7 +41,7 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
       .subscribe(
         questionIndex => {
           try {
-            document.body.scrollTop = 0;
+            window.scrollTo(0, 0);
             this.questionIndex = questionIndex;
             this.question = this._applymentService.getItems()[questionIndex];
             this.answer = this._applymentService.getAnswer(questionIndex);
