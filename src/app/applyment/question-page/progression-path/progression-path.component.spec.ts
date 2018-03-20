@@ -38,7 +38,7 @@ describe('ProgressionPathComponent', () => {
     router = fixture.debugElement.injector.get(Router);
     applymentService = fixture.debugElement.injector.get(ApplymentService);
 
-    applymentService.initAnswers(QUESTIONS.length);
+    applymentService.initAnswers(QUESTIONS);
 
     fixture.detectChanges();
   });

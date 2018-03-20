@@ -48,10 +48,6 @@
         {
           "id": 4,
           "description": "Botafogo"
-        },
-        {
-          "id": 5,
-          "description": "Bangu"
         }
       ]
     },
@@ -158,15 +154,27 @@
   "answers": [
     {
       "itemId": "58d2f1af4a083c00194437c7",
-      "optionId": 4
+      "optionId": 4,
+      "visualizedTimes": 1,
+      "timeSpentInSeconds": 32
     },
     {
       "itemId": "58d2f1af4a083c00194437c8",
-      "optionId": 7
+      "optionId": 7,
+      "visualizedTimes": 3,
+      "timeSpentInSeconds": 100
     },
     {
       "itemId": "58d2f1af4a083c00194437c9",
-      "optionId": "12"
+      "optionId": 12,
+      "visualizedTimes": 1,
+      "timeSpentInSeconds": 14
+    },
+    {
+      "itemId": "58d2f1af4a083c00194437c9",
+      "optionId": 0,
+      "visualizedTimes": 0,
+      "timeSpentInSeconds": 0
     }
   ]
 }

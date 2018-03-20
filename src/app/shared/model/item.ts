@@ -6,4 +6,8 @@ export class Item {
   text: string;
   answers: Option[];
   media: Media[];
+
+  constructor({ answers = [] } = {}) {
+    this.answers = answers;
+  }
 }

@@ -1,6 +1,6 @@
 <ul class="progression-path-list">
   <li *ngFor="let answer of answers; let indexFor = index"
-      [ngClass]="{answered: answer }"
+      [ngClass]="{answered: answer.isAnswered() }"
       [title]="buttonTitle(answer, indexFor+1)"
       (click)="onItemClick(indexFor+1)"
       class="progression-path-item">

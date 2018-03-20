@@ -13,20 +13,24 @@
       <div class="panel-body">
 
         <div class="col-xs-12">
-          <h3>Questão #{{questionIndex+1}}</h3>
+          <h3 itemIndex>Questão #{{questionIndex+1}}</h3>
           <hr>
         </div>
 
         <div class="col-xs-12 col-md-6">
-          <div class="question" question [innerHTML]="questionText"></div>
+          <div itemStem
+            class="question"
+            [innerHTML]="questionHTML()"
+          >
+          </div>
         </div>
 
         <div class="col-xs-12 col-md-6">
           <qp-answer
-            *ngFor="let option of options"
+            *ngFor="let option of question?.answers"
             [option]="option"
-            [checked]="option.id === checkedAnswer"
-            (onClicked)="updateChecked($event)"
+            [checked]="isCorrectOption(option)"
+            (onClicked)="handleOptionClick($event)"
           ></qp-answer>
         </div>
 

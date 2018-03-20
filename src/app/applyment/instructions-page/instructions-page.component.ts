@@ -51,6 +51,7 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
       .subscribe(
         questions => {
           this._applymentService.setItems(questions);
+          this._applymentService.initAnswers(questions);
           this.showLoading = false;
           this._router.navigate(['prova', assessmentToken, 'questao', '1']);
           this.loadImageCache(questions);
