@@ -187,25 +187,6 @@ describe('QuestionPageComponent', () => {
       expect(buttonEl.disabled).toEqual(true);
     });
 
-    // describe('submitAnswerAndNavigateBack()', () => {
-    //   it('should submit the current option and navigate', () => {
-    //     const response = createResponse(200, 'OK', { data: null });
-    //     route.testParams = { token: ASSESSMENT.token, question_id: '1' };
-    //     spyOn(assessmentService, 'postAnswers').and.returnValue(
-    //       Observable.of(response),
-    //     );
-    //     spyOn(router, 'navigate').and.returnValue(Observable.of(response));
-    //     component.submitAnswerAndNavigateNext();
-    //     // expect(assessmentService.postAnswers).toHaveBeenCalled();
-    //     expect(router.navigate).toHaveBeenCalledWith([
-    //       'prova',
-    //       ASSESSMENT.token,
-    //       'questao',
-    //       2,
-    //     ]);
-    //   });
-    // });
-
     it('should show amount of progression items', () => {
       const progressionItemLength = fixture.debugElement.queryAll(
         By.css('.progression-path-item'),
