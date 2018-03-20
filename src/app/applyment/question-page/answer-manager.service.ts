@@ -30,7 +30,7 @@ export class AnswerManagerService {
   }
 
   private startTrackingTime() {
-    clearInterval(this.interval);
+    this.unregister();
     this.interval = setInterval(() => {
       this.answer = this.cloneAnswer({
         spentTimeInSeconds: this.answer.spentTimeInSeconds + 1,
