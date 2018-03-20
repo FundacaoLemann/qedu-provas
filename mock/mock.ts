@@ -100,14 +100,14 @@ export default class Mock {
 
   static mockAnswer(index = 0): Answer {
     const ANSWER = mock.answers[index];
-    return new Answer({itemId: ANSWER.itemId, optionId: ANSWER.optionId});
+    return new Answer({...ANSWER});
   }
 
   static mockAnswers(): Answer[] {
     const ANSWERS = mock.answers;
     const answers = [];
     for (const A of ANSWERS) {
-      const a = new Answer({ itemId: A.itemId, optionId: A.optionId });
+      const a = new Answer({...A});
       answers.push(a);
     }
     return answers;

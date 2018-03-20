@@ -54,7 +54,7 @@ describe('ApplymentService', () => {
     'should return a single option',
     inject([ApplymentService], (service: ApplymentService) => {
       prepareAnswers(service);
-      // expect(service.getAnswer(2)).toEqual(5);
+      expect(service.getAnswer(2)).toEqual(ANSWERS[2]);
     }),
   );
 
@@ -62,7 +62,7 @@ describe('ApplymentService', () => {
     'should return all the answers',
     inject([ApplymentService], (service: ApplymentService) => {
       prepareAnswers(service);
-      // expect(service.getAllAnswers()).toEqual([1, 2, 5, null]);
+      expect(service.getAllAnswers()).toEqual(ANSWERS);
     }),
   );
 
