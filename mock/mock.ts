@@ -10,7 +10,6 @@ const md5 = require('md5');
 const mock = require('./db.json');
 
 export default class Mock {
-
   static mockItem(index = 0) {
     const item = new Item();
     item.id = mock.questions[index].id;
@@ -34,13 +33,12 @@ export default class Mock {
   static mockMedia(questionIndex = 0): Media {
     const question = mock.questions[questionIndex];
     const media = new Media();
-    if(question.image) {
+    if (question.image) {
       media.id = md5(question.image);
       media.type = 'image';
       media.source = question.image;
       return media;
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -54,8 +52,8 @@ export default class Mock {
     a.mainTitle = A.mainTitle;
     a.secondaryTitle = A.secondaryTitle;
     a.description = A.description;
-    a.duration= A.number;
-    a.numberOfItems= A.numberOfItems;
+    a.duration = A.number;
+    a.numberOfItems = A.numberOfItems;
     a.subjects = A.subjects;
     a.school = Mock.mockSchool();
     a.department = Mock.mockDepartment();
@@ -99,18 +97,24 @@ export default class Mock {
   }
 
   static mockAnswer(index = 0): Answer {
-    const ANSWER = mock.answers[index];
-    return new Answer({...ANSWER});
+    const A = mock.answers[index];
+    const a = new Answer();
+    a.itemId = A.itemId;
+    a.optionId = A.optionId;
+    a.visualizedTimes = A.visualizedTimes;
+    a.spentTimeInSeconds = A.spentTimeInSeconds;
+
+    return a;
   }
 
   static mockAnswers(): Answer[] {
-    const ANSWERS = mock.answers;
-    const answers = [];
-    for (const A of ANSWERS) {
-      const a = new Answer({...A});
-      answers.push(a);
-    }
-    return answers;
+    return mock.answers.map(A => {
+      const a = new Answer();
+      a.itemId = A.itemId;
+      a.optionId = A.optionId;
+      a.visualizedTimes = A.visualizedTimes;
+      a.spentTimeInSeconds = A.spentTimeInSeconds;
+      return a;
+    });
   }
-
 }
