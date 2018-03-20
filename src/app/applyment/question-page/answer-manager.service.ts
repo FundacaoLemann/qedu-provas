@@ -33,7 +33,7 @@ export class AnswerManagerService {
     this.unregister();
     this.interval = setInterval(() => {
       this.answer = this.cloneAnswer({
-        spentTimeInSeconds: this.answer.spentTimeInSeconds + 1,
+        timeSpentInSeconds: this.answer.timeSpentInSeconds + 1,
       });
       this.answer$.next(this.answer);
     }, 1000);

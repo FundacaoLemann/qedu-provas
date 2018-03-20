@@ -87,7 +87,7 @@ describe('ApplymentService', () => {
             itemId: '58d2f1af4a083c00194437c7',
             optionId: 0,
             visualizedTimes: 0,
-            spentTimeInSeconds: 0,
+            timeSpentInSeconds: 0,
           };
 
           expect(answers.length).toEqual(3);

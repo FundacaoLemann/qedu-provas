@@ -102,7 +102,7 @@ export default class Mock {
     a.itemId = A.itemId;
     a.optionId = A.optionId;
     a.visualizedTimes = A.visualizedTimes;
-    a.spentTimeInSeconds = A.spentTimeInSeconds;
+    a.timeSpentInSeconds = A.timeSpentInSeconds;
 
     return a;
   }
@@ -113,7 +113,7 @@ export default class Mock {
       a.itemId = A.itemId;
       a.optionId = A.optionId;
       a.visualizedTimes = A.visualizedTimes;
-      a.spentTimeInSeconds = A.spentTimeInSeconds;
+      a.timeSpentInSeconds = A.timeSpentInSeconds;
       return a;
     });
   }

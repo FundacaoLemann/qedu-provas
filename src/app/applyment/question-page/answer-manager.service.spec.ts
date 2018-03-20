@@ -59,7 +59,7 @@ describe('AnswerManagerService', () => {
   );
 
   it(
-    'update spentTimeInSeconds by 3',
+    'update timeSpentInSeconds by 3',
     fakeAsync(
       inject([AnswerManagerService], (service: AnswerManagerService) => {
         const answer = new Answer();
@@ -73,7 +73,7 @@ describe('AnswerManagerService', () => {
         expect(lastEmittedAnswer).toEqual(
           new Answer({
             visualizedTimes: 1,
-            spentTimeInSeconds: 3,
+            timeSpentInSeconds: 3,
           }),
         );
         discardPeriodicTasks();
@@ -114,7 +114,7 @@ describe('AnswerManagerService', () => {
             itemId: '1',
             optionId: 4,
             visualizedTimes: 2,
-            spentTimeInSeconds: 11,
+            timeSpentInSeconds: 11,
           }),
         );
         expect(answer2).toEqual(
@@ -122,7 +122,7 @@ describe('AnswerManagerService', () => {
             itemId: '2',
             optionId: 0,
             visualizedTimes: 1,
-            spentTimeInSeconds: 10,
+            timeSpentInSeconds: 10,
           }),
         );
         discardPeriodicTasks();

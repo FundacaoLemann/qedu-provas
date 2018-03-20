@@ -2,20 +2,20 @@ export class Answer {
   itemId: string;
   optionId: number;
   visualizedTimes: number;
-  spentTimeInSeconds: number;
+  timeSpentInSeconds: number;
 
   constructor(
     {
       itemId = '',
       optionId = 0,
       visualizedTimes = 0,
-      spentTimeInSeconds = 0,
+      timeSpentInSeconds = 0,
     } = {},
   ) {
     this.itemId = itemId;
     this.optionId = optionId;
     this.visualizedTimes = visualizedTimes;
-    this.spentTimeInSeconds = spentTimeInSeconds;
+    this.timeSpentInSeconds = timeSpentInSeconds;
   }
 
   isAnswered(): boolean {
