@@ -6,7 +6,7 @@ import { AssessmentService } from '../../core/shared/assessment.service';
 import { ApplymentService } from '../shared/applyment.service';
 import { ApplymentModule } from '../applyment.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ResponseError } from '../../shared/errors/response-error';
 
@@ -52,7 +52,7 @@ describe('SearchAssessmentPageComponent', () => {
 
     it('should try to fetch an assessment', () => {
       spyOn(assessmentService, 'fetchAssessment')
-        .and.returnValue(Observable.of(ASSESSMENT));
+        .and.returnValue(of(ASSESSMENT));
       spyOn(applymentService, 'setAssessment');
       spyOn(router, 'navigate');
 

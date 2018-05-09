@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
 import { StoreService } from '../../core/shared/store.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Assessment } from '../../shared/model/assessment';
 import { Item } from '../../shared/model/item';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
@@ -99,10 +100,10 @@ export class ApplymentService {
     return this._store.state.applyment.answers;
   }
 
-  answersAsObservable(): Observable<Answer[]> {
-    return this._store.asObservable().map(state => {
-      return state.applyment.answers;
-    });
+  answersAsObservable(): Observable<any[]> {
+    return this._store.asObservable().pipe(
+      map((state: any) => state.applyment.answers),
+    );
   }
 
   // Status

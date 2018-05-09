@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { throwError, of } from 'rxjs';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
 import * as test from '../../../testing/testing-helper';
@@ -18,7 +18,7 @@ const PARSED_STUDENT = {
   id: '58d2f1af4a083c00194437c6',
   matricula: '11223344',
   name: 'Mario Junior Oliveira',
-  class: '901A'
+  class: '901A',
 };
 const ASSESSMENT = db.assessments[0];
 
@@ -29,21 +29,22 @@ describe('StudentAuthenticationPageComponent', () => {
   let studentService: StudentService;
   let router: Router;
   const route = new ActivatedRouteStub();
-  route.testParams = { 'token': '1' };
+  route.testParams = { token: '1' };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [ApplymentModule],
-      providers: [
-        StoreService,
-        ApplymentService,
-        StudentService,
-        { provide: Router, useClass: RouterStub },
-        { provide: ActivatedRoute, useValue: route },
-      ]
-    })
-      .compileComponents();
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [ApplymentModule],
+        providers: [
+          StoreService,
+          ApplymentService,
+          StudentService,
+          { provide: Router, useClass: RouterStub },
+          { provide: ActivatedRoute, useValue: route },
+        ],
+      }).compileComponents();
+    }),
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StudentAuthenticationPageComponent);
@@ -55,12 +56,15 @@ describe('StudentAuthenticationPageComponent', () => {
     router = fixture.debugElement.injector.get(Router);
   });
 
-  it('should load getStudent data from service', async(() => {
-    spyOn(applymentService, 'getStudent').and.returnValue(RAW_STUDENT);
-    component.student = null;
-    component.ngOnInit();
-    expect(component.student).toEqual(RAW_STUDENT);
-  }));
+  it(
+    'should load getStudent data from service',
+    async(() => {
+      spyOn(applymentService, 'getStudent').and.returnValue(RAW_STUDENT);
+      component.student = null;
+      component.ngOnInit();
+      expect(component.student).toEqual(RAW_STUDENT);
+    }),
+  );
 
   describe('Submitting form', () => {
     beforeEach(() => {
@@ -71,21 +75,35 @@ describe('StudentAuthenticationPageComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should fetch getStudent data when submit', async(() => {
-      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.of(PARSED_STUDENT));
-      component.accessToken = '1235';
-      component.onSubmit();
-      expect(applymentService.setStudent).toHaveBeenCalledWith(PARSED_STUDENT);
-    }));
+    it(
+      'should fetch getStudent data when submit',
+      async(() => {
+        spyOn(studentService, 'getStudentByToken').and.returnValue(
+          of(PARSED_STUDENT),
+        );
+        component.accessToken = '1235';
+        component.onSubmit();
+        expect(applymentService.setStudent).toHaveBeenCalledWith(
+          PARSED_STUDENT,
+        );
+      }),
+    );
 
-    it('should display `Código inválido` when accessToken is invalid', async(() => {
-      spyOn(studentService, 'getStudentByToken').and.returnValue(Observable.throw(new ResponseError('Código inválido')));
-      component.accessToken = '000';
-      component.onSubmit();
-      fixture.detectChanges();
+    it(
+      'should display `Código inválido` when accessToken is invalid',
+      async(() => {
+        spyOn(studentService, 'getStudentByToken').and.returnValue(
+          throwError(new ResponseError('Código inválido')),
+        );
+        component.accessToken = '000';
+        component.onSubmit();
+        fixture.detectChanges();
 
-      expect(test.getNativeElement(fixture, '.error').textContent).toEqual('Código inválido');
-    }));
+        expect(test.getNativeElement(fixture, '.error').textContent).toEqual(
+          'Código inválido',
+        );
+      }),
+    );
   });
 
   describe('Displaying getStudent data', () => {
@@ -97,18 +115,27 @@ describe('StudentAuthenticationPageComponent', () => {
     });
 
     it('should display getStudent data', () => {
-      expect(test.getNativeElement(fixture, '[studentName]').textContent).toEqual(PARSED_STUDENT.name);
-      expect(test.getNativeElement(fixture, '[studentMatricula]').textContent).toEqual(PARSED_STUDENT.matricula);
+      expect(
+        test.getNativeElement(fixture, '[studentName]').textContent,
+      ).toEqual(PARSED_STUDENT.name);
+      expect(
+        test.getNativeElement(fixture, '[studentMatricula]').textContent,
+      ).toEqual(PARSED_STUDENT.matricula);
     });
 
     it('should display getStudent class', () => {
-      const studentClass = fixture.debugElement.query(By.css('[studentClass]')).nativeElement.textContent;
+      const studentClass = fixture.debugElement.query(By.css('[studentClass]'))
+        .nativeElement.textContent;
       expect(studentClass).toEqual(PARSED_STUDENT.class);
     });
 
     it('should continue to the next page', () => {
       test.dispatchEvent(fixture, '[continue]', 'click');
-      expect(router.navigate).toHaveBeenCalledWith(['prova', '1', 'instrucoes']);
+      expect(router.navigate).toHaveBeenCalledWith([
+        'prova',
+        '1',
+        'instrucoes',
+      ]);
     });
 
     it('should clear getStudent data and go submitAnswerAndNavigateBack to search', () => {
@@ -118,5 +145,4 @@ describe('StudentAuthenticationPageComponent', () => {
       expect(component.error).toEqual(null);
     });
   });
-
 });
