@@ -2,8 +2,6 @@ import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed } fro
 import { QuestionPageComponent } from './question-page.component';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 
 import { CoreModule } from '../../core/core.module';
 import { ApplymentModule } from '../applyment.module';
@@ -12,11 +10,10 @@ import { RouterStub } from '../../../testing/router-stub';
 import { ApplymentService } from '../shared/applyment.service';
 import { StoreService } from '../../core/shared/store.service';
 import * as test from '../../../testing/testing-helper';
-import { createResponse } from '../../../testing/testing-helper';
 import Mock from '../../../../mock/mock';
 import { Answer } from '../../shared/model/answer';
 import { AnswerManagerService } from './answer-manager.service';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 const db = require('../../../../mock/db.json');
 

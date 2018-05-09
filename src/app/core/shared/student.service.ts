@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { Student } from '../../shared/model/student';
 import { RequestService } from './request.service';
+import { catchError, map } from 'rxjs/operators';
 
 const { API_URL } = environment;
 
@@ -48,7 +49,6 @@ export class StudentService extends RequestService {
 
     return this.http
       .get<StudentResponse>(url, { headers })
-      .map(this.extractData)
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 }

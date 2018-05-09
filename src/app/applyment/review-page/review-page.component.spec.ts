@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import Mock from '../../../../mock/mock';
 import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { RouterStub } from '../../../testing/router-stub';
@@ -135,7 +135,7 @@ describe('ReviewPageComponent', () => {
         const fakeResponse = createResponse(200, 'OK', null);
 
         spyOn(assessmentService, 'postAnswers').and.returnValue(
-          Observable.of(fakeResponse),
+          of(fakeResponse),
         );
         spyOn(router, 'navigate');
 
