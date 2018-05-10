@@ -48,7 +48,7 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
             this.answer = this._applymentService.getAnswer(questionIndex);
             this.answerManager
               .register(this.answer)
-              .subscribe(this.handleAnswerChange);
+              .subscribe(this.handleAnswerChange.bind(this));
           } catch (err) {
             this.question = new Item();
           }
@@ -110,10 +110,10 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
     this.answerManager.setOption(optionId);
   }
 
-  handleAnswerChange = (answer: Answer) => {
+  handleAnswerChange (answer: Answer) {
     this.answer = answer;
     this._applymentService.setAnswer(this.questionIndex, this.answer);
-  };
+  }
 
   isCorrectOption(option: Option): boolean {
     return option.id === this.answer.optionId;

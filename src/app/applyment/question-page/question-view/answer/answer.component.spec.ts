@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AnswerComponent } from './answer.component';
-import Mock from '../../../../../mock/mock';
+import Mock from '../../../../../../mock/mock';
 
 describe('AnswerComponent', () => {
   let component: AnswerComponent;
