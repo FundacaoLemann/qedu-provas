@@ -7,7 +7,7 @@ import { SearchAssessmentPageDirective } from './search-assessment-page/search-a
 import { InstructionsPageComponent } from './instructions-page/instructions-page.component';
 import { InstructionsModalComponent } from './instructions-page/modal/instructions-modal.component';
 import { QuestionPageComponent } from './question-page/question-page.component';
-import { AnswerComponent } from './question-page/answer/answer.component';
+import { AnswerComponent } from './question-page/question-view/answer/answer.component';
 import { ReviewPageComponent } from './review-page/review-page.component';
 import { ReviewModalComponent } from './review-page/modal/review-modal.component';
 import { CurrentQuestionComponent } from './question-page/current-question/current-question.component';
@@ -20,6 +20,7 @@ import { ProgressionPathComponent } from './question-page/progression-path/progr
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentService } from './shared/applyment.service';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
+import { QuestionViewComponent } from './question-page/question-view/question-view.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { ErrorModalComponent } from './shared/error-modal/error-modal.component'
     NoConnectionModalComponent,
     ReviewModalComponent,
     InstructionsModalComponent,
-    ErrorModalComponent
+    ErrorModalComponent,
+    QuestionViewComponent
   ],
   entryComponents: [
     ReviewModalComponent,

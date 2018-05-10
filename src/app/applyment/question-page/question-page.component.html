@@ -17,22 +17,11 @@
           <hr>
         </div>
 
-        <div class="col-xs-12 col-md-6">
-          <div itemStem
-            class="question"
-            [innerHTML]="questionHTML()"
-          >
-          </div>
-        </div>
-
-        <div class="col-xs-12 col-md-6">
-          <qp-answer
-            *ngFor="let option of question?.answers"
-            [option]="option"
-            [checked]="isCorrectOption(option)"
-            (onClicked)="handleOptionClick($event)"
-          ></qp-answer>
-        </div>
+        <app-question-view
+          [question]="question"
+          [answer]="answer"
+          (selectAnswer)="handleOptionClick($event)"
+        ></app-question-view>
 
       </div>
       <div class="panel-footer">
