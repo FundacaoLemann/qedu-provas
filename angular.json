@@ -14,7 +14,7 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.json",
+            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
@@ -149,7 +149,7 @@
             "outputPath": "dist/qedu-provas-lite",
             "index": "src/index.html",
             "main": "src/main-lite.ts",
-            "tsConfig": "src/tsconfig.json",
+            "tsConfig": "src/tsconfig.app-lite.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
