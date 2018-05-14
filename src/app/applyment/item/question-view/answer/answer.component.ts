@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
-import { Option } from '../../../../../shared/model/option';
+import { Option } from '../../../../shared/model/option';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({

@@ -7,7 +7,6 @@ import { SearchAssessmentPageDirective } from './pages/search-assessment-page/se
 import { InstructionsPageComponent } from './pages/instructions-page/instructions-page.component';
 import { InstructionsModalComponent } from './pages/instructions-page/modal/instructions-modal.component';
 import { QuestionPageComponent } from './pages/question-page/question-page.component';
-import { AnswerComponent } from './pages/question-page/question-view/answer/answer.component';
 import { ReviewPageComponent } from './pages/review-page/review-page.component';
 import { ReviewModalComponent } from './pages/review-page/modal/review-modal.component';
 import { CurrentQuestionComponent } from './pages/question-page/current-question/current-question.component';
@@ -20,13 +19,14 @@ import { ProgressionPathComponent } from './pages/question-page/progression-path
 import { NoConnectionModalComponent } from './shared/no-connection-modal/no-connection-modal.component';
 import { ApplymentService } from './shared/applyment.service';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
-import { QuestionViewComponent } from './pages/question-page/question-view/question-view.component';
+import { ItemModule } from './item/item.module';
 
 @NgModule({
   imports: [
     ApplymentRoutingModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    ItemModule
   ],
   declarations: [
     ApplymentComponent,
@@ -37,7 +37,6 @@ import { QuestionViewComponent } from './pages/question-page/question-view/quest
     InstructionsPageComponent,
     InstructionsModalComponent,
     QuestionPageComponent,
-    AnswerComponent,
     ReviewPageComponent,
     CurrentQuestionComponent,
     CongratulationsPageComponent,
@@ -47,7 +46,6 @@ import { QuestionViewComponent } from './pages/question-page/question-view/quest
     ReviewModalComponent,
     InstructionsModalComponent,
     ErrorModalComponent,
-    QuestionViewComponent
   ],
   entryComponents: [
     ReviewModalComponent,

@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { EventEmitter, Output } from '@angular/core';
 
-import { Item } from '../../../../shared/model/item';
-import Answer from '../../../../shared/model/answer';
-import { Option } from '../../../../shared/model/option';
+
+import { Item } from '../../../shared/model/item';
+import Answer from '../../../shared/model/answer';
+import { Option } from '../../../shared/model/option';
+import { AsCustomElement } from '../../../../app-lite/interfaces/as-custom-element';
+import { createCustomElement } from '@angular/elements';
+
+declare let customElements: any;
 
 @Component({
   selector: 'app-question-view',
   templateUrl: './question-view.component.html',
   styleUrls: ['./question-view.component.sass'],
 })
-export class QuestionViewComponent implements OnInit {
+export class QuestionViewComponent implements OnInit, AsCustomElement {
   @Input() question: Item;
   @Input() answer: Answer;
   @Output() selectAnswer = new EventEmitter<number>();
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private injector: Injector) {}
 
   ngOnInit() {}
 
