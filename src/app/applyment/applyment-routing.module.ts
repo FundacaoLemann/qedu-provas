@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { StudentAuthenticationPageComponent } from './student-authentication-page/student-authentication-page.component';
-import { SearchAssessmentPageComponent } from './search-assessment-page/search-assessment-page.component';
-import { InstructionsPageComponent } from './instructions-page/instructions-page.component';
-import { QuestionPageComponent } from './question-page/question-page.component';
-import { ReviewPageComponent } from './review-page/review-page.component';
-import { CongratulationsPageComponent } from './congratulations-page/congratulations-page.component';
+import { StudentAuthenticationPageComponent } from './pages/student-authentication-page/student-authentication-page.component';
+import { SearchAssessmentPageComponent } from './pages/search-assessment-page/search-assessment-page.component';
+import { InstructionsPageComponent } from './pages/instructions-page/instructions-page.component';
+import { QuestionPageComponent } from './pages/question-page/question-page.component';
+import { ReviewPageComponent } from './pages/review-page/review-page.component';
+import { CongratulationsPageComponent } from './pages/congratulations-page/congratulations-page.component';
 import { ApplymentComponent } from './applyment.component';
 
 const routes: Routes = [
