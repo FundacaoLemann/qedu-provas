@@ -1,18 +1,20 @@
-import { Injector, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { createCustomElement } from '@angular/elements';
 
 import { AppComponent } from './app.component';
+import { ItemModule } from '../app/applyment/item/item.module';
+import { bootstrapCustomElements } from './custom-elements/bootstrap-custom-elements.function';
 
 @NgModule({
-  imports: [BrowserModule],
+  imports: [BrowserModule, ItemModule],
   declarations: [AppComponent],
   entryComponents: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppLiteModule {
-  constructor(public injector: Injector) {
-    const AppElement = createCustomElement(AppComponent, {injector: this.injector});
-    customElements.define('qp-app', AppElement);
+  constructor(private injector: Injector) {
+    bootstrapCustomElements(ItemModule, this.injector);
+    bootstrapCustomElements(AppLiteModule, this.injector);
   }
 
   ngDoBootstrap() {

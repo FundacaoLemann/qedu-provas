@@ -5,15 +5,10 @@ import { QuestionViewComponent } from './question-view/question-view.component';
 import { AnswerComponent } from './question-view/answer/answer.component';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [
-    QuestionViewComponent,
-    AnswerComponent,
-  ],
-  exports: [
-    QuestionViewComponent,
-  ]
+  imports: [CommonModule],
+  declarations: [QuestionViewComponent, AnswerComponent],
+  exports: [QuestionViewComponent],
+  entryComponents: [QuestionViewComponent],
 })
-export class ItemModule { }
+export class ItemModule {
+}
