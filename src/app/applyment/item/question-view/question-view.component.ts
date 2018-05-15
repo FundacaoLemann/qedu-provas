@@ -7,17 +7,15 @@ import { EventEmitter, Output } from '@angular/core';
 import { Item } from '../../../shared/model/item';
 import Answer from '../../../shared/model/answer';
 import { Option } from '../../../shared/model/option';
-import { AsCustomElement } from '../../../../app-lite/interfaces/as-custom-element';
-import { createCustomElement } from '@angular/elements';
+import { CustomElement } from '../../../../app-lite/custom-elements/custom-element.decorator';
 
-declare let customElements: any;
-
+@CustomElement('x-qp-question-view')
 @Component({
   selector: 'qp-question-view',
   templateUrl: './question-view.component.html',
   styleUrls: ['./question-view.component.sass'],
 })
-export class QuestionViewComponent implements OnInit, AsCustomElement {
+export class QuestionViewComponent implements OnInit {
   @Input() index = 0;
   @Input() title = '';
   @Input() question: Item;
