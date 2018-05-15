@@ -13,11 +13,13 @@ import { createCustomElement } from '@angular/elements';
 declare let customElements: any;
 
 @Component({
-  selector: 'app-question-view',
+  selector: 'qp-question-view',
   templateUrl: './question-view.component.html',
   styleUrls: ['./question-view.component.sass'],
 })
 export class QuestionViewComponent implements OnInit, AsCustomElement {
+  @Input() index = 0;
+  @Input() title = '';
   @Input() question: Item;
   @Input() answer: Answer;
   @Output() selectAnswer = new EventEmitter<number>();
