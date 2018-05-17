@@ -1,17 +1,15 @@
 <div class="panel panel-default">
-  <div class="panel-heading">
-    {{title}}
-  </div>
+  <div class="panel-heading" title>{{title}}</div>
 
   <div class="panel-body">
     <div class="col-xs-12">
-      <h3 itemIndex>Questão #{{index}}</h3>
+      <h3 index>Questão #{{index}}</h3>
       <hr>
     </div>
 
     <div class="col-xs-12 col-md-6">
       <div
-        itemStem
+        stem
         class="question"
         [innerHTML]="questionHTML()"
       ></div>
@@ -22,7 +20,7 @@
         *ngFor="let option of question?.answers"
         [option]="option"
         [checked]="isCorrectOption(option)"
-        (onClicked)="handleOptionClick($event)"
+        (click)="handleOptionClick($event)"
       ></qp-answer>
     </div>
 

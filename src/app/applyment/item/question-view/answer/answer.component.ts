@@ -10,11 +10,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class AnswerComponent implements OnInit {
   @Input() option: Option = { id: 0, text: '' };
   @Input() checked = false;
-  @Output() onClicked = new EventEmitter<number>();
-  optionText: SafeHtml = null;
 
-  constructor(private _sanitizer: DomSanitizer) {
-  }
+  @Output() onClicked = new EventEmitter<number>();
+
+  private optionText: SafeHtml = null;
+
+  constructor(private _sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.optionText = this._sanitizer.bypassSecurityTrustHtml(this.option.text);

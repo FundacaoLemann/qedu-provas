@@ -1,9 +1,8 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 
 import { RequestService } from './request.service';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import 'rxjs/add/observable/from';
 import { HttpErrorResponse } from '@angular/common/http';
 
 class RequestServiceImpl extends RequestService {}
