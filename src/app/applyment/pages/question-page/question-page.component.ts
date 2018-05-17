@@ -28,7 +28,6 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _router: Router,
     private _applymentService: ApplymentService,
-    private _sanitizer: DomSanitizer,
     private answerManager: AnswerManagerService,
   ) {}
 
@@ -63,27 +62,7 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
     this.answerManager.unregister();
   }
 
-  questionHTML(): SafeHtml {
-    let questionText = this.question.text;
-
-    this.question.media.map(media => {
-      switch (media.type) {
-        case 'image':
-          questionText = questionText.replace(
-            `{{${media.id}}}`,
-            `<p><img class="img-responsive center-block" src="${
-              media.source
-            }" /></p>`,
-          );
-          break;
-      }
-    });
-
-    return this._sanitizer.bypassSecurityTrustHtml(questionText);
-  }
-
   submitAnswerAndNavigateNext() {
-    this.postAnswer();
     const nextQuestion = +this._route.snapshot.params['question_id'] + 1;
     const token = this._route.snapshot.params['token'];
     if (nextQuestion > this.questionsLength) {
@@ -94,16 +73,11 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
   }
 
   submitAnswerAndNavigateBack() {
-    this.postAnswer();
     const prevQuestion = +this._route.snapshot.params['question_id'] - 1;
     if (prevQuestion >= 1) {
       const uuid = this._route.snapshot.params['token'];
       this._router.navigate(['prova', uuid, 'questao', prevQuestion]);
     }
-  }
-
-  postAnswer() {
-    const applymentStatus = this._applymentService.getApplymentStatus();
   }
 
   handleOptionClick(optionId: number) {
@@ -113,9 +87,5 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
   handleAnswerChange (answer: Answer) {
     this.answer = answer;
     this._applymentService.setAnswer(this.questionIndex, this.answer);
-  }
-
-  isCorrectOption(option: Option): boolean {
-    return option.id === this.answer.optionId;
   }
 }
