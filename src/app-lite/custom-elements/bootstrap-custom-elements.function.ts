@@ -1,10 +1,11 @@
 import { Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
+import { getAnnotations } from './get-annotations.function';
 
 declare let customElements: any;
 
 export function bootstrapCustomElements(module: any, injector: Injector) {
-  const entryComponents: any[] = module.__annotations__[0].entryComponents;
+  const entryComponents: any[] = getAnnotations(module).entryComponents;
 
   if (!entryComponents) {
     return;
@@ -12,11 +13,10 @@ export function bootstrapCustomElements(module: any, injector: Injector) {
 
   entryComponents
     .filter((componentDecorator: any) =>
-      componentDecorator.__annotations__[0].hasOwnProperty('customTagName'),
+      getAnnotations(componentDecorator).hasOwnProperty('customTagName'),
     )
     .map((filteredComponentDecorator: any) => {
-      const tagName =
-        filteredComponentDecorator.__annotations__[0].customTagName;
+      const tagName = getAnnotations(filteredComponentDecorator).customTagName;
       const element = createCustomElement(filteredComponentDecorator, {
         injector,
       });
