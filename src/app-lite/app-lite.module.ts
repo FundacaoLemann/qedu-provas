@@ -4,16 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ItemModule } from '../app/applyment/item/item.module';
 import { bootstrapCustomElements } from './custom-elements/bootstrap-custom-elements.function';
+import { QuestionViewComponent } from '../app/applyment/item/question-view/question-view.component';
 
 @NgModule({
   imports: [BrowserModule, ItemModule],
   declarations: [AppComponent],
-  entryComponents: [AppComponent],
+  entryComponents: [AppComponent, QuestionViewComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppLiteModule {
   constructor(private injector: Injector) {
-    bootstrapCustomElements(ItemModule, this.injector);
     bootstrapCustomElements(AppLiteModule, this.injector);
   }
 

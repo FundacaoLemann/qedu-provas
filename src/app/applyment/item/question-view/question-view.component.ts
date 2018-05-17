@@ -9,7 +9,7 @@ import { CustomElement } from '../../../../app-lite/custom-elements/custom-eleme
 
 @CustomElement('x-qp-question-view')
 @Component({
-  selector: 'qp-question-view',
+  selector: 'item-preview',
   templateUrl: './question-view.component.html',
   styleUrls: ['./question-view.component.sass'],
 })
