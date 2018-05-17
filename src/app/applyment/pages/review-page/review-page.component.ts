@@ -1,4 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../../../core/shared/assessment.service';
 import { ConnectionService } from '../../../core/shared/connection.service';
@@ -20,8 +25,8 @@ import { ReviewModalComponent } from './modal/review-modal.component';
   entryComponents: [
     ReviewModalComponent,
     NoConnectionModalComponent,
-    ErrorModalComponent
-  ]
+    ErrorModalComponent,
+  ],
 })
 export class ReviewPageComponent extends HasModal implements OnInit {
   questions: Item[];
@@ -32,13 +37,15 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   assessment: Assessment;
   student: Student;
 
-  constructor(protected _viewContainer: ViewContainerRef,
-              protected _componentFactoryResolver: ComponentFactoryResolver,
-              private _applymentService: ApplymentService,
-              private _assessmentService: AssessmentService,
-              private _route: ActivatedRoute,
-              private _router: Router,
-              private _connection: ConnectionService) {
+  constructor(
+    protected _viewContainer: ViewContainerRef,
+    protected _componentFactoryResolver: ComponentFactoryResolver,
+    private _applymentService: ApplymentService,
+    private _assessmentService: AssessmentService,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _connection: ConnectionService,
+  ) {
     super(_viewContainer, _componentFactoryResolver);
   }
 
@@ -66,17 +73,22 @@ export class ReviewPageComponent extends HasModal implements OnInit {
   }
 
   navigate(questionNumber: number) {
-    this._router.navigate(['prova', this._route.snapshot.params['token'], 'questao', questionNumber.toString()]);
+    this._router.navigate([
+      'prova',
+      this._route.snapshot.params['token'],
+      'questao',
+      questionNumber.toString(),
+    ]);
   }
 
   openFinishModal() {
     this.openModal(ReviewModalComponent, {
-      'onConfirm': () => {
+      onConfirm: () => {
         this.deliver();
       },
-      'onCancel': () => {
+      onCancel: () => {
         this.closeModal();
-      }
+      },
     });
   }
 
@@ -87,18 +99,20 @@ export class ReviewPageComponent extends HasModal implements OnInit {
         onClose: () => {
           this.closeModal();
         },
-        onDownload: (code) => {
+        onDownload: code => {
           Promise.all([
             this._assessmentService.downloadBackup(code),
-            window.localStorage.clear()
-          ])
-        }
+            window.localStorage.clear(),
+          ]);
+        },
       });
     }, 300);
   }
 
   submit() {
-    const answers = this._applymentService.getAllAnswers().filter(answer => answer);
+    const answers = this._applymentService
+      .getAllAnswers()
+      .filter(answer => answer);
 
     const onError = (error: any) => {
       if (error.name === 'ConnectionError') {
@@ -109,28 +123,23 @@ export class ReviewPageComponent extends HasModal implements OnInit {
     };
 
     this._assessmentService
-        .postAnswers(this.assessment.token, this.student.token, answers)
-        .subscribe(
-          () => {
-            this._router.navigate(['prova', this.assessment.token, 'parabens']);
-            window.localStorage.clear();
-          },
-          onError.bind(this)
-        );
+      .postAnswers(this.assessment.token, this.student.token, answers)
+      .subscribe(() => {
+        this._router.navigate(['prova', this.assessment.token, 'parabens']);
+        window.localStorage.clear();
+      }, onError.bind(this));
   }
 
   deliver() {
     this.modalRef.instance.isSubmitting = true;
 
-    this._connection
-        .getStatusOnce()
-        .subscribe(status => {
-          if (status) {
-            this.submit();
-          } else {
-            this.openNoConnectionModal();
-          }
-        });
+    this._connection.getStatusOnce().subscribe(status => {
+      if (status) {
+        this.submit();
+      } else {
+        this.openNoConnectionModal();
+      }
+    });
   }
 
   setNotAnswered(allAnswers: Answer[]) {

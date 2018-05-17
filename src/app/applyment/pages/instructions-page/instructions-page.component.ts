@@ -1,4 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../../../core/shared/assessment.service';
 import { ConnectionService } from '../../../core/shared/connection.service';
@@ -14,22 +19,21 @@ import MESSAGES from '../../../core/shared/messages/messages';
   selector: 'qp-instructions-page',
   templateUrl: './instructions-page.component.html',
   styleUrls: ['./instructions-page.component.sass'],
-  entryComponents: [
-    NoConnectionModalComponent,
-    InstructionsModalComponent
-  ]
+  entryComponents: [NoConnectionModalComponent, InstructionsModalComponent],
 })
 export class InstructionsPageComponent extends HasModal implements OnInit {
   assessment: Assessment;
   showLoading = false;
 
-  constructor(private _router: Router,
-              private _route: ActivatedRoute,
-              private _applymentService: ApplymentService,
-              private _assessmentService: AssessmentService,
-              private _connection: ConnectionService,
-              protected _viewContainerRef: ViewContainerRef,
-              protected _componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _applymentService: ApplymentService,
+    private _assessmentService: AssessmentService,
+    private _connection: ConnectionService,
+    protected _viewContainerRef: ViewContainerRef,
+    protected _componentFactoryResolver: ComponentFactoryResolver,
+  ) {
     super(_viewContainerRef, _componentFactoryResolver);
   }
 
@@ -48,17 +52,13 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
 
     this._assessmentService
       .fetchAssessmentQuestions(assessmentToken, studentToken)
-      .subscribe(
-        questions => {
-          this._applymentService.setItems(questions);
-          this._applymentService.initAnswers(questions);
-          this.showLoading = false;
-          this._router.navigate(['prova', assessmentToken, 'questao', '1']);
-          this.loadImageCache(questions);
-        },
-        this.openErrorModal.bind(this)
-      );
-    ;
+      .subscribe(questions => {
+        this._applymentService.setItems(questions);
+        this._applymentService.initAnswers(questions);
+        this.showLoading = false;
+        this._router.navigate(['prova', assessmentToken, 'questao', '1']);
+        this.loadImageCache(questions);
+      }, this.openErrorModal.bind(this));
   }
 
   /**
@@ -67,19 +67,17 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
   openModalProceed() {
     this.openModal(InstructionsModalComponent, {
       onConfirm: () => {
-        this._connection
-          .getStatusOnce()
-          .subscribe((status) => {
-            if (status) {
-              this.initAssessment();
-            } else {
-              this.openErrorModal(MESSAGES.SYSTEM_NOT_AVAILABLE);
-            }
-          });
+        this._connection.getStatusOnce().subscribe(status => {
+          if (status) {
+            this.initAssessment();
+          } else {
+            this.openErrorModal(MESSAGES.SYSTEM_NOT_AVAILABLE);
+          }
+        });
       },
       onClose: () => {
         this.closeModal();
-      }
+      },
     });
   }
 
@@ -89,19 +87,21 @@ export class InstructionsPageComponent extends HasModal implements OnInit {
       this.openModal(NoConnectionModalComponent, {
         onClose: () => {
           this.closeModal();
-        }
+        },
       });
     }, 300);
   }
 
   loadImageCache(questions: Item[]) {
-    function injectLinkPrefetch (media: any) {
+    function injectLinkPrefetch(media: any) {
       const element = document.createElement('link');
       element.rel = 'prefetch';
       element.href = media.source;
       document.getElementsByTagName('head')[0].appendChild(element);
     }
 
-    questions.map(question => question.media.filter(media => !!media.source).map(injectLinkPrefetch));
+    questions.map(question =>
+      question.media.filter(media => !!media.source).map(injectLinkPrefetch),
+    );
   }
 }
