@@ -7,7 +7,7 @@
         [title]="assessment?.mainTitle"
         [index]="questionIndex+1"
         [question]="question"
-        [answer]="answer"
+        [answer]="answer.optionId"
         (selectAnswer)="handleOptionClick($event)"
       >
         <div class="row" footer>

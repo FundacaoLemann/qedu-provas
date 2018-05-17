@@ -1,4 +1,4 @@
-export function getAnnotations(constructor: any): Object {
+export function getAnnotations(constructor: any): any {
   const annotations = constructor.__annotations__;
 
   if (!annotations) {

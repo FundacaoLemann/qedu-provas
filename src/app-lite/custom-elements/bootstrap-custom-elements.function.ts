@@ -4,7 +4,10 @@ import { getAnnotations } from './get-annotations.function';
 
 declare let customElements: any;
 
-export function bootstrapCustomElements(module: any, injector: Injector) {
+export function bootstrapCustomElements(
+  module: any,
+  injector: Injector,
+) {
   const entryComponents: any[] = getAnnotations(module).entryComponents;
 
   if (!entryComponents) {

@@ -3,9 +3,7 @@ import { Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { EventEmitter, Output } from '@angular/core';
 
-
 import { Item } from '../../../shared/model/item';
-import Answer from '../../../shared/model/answer';
 import { Option } from '../../../shared/model/option';
 import { CustomElement } from '../../../../app-lite/custom-elements/custom-element.decorator';
 
@@ -19,7 +17,8 @@ export class QuestionViewComponent implements OnInit {
   @Input() index = 0;
   @Input() title = '';
   @Input() question: Item;
-  @Input() answer: Answer;
+  @Input() answer = 0;
+
   @Output() selectAnswer = new EventEmitter<number>();
 
   constructor(private sanitizer: DomSanitizer, private injector: Injector) {}
@@ -27,29 +26,33 @@ export class QuestionViewComponent implements OnInit {
   ngOnInit() {}
 
   questionHTML(): SafeHtml {
-    let questionText = this.question.text;
+    let text = '';
+    if (this.question) {
+      text = this.question.text;
 
-    this.question.media.map(media => {
-      switch (media.type) {
-        case 'image':
-          questionText = questionText.replace(
-            `{{${media.id}}}`,
-            `<p><img class="img-responsive center-block" src="${
-              media.source
-            }" /></p>`,
-          );
-          break;
-      }
-    });
+      this.question.media.map(media => {
+        switch (media.type) {
+          case 'image':
+            text = text.replace(
+              `{{${media.id}}}`,
+              `<p><img class="img-responsive center-block" src="${
+                media.source
+              }" /></p>`,
+            );
+            break;
+        }
+      });
+    }
 
-    return this.sanitizer.bypassSecurityTrustHtml(questionText);
+    return this.sanitizer.bypassSecurityTrustHtml(text);
   }
 
   isCorrectOption(option: Option) {
-    return option.id === this.answer.optionId;
+    return option.id === this.answer;
   }
 
-  handleOptionClick(optionId: number) {
-    this.selectAnswer.emit(optionId);
+  handleOptionClick(option: number) {
+    this.answer = option;
+    this.selectAnswer.emit(option);
   }
 }

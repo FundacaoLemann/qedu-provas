@@ -8,12 +8,10 @@ describe('AnswerComponent', () => {
   let fixture: ComponentFixture<AnswerComponent>;
   const OPTION = Mock.mockOptions()[0];
 
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-             declarations: [AnswerComponent]
-           })
-           .compileComponents();
+      declarations: [AnswerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -29,12 +27,13 @@ describe('AnswerComponent', () => {
 
   describe('onClick event', () => {
     it('should emit `onClicked` event when clicked', async(() => {
-      component.onClicked.subscribe((optionId) => {
+      component.onClicked.subscribe(optionId => {
         expect(optionId).toEqual(OPTION.id);
         expect(component.checked).toEqual(true);
       });
 
-      const optionEl = fixture.debugElement.query(By.css('[option]')).nativeElement;
+      const optionEl = fixture.debugElement.query(By.css('[option]'))
+        .nativeElement;
       optionEl.click();
     }));
   });
@@ -45,5 +44,4 @@ describe('AnswerComponent', () => {
       expect(labelEl.textContent).toEqual(OPTION.text);
     });
   });
-
 });
