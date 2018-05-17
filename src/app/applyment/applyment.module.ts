@@ -53,6 +53,7 @@ import { ItemModule } from './item/item.module';
   ],
   exports: [
     ApplymentComponent,
+    ItemModule,
   ],
   providers: [
     ApplymentService,

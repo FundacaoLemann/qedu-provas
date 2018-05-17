@@ -7,11 +7,14 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import Mock from '../../../../../mock/mock';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
 import { RouterStub } from '../../../../testing/router-stub';
-import { createResponse, dispatchEvent } from '../../../../testing/testing-helper';
+import {
+  createResponse,
+  dispatchEvent,
+} from '../../../../testing/testing-helper';
 import { AssessmentService } from '../../../core/shared/assessment.service';
 import { camelizeObject } from '../../../utils/json';
 import { ApplymentModule } from '../../applyment.module';
@@ -34,21 +37,18 @@ describe('ReviewPageComponent', () => {
   const STUDENT = db.students[0];
   const QUESTIONS = db.questions;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [ApplymentModule],
-        providers: [
-          { provide: Router, useClass: RouterStub },
-          {
-            provide: ActivatedRoute,
-            useFactory: () =>
-              new ActivatedRouteStub({ token: ASSESSMENT.token }),
-          },
-        ],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [ApplymentModule],
+      providers: [
+        { provide: Router, useClass: RouterStub },
+        {
+          provide: ActivatedRoute,
+          useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }),
+        },
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewPageComponent);
@@ -70,28 +70,22 @@ describe('ReviewPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it(
-    'should create',
-    async(() => {
-      expect(component).toBeTruthy();
-    }),
-  );
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  it(
-    'should return to the last question when [back] is clicked',
-    async(() => {
-      component.questions = QUESTIONS;
-      spyOn(router, 'navigate');
-      dispatchEvent(fixture, '[back]', 'click');
-      fixture.detectChanges();
-      expect(router.navigate).toHaveBeenCalledWith([
-        'prova',
-        ASSESSMENT.token,
-        'questao',
-        QUESTIONS.length,
-      ]);
-    }),
-  );
+  it('should return to the last question when [back] is clicked', () => {
+    component.questions = QUESTIONS;
+    spyOn(router, 'navigate');
+    dispatchEvent(fixture, '[back]', 'click');
+    fixture.detectChanges();
+    expect(router.navigate).toHaveBeenCalledWith([
+      'prova',
+      ASSESSMENT.token,
+      'questao',
+      QUESTIONS.length,
+    ]);
+  });
 
   it('should create a modal when the [button-deliver] is clicked', () => {
     dispatchEvent(fixture, '[button-deliver]', 'click');
@@ -101,20 +95,16 @@ describe('ReviewPageComponent', () => {
     );
   });
 
-  it(
-    'should display the amount of answered questions',
-    async(() => {
-      component.ngOnInit();
-      fixture.detectChanges();
+  it('should display the amount of answered questions', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
 
-      const answeredQuestions = fixture.debugElement.query(
-        By.css('.items_count'),
-      ).nativeElement.innerHTML;
-      const message = `2 de ${QUESTIONS.length} questões`;
+    const answeredQuestions = fixture.debugElement.query(By.css('.items_count'))
+      .nativeElement.innerHTML;
+    const message = `2 de ${QUESTIONS.length} questões`;
 
-      expect(answeredQuestions).toEqual(message);
-    }),
-  );
+    expect(answeredQuestions).toEqual(message);
+  });
 
   it(
     'should create warning modal when offline',
@@ -129,32 +119,27 @@ describe('ReviewPageComponent', () => {
   );
 
   describe('submit()', () => {
-    it(
-      'should successfully post a request the answers',
-      async(() => {
-        const fakeResponse = createResponse(200, 'OK', null);
+    it('should successfully post a request the answers', () => {
+      const fakeResponse = createResponse(200, 'OK', null);
 
-        spyOn(assessmentService, 'postAnswers').and.returnValue(
-          of(fakeResponse),
-        );
-        spyOn(router, 'navigate');
+      spyOn(assessmentService, 'postAnswers').and.returnValue(of(fakeResponse));
+      spyOn(router, 'navigate');
 
-        component.submit();
+      component.submit();
 
-        const assessmentToken = applymentService.getAssessment().token;
+      const assessmentToken = applymentService.getAssessment().token;
 
-        expect(router.navigate).toHaveBeenCalledWith([
-          'prova',
-          assessmentToken,
-          'parabens',
-        ]);
-      }),
-    );
+      expect(router.navigate).toHaveBeenCalledWith([
+        'prova',
+        assessmentToken,
+        'parabens',
+      ]);
+    });
 
     it('should display modal error on response failure', () => {
       const message = 'Você não tem autorização para fazer essa prova';
       spyOn(assessmentService, 'postAnswers').and.returnValue(
-        Observable.throw(new Error(message)),
+        throwError(new Error(message)),
       );
 
       component.submit();

@@ -1,4 +1,10 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -20,7 +26,7 @@ const PARSED_STUDENT = {
   token: '12a11',
   name: 'John Doe',
   matricula: '12355',
-  class: '128hA'
+  class: '128hA',
 };
 
 describe('InstructionsPageComponent', () => {
@@ -38,16 +44,16 @@ describe('InstructionsPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-             imports: [
-               ApplymentModule
-             ],
-             providers: [
-               { provide: Router, useValue: new RouterStub() },
-               { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }) },
-               AssessmentService
-             ]
-           })
-           .compileComponents();
+      imports: [ApplymentModule],
+      providers: [
+        { provide: Router, useValue: new RouterStub() },
+        {
+          provide: ActivatedRoute,
+          useFactory: () => new ActivatedRouteStub({ token: ASSESSMENT.token }),
+        },
+        AssessmentService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -61,26 +67,37 @@ describe('InstructionsPageComponent', () => {
     connection = fixture.debugElement.injector.get(ConnectionService);
 
     spyOn(applymentService, 'getAssessment').and.returnValue(ASSESSMENT);
-    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(of(ITEMS));
+    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(
+      of(ITEMS),
+    );
 
     fixture.detectChanges();
   });
 
-  it('should create', async(() => {
+  it('should create', (() => {
     expect(applyment).toBeDefined();
     expect(component).toBeTruthy();
   }));
 
   it('should display an assessment details', () => {
-    const instructionEl = fixture.debugElement.query(By.css('.instructions')).nativeElement;
-    const durationEl = fixture.debugElement.query(By.css('.duration')).nativeElement;
-    const itemsCountEl = fixture.debugElement.query(By.css('.items_count')).nativeElement;
-    expect(instructionEl.innerHTML.substr(0, 10)).toEqual(ASSESSMENT.instructions.substr(0, 10));
-    expect(durationEl.textContent.trim()).toEqual(`${ASSESSMENT.duration} minutos`);
-    expect(itemsCountEl.textContent.trim()).toEqual(`${ASSESSMENT.numberOfItems} questões`);
+    const instructionEl = fixture.debugElement.query(By.css('.instructions'))
+      .nativeElement;
+    const durationEl = fixture.debugElement.query(By.css('.duration'))
+      .nativeElement;
+    const itemsCountEl = fixture.debugElement.query(By.css('.items_count'))
+      .nativeElement;
+    expect(instructionEl.innerHTML.substr(0, 10)).toEqual(
+      ASSESSMENT.instructions.substr(0, 10),
+    );
+    expect(durationEl.textContent.trim()).toEqual(
+      `${ASSESSMENT.duration} minutos`,
+    );
+    expect(itemsCountEl.textContent.trim()).toEqual(
+      `${ASSESSMENT.numberOfItems} questões`,
+    );
   });
 
-  it('initAssessment', async(() => {
+  it('initAssessment', (() => {
     spyOn(applyment, 'initAnswers');
     spyOn(router, 'navigate');
     // spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(ITEMS));
@@ -89,7 +106,12 @@ describe('InstructionsPageComponent', () => {
     applymentService.setAssessment(ASSESSMENT);
     component.initAssessment();
 
-    expect(router.navigate).toHaveBeenCalledWith(['prova', ASSESSMENT.token, 'questao', '1']);
+    expect(router.navigate).toHaveBeenCalledWith([
+      'prova',
+      ASSESSMENT.token,
+      'questao',
+      '1',
+    ]);
   }));
 
   describe('modals', () => {
@@ -97,15 +119,21 @@ describe('InstructionsPageComponent', () => {
       dispatchEvent(fixture, 'button.continue', 'click');
       fixture.detectChanges();
 
-      expect(component.modalRef.instance).toEqual(jasmine.any(InstructionsModalComponent));
+      expect(component.modalRef.instance).toEqual(
+        jasmine.any(InstructionsModalComponent),
+      );
     });
 
-    it('should open warning modal when have no connection', fakeAsync(() => {
-      component.openModalConnectionError();
-      tick(300);
-      fixture.detectChanges();
-      expect(component.modalRef.instance).toEqual(jasmine.any(NoConnectionModalComponent));
-    }));
+    it(
+      'should open warning modal when have no connection',
+      fakeAsync(() => {
+        component.openModalConnectionError();
+        tick(300);
+        fixture.detectChanges();
+        expect(component.modalRef.instance).toEqual(
+          jasmine.any(NoConnectionModalComponent),
+        );
+      }),
+    );
   });
-
 });

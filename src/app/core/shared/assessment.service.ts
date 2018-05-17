@@ -105,10 +105,7 @@ export class AssessmentService extends RequestService {
 
     return this._http
       .post(url, { answers }, { headers })
-      .pipe(
-        timeout(60000),
-        catchError(this.handleError),
-      );
+      .pipe(timeout(60000), catchError(this.handleError));
   }
 
   downloadBackup(password: string): string | boolean {

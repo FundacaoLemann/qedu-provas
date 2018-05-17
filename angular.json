@@ -94,11 +94,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "polyfills": "src/polyfills.ts",
             "scripts": [],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/font-awesome/css/font-awesome.min.css",
-              "src/assets/scss/styles.sass"
-            ],
+            "styles": [],
             "assets": [
               "src/assets",
               "src/favicon.ico"

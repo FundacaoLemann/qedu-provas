@@ -5,7 +5,7 @@ import { ItemModule } from '../item.module';
 import { By } from '@angular/platform-browser';
 import { detectChanges } from '@angular/core/src/render3';
 
-fdescribe('QuestionViewComponent', () => {
+describe('QuestionViewComponent', () => {
   let component: QuestionViewComponent;
   let fixture: ComponentFixture<QuestionViewComponent>;
 

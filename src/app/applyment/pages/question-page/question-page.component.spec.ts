@@ -1,4 +1,10 @@
-import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  discardPeriodicTasks,
+  fakeAsync,
+  TestBed,
+} from '@angular/core/testing';
 import { QuestionPageComponent } from './question-page.component';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,27 +35,24 @@ describe('QuestionPageComponent', () => {
   const ASSESSMENT = db.assessments[0];
   const ANSWERS = [Mock.mockAnswer(), Mock.mockAnswer(1), Mock.mockAnswer(2)];
 
-
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [ApplymentModule, CoreModule],
-        providers: [
-          {
-            provide: ActivatedRoute,
-            useFactory: () =>
-              new ActivatedRouteStub({
-                token: ASSESSMENT.token,
-                question_id: '1',
-              }),
-          },
-          { provide: Router, useClass: RouterStub },
-          ApplymentService,
-          StoreService,
-        ],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [ApplymentModule, CoreModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useFactory: () =>
+            new ActivatedRouteStub({
+              token: ASSESSMENT.token,
+              question_id: '1',
+            }),
+        },
+        { provide: Router, useClass: RouterStub },
+        ApplymentService,
+        StoreService,
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionPageComponent);
@@ -70,21 +73,6 @@ describe('QuestionPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('renders a question', () => {
-    const question = QUESTIONS[0];
-    route.testParams = { token: 'prova-1', question_id: '1' };
-
-    const itemIndexContent = fixture.debugElement.query(By.css('[itemIndex]'))
-      .nativeElement.textContent;
-    const itemStemHtml = fixture.debugElement.query(By.css('[itemStem]'))
-      .nativeElement.innerHTML;
-    const itemOptions = fixture.debugElement.queryAll(By.css('qp-answer'));
-
-    expect(itemIndexContent).toEqual('Questão #1');
-    expect(itemStemHtml).toEqual(question.text);
-    expect(itemOptions.length).toEqual(4);
-  });
-
   it('register a question to be managed', () => {
     const mockAnswer = ANSWERS[0];
     spyOn(answerManagerService, 'register');
@@ -94,87 +82,78 @@ describe('QuestionPageComponent', () => {
     expect(answerManagerService.register).toHaveBeenCalledWith(mockAnswer);
   });
 
+  it('updates answer on options change', (() => {
+    const mockAnswer = ANSWERS[0];
+    const updatedAnswer = new Answer({ ...mockAnswer, optionId: 1 });
+    const mockedAnswerManager$ = new Subject();
+    spyOn(answerManagerService, 'register').and.returnValue(
+      mockedAnswerManager$.asObservable(),
+    );
+    spyOn(answerManagerService, 'setOption');
+    spyOn(applymentService, 'setAnswer');
+
+    route.testParams = { token: 'prova-1', question_id: '1' };
+
+    component.handleOptionClick(1);
+    mockedAnswerManager$.next(updatedAnswer);
+
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+    expect(answerManagerService.setOption).toHaveBeenCalledWith(1);
+    expect(applymentService.setAnswer).toHaveBeenCalledWith(0, updatedAnswer);
+  }));
+
   it(
-    'updates answer on options change',
-    async(() => {
-      const mockAnswer = ANSWERS[0];
-      const updatedAnswer = new Answer({ ...mockAnswer, optionId: 1 });
-      const mockedAnswerManager$ = new Subject();
-      spyOn(answerManagerService, 'register').and.returnValue(
-        mockedAnswerManager$.asObservable(),
-      );
-      spyOn(answerManagerService, 'setOption');
-      spyOn(applymentService, 'setAnswer');
+    'stop tracking on destroy',
+    fakeAsync(() => {
+      spyOn(answerManagerService, 'unregister');
 
-      route.testParams = { token: 'prova-1', question_id: '1' };
+      component.ngOnDestroy();
 
-      component.handleOptionClick(1);
-      mockedAnswerManager$.next(updatedAnswer);
-
-      expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
-      expect(answerManagerService.setOption).toHaveBeenCalledWith(1);
-      expect(applymentService.setAnswer).toHaveBeenCalledWith(0, updatedAnswer);
+      expect(answerManagerService.unregister).toHaveBeenCalled();
+      discardPeriodicTasks();
     }),
   );
-
-  it('stop tracking on destroy', fakeAsync(() => {
-    spyOn(answerManagerService, 'unregister');
-
-    component.ngOnDestroy();
-
-    expect(answerManagerService.unregister).toHaveBeenCalled();
-    discardPeriodicTasks();
-  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   describe('navigation buttons', () => {
-    it(
-      'should navigate to the next question when clicked',
-      async(() => {
-        route.testParams = { token: '1', question_id: 1 };
-        spyOn(router, 'navigate');
-        test.dispatchEvent(fixture, '[next]', 'click');
+    it('should navigate to the next question when clicked', (() => {
+      route.testParams = { token: '1', question_id: 1 };
+      spyOn(router, 'navigate');
+      test.dispatchEvent(fixture, '[next]', 'click');
 
-        expect(router.navigate).toHaveBeenCalledWith([
-          'prova',
-          '1',
-          'questao',
-          2,
-        ]);
-      }),
-    );
+      expect(router.navigate).toHaveBeenCalledWith([
+        'prova',
+        '1',
+        'questao',
+        2,
+      ]);
+    }));
 
-    it(
-      'should navigate to review page when the current question is the last',
-      async(() => {
-        route.testParams = { token: 'qedu1', question_id: '10' };
-        spyOn(router, 'navigate');
-        test.dispatchEvent(fixture, '[next]', 'click');
-        expect(router.navigate).toHaveBeenCalledWith([
-          'prova',
-          'qedu1',
-          'revisao',
-        ]);
-      }),
-    );
+    it('should navigate to review page when the current question is the last', (() => {
+      route.testParams = { token: 'qedu1', question_id: '10' };
+      spyOn(router, 'navigate');
+      test.dispatchEvent(fixture, '[next]', 'click');
+      expect(router.navigate).toHaveBeenCalledWith([
+        'prova',
+        'qedu1',
+        'revisao',
+      ]);
+    }));
 
-    it(
-      'should navigate to the previous question when previous is clicked',
-      async(() => {
-        route.testParams = { token: 'qedu1', question_id: '9' };
-        spyOn(router, 'navigate');
-        test.dispatchEvent(fixture, '[prev]', 'click');
-        expect(router.navigate).toHaveBeenCalledWith([
-          'prova',
-          'qedu1',
-          'questao',
-          8,
-        ]);
-      }),
-    );
+    it('should navigate to the previous question when previous is clicked', (() => {
+      route.testParams = { token: 'qedu1', question_id: '9' };
+      spyOn(router, 'navigate');
+      test.dispatchEvent(fixture, '[prev]', 'click');
+      expect(router.navigate).toHaveBeenCalledWith([
+        'prova',
+        'qedu1',
+        'questao',
+        8,
+      ]);
+    }));
 
     it('should disable the prev-button when the current question is the first', () => {
       route.testParams = { token: 'qedu1', question_id: '1' };
