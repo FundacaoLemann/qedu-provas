@@ -9,7 +9,7 @@ RUN  chown -R node\:node /var/www
 USER node
 
 RUN cd /var/www &&\
-    yarn install &&\
+    yarn &&\
     yarn build:stag &&\
     rm -fr src test mock build provision e2e
 
