@@ -7,7 +7,7 @@
     "start": "pm2 start process.json --only qedu-provas-front --no-daemon",
     "start:dev": "ng serve",
     "build:stag": "ng build --configuration=stag",
-    "build:prod": "ng build --configuration=prod",
+    "build:prod": "ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -7,9 +7,9 @@ import { Item } from '../../../shared/model/item';
 import { Option } from '../../../shared/model/option';
 import { CustomElement } from '../../../../app-lite/custom-elements/custom-element.decorator';
 
-@CustomElement('x-qp-question-view')
+@CustomElement('item-preview')
 @Component({
-  selector: 'item-preview',
+  selector: 'qp-question-view',
   templateUrl: './question-view.component.html',
   styleUrls: ['./question-view.component.sass'],
 })

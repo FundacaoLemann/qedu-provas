@@ -13,7 +13,7 @@ export class AnswerComponent implements OnInit {
 
   @Output() onClicked = new EventEmitter<number>();
 
-  private optionText: SafeHtml = null;
+  public optionText: SafeHtml = null;
 
   constructor(private _sanitizer: DomSanitizer) {}
 
