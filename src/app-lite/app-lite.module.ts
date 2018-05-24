@@ -3,18 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ItemModule } from '../app/applyment/item/item.module';
+
 import { bootstrapCustomElements } from './custom-elements/bootstrap-custom-elements.function';
-import { QuestionViewComponent } from '../app/applyment/item/question-view/question-view.component';
+import { customElementsRepository } from './custom-elements-repository';
 
 @NgModule({
   imports: [BrowserModule, ItemModule],
   declarations: [AppComponent],
-  entryComponents: [AppComponent, QuestionViewComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  entryComponents: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
 })
 export class AppLiteModule {
   constructor(private injector: Injector) {
-    bootstrapCustomElements(AppLiteModule, this.injector);
+    bootstrapCustomElements(customElementsRepository, this.injector);
   }
 
   ngDoBootstrap() {
