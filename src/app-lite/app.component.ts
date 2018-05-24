@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CustomElement } from './custom-elements/custom-element.decorator';
-
 @Component({
   selector: 'qp-app',
   templateUrl: './app.component.html',
