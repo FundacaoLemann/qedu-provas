@@ -5,9 +5,7 @@ import { EventEmitter, Output } from '@angular/core';
 
 import { Item } from '../../../shared/model/item';
 import { Option } from '../../../shared/model/option';
-import { CustomElement } from '../../../../app-lite/custom-elements/custom-element.decorator';
 
-@CustomElement('item-preview')
 @Component({
   selector: 'qp-question-view',
   templateUrl: './question-view.component.html',
@@ -21,7 +19,7 @@ export class QuestionViewComponent implements OnInit {
 
   @Output() selectAnswer = new EventEmitter<number>();
 
-  constructor(private sanitizer: DomSanitizer, private injector: Injector) {}
+  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {}
 
