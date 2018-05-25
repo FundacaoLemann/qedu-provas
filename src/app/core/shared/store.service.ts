@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { Observable ,  BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable()
 export class StoreService {
@@ -26,7 +25,7 @@ export class StoreService {
   asObservable(): Observable<any> {
     return this._store$
       .asObservable()
-      .distinctUntilChanged();
+      .pipe(distinctUntilChanged());
   }
 
 }

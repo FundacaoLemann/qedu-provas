@@ -1,4 +1,4 @@
-FROM qedu/qedu-provas-base-front-infra:release-1.2.0
+FROM qedu/qedu-provas-base-front-infra:release-2.0.0
 
 USER root
 
