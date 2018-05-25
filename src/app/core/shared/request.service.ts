@@ -1,6 +1,5 @@
-
-import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { ConnectionError } from '../../shared/errors/connection-error';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -25,6 +24,6 @@ export abstract class RequestService {
       errorToThrow = new Error(error);
     }
 
-    return observableThrowError(errorToThrow);
+    return Observable.throw(errorToThrow);
   }
 }

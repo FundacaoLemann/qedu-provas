@@ -2,7 +2,7 @@ version: '2'
 services:
   qedu-provas-front:
     container_name: qedu-provas-front
-    image: "qedu/qedu-provas-base-front-infra:release-2.0.0"
+    image: "qedu/qedu-provas-base-front-infra:release-1.0.0"
     working_dir: /var/www/qedu-provas-front
     restart: always
     command: bash -c "yarn && yarn start:dev"

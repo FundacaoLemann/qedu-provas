@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 // App
 import { RouterStub } from '../../../testing/router-stub';
 import { InstructionsPageComponent } from './instructions-page.component';
@@ -61,7 +62,7 @@ describe('InstructionsPageComponent', () => {
     connection = fixture.debugElement.injector.get(ConnectionService);
 
     spyOn(applymentService, 'getAssessment').and.returnValue(ASSESSMENT);
-    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(of(ITEMS));
+    spyOn(assessmentService, 'fetchAssessmentQuestions').and.returnValue(Observable.of(ITEMS));
 
     fixture.detectChanges();
   });
