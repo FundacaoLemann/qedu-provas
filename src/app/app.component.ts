@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { StoreService } from './core/shared/store.service';
+import {StoreService} from './core/shared/store.service';
 
 declare const ga: Function;
 

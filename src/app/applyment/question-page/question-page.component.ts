@@ -3,9 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../shared/model/item';
 import { ApplymentService } from '../shared/applyment.service';
 import { Assessment } from '../../shared/model/assessment';
-import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 import Answer from '../../shared/model/answer';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AnswerManagerService } from './answer-manager.service';
@@ -38,9 +37,9 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
     this.questionsLength = this._applymentService.getItems().length;
     // Update question based on the url change
     this._route.params
-      .pipe(switchMap(params => of(+params['question_id'] - 1)))
+      .switchMap(params => Observable.of(+params['question_id'] - 1))
       .subscribe(
-        (questionIndex: number) => {
+        questionIndex => {
           try {
             window.scrollTo(0, 0);
             this.questionIndex = questionIndex;

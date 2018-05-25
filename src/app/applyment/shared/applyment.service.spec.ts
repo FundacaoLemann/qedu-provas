@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ApplymentService } from './applyment.service';
 import { StoreService } from '../../core/shared/store.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { ApplymentStatus } from '../../shared/model/applyment-status';
 import { Assessment } from '../../shared/model/assessment';
 import { Student } from 'app/shared';

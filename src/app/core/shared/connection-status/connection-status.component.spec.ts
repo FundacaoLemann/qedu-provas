@@ -8,7 +8,7 @@ import {
 
 import { ConnectionStatusComponent } from './connection-status.component';
 import { ConnectionService } from '../connection.service';
-import { of } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../../shared/shared.module';
 import { By } from '@angular/platform-browser';
@@ -46,7 +46,7 @@ describe('ConnectionStatusComponent', () => {
     'should start watching on initialization',
     async(() => {
       connection.stopWatch();
-      spyOn(connection, 'startWatch').and.returnValue(of(true));
+      spyOn(connection, 'startWatch').and.returnValue(Observable.of(true));
 
       component.ngOnInit();
       expect(connection.startWatch).toHaveBeenCalled();
@@ -57,7 +57,7 @@ describe('ConnectionStatusComponent', () => {
     'should update display when the component is offline',
     fakeAsync(() => {
       connection.stopWatch();
-      spyOn(connection, 'startWatch').and.returnValue(of(false));
+      spyOn(connection, 'startWatch').and.returnValue(Observable.of(false));
       component.ngOnInit();
 
       tick(300);
@@ -78,7 +78,7 @@ describe('ConnectionStatusComponent', () => {
     'should update display when the component is online',
     fakeAsync(() => {
       connection.stopWatch();
-      spyOn(connection, 'startWatch').and.returnValue(of(true));
+      spyOn(connection, 'startWatch').and.returnValue(Observable.of(true));
       component.ngOnInit();
 
       tick(300);

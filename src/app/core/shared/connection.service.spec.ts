@@ -7,7 +7,7 @@ import {
   discardPeriodicTasks,
 } from '@angular/core/testing';
 import { ConnectionService } from './connection.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -61,9 +61,9 @@ describe('ConnectionService', () => {
     fakeAsync(
       inject([ConnectionService], (connection: ConnectionService) => {
         spyOn(connection, 'getStatusOnce').and.returnValues(
-          of(true),
-          of(false),
-          of(true),
+          Observable.of(true),
+          Observable.of(false),
+          Observable.of(true),
         );
 
         const statuses = [];
@@ -83,9 +83,9 @@ describe('ConnectionService', () => {
     fakeAsync(
       inject([ConnectionService], (connection: ConnectionService) => {
         spyOn(connection, 'getStatusOnce').and.returnValues(
-          of(true),
-          of(false),
-          of(true),
+          Observable.of(true),
+          Observable.of(false),
+          Observable.of(true),
         );
 
         connection.startWatch(100, 3);
@@ -101,12 +101,12 @@ describe('ConnectionService', () => {
     fakeAsync(
       inject([ConnectionService], (connection: ConnectionService) => {
         spyOn(connection, 'getStatusOnce').and.returnValues(
-          of(true),
-          of(true),
-          of(true),
-          of(true),
-          of(true),
-          of(true),
+          Observable.of(true),
+          Observable.of(true),
+          Observable.of(true),
+          Observable.of(true),
+          Observable.of(true),
+          Observable.of(true),
         );
 
         connection.startWatch(100, 3);
