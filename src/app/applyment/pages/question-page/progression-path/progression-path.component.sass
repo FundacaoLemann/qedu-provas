@@ -1,0 +1,56 @@
+@import '../../../../../assets/scss/styles/variables'
+
+.progression-path-list
+  padding: 0
+  display: flex
+  position: relative
+  list-style: none
+  flex-flow: row wrap
+  justify-content: center
+  align-items: center
+
+  .progression-path-item
+    width: 32px
+    height: 32px
+    border-radius: 100px
+    color: $color-primary-blue
+    background-color: $color-white
+    text-align: center
+    line-height: 32px
+    position: relative
+    cursor: pointer
+    transition: background 250ms
+    margin-left: 10px
+    margin-bottom: 15px
+    box-shadow: 0 0 10px 0 $color-primary-blue
+
+    .status
+      display: none
+
+    &:first-child
+      margin-left: 0
+      &:before
+        border-bottom: 0
+
+    &.answered
+      width: 26px
+      height: 26px
+      background-color: $color-primary-blue
+      color: $color-white
+      box-shadow: none
+      margin-left: 6px
+
+      span
+        font-size: 12px
+        margin-top: -2px
+
+      .status
+        display: block
+      .number
+        display: none
+
+      &:hover
+        .number
+          display: block
+        .status
+          display: none

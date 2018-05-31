@@ -1,9 +1,8 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 
 import { RequestService } from './request.service';
-import { createResponse } from '../../../testing/testing-helper';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
+import { Observable, throwError, from } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 class RequestServiceImpl extends RequestService {}
@@ -39,7 +38,7 @@ describe('RequestService', () => {
           status: 404,
           statusText: 'Not found',
         });
-        const source = Observable.throw(httpError).catch(service.handleError);
+        const source = throwError(httpError).pipe(catchError(service.handleError));
         source.subscribe(
           () => {},
           error => {
@@ -52,7 +51,7 @@ describe('RequestService', () => {
 
     it('should return an errors status code 0', () => {
       const response = new HttpErrorResponse({ status: 0 });
-      const source = Observable.throw(response).catch(service.handleError);
+      const source = throwError(response).pipe(catchError(service.handleError));
 
       source.subscribe(
         () => {},

@@ -1,0 +1,49 @@
+<div class="page">
+  <qp-header></qp-header>
+
+  <main class="container">
+
+      <qp-question-view
+        [title]="assessment?.mainTitle"
+        [index]="questionIndex+1"
+        [question]="question"
+        [answer]="answer.optionId"
+        (selectAnswer)="handleOptionClick($event)"
+      >
+        <div class="row" footer>
+            <div class="col-xs-4">
+              <button
+                prev
+                class="btn btn-default"
+                [disabled]="questionIndex <= 0"
+                [ngClass]="{disabled: questionIndex <= 0}"
+                (click)="submitAnswerAndNavigateBack()">
+                Anterior
+              </button>
+            </div>
+            <div class="col-xs-4 text-center">
+              <qp-current-question
+                [currentQuestion]="questionIndex+1"
+                [questionsLength]="questionsLength"
+              >
+              </qp-current-question>
+            </div>
+            <div class="col-xs-4 text-right">
+              <button
+                next
+                (click)="submitAnswerAndNavigateNext()"
+                class="btn btn-success">
+                Próxima
+              </button>
+            </div>
+        </div>
+      </qp-question-view>
+
+      <qp-progression-path
+        [questionsLength]="questionsLength"
+      ></qp-progression-path>
+  </main>
+
+  <qp-footer></qp-footer>
+</div>
+

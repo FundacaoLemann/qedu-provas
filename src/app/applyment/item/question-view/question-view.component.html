@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading" title>{{title}}</div>
+
+  <div class="panel-body">
+    <div class="col-xs-12">
+      <h3 index>Questão #{{index}}</h3>
+      <hr>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <div
+        stem
+        class="question"
+        [innerHTML]="questionHTML()"
+      ></div>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <qp-answer
+        *ngFor="let option of question?.answers"
+        [option]="option"
+        [checked]="isCorrectOption(option)"
+        (onClicked)="handleOptionClick($event)"
+      ></qp-answer>
+    </div>
+
+  </div>
+
+  <div class="panel-footer">
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</div>

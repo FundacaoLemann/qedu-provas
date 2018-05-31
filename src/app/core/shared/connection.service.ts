@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, of } from 'rxjs';
+import { mapTo, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -29,21 +26,19 @@ export class ConnectionService {
 
   getStatusOnce(): Observable<boolean> {
     try {
-      return (
-        this.http.get(`${API_URL}`)
-          .mapTo(true)
-          .catch(e => {
-            return Observable.of(false);
-          })
-      );
+      return this.http
+        .get(`${API_URL}`)
+        .pipe(mapTo(true), catchError(e => of(false)));
     } catch (err) {
-      return Observable.of(false);
+      return of(false);
     }
   }
 
   startWatch(interval = 500, limit = 0): Observable<boolean> {
-    if ( this._isFetching ) {
-      throw new Error('Already watching status. Stop the watching if you want to reinitialize.');
+    if (this._isFetching) {
+      throw new Error(
+        'Already watching status. Stop the watching if you want to reinitialize.',
+      );
     } else {
       this._isFetching = true;
       this.interval = interval;
@@ -52,12 +47,11 @@ export class ConnectionService {
     }
 
     const request = () => {
-      if ( this.limit === 0 || this.times < this.limit ) {
+      if (this.limit === 0 || this.times < this.limit) {
         this.times++;
-        this.getStatusOnce()
-          .subscribe(status => {
-            this._fetching$.next(status);
-          });
+        this.getStatusOnce().subscribe(status => {
+          this._fetching$.next(status);
+        });
       } else {
         this.stopWatch();
       }

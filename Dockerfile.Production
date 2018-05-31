@@ -1,4 +1,4 @@
-FROM qedu/qedu-provas-base-front-infra:release-1.2.0
+FROM qedu/qedu-provas-base-front-infra:release-2.0.0
 
 USER root
 
@@ -9,7 +9,7 @@ RUN  chown -R node\:node /var/www
 USER node
 
 RUN cd /var/www &&\
-    yarn install &&\
+    yarn &&\
     yarn build:prod &&\
     rm -fr src test mock build provision e2e
 

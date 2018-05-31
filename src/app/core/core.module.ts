@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { StoreService } from './shared/store.service';
 import { AssessmentService } from './shared/assessment.service';
 import { HeaderComponent } from './header/header.component';
@@ -11,7 +10,6 @@ import { ConnectionStatusComponent } from './shared/connection-status/connection
 
 @NgModule({
   imports: [
-    HttpModule,
     SharedModule,
   ],
   providers: [

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { ConnectionError } from '../../shared/errors/connection-error';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { throwError, Observable, TimeoutError } from 'rxjs';
+
+import { ConnectionError } from '../../shared/errors/connection-error';
 
 @Injectable()
 export abstract class RequestService {
@@ -17,13 +18,13 @@ export abstract class RequestService {
     } else if (error instanceof HttpErrorResponse && error.status !== 0) {
       errorToThrow = new Error(error.error.message);
 
-    } else if (error.name === 'TimeoutError') {
+    } else if (error instanceof TimeoutError) {
       errorToThrow = new ConnectionError();
 
     } else {
       errorToThrow = new Error(error);
     }
 
-    return Observable.throw(errorToThrow);
+    return throwError(errorToThrow);
   }
 }
