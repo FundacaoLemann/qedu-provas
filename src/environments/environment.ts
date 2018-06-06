@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   API_URL: 'http://localhost',
-  DOWNLOAD_CODE: 'offjkl9'
+  DOWNLOAD_CODE: 'offjkl9',
 };

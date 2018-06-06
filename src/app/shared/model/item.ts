@@ -7,7 +7,10 @@ export class Item {
   answers: Option[];
   media: Media[];
 
-  constructor({ answers = [] } = {}) {
+  constructor({ id = '', text = '', answers = [], media = [] } = {}) {
+    this.id = id;
+    this.text = text;
     this.answers = answers;
+    this.media = media;
   }
 }
