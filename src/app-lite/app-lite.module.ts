@@ -7,12 +7,14 @@ import { ItemModule } from '../app/applyment/item/item.module';
 import { bootstrapCustomElements } from './custom-elements/bootstrap-custom-elements.function';
 import { customElementsRepository } from './custom-elements-repository';
 
+
 @NgModule({
   imports: [BrowserModule, ItemModule],
   declarations: [AppComponent],
   entryComponents: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent]
+  /* uncomment for testing component*/
+  // bootstrap: [AppComponent],
 })
 export class AppLiteModule {
   constructor(private injector: Injector) {

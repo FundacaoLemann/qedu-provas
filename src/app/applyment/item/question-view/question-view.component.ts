@@ -14,7 +14,7 @@ import { Option } from '../../../shared/model/option';
 export class QuestionViewComponent implements OnInit {
   @Input() index = 0;
   @Input() title = '';
-  @Input() question: Item;
+  @Input() question: Item = new Item();
   @Input() answer = 0;
 
   @Output() selectAnswer = new EventEmitter<number>();
@@ -25,6 +25,7 @@ export class QuestionViewComponent implements OnInit {
 
   questionHTML(): SafeHtml {
     let text = '';
+
     if (this.question) {
       text = this.question.text;
 

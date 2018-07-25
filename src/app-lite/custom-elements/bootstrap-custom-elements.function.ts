@@ -4,6 +4,10 @@ import { createCustomElement } from '@angular/elements';
 declare let customElements: any;
 
 export function bootstrapCustomElements(repository: any, injector: Injector) {
+  if (!customElements || !customElements.define) {
+    return;
+  }
+
   //noinspection TypeScriptUnresolvedFunction
   const entryComponents: any[] = Object.entries(repository);
 
