@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost',
+  API_URL: '//localhost',
   DOWNLOAD_CODE: 'offjkl9',
 };
