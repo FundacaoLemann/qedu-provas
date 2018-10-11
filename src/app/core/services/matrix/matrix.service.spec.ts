@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { MatrixService } from './matrix.service';
 import { AssessmentService } from '../assessment.service';
+import { FormsModule } from '@angular/forms';
 
 describe('MatrixService', () => {
   let httpClient: HttpClient;
@@ -13,6 +14,7 @@ describe('MatrixService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        FormsModule
       ],
       providers: [
         MatrixService,

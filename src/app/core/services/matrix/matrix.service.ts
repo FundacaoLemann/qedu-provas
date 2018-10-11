@@ -21,7 +21,6 @@ export class MatrixService extends RequestService {
     private assessmentService: AssessmentService,
   ) {
     super();
-    console.log(this.assessmentService);
   }
 
   getMatrix(query: {
