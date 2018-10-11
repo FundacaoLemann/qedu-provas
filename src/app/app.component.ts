@@ -21,11 +21,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit () {
     this.current_date = new Date();
-    this.store.asObservable().subscribe((stored) => {
-      if (stored == null) {
-        this._router.navigate(['']);
-      }
-    });
+
+    this.store
+      .asObservable()
+      .subscribe((stored) => {
+        // if (stored === null) {
+        //   this._router.navigate(['']);
+        // }
+      });
 
     this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

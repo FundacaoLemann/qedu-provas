@@ -251,11 +251,11 @@
   "defaultProject": "qedu-provas-ng",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "qp",
       "styleext": "sass"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "qp"
     }
   }
 }

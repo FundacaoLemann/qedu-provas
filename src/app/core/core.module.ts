@@ -24,6 +24,7 @@ import { ConnectionStatusComponent } from './shared/connection-status/connection
     ConnectionStatusComponent
   ],
   exports: [
+    SharedModule,
     HeaderComponent,
     FooterComponent,
     ConnectionStatusComponent
