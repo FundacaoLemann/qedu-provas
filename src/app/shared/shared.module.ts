@@ -12,6 +12,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PanelPageComponent } from './components/panel-page/panel-page.component';
 import { ConnectionStatusComponent } from './components/connection-status/connection-status.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { ConnectionStatusComponent } from './components/connection-status/connec
     HeaderComponent,
     FooterComponent,
     PanelPageComponent,
-    ConnectionStatusComponent
+    ConnectionStatusComponent,
+    LogoComponent
   ],
   providers: [
     ConnectionService,
