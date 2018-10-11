@@ -22,7 +22,7 @@ describe('ConnectionStatusComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [ConnectionStatusComponent],
+        declarations: [],
         imports: [SharedModule, RouterTestingModule, HttpClientTestingModule],
         providers: [ConnectionService],
       }).compileComponents();

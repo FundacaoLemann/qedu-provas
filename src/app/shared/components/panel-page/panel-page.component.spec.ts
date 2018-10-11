@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PanelPageComponent } from './panel-page.component';
+import { SharedModule } from '../../shared.module';
 
 describe('PanelPageComponent', () => {
   let component: PanelPageComponent;
@@ -8,7 +9,8 @@ describe('PanelPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PanelPageComponent ]
+      imports: [SharedModule],
+      declarations: [ ]
     })
     .compileComponents();
   }));
