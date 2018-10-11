@@ -7,11 +7,11 @@ import { HttpClient } from '@angular/common/http';
 import * as md5 from 'md5';
 import * as _ from 'lodash';
 
-import Mock from '../../../mock/mock';
-import { environment } from '../../environments/environment';
+import Mock from '../../../../mock/mock';
+import { environment } from '../../../environments/environment';
 import { AssessmentService } from './assessment.service';
 
-const mock = require('../../../mock/db.json');
+const mock = require('../../../../mock/db.json');
 const ASSESSMENT = mock.assessments[0];
 const QUESTIONS = mock.questions;
 const { API_URL } = environment;

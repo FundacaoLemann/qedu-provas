@@ -5,17 +5,21 @@ import { Observable } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
 import * as md5 from 'md5';
 
-import { environment } from '../../environments/environment';
-import Answer from '../shared/model/answer';
-import { Assessment } from '../shared/model/assessment';
-import { Item } from '../shared/model/item';
+import { environment } from '../../../environments/environment';
+import Answer from '../../shared/model/answer';
+import { Assessment } from '../../shared/model/assessment';
+import { Item } from '../../shared/model/item';
 import { RequestService } from './request.service';
 
 const { API_URL, DOWNLOAD_CODE } = environment;
 
 @Injectable()
 export class AssessmentService extends RequestService {
-  private extractQuestionData(response: any): Item[] {
+  constructor(private _http: HttpClient) {
+    super();
+  }
+
+  extractQuestionData(response: any): Item[] {
     const rawItems = response.items;
     const questions = [];
 
@@ -64,10 +68,6 @@ export class AssessmentService extends RequestService {
     }
 
     return questions;
-  }
-
-  constructor(private _http: HttpClient) {
-    super();
   }
 
   fetchAssessment(assessment_id: string): Observable<Assessment> {
