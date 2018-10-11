@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 // Modules
 import { SharedModule } from '../shared/shared.module';
 // Services
-import { StoreService } from './store.service';
-import { AssessmentService } from './assessment.service';
-import { StudentService } from './student.service';
+import { StoreService } from './services/store.service';
+import { AssessmentService } from './services/assessment.service';
+import { StudentService } from './services/student.service';
 // Components
 
 @NgModule({

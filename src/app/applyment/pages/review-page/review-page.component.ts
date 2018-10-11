@@ -5,7 +5,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AssessmentService } from '../../../core/assessment.service';
+import { AssessmentService } from '../../../core/services/assessment.service';
 import { ConnectionService } from '../../../shared/services/connection.service';
 import { HasModal } from '../../../core/has-modal/has-modal';
 import { ConnectionError } from '../../../shared/errors/connection-error';

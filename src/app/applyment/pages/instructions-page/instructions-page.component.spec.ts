@@ -12,7 +12,7 @@ import { of } from 'rxjs';
 import { RouterStub } from '../../../../testing/router-stub';
 import { InstructionsPageComponent } from './instructions-page.component';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
-import { AssessmentService } from '../../../core/assessment.service';
+import { AssessmentService } from '../../../core/services/assessment.service';
 import { dispatchEvent } from '../../../../testing/testing-helper';
 import { ApplymentModule } from '../../applyment.module';
 import { ApplymentService } from '../../shared/applyment.service';
