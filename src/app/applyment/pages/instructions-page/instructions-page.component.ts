@@ -5,15 +5,15 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AssessmentService } from '../../../core/shared/assessment.service';
-import { ConnectionService } from '../../../core/shared/connection.service';
-import { HasModal } from '../../../core/shared/has-modal/has-modal';
+import { AssessmentService } from '../../../core/assessment.service';
+import { ConnectionService } from '../../../shared/services/connection.service';
+import { HasModal } from '../../../core/has-modal/has-modal';
 import { Assessment } from '../../../shared/model/assessment';
 import { Item } from '../../../shared/model/item';
 import { ApplymentService } from '../../shared/applyment.service';
 import { NoConnectionModalComponent } from '../../shared/no-connection-modal/no-connection-modal.component';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
-import MESSAGES from '../../../core/shared/messages/messages';
+import MESSAGES from '../../../core/messages/messages';
 
 @Component({
   selector: 'qp-instructions-page',

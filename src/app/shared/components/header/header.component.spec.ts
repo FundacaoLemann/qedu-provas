@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
-import { ConnectionService } from '../shared/connection.service';
+import { ConnectionService } from '../../services/connection.service';
 import { By } from '@angular/platform-browser';
-import { ApplymentService } from '../../applyment/shared/applyment.service';
-import { ApplymentModule } from '../../applyment/applyment.module';
+import { ApplymentService } from '../../../applyment/shared/applyment.service';
+import { ApplymentModule } from '../../../applyment/applyment.module';
 
-const db = require('../../../../mock/db.json');
+const db = require('../../../../../mock/db.json');
 const PARSED_STUDENT = {
   name: 'John Doe',
   matricula: '44256273',

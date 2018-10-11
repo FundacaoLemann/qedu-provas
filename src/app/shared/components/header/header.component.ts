@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Student } from '../../shared/model/student';
-import { ApplymentService } from '../../applyment/shared/applyment.service';
+import { Student } from '../../model/student';
+import { ApplymentService } from '../../../applyment/shared/applyment.service';
 
 @Component({
   selector: 'qp-header',

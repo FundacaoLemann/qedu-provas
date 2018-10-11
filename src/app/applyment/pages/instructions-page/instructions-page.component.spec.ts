@@ -12,12 +12,12 @@ import { of } from 'rxjs';
 import { RouterStub } from '../../../../testing/router-stub';
 import { InstructionsPageComponent } from './instructions-page.component';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
-import { AssessmentService } from '../../../core/shared/assessment.service';
+import { AssessmentService } from '../../../core/assessment.service';
 import { dispatchEvent } from '../../../../testing/testing-helper';
 import { ApplymentModule } from '../../applyment.module';
 import { ApplymentService } from '../../shared/applyment.service';
 import { InstructionsModalComponent } from './modal/instructions-modal.component';
-import { ConnectionService } from '../../../core/shared/connection.service';
+import { ConnectionService } from '../../../shared/services/connection.service';
 import { NoConnectionModalComponent } from '../../shared/no-connection-modal/no-connection-modal.component';
 
 const db = require('../../../../../mock/db.json');

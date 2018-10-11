@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable, TimeoutError } from 'rxjs';
 
-import { ConnectionError } from '../../shared/errors/connection-error';
+import { ConnectionError } from '../shared/errors/connection-error';
 
 @Injectable()
 export abstract class RequestService {

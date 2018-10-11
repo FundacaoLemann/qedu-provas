@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, ComponentRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { ErrorModalComponent } from '../../../applyment/shared/error-modal/error-modal.component';
+import { ErrorModalComponent } from '../../applyment/shared/error-modal/error-modal.component';
 
 export abstract class HasModal {
   @ViewChild('modal') modalRef: ComponentRef<any>;

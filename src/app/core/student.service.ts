@@ -3,8 +3,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
-import { Student } from '../../shared/model/student';
+import { environment } from '../../environments/environment';
+import { Student } from '../shared/model/student';
 import { RequestService } from './request.service';
 import { catchError, map } from 'rxjs/operators';
 
