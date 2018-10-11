@@ -4,11 +4,11 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { StudentService } from './student.service';
 
 const { API_URL } = environment;
-const db = require('../../../../mock/db.json');
+const db = require('../../../mock/db.json');
 const RAW_STUDENT = db.students[0];
 const PARSED_STUDENT = {
   id: '58d2f1af4a083c00194437c6',

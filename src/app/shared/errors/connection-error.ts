@@ -1,4 +1,4 @@
-import MESSAGES from '../../core/shared/messages/messages';
+import MESSAGES from '../../core/messages/messages';
 
 export class ConnectionError extends Error {
   constructor(message?: string) {

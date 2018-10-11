@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConnectionService } from '../connection.service';
+import { ConnectionService } from '../../services/connection.service';
 
 @Component({
   selector: 'qp-connection-status',

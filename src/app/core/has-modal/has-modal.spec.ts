@@ -1,7 +1,7 @@
 import { TestBed, inject, ComponentFixture } from '@angular/core/testing';
 import { HasModal } from './has-modal';
 import { ViewContainerRef, Component, ComponentFactoryResolver } from '@angular/core';
-import { ErrorModalComponent } from '../../../applyment/shared/error-modal/error-modal.component';
+import { ErrorModalComponent } from '../../applyment/shared/error-modal/error-modal.component';
 
 @Component({
   selector: 'qp-modal',

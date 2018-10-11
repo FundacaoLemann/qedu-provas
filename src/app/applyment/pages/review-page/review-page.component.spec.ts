@@ -15,7 +15,7 @@ import {
   createResponse,
   dispatchEvent,
 } from '../../../../testing/testing-helper';
-import { AssessmentService } from '../../../core/shared/assessment.service';
+import { AssessmentService } from '../../../core/assessment.service';
 import { camelizeObject } from '../../../utils/json';
 import { ApplymentModule } from '../../applyment.module';
 import { ApplymentService } from '../../shared/applyment.service';

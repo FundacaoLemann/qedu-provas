@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 import { map, catchError, timeout } from 'rxjs/operators';
 import * as md5 from 'md5';
 
-import { environment } from '../../../environments/environment';
-import Answer from '../../shared/model/answer';
-import { Assessment } from '../../shared/model/assessment';
-import { Item } from '../../shared/model/item';
+import { environment } from '../../environments/environment';
+import Answer from '../shared/model/answer';
+import { Assessment } from '../shared/model/assessment';
+import { Item } from '../shared/model/item';
 import { RequestService } from './request.service';
 
 const { API_URL, DOWNLOAD_CODE } = environment;
