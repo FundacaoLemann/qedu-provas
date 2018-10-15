@@ -15,6 +15,9 @@
                 id="matrix_code"
                 [(ngModel)]="matrixId"
             >
+            <p *ngIf="error && !submitting">
+              {{error}}
+            </p>
           </div>
         </div>
       </div>
