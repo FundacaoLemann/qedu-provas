@@ -19,7 +19,7 @@ export class MatrixSearchPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleSubmit() {
+  handleSubmit(event: Event) {
     if (!this.matrixId) {
       return;
     }
