@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatrixService } from '../../core/services/matrix/matrix.service';
 import { finalize } from 'rxjs/operators';
+import { Matrix } from '../../shared/model/matrix';
 
 @Component({
   selector: 'qp-matrix-search-page',
@@ -12,6 +13,8 @@ export class MatrixSearchPageComponent implements OnInit {
   public matrixId = '';
   public error = '';
   public submitting = false;
+
+  public matrix: Matrix;
 
   constructor(private matrixService: MatrixService) {
   }
@@ -29,9 +32,13 @@ export class MatrixSearchPageComponent implements OnInit {
       .getMatrix({ id: this.matrixId })
       .pipe(finalize(this.finalizeRequest))
       .subscribe(
-        () => {},
+        this.setMatrix,
         this.setError,
       );
+  }
+
+  setMatrix = (matrix: Matrix) => {
+    this.matrix = matrix;
   }
 
   setError = (error: Error) => {
