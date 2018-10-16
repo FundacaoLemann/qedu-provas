@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { empty, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
-import { SharedModule } from '../../shared/shared.module';
+import { ValidationModule } from '../validation.module';
 import { MatrixSearchPageComponent } from './matrix-search-page.component';
 import { AssessmentService } from '../../core/services/assessment.service';
 import { MatrixService } from '../../core/services/matrix/matrix.service';
 import { By } from '@angular/platform-browser';
+import { MatrixFixture } from '../../../testing/fixtures/matrix-fixture';
 
 fdescribe('MatrixSearchPageComponent', () => {
   let component: MatrixSearchPageComponent;
@@ -14,9 +15,8 @@ fdescribe('MatrixSearchPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [ValidationModule],
       providers: [AssessmentService],
-      declarations: [MatrixSearchPageComponent],
     })
       .compileComponents();
   }));
@@ -51,6 +51,17 @@ fdescribe('MatrixSearchPageComponent', () => {
 
     const errorEl = fixture.debugElement.query(By.css('.error'));
     expect(errorEl.nativeElement.innerText).toEqual('Matrix not found.');
+  });
+
+
+  it('renders matrix info', () => {
+    const matrix = MatrixFixture.get();
+    component.matrix = matrix;
+
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css('qp-matrix-info'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('form'))).toBeFalsy();
   });
 
 });

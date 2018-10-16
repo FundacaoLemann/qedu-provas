@@ -38,11 +38,14 @@ export class MatrixService extends RequestService {
   }
 
   private formatGetMatrixResponse(response: GetMatrixResponseDTO): Matrix {
-    const { id, title } = response.data;
+    const { id, title, numberOfItems, grade, subjects} = response.data;
 
     const matrix = new Matrix();
     matrix.id = id;
     matrix.title = title;
+    matrix.numberOfItems = numberOfItems;
+    matrix.grade = grade;
+    matrix.subjects = subjects;
     matrix.items = this.assessmentService.extractQuestionData(response.data);
 
     return matrix;
