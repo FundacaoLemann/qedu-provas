@@ -1,0 +1,30 @@
+<qp-panel-page>
+  <div>
+    <form #form="ngForm" action="" class="text-center">
+      <h3>Validação de Matriz de Prova</h3>
+      <div class="form-group">
+        <div class="row">
+          <label for="matrix_code">Códgio de Acesso da Matriz</label>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <input
+                type="text"
+                class="form-control"
+                name="matrix_code"
+                id="matrix_code"
+                [(ngModel)]="matrixId"
+            >
+            <div *ngIf="error && !submitting" class="error form-field-error">
+              {{error}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div footer>
+    <button class="btn btn-success" (click)="handleSubmit($event)">Continuar</button>
+  </div>
+</qp-panel-page>
+

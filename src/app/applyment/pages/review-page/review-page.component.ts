@@ -5,9 +5,9 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AssessmentService } from '../../../core/shared/assessment.service';
-import { ConnectionService } from '../../../core/shared/connection.service';
-import { HasModal } from '../../../core/shared/has-modal/has-modal';
+import { AssessmentService } from '../../../core/services/assessment.service';
+import { ConnectionService } from '../../../shared/services/connection.service';
+import { HasModal } from '../../../core/has-modal/has-modal';
 import { ConnectionError } from '../../../shared/errors/connection-error';
 import Answer from '../../../shared/model/answer';
 import { Assessment } from '../../../shared/model/assessment';

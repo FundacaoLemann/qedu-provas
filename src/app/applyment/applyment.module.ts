@@ -24,7 +24,6 @@ import { ItemModule } from './item/item.module';
 @NgModule({
   imports: [
     ApplymentRoutingModule,
-    SharedModule,
     CoreModule,
     ItemModule
   ],

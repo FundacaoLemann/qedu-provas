@@ -14,7 +14,7 @@ import { ApplymentModule } from '../../applyment.module';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
 import { RouterStub } from '../../../../testing/router-stub';
 import { ApplymentService } from '../../shared/applyment.service';
-import { StoreService } from '../../../core/shared/store.service';
+import { StoreService } from '../../../core/services/store.service';
 import * as test from '../../../../testing/testing-helper';
 import Mock from '../../../../../mock/mock';
 import { Answer } from '../../../shared/model/answer';

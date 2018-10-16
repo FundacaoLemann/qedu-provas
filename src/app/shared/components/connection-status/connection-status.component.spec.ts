@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 
 import { ConnectionStatusComponent } from './connection-status.component';
-import { ConnectionService } from '../connection.service';
+import { ConnectionService } from '../../services/connection.service';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../../shared/shared.module';
@@ -22,7 +22,7 @@ describe('ConnectionStatusComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [ConnectionStatusComponent],
+        declarations: [],
         imports: [SharedModule, RouterTestingModule, HttpClientTestingModule],
         providers: [ConnectionService],
       }).compileComponents();

@@ -15,7 +15,11 @@ const { API_URL, DOWNLOAD_CODE } = environment;
 
 @Injectable()
 export class AssessmentService extends RequestService {
-  private extractQuestionData(response: any): Item[] {
+  constructor(private _http: HttpClient) {
+    super();
+  }
+
+  extractQuestionData(response: any): Item[] {
     const rawItems = response.items;
     const questions = [];
 
@@ -64,10 +68,6 @@ export class AssessmentService extends RequestService {
     }
 
     return questions;
-  }
-
-  constructor(private _http: HttpClient) {
-    super();
   }
 
   fetchAssessment(assessment_id: string): Observable<Assessment> {

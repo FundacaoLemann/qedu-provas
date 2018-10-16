@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { StoreService } from './shared/store.service';
-import { AssessmentService } from './shared/assessment.service';
-import { HeaderComponent } from './header/header.component';
+// Modules
 import { SharedModule } from '../shared/shared.module';
-import { FooterComponent } from './footer/footer.component';
-import { StudentService } from './shared/student.service';
-import { ConnectionService } from './shared/connection.service';
-import { ConnectionStatusComponent } from './shared/connection-status/connection-status.component';
+// Services
+import { StoreService } from './services/store.service';
+import { AssessmentService } from './services/assessment.service';
+import { StudentService } from './services/student.service';
+// Components
 
 @NgModule({
   imports: [
@@ -16,17 +15,11 @@ import { ConnectionStatusComponent } from './shared/connection-status/connection
     StoreService,
     AssessmentService,
     StudentService,
-    ConnectionService
   ],
   declarations: [
-    HeaderComponent,
-    FooterComponent,
-    ConnectionStatusComponent
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent,
-    ConnectionStatusComponent
+    SharedModule,
   ]
 })
 export class CoreModule {

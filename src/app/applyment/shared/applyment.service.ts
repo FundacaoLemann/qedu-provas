@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../shared/model/student';
-import { StoreService } from '../../core/shared/store.service';
+import { StoreService } from '../../core/services/store.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Assessment } from '../../shared/model/assessment';
