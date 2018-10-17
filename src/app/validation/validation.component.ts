@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'qp-validation',
-  templateUrl: './validation.component.html',
+  template: '<router-outlet></router-outlet>',
 })
 export class ValidationComponent implements OnInit {
 
