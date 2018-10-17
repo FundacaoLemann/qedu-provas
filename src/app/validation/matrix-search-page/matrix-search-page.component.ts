@@ -27,6 +27,7 @@ export class MatrixSearchPageComponent implements OnInit {
       return;
     }
 
+    this.matrix = null;
     this.setSubmitting(true);
     this.matrixService
       .getMatrix({ id: this.matrixId })

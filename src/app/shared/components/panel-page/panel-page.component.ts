@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
 
 @Component({
   selector: 'qp-panel-page',
@@ -7,6 +7,7 @@ import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetector
 })
 export class PanelPageComponent implements OnInit, AfterViewInit {
   @ViewChild('footerContainer') private footer: ElementRef<HTMLElement>;
+  @Input() small = true;
 
   constructor() {
   }
