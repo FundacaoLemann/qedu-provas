@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MatrixService } from '../../core/services/matrix/matrix.service';
+import { MatrixService } from '../../../core/services/matrix/matrix.service';
 import { finalize } from 'rxjs/operators';
-import { Matrix } from '../../shared/model/matrix';
+import { Matrix } from '../../../shared/model/matrix';
 
 @Component({
   selector: 'qp-matrix-search-page',

@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 
-import { ValidationModule } from '../validation.module';
+import { ValidationModule } from '../../validation.module';
 import { MatrixSearchPageComponent } from './matrix-search-page.component';
-import { AssessmentService } from '../../core/services/assessment.service';
-import { MatrixService } from '../../core/services/matrix/matrix.service';
+import { AssessmentService } from '../../../core/services/assessment.service';
+import { MatrixService } from '../../../core/services/matrix/matrix.service';
 import { By } from '@angular/platform-browser';
-import { MatrixFixture } from '../../../testing/fixtures/matrix-fixture';
+import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
 
 fdescribe('MatrixSearchPageComponent', () => {
   let component: MatrixSearchPageComponent;
