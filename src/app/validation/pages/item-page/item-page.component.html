@@ -1,0 +1,16 @@
+<div class="page">
+  <qp-header></qp-header>
+
+  <main class="container">
+    <qp-question-view
+      [title]="title"
+      [index]="questionIndex+1"
+      [question]="question"
+      [answer]="answer"
+      (selectAnswer)="handleOptionClick($event)"
+    ></qp-question-view>
+  </main>
+
+  <qp-footer></qp-footer>
+</div>
+
