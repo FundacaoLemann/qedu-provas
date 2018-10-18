@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { ValidationState } from './validation-state.interface';
 
 @Injectable({
-  providedIn: 'ValidationModule',
+  providedIn: 'root',
 })
 export class ValidationStateService {
   private state$ = new BehaviorSubject<ValidationState>(new ValidationState);

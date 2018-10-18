@@ -44,7 +44,7 @@ describe('MatrixService', () => {
           expect(data.subjects.join(', ')).toEqual('Subject A, Subject B');
 
           expect(data.items[0].id).toEqual('fff');
-          expect(data.items[0].text).toEqual('A simple question');
+          expect(data.items[0].text).toEqual('A simple currentItem');
           expect(data.items[0].media).toEqual([]);
           expect(data.items[0].answers).toEqual([
             { id: 1, text: 'A'},
@@ -67,7 +67,7 @@ describe('MatrixService', () => {
           items: [
             {
               id: 'fff',
-              stem: 'A simple question',
+              stem: 'A simple currentItem',
               image: '',
               options: [
                 { id: 1, description: 'A'},

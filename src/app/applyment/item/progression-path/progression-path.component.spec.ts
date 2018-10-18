@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProgressionPathComponent } from './progression-path.component';
 import { By } from '@angular/platform-browser';
-import { RouterStub } from '../../../../../testing/router-stub';
+import { RouterStub } from '../../../../testing/router-stub';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from '../../../../../testing/activated-route-stub';
-import { ApplymentService } from '../../../shared/applyment.service';
-import { AppModule } from '../../../../app.module';
-import * as test from '../../../../../testing/testing-helper';
-import Mock from '../../../../../../mock/mock';
+import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
+import { ApplymentService } from '../../shared/applyment.service';
+import { AppModule } from '../../../app.module';
+import * as test from '../../../../testing/testing-helper';
+import Mock from '../../../../../mock/mock';
 
-const db = require('../../../../../../mock/db.json');
+const db = require('../../../../../mock/db.json');
 const QUESTIONS = [Mock.mockItem(0), Mock.mockItem(1), Mock.mockItem(2)];
 
 describe('ProgressionPathComponent', () => {
@@ -58,7 +58,7 @@ describe('ProgressionPathComponent', () => {
     }
   }));
 
-  it('should navigate to question on click', () => {
+  it('should navigate to currentItem on click', () => {
     spyOn(router, 'navigate');
     fixture.debugElement.queryAll(By.css('ul li'))[1].nativeElement.click();
 

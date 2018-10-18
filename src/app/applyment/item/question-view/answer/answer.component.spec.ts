@@ -39,7 +39,7 @@ describe('AnswerComponent', () => {
   });
 
   describe('display content', () => {
-    it('should display the question text', () => {
+    it('should display the currentItem text', () => {
       const labelEl = fixture.debugElement.query(By.css('label')).nativeElement;
       expect(labelEl.textContent).toEqual(OPTION.text);
     });

@@ -3,12 +3,21 @@
 
   <main class="container">
     <qp-question-view
-      [title]="title"
-      [index]="questionIndex+1"
-      [question]="question"
+      [title]="matrix.title"
+      [index]="currentItemIndex"
+      [question]="currentItem"
       [answer]="answer"
       (selectAnswer)="handleOptionClick($event)"
-    ></qp-question-view>
+    >
+      <div footer>
+        <button class="btn btn-success">Anterior</button>
+        <qp-current-question
+          [currentQuestion]="currentItemIndex"
+          [questionsLength]="itemsLength"
+        ></qp-current-question>
+        <button class="btn btn-success" (click)="handleNextQuestion()">Próxima</button>
+      </div>
+    </qp-question-view>
   </main>
 
   <qp-footer></qp-footer>
