@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Item } from '../../../shared/model/item';
 import { Matrix } from '../../../shared/model/matrix';
 import { ValidationStateService } from '../../services/validation-state.service';
+import { tap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'qp-item-page',
@@ -14,8 +15,7 @@ export class ItemPageComponent implements OnInit {
   title = '';
   matrix = new Matrix();
   currentItem = new Item();
-  currentItemIndex = 0;
-  answer = 0;
+  currentItemIndex = 1;
   itemsLength = 1;
 
   constructor(private stateService: ValidationStateService,
@@ -77,13 +77,8 @@ export class ItemPageComponent implements OnInit {
     });
   }
 
-  private resetAnswer = () => {
-    this.answer = 0;
-  }
-
   private nagivateToItem = (itemIndex: number) => {
     this.resetScroll();
-    this.resetAnswer();
     this.router.navigate(['/validacao', this.matrix.id, 'item', itemIndex]);
   }
 

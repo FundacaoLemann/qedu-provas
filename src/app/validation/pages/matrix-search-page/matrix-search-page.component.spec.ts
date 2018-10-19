@@ -8,7 +8,7 @@ import { MatrixService } from '../../../core/services/matrix/matrix.service';
 import { By } from '@angular/platform-browser';
 import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
 
-fdescribe('MatrixSearchPageComponent', () => {
+describe('MatrixSearchPageComponent', () => {
   let component: MatrixSearchPageComponent;
   let fixture: ComponentFixture<MatrixSearchPageComponent>;
   let matrixService: MatrixService;
