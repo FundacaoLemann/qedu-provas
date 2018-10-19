@@ -9,7 +9,7 @@ export class MatrixFixture {
     m.grade = 5;
     m.numberOfItems = 1;
     m.subjects = ['Língua Portuguesa', 'Matemática'];
-    m.items = [ItemFixture.get()];
+    m.items = [ItemFixture.get(), ItemFixture.get()];
 
     return m;
   }
