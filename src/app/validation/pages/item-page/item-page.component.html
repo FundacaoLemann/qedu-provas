@@ -9,13 +9,13 @@
       [answer]="answer"
       (selectAnswer)="handleOptionClick($event)"
     >
-      <div footer>
-        <button class="btn btn-success">Anterior</button>
+      <div class="footer" footer>
+        <button class="btn btn-success" (click)="handlePrevQuestionClick()">Anterior</button>
         <qp-current-question
           [currentQuestion]="currentItemIndex"
           [questionsLength]="itemsLength"
         ></qp-current-question>
-        <button class="btn btn-success" (click)="handleNextQuestion()">Próxima</button>
+        <button class="btn btn-success" (click)="handleNextQuestionClick()">Próxima</button>
       </div>
     </qp-question-view>
   </main>
