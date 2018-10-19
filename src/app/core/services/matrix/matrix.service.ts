@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
 import { Matrix } from '../../../shared/model/matrix';
 import { RequestService } from '../request.service';
 import { AssessmentService } from '../assessment.service';
-import { Item } from '../../../shared/model/item';
 // DTOs
 import { GetMatrixResponseDTO } from './GetMatrixResponseDTO.interface';
 

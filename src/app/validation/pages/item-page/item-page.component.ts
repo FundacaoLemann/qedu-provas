@@ -18,40 +18,73 @@ export class ItemPageComponent implements OnInit {
   answer = 0;
   itemsLength = 1;
 
-  constructor(
-    private stateService: ValidationStateService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
+  constructor(private stateService: ValidationStateService,
+              private router: Router,
+              private route: ActivatedRoute,) {
+  }
 
   async ngOnInit() {
     if (!this.stateIsValid()) {
       return this.redirectOnEmptyState();
     }
 
-    const { matrix } = this.stateService.state;
-    this.matrix = matrix;
-    this.title = matrix.title;
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.currentItemIndex = +params.get('itemIndex');
-      this.currentItem = matrix.items[this.currentItemIndex - 1];
-      this.itemsLength = matrix.items.length;
-    });
+    this.bindData();
   }
 
-  stateIsValid = (): boolean => {
-    return !!this.stateService.state.matrix;
+  handleNextQuestionClick = () => {
+    const nextItemIndex = this.currentItemIndex + 1;
+    if (nextItemIndex <= this.itemsLength) {
+      this.nagivateToItem(nextItemIndex);
+    }
   }
 
-  redirectOnEmptyState = () => {
-    return this.router.navigateByUrl('/validacao');
-  }
-
-  handleNextQuestion = () => {
-    this.router.navigate(['/validacao', this.matrix.id, 'item', (this.currentItemIndex + 1)]);
+  handlePrevQuestionClick = () => {
+    const prevItemIndex = this.currentItemIndex - 1;
+    if (prevItemIndex >= 1) {
+      this.nagivateToItem(prevItemIndex);
+    }
   }
 
   handleOptionClick = () => {
-    console.log('clicked');
   }
+
+  private stateIsValid = (): boolean => {
+    return !!this.stateService.state.matrix;
+  }
+
+  private handleParamChangePart = (matrix: Matrix) => {
+    return (params: ParamMap) => {
+      this.currentItemIndex = +params.get('itemIndex');
+      this.currentItem = matrix.items[this.currentItemIndex - 1];
+      this.itemsLength = matrix.items.length;
+    };
+  }
+
+  private bindData = () => {
+    const { matrix } = this.stateService.state;
+    this.matrix = matrix;
+    this.title = matrix.title;
+    this.route.paramMap.subscribe(this.handleParamChangePart(matrix));
+  }
+
+  private redirectOnEmptyState = () => {
+    return this.router.navigateByUrl('/validacao');
+  }
+
+  private resetScroll = () => {
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+  }
+
+  private resetAnswer = () => {
+    this.answer = 0;
+  }
+
+  private nagivateToItem = (itemIndex: number) => {
+    this.resetScroll();
+    this.resetAnswer();
+    this.router.navigate(['/validacao', this.matrix.id, 'item', itemIndex]);
+  }
+
 }
