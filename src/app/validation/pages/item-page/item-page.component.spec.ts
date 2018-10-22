@@ -14,7 +14,7 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { ItemPageComponent } from './item-page.component';
 import { ValidationModule } from '../../validation.module';
@@ -29,7 +29,7 @@ import { Matrix } from '../../../shared/model/matrix';
 })
 class StubComponent {}
 
-describe('ItemPageComponent', () => {
+fdescribe('ItemPageComponent', () => {
   let component: ItemPageComponent;
   let fixture: ComponentFixture<ItemPageComponent>;
   let router: Router;
@@ -98,4 +98,14 @@ describe('ItemPageComponent', () => {
       expect(component.currentItemIndex).toEqual(2);
     }),
   );
+
+  it('redirects to approval on last item', () => {
+    component.currentItemIndex = 2;
+    component.itemsLength = 2;
+
+    component.handleNextQuestionClick();
+
+    expect(router.navigate)
+      .toHaveBeenCalledWith(['/validacao', matrixMock.id, 'aprovacao']);
+  });
 });
