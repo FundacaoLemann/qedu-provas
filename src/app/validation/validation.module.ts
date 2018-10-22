@@ -11,6 +11,7 @@ import { MatrixInfoComponent } from './components/matrix-info/matrix-info.compon
 import { ValidationStateService } from './services/validation-state.service';
 // External Modules
 import { ItemModule } from '../applyment/item/item.module';
+import { ApprovalPageComponent } from './pages/approval-page/approval-page.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { ItemModule } from '../applyment/item/item.module';
     MatrixSearchPageComponent,
     MatrixInfoComponent,
     ItemPageComponent,
+    ApprovalPageComponent,
   ],
 })
 export class ValidationModule {}
