@@ -32,6 +32,6 @@ describe('CurrentQuestionComponent', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('.current-currentItem')).nativeElement.textContent.trim()).toEqual('12 de 20');
+    expect(fixture.debugElement.query(By.css('.current-question')).nativeElement.textContent.trim()).toEqual('12 de 20');
   });
 });
