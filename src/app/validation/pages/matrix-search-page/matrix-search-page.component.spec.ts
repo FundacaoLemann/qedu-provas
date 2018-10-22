@@ -7,6 +7,7 @@ import { AssessmentService } from '../../../core/services/assessment.service';
 import { MatrixService } from '../../../core/services/matrix/matrix.service';
 import { By } from '@angular/platform-browser';
 import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MatrixSearchPageComponent', () => {
   let component: MatrixSearchPageComponent;
@@ -15,7 +16,7 @@ describe('MatrixSearchPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ValidationModule],
+      imports: [ValidationModule, RouterTestingModule],
       providers: [AssessmentService],
     })
       .compileComponents();
