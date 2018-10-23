@@ -4,8 +4,8 @@ pipeline {
     }
 
     environment {
-        APP_NAME = 'newton-api'
-        ECR_REPO = 'https://494167762137.dkr.ecr.us-east-1.amazonaws.com/newton-api'
+        APP_NAME = 'newton-front'
+        ECR_REPO = 'https://494167762137.dkr.ecr.us-east-1.amazonaws.com/newton'
         ECR_PREFIX = '494167762137.dkr.ecr.us-east-1.amazonaws.com/'
         ECR_CREDENTIAL = 'ecr:us-east-1:ecr-complete-access'
     }
@@ -38,11 +38,13 @@ pipeline {
                             println("2- Checking current ambient")
                             if (env.GIT_BRANCH ==~ "^v\\d+\\.\\d+\\.\\d+") {
                                 // PRD --> If matches a tag v*.*.*
+				env.ENVIRONMENT = "prod"
                                 env.APP_AMBIENT = "prd"
                                 env.APP_TAG = env.GIT_BRANCH
                             }
                             else {
                                 // STG --> Everything else
+				env.ENVIRONMENT = "stag"
                                 env.APP_AMBIENT = "stg"
                                 env.APP_TAG = ""
                             }
@@ -157,7 +159,7 @@ pipeline {
                     )
                     println("Building application image")
                     // Creates "image" Docker Image type object
-                    image = docker.build("${APP_NAME}:${APP_COMMIT}", " .")
+                    image = docker.build("${APP_NAME}:${APP_COMMIT}", "--build-arg ENVIRONMENT=${ENVIRONMENT} .")
                 }
             }
             post {
