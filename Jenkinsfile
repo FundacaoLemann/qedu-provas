@@ -162,6 +162,7 @@ pipeline {
                     image = docker.build("${APP_NAME}:${APP_COMMIT}", "--build-arg ENVIRONMENT=${ENVIRONMENT} .")
                 }
             }
+
             post {
                 failure {
                     println("SLACK - Notifying build failure")
