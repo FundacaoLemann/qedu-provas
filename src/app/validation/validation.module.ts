@@ -12,6 +12,8 @@ import { ValidationStateService } from './services/validation-state.service';
 // External Modules
 import { ItemModule } from '../applyment/item/item.module';
 import { ApprovalPageComponent } from './pages/approval-page/approval-page.component';
+import { ApprovedContentComponent } from './pages/approval-page/approved-content/approved-content.component';
+import { RefusedContentComponent } from './pages/approval-page/refused-content/refused-content.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { ApprovalPageComponent } from './pages/approval-page/approval-page.compo
     MatrixInfoComponent,
     ItemPageComponent,
     ApprovalPageComponent,
+    ApprovedContentComponent,
+    RefusedContentComponent,
   ],
 })
 export class ValidationModule {}
