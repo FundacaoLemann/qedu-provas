@@ -1,20 +1,18 @@
 FROM qedu/qedu-provas-base-front-infra:release-2.0.0
 
+WORKDIR "/var/www"
 USER root
 
 ADD . /var/www
 
-RUN  chown -R node\:node /var/www
+RUN  chown -R node:node /var/www
 
-USER node
+ARG ENVIRONMENT
 
 RUN cd /var/www &&\
     yarn &&\
     yarn build:${ENVIRONMENT} &&\
     rm -fr src test mock build provision e2e
-
-
-WORKDIR "/var/www"
 
 CMD yarn start
 
