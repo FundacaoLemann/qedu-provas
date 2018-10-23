@@ -16,7 +16,6 @@ RUN cd /var/www &&\
 
 CMD yarn start
 
-
 FROM alpine:3.8
 
 USER root
