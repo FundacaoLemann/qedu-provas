@@ -178,16 +178,16 @@ pipeline {
             steps {
                 script {
                     // Starts "test" container with the built application and runs commands
-                    #def test = image.run("-i --user root", "/bin/sh")
-                    #try {
-                    #    sh "docker exec -i ${test.id} yarn e2e"
-                    #    sh "docker exec -i ${test.id} yarn test"
-                    #    sh "docker cp ${test.id}:/tmp/ ./tmp/"
-                    #    junit(testResults: 'tmp/*.xml', allowEmptyResults: true)
-                    #}
-                    #finally {
-                    #    test.stop()
-                    #}
+                    //def test = image.run("-i --user root", "/bin/sh")
+                    //try {
+                    //    sh "docker exec -i ${test.id} yarn e2e"
+                    //    sh "docker exec -i ${test.id} yarn test"
+                    //    sh "docker cp ${test.id}:/tmp/ ./tmp/"
+                    //    junit(testResults: 'tmp/*.xml', allowEmptyResults: true)
+                    //}
+                    //finally {
+                    //    test.stop()
+                    //}
 		    println("testado")
                 }
             }
