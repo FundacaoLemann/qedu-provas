@@ -29,7 +29,7 @@ import { Matrix } from '../../../shared/model/matrix';
 })
 class StubComponent {}
 
-fdescribe('ItemPageComponent', () => {
+describe('ItemPageComponent', () => {
   let component: ItemPageComponent;
   let fixture: ComponentFixture<ItemPageComponent>;
   let router: Router;
