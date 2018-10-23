@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         APP_NAME = 'newton-front'
-        ECR_REPO = 'https://494167762137.dkr.ecr.us-east-1.amazonaws.com/newton'
+        ECR_REPO = 'https://494167762137.dkr.ecr.us-east-1.amazonaws.com/newton-front'
         ECR_PREFIX = '494167762137.dkr.ecr.us-east-1.amazonaws.com/'
         ECR_CREDENTIAL = 'ecr:us-east-1:ecr-complete-access'
     }
