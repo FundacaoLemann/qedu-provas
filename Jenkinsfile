@@ -139,6 +139,7 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Pulling necessary images') {
                     steps {
                         script {
