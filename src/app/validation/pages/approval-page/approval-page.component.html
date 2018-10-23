@@ -9,7 +9,7 @@
           <p>
             <button
               approveBtn
-              (click)="setApproved(true)"
+              (click)="approve()"
               class="btn btn-success btn-lg"
             >
               Sim, tudo certo!
@@ -19,7 +19,7 @@
             <button
               refuseBtn
               class="btn btn-danger btn-lg"
-              (click)="setApproved(false)"
+              (click)="requestChanges(false)"
             >
               Não, precisam de alteração
             </button>
