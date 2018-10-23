@@ -35,7 +35,7 @@ export class QuestionPageComponent implements OnInit, OnDestroy {
     // this.assessment = this._applymentService.getAssessment();
     this.assessment = this._applymentService.getAssessment();
     this.questionsLength = this._applymentService.getItems().length;
-    // Update question based on the url change
+    // Update currentItem based on the url change
     this._route.params
       .pipe(switchMap(params => of(+params['question_id'] - 1)))
       .subscribe(

@@ -1,0 +1,25 @@
+<div class="page">
+  <qp-header></qp-header>
+
+  <main class="container">
+    <qp-question-view
+      [title]="matrix.title"
+      [index]="currentItemIndex"
+      [question]="currentItem"
+      [answer]="0"
+      (selectAnswer)="handleOptionClick()"
+    >
+      <div class="footer" footer>
+        <button class="btn btn-success" (click)="handlePrevQuestionClick()">Anterior</button>
+        <qp-current-question
+          [currentQuestion]="currentItemIndex"
+          [questionsLength]="itemsLength"
+        ></qp-current-question>
+        <button class="btn btn-success" (click)="handleNextQuestionClick()">Próxima</button>
+      </div>
+    </qp-question-view>
+  </main>
+
+  <qp-footer></qp-footer>
+</div>
+

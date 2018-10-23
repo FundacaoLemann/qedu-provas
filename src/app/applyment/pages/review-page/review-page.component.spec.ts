@@ -74,7 +74,7 @@ describe('ReviewPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should return to the last question when [back] is clicked', () => {
+  it('should return to the last currentItem when [back] is clicked', () => {
     component.questions = QUESTIONS;
     spyOn(router, 'navigate');
     dispatchEvent(fixture, '[back]', 'click');

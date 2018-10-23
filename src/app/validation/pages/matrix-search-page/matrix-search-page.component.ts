@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
-import { MatrixService } from '../../core/services/matrix/matrix.service';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+
+import { ValidationStateService } from '../../services/validation-state.service';
+import { MatrixService } from '../../../core/services/matrix/matrix.service';
+import { Matrix } from '../../../shared/model/matrix';
 
 @Component({
   selector: 'qp-matrix-search-page',
@@ -13,8 +16,13 @@ export class MatrixSearchPageComponent implements OnInit {
   public error = '';
   public submitting = false;
 
-  constructor(private matrixService: MatrixService) {
-  }
+  public matrix: Matrix;
+
+  constructor(
+    private router: Router,
+    private stateService: ValidationStateService,
+    private matrixService: MatrixService
+  ) { }
 
   ngOnInit() {
   }
@@ -24,14 +32,24 @@ export class MatrixSearchPageComponent implements OnInit {
       return;
     }
 
+    if (this.matrix) {
+      return this.redirectToItem();
+    }
+
+    this.matrix = null;
     this.setSubmitting(true);
     this.matrixService
       .getMatrix({ id: this.matrixId })
       .pipe(finalize(this.finalizeRequest))
       .subscribe(
-        () => {},
+        this.setMatrix,
         this.setError,
       );
+  }
+
+  setMatrix = (matrix: Matrix) => {
+    this.stateService.setState({ matrix });
+    this.matrix = matrix;
   }
 
   setError = (error: Error) => {
@@ -44,5 +62,9 @@ export class MatrixSearchPageComponent implements OnInit {
 
   finalizeRequest = () => {
     this.setSubmitting(false);
+  }
+
+  private redirectToItem() {
+    this.router.navigateByUrl(`validacao/${this.matrix.id}/item/1`);
   }
 }

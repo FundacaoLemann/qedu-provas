@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApplymentService } from '../../../shared/applyment.service';
-import Answer from '../../../../shared/model/answer';
+import { ApplymentService } from '../../shared/applyment.service';
+import Answer from '../../../shared/model/answer';
 
 @Component({
   selector: 'qp-progression-path',

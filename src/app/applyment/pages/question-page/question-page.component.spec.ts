@@ -73,7 +73,7 @@ describe('QuestionPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('register a question to be managed', () => {
+  it('register a currentItem to be managed', () => {
     const mockAnswer = ANSWERS[0];
     spyOn(answerManagerService, 'register');
     spyOn(applymentService, 'getAnswer').and.returnValue(mockAnswer);
@@ -119,7 +119,7 @@ describe('QuestionPageComponent', () => {
   });
 
   describe('navigation buttons', () => {
-    it('should navigate to the next question when clicked', (() => {
+    it('should navigate to the next currentItem when clicked', (() => {
       route.testParams = { token: '1', question_id: 1 };
       spyOn(router, 'navigate');
       test.dispatchEvent(fixture, '[next]', 'click');
@@ -132,7 +132,7 @@ describe('QuestionPageComponent', () => {
       ]);
     }));
 
-    it('should navigate to review page when the current question is the last', (() => {
+    it('should navigate to review page when the current currentItem is the last', (() => {
       route.testParams = { token: 'qedu1', question_id: '10' };
       spyOn(router, 'navigate');
       test.dispatchEvent(fixture, '[next]', 'click');
@@ -143,7 +143,7 @@ describe('QuestionPageComponent', () => {
       ]);
     }));
 
-    it('should navigate to the previous question when previous is clicked', (() => {
+    it('should navigate to the previous currentItem when previous is clicked', (() => {
       route.testParams = { token: 'qedu1', question_id: '9' };
       spyOn(router, 'navigate');
       test.dispatchEvent(fixture, '[prev]', 'click');
@@ -155,7 +155,7 @@ describe('QuestionPageComponent', () => {
       ]);
     }));
 
-    it('should disable the prev-button when the current question is the first', () => {
+    it('should disable the prev-button when the current currentItem is the first', () => {
       route.testParams = { token: 'qedu1', question_id: '1' };
       fixture.detectChanges();
       const buttonEl = fixture.debugElement.query(By.css('[prev]'))

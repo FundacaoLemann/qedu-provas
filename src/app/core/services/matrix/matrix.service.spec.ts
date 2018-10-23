@@ -39,9 +39,12 @@ describe('MatrixService', () => {
         .subscribe( data => {
           expect(data.id).toEqual('e1234');
           expect(data.title).toEqual('Some Matrix to Tests');
+          expect(data.numberOfItems).toEqual(10);
+          expect(data.grade).toEqual(5);
+          expect(data.subjects.join(', ')).toEqual('Subject A, Subject B');
 
           expect(data.items[0].id).toEqual('fff');
-          expect(data.items[0].text).toEqual('A simple question');
+          expect(data.items[0].text).toEqual('A simple currentItem');
           expect(data.items[0].media).toEqual([]);
           expect(data.items[0].answers).toEqual([
             { id: 1, text: 'A'},
@@ -58,10 +61,13 @@ describe('MatrixService', () => {
         data: {
           id: 'e1234',
           title: 'Some Matrix to Tests',
+          numberOfItems: 10,
+          grade: 5,
+          subjects: ['Subject A', 'Subject B'],
           items: [
             {
               id: 'fff',
-              stem: 'A simple question',
+              stem: 'A simple currentItem',
               image: '',
               options: [
                 { id: 1, description: 'A'},
