@@ -24,7 +24,7 @@ export class ApprovalPageComponent implements OnInit {
 
   approve() {
     this.approved = true;
-    this.matrixService.setMatrixAsApproved(this.matrix);
+    // this.matrixService.setMatrixAsApproved(this.matrix);
   }
 
   requestChanges() {
