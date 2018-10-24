@@ -5,7 +5,7 @@
     <ng-container *ngIf="!matrix; then matrixForm; else matrixInfo"></ng-container>
 
     <ng-template #matrixForm>
-      <form  #form="ngForm" action="" class="text-center">
+      <form  #form="ngForm" action="" class="text-center mt20">
         <div class="form-group">
           <div class="row">
             <label for="matrix_code">Código de Acesso da Matriz</label>
@@ -29,7 +29,9 @@
     </ng-template>
 
     <ng-template #matrixInfo>
-      <qp-matrix-info [matrix]="matrix"></qp-matrix-info>
+      <div class="matrix-info">
+        <qp-matrix-info [matrix]="matrix"></qp-matrix-info>
+      </div>
     </ng-template>
 
   </div>
