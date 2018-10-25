@@ -17,10 +17,8 @@ import { mapTo } from 'rxjs/internal/operators';
 })
 export class MatrixService extends RequestService {
 
-  constructor(
-    private http: HttpClient,
-    private assessmentService: AssessmentService
-  ) {
+  constructor(private http: HttpClient,
+              private assessmentService: AssessmentService) {
     super();
   }
 
@@ -38,6 +36,14 @@ export class MatrixService extends RequestService {
   }
 
   setMatrixAsApproved(matrix: Matrix | string): Observable<boolean> {
+    return this.updateMatrixStatus(matrix, 'APPROVED');
+  }
+
+  setMatrixAsRequireChanges(matrix: Matrix | string): Observable<boolean> {
+    return this.updateMatrixStatus(matrix, 'REQUIRE_CHANGES');
+  }
+
+  private updateMatrixStatus = (matrix: Matrix | string, status: string): Observable<boolean> => {
     let id;
     if (typeof matrix === 'string') {
       id = matrix;
@@ -46,13 +52,25 @@ export class MatrixService extends RequestService {
       id = matrix.id;
     }
 
-    const requestUrl = this.createRequestUrl('matrices/:id', { id });
+    const requestUrl = this.getStatusUpdateUrl(id, status);
 
     return this.http
-      .patch(requestUrl, { status: 'APPROVED' })
-        .pipe(
-          map((data: any) => data.data),
-        );
+      .post(requestUrl, {})
+      .pipe(
+        map((data: any) => data.data),
+      );
+  }
+
+  private getStatusUpdateUrl = (matrixId: string, status: string): string => {
+    let action = '';
+
+    if (status === 'APPROVED') {
+      action = 'approve';
+    } else if (status === 'REQUIRE_CHANGES') {
+      action = 'require-changes';
+    }
+
+    return this.createRequestUrl('matrices/:matrixId/:action', { matrixId, action });
   }
 
   private formatGetMatrixResponse(response: GetMatrixResponseDTO): Matrix {

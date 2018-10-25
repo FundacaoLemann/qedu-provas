@@ -12,7 +12,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
 import { Matrix } from '../../../shared/model/matrix';
 
-fdescribe('ApprovalPageComponent', () => {
+describe('ApprovalPageComponent', () => {
   let component: ApprovalPageComponent;
   let fixture: ComponentFixture<ApprovalPageComponent>;
   let matrixService: MatrixService;
@@ -48,11 +48,14 @@ fdescribe('ApprovalPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('sets matrix as approved', () => {
-    spyOn(matrixService, 'setMatrixAsApproved').and.returnValue(of({ data: true }));
-
+  it('renders confirmation', () => {
+    expect(fixture.debugElement.queryAll(By.css('[defaultContent]')).length).toEqual(1);
     expect(fixture.debugElement.queryAll(By.css('qp-approved-content')).length).toEqual(0);
     expect(fixture.debugElement.queryAll(By.css('qp-refused-content')).length).toEqual(0);
+  });
+
+  it('approves a matrix', () => {
+    spyOn(matrixService, 'setMatrixAsApproved').and.returnValue(of({ data: true }));
 
     fixture.debugElement.query(By.css('[approveBtn]')).triggerEventHandler('click', {});
     fixture.detectChanges();
@@ -62,6 +65,19 @@ fdescribe('ApprovalPageComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('[defaultContent]')).length).toEqual(0);
     expect(fixture.debugElement.queryAll(By.css('qp-approved-content')).length).toEqual(1);
     expect(fixture.debugElement.queryAll(By.css('qp-refused-content')).length).toEqual(0);
+  });
+
+  it('requires changes to a matrix', () => {
+    spyOn(matrixService, 'setMatrixAsRequireChanges').and.returnValue(of({ data: true }));
+
+    fixture.debugElement.query(By.css('[requireChangesBtn]')).triggerEventHandler('click', {});
+    fixture.detectChanges();
+
+    expect(matrixService.setMatrixAsRequireChanges).toHaveBeenCalledWith(matrixMock);
+
+    expect(fixture.debugElement.queryAll(By.css('[defaultContent]')).length).toEqual(0);
+    expect(fixture.debugElement.queryAll(By.css('qp-approved-content')).length).toEqual(0);
+    expect(fixture.debugElement.queryAll(By.css('qp-refused-content')).length).toEqual(1);
   });
 
 });
