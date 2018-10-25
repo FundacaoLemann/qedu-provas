@@ -17,7 +17,7 @@ export abstract class RequestService {
     return `${API_URL}/${resources}`;
   }
 
-  protected createRequestUrl(resource = '', params: Object): string {
+  protected createRequestUrl(resource = '', params: Object = {}): string {
     return Object
       .entries(params)
       .reduce(
