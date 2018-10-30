@@ -9,6 +9,7 @@ import { ItemPageComponent } from './pages/item-page/item-page.component';
 import { MatrixInfoComponent } from './components/matrix-info/matrix-info.component';
 // Services
 import { ValidationStateService } from './services/validation-state.service';
+import { RouterGuardService } from './services/router-guard.service';
 // External Modules
 import { ItemModule } from '../applyment/item/item.module';
 import { ApprovalPageComponent } from './pages/approval-page/approval-page.component';
@@ -23,6 +24,7 @@ import { RefusedContentComponent } from './pages/approval-page/refused-content/r
   ],
   providers: [
     ValidationStateService,
+    RouterGuardService
   ],
   declarations: [
     ValidationComponent,
