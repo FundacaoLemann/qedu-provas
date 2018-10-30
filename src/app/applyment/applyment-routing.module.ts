@@ -8,25 +8,45 @@ import { QuestionPageComponent } from './pages/question-page/question-page.compo
 import { ReviewPageComponent } from './pages/review-page/review-page.component';
 import { CongratulationsPageComponent } from './pages/congratulations-page/congratulations-page.component';
 import { ApplymentComponent } from './applyment.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
   {
-    path: '', component: ApplymentComponent,
+    path: '',
+    component: ApplymentComponent,
     children: [
       { path: '', component: SearchAssessmentPageComponent },
-      { path: 'prova/:token', component: StudentAuthenticationPageComponent },
-      { path: 'prova/:token/instrucoes', component: InstructionsPageComponent },
-      { path: 'prova/:token/questao/:question_id', component: QuestionPageComponent },
-      { path: 'prova/:token/revisao', component: ReviewPageComponent },
-      { path: 'prova/:token/parabens', component: CongratulationsPageComponent },
-    ]
+      {
+        path: 'prova/:token',
+        component: StudentAuthenticationPageComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'prova/:token/instrucoes',
+        component: InstructionsPageComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'prova/:token/questao/:question_id',
+        component: QuestionPageComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'prova/:token/revisao',
+        component: ReviewPageComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'prova/:token/parabens',
+        component: CongratulationsPageComponent,
+        canActivate: [AuthGuardService],
+      },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class ApplymentRoutingModule {
-}
+export class ApplymentRoutingModule {}
