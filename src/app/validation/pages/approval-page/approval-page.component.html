@@ -1,0 +1,34 @@
+<div class="page">
+  <qp-header></qp-header>
+  <main class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{matrix?.title}}</div>
+      <div class="panel-body">
+        <div defaultContent *ngIf="approved === null">
+          <h3>Você conseguiu visualizar todos os items corretamente?</h3>
+          <p>
+            <button
+              approveBtn
+              (click)="handleClick('approve')"
+              class="btn btn-success btn-lg"
+            >
+              Sim, tudo certo!
+            </button>
+          </p>
+          <p>
+            <button
+              requireChangesBtn
+              class="btn btn-danger btn-lg"
+              (click)="handleClick('requireChanges')"
+            >
+              Não, precisam de alteração
+            </button>
+          </p>
+        </div>
+        <qp-approved-content *ngIf="approved === true"></qp-approved-content>
+        <qp-refused-content *ngIf="approved === false"></qp-refused-content>
+      </div>
+    </div>
+  </main>
+  <qp-footer></qp-footer>
+</div>

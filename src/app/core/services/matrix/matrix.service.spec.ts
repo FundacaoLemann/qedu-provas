@@ -5,6 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { MatrixService } from './matrix.service';
 import { AssessmentService } from '../assessment.service';
 import { FormsModule } from '@angular/forms';
+import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
 
 describe('MatrixService', () => {
   let httpClient: HttpClient;
@@ -12,14 +13,8 @@ describe('MatrixService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        FormsModule
-      ],
-      providers: [
-        MatrixService,
-        AssessmentService
-      ]
+      imports: [HttpClientTestingModule, FormsModule],
+      providers: [MatrixService, AssessmentService]
     });
   });
 
@@ -32,7 +27,7 @@ describe('MatrixService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('it should request a matrix', async(inject(
+  it('requests a matrix', async(inject(
     [MatrixService], (service: MatrixService) => {
       service
         .getMatrix({ id: 'e1234' })
@@ -83,4 +78,39 @@ describe('MatrixService', () => {
       httpTestingController.verify();
     })
   ));
+
+  it('updates matrix state to APPROVED',
+    inject([MatrixService], (service: MatrixService) => {
+      const matrix = MatrixFixture.get();
+
+      service
+        .setMatrixAsApproved(matrix)
+        .subscribe(data => {
+          expect(data).toEqual(true);
+        });
+
+      const req = httpTestingController.expectOne(`//localhost/matrices/${matrix.id}/approve`);
+
+      expect(req.request.method).toEqual('POST');
+
+      req.flush({ data: true });
+    })
+  );
+  it('updates matrix state to APPROVED',
+    inject([MatrixService], (service: MatrixService) => {
+      const matrix = MatrixFixture.get();
+
+      service
+        .setMatrixAsApproved(matrix)
+        .subscribe(data => {
+          expect(data).toEqual(true);
+        });
+
+      const req = httpTestingController.expectOne(`//localhost/matrices/${matrix.id}/approve`);
+
+      expect(req.request.method).toEqual('POST');
+
+      req.flush({ data: true });
+    })
+  );
 });
