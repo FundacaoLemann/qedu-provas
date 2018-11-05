@@ -291,7 +291,7 @@ pipeline {
                             try {
                                 sh "docker exec -i ${deploy.id} apk add python py-pip --update --no-cache"
                                 sh "docker exec -i ${deploy.id} pip install --upgrade awscli"
-                                sh "docker exec -i ${deploy.id} aws s3 sync /var/www/ s3://${AWS_DEPLOY_S3_BUCKET}/ --delete"
+                                sh "docker exec -i ${deploy.id} aws s3 sync /var/www/dist s3://${AWS_DEPLOY_S3_BUCKET}/ --delete"
                                 sh "docker exec -i ${deploy.id} aws cloudfront create-invalidation --distribution-id ${AWS_DEPLOY_CLOUDFRONT_DISTRIBUTION_ID} --paths \"/*\""
                             }
                             finally {
