@@ -205,30 +205,6 @@ pipeline {
                     )
                 }
             }
-
-            post {
-                success {
-                    println("SLACK - Notifying build success")
-                    slackSend (
-                        color: "${SUCCESS_COLOR}",
-                        message: "${MSG_BUILD_SUCCESS}"
-                    )
-                }
-                failure {
-                    println("SLACK - Notifying build failure")
-                    slackSend (
-                        color: "${FAILURE_COLOR}",
-                        message: "${MSG_BUILD_FAILURE}"
-                    )
-                }
-                unstable {
-                    println("SLACK - Notifying build unstable")
-                    slackSend (
-                        color: "${SUCCESS_COLOR}",
-                        message: "${MSG_BUILD_UNSTABLE}"
-                    )
-                }
-            }
         }
 
         stage('Confirm Deploy') {
