@@ -41,12 +41,16 @@ pipeline {
 				env.ENVIRONMENT = "prod"
                                 env.APP_AMBIENT = "prd"
                                 env.APP_TAG = env.GIT_BRANCH
+                                env.AWS_DEPLOY_S3_BUCKET = 'newton-front.qedu.org.br'
+                                env.AWS_DEPLOY_CLOUDFRONT_DISTRIBUTION_ID = 'EAU3N9WQTF624' 
                             }
                             else {
                                 // STG --> Everything else
 				env.ENVIRONMENT = "stag"
                                 env.APP_AMBIENT = "stg"
                                 env.APP_TAG = ""
+                                env.AWS_DEPLOY_S3_BUCKET = 'staging-newton-front.qedu.org.br'
+                                env.AWS_DEPLOY_CLOUDFRONT_DISTRIBUTION_ID = 'E3QTY7H5TGS3LB' 
                             }
 
 
@@ -281,25 +285,17 @@ pipeline {
                         )
 
                         try {
-                            sh "mkdir -p ./jenkins-pipeline-repo"
-                            dir("jenkins-pipeline-repo"){
-                                git(
-                                    url: env.PIPELINES_REPO,
-                                    credentialsId: env.GITHUB_CREDENTIAL,
-                                    branch: env.PIPELINES_BRANCH
-                                )
 
-                                def deploy_command = "python ./deploy-ecs/ecs-deploy-fargate.py"
-                                deploy_command += " --aws-region us-east-1"
-                                deploy_command += " --cluster ${AWS_ECS_CLUSTER}"
-                                deploy_command += " --service ${AWS_ECS_SERVICE}"
-                                deploy_command += " --task-definition ${AWS_ECS_TASK_DEFINITION}"
-                                deploy_command += " --container-name ${CONTAINER_NAME}"
-                                deploy_command += " --container-image ${CONTAINER_IMAGE}"
-                                deploy_command += " --max-backup 3"
-                                deploy_command += " --ambient ${APP_AMBIENT}"
 
-                                sh "${deploy_command}"
+                            def deploy = image.run("-ti --user root", "/bin/sh")
+                            try {
+                                sh "docker exec -i ${deploy.id} apk add python py-pip --update --no-cache"
+                                sh "docker exec -i ${deploy.id} pip install --upgrade awscli"
+                                sh "docker exec -i ${deploy.id} aws s3 sync /var/www/ ${AWS_DEPLOY_S3_BUCKET} --delete"
+                                sh "docker exec -i ${deploy.id} aws cloudfront create-invalidation --distribution-id ${AWS_DEPLOY_CLOUDFRONT_DISTRIBUTION_ID} --paths \"/*\""
+                            }
+                            finally {
+                                deploy.stop()
                             }
 
                             println("SLACK - Notifying deployment success")
