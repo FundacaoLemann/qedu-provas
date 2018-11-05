@@ -205,31 +205,7 @@ pipeline {
                     )
                 }
             }
-        }
 
-        stage('Push image') {
-            steps {
-                script {
-                    println("Pushing image with custom tags to ECR repository")
-
-                    // "image_tags" is a list of all possible tags.
-                    def image_tags = [
-                        "${APP_COMMIT}"
-                    ]
-
-                    // If the application has a tag, add a new Docker Tag to the final image
-                    if(env.APP_TAG){
-                        image_tags.add("${APP_TAG}")
-                    }
-
-                    // Using AWS ECR Plugin, push the image with all possible tags
-                    docker.withRegistry(ECR_REPO, ECR_CREDENTIAL) {
-                        for(tag in image_tags){
-                            image.push(tag)
-                        }
-                    }
-                }
-            }
             post {
                 success {
                     println("SLACK - Notifying build success")
@@ -291,7 +267,7 @@ pipeline {
                             try {
                                 sh "docker exec -i ${deploy.id} apk add python py-pip --update --no-cache"
                                 sh "docker exec -i ${deploy.id} pip install --upgrade awscli"
-                                sh "docker exec -i ${deploy.id} aws s3 sync /var/www/dist s3://${AWS_DEPLOY_S3_BUCKET}/ --delete"
+                                sh "docker exec -i ${deploy.id} aws s3 sync /var/www/dist/ s3://${AWS_DEPLOY_S3_BUCKET}/ --delete"
                                 sh "docker exec -i ${deploy.id} aws cloudfront create-invalidation --distribution-id ${AWS_DEPLOY_CLOUDFRONT_DISTRIBUTION_ID} --paths \"/*\""
                             }
                             finally {
