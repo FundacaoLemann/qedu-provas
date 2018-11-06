@@ -36,7 +36,7 @@
 
   </div>
   <div footer>
-    <button class="btn btn-success" (click)="handleSubmit($event)">Continuar</button>
+    <button class="btn btn-success" [disabled]="submitting" (click)="handleSubmit()">Continuar</button>
   </div>
 </qp-panel-page>
 

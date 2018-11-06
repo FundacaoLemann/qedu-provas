@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { ValidationStateService } from '../../services/validation-state.service';
@@ -20,14 +20,16 @@ export class MatrixSearchPageComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private stateService: ValidationStateService,
     private matrixService: MatrixService
   ) { }
 
   ngOnInit() {
+    this.subscribeToMatrixIdFromUrl();
   }
 
-  handleSubmit(event: Event) {
+  handleSubmit() {
     if (!this.matrixId) {
       return;
     }
@@ -64,7 +66,17 @@ export class MatrixSearchPageComponent implements OnInit {
     this.setSubmitting(false);
   }
 
-  private redirectToItem() {
+  private redirectToItem = () => {
     this.router.navigateByUrl(`validacao/${this.matrix.id}/item/1`);
+  }
+
+  private subscribeToMatrixIdFromUrl = () => {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = paramMap.get('id');
+      if (id) {
+        this.matrixId = id;
+        this.handleSubmit();
+      }
+    });
   }
 }
