@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { ValidationModule } from '../../validation.module';
@@ -7,17 +9,23 @@ import { AssessmentService } from '../../../core/services/assessment.service';
 import { MatrixService } from '../../../core/services/matrix/matrix.service';
 import { By } from '@angular/platform-browser';
 import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
+
 
 describe('MatrixSearchPageComponent', () => {
   let component: MatrixSearchPageComponent;
   let fixture: ComponentFixture<MatrixSearchPageComponent>;
   let matrixService: MatrixService;
+  let router: Router;
+  let route: ActivatedRouteStub;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ValidationModule, RouterTestingModule],
-      providers: [AssessmentService],
+      providers: [
+        AssessmentService,
+        { provide: ActivatedRoute, useFactory: () => new ActivatedRouteStub() }
+      ],
     })
       .compileComponents();
   }));
@@ -26,6 +34,8 @@ describe('MatrixSearchPageComponent', () => {
     fixture = TestBed.createComponent(MatrixSearchPageComponent);
     component = fixture.componentInstance;
     matrixService = TestBed.get(MatrixService);
+    router = TestBed.get(Router);
+    route = TestBed.get(ActivatedRoute);
     fixture.detectChanges();
   });
 
@@ -64,5 +74,13 @@ describe('MatrixSearchPageComponent', () => {
     expect(fixture.debugElement.query(By.css('qp-matrix-info'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('form'))).toBeFalsy();
   });
+
+  it('submits matrix id when passed by url', async(() => {
+    spyOn(matrixService, 'getMatrix').and.returnValue(of(null));
+
+    route.setParamMap({ id: '12345' });
+
+    expect(matrixService.getMatrix).toHaveBeenCalledWith({id: '12345'});
+  }));
 
 });

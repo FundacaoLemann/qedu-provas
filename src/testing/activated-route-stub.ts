@@ -1,11 +1,13 @@
-import { BehaviorSubject } from 'rxjs';
+import { ReplaySubject, BehaviorSubject } from 'rxjs';
+import { convertToParamMap, ParamMap, Params } from '@angular/router';
+
 
 export class ActivatedRouteStub {
-
   // ActivatedRoute.params is Observable
   private subject = new BehaviorSubject(this.testParams);
   params = this.subject.asObservable();
   private _testParams: {};
+  private _subject = new ReplaySubject<ParamMap>();
 
   constructor(params = {}) {
     if (params) {
@@ -26,5 +28,13 @@ export class ActivatedRouteStub {
   // ActivatedRoute.snapshot.params
   get snapshot() {
     return {params: this.testParams};
+  }
+
+  get paramMap() {
+    return this._subject.asObservable();
+  }
+
+  setParamMap(params?: Params) {
+    this._subject.next(convertToParamMap(params));
   }
 }

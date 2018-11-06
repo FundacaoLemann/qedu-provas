@@ -13,6 +13,7 @@ const routes: Routes = [
     component: ValidationComponent,
     children: [
       { path: '', component: MatrixSearchPageComponent },
+      { path: ':id', component: MatrixSearchPageComponent },
       {
         path: ':id/item/:itemIndex',
         component: ItemPageComponent,
