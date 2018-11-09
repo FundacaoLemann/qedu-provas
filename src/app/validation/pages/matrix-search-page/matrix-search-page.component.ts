@@ -67,7 +67,7 @@ export class MatrixSearchPageComponent implements OnInit {
   }
 
   private redirectToItem = () => {
-    this.router.navigateByUrl(`validacao/${this.matrix.id}/item/1`);
+    this.router.navigateByUrl(`/validacao/${this.matrix.id}/item/1`);
   }
 
   private subscribeToMatrixIdFromUrl = () => {

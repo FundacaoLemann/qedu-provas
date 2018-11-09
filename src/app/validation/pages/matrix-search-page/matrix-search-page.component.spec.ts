@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Subject } from 'rxjs';
 
 import { ValidationModule } from '../../validation.module';
 import { MatrixSearchPageComponent } from './matrix-search-page.component';
@@ -10,14 +10,16 @@ import { MatrixService } from '../../../core/services/matrix/matrix.service';
 import { By } from '@angular/platform-browser';
 import { MatrixFixture } from '../../../../testing/fixtures/matrix-fixture';
 import { ActivatedRouteStub } from '../../../../testing/activated-route-stub';
+import { ValidationStateService } from '../../services/validation-state.service';
 
 
 describe('MatrixSearchPageComponent', () => {
   let component: MatrixSearchPageComponent;
   let fixture: ComponentFixture<MatrixSearchPageComponent>;
-  let matrixService: MatrixService;
   let router: Router;
   let route: ActivatedRouteStub;
+  let matrixService: MatrixService;
+  let stateService: ValidationStateService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,6 +36,7 @@ describe('MatrixSearchPageComponent', () => {
     fixture = TestBed.createComponent(MatrixSearchPageComponent);
     component = fixture.componentInstance;
     matrixService = TestBed.get(MatrixService);
+    stateService = TestBed.get(ValidationStateService);
     router = TestBed.get(Router);
     route = TestBed.get(ActivatedRoute);
     fixture.detectChanges();
@@ -44,12 +47,25 @@ describe('MatrixSearchPageComponent', () => {
   });
 
   it('handles form submit', () => {
-    spyOn(matrixService, 'getMatrix').and.returnValue(of(null));
+    const matrixMock = MatrixFixture.get();
+    const matrixMock$ = new Subject();
+
+    spyOn(matrixService, 'getMatrix').and.returnValue(matrixMock$.asObservable());
+    spyOn(stateService, 'setState');
+    spyOn(router, 'navigateByUrl');
 
     component.matrixId = '12345';
     fixture.debugElement.query(By.css('button')).triggerEventHandler('click', {});
 
+    matrixMock$.next(matrixMock);
+    matrixMock$.complete();
+
     expect(matrixService.getMatrix).toHaveBeenCalledWith({ id: '12345'});
+    expect(stateService.setState).toHaveBeenCalledWith({ matrix: matrixMock });
+
+    fixture.debugElement.query(By.css('button')).triggerEventHandler('click', {});
+
+    expect(router.navigateByUrl).toHaveBeenCalledWith(`/validacao/${matrixMock.id}/item/1`);
   });
 
   it('renders error messages', () => {

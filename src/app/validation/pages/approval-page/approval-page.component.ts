@@ -70,6 +70,7 @@ export class ApprovalPageComponent implements OnInit {
 
   private handleCompleted = () => {
     this.isSubmitting = false;
+    this.stateService.setState({ matrix: null });
   }
 
 }
