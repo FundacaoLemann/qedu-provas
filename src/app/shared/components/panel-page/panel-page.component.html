@@ -1,0 +1,24 @@
+<div class="page">
+  <main>
+    <div class="container">
+      <div class="col-xs-12 no-h-padding" [ngClass]="{'col-md-6 col-md-offset-3': small}">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row text-center" >
+              <qp-logo></qp-logo>
+            </div>
+            <ng-content></ng-content>
+          </div>
+          <div
+              class="panel-footer text-center"
+              [ngStyle]="{display: footerStyle()}"
+              #footerContainer
+          >
+            <ng-content select="[footer]"></ng-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <qp-footer></qp-footer>
+</div>

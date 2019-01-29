@@ -15,7 +15,7 @@ import {
   createResponse,
   dispatchEvent,
 } from '../../../../testing/testing-helper';
-import { AssessmentService } from '../../../core/shared/assessment.service';
+import { AssessmentService } from '../../../core/services/assessment.service';
 import { camelizeObject } from '../../../utils/json';
 import { ApplymentModule } from '../../applyment.module';
 import { ApplymentService } from '../../shared/applyment.service';
@@ -74,7 +74,7 @@ describe('ReviewPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should return to the last question when [back] is clicked', () => {
+  it('should return to the last currentItem when [back] is clicked', () => {
     component.questions = QUESTIONS;
     spyOn(router, 'navigate');
     dispatchEvent(fixture, '[back]', 'click');

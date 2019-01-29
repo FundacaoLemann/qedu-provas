@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Router } from '@angular/router';
 import { SearchAssessmentPageComponent } from './search-assessment-page.component';
-import { AssessmentService } from '../../../core/shared/assessment.service';
+import { AssessmentService } from '../../../core/services/assessment.service';
 import { ApplymentService } from '../../shared/applyment.service';
 import { ApplymentModule } from '../../applyment.module';
 import { RouterTestingModule } from '@angular/router/testing';

@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { StoreService } from './core/shared/store.service';
+import { StoreService } from './core/services/store.service';
 
 declare const ga: Function;
 
@@ -21,11 +21,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit () {
     this.current_date = new Date();
-    this.store.asObservable().subscribe((stored) => {
-      if (stored == null) {
-        this._router.navigate(['']);
-      }
-    });
 
     this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
