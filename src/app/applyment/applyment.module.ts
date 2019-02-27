@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ApplymentComponent } from './applyment.component';
 import { ApplymentRoutingModule } from './applyment-routing.module';
+import { TroubleshootPageComponent } from './pages/troubleshoot-page/troubleshoot-page.component';
 import { SearchAssessmentPageComponent } from './pages/search-assessment-page/search-assessment-page.component';
 import { SearchAssessmentPageDirective } from './pages/search-assessment-page/search-assessment-page.directive';
 import { InstructionsPageComponent } from './pages/instructions-page/instructions-page.component';
@@ -40,6 +41,7 @@ import { ItemModule } from './item/item.module';
     ReviewModalComponent,
     InstructionsModalComponent,
     ErrorModalComponent,
+    TroubleshootPageComponent,
   ],
   entryComponents: [
     ReviewModalComponent,
