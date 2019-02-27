@@ -1,0 +1,32 @@
+<div class="page">
+  <main class="container text-center">
+    <div class="panel panel-default">
+      <div class="panel-footer">
+        <div class="row">
+          <h4>Detalhes do navegador</h4>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="troubleshoot-content">
+          <h4>
+            Detectamos os seguintes detalhes sobre seu navegador:
+          </h4>
+          <h1>
+            <strong>{{currentBrowser.name}} {{currentBrowser.version}}</strong>
+          </h1>
+        </div>
+        <div class="troubleshoot-content">
+          <h4>
+            Navegadores recomendados:
+          </h4>
+          <ul class="list-unstyled">
+            <li *ngFor="let browser of recommendedBrowsers">
+              <strong>{{browser.name}} {{browser.version}}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <qp-footer></qp-footer>
+</div>
