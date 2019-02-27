@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { TroubleshootPageComponent } from './pages/troubleshoot-page/troubleshoot-page.component';
 import { StudentAuthenticationPageComponent } from './pages/student-authentication-page/student-authentication-page.component';
 import { SearchAssessmentPageComponent } from './pages/search-assessment-page/search-assessment-page.component';
 import { InstructionsPageComponent } from './pages/instructions-page/instructions-page.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
     component: ApplymentComponent,
     children: [
       { path: '', component: SearchAssessmentPageComponent },
+      { path: 'troubleshoot', component: TroubleshootPageComponent },
       {
         path: 'prova/:token',
         component: StudentAuthenticationPageComponent,
