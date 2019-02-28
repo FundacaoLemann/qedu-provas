@@ -12,7 +12,7 @@ export class TroubleshootPageComponent implements OnInit {
     version: 0,
   };
   recommendedBrowsers: BrowserInterface[] = [
-    {name: 'Chrome', version: 73},
+    {name: 'Chrome', version: 67},
     {name: 'Firefox', version: 60},
   ];
 
