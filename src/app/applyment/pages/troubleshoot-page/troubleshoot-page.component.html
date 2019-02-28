@@ -15,9 +15,9 @@
             <strong>{{currentBrowser.name}} {{currentBrowser.version}}</strong>
           </h1>
         </div>
-        <div class="troubleshoot-content">
+        <div class="troubleshoot-content" *ngIf="hideBrowserList">
           <h4>
-            Navegadores recomendados:
+            Listade de navegadores recomendados com suas respectivas versões:
           </h4>
           <ul class="list-unstyled">
             <li *ngFor="let browser of recommendedBrowsers">

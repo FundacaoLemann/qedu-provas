@@ -3,9 +3,10 @@ import {Component, OnInit} from '@angular/core';
 @Component({
   selector: 'qp-troubleshoot-page',
   templateUrl: './troubleshoot-page.component.html',
-  styleUrls: ['./troubleshoot-page.component.sass']
+  styleUrls: ['./troubleshoot-page.component.sass'],
 })
 export class TroubleshootPageComponent implements OnInit {
+  hideBrowserList = true;
   currentBrowser: BrowserInterface = {
     name: 'Buscando informações sobre seu navegador',
     version: 0,
@@ -21,6 +22,17 @@ export class TroubleshootPageComponent implements OnInit {
   ngOnInit() {
     const browserNameAndVersion = this.getBrowserNameAndVersion(window.navigator.userAgent);
     this.currentBrowser = this.splitNameAndVersion(browserNameAndVersion);
+    this.hideBrowserList = this.browserHasSupport(this.currentBrowser);
+  }
+
+  browserHasSupport(currentBrowser: BrowserInterface): boolean {
+    const result = this.recommendedBrowsers
+      .filter(({name}) => name === currentBrowser.name)
+      .filter(({version}) => version > currentBrowser.version);
+
+    return result.length
+      ? true
+      : false;
   }
 
   splitNameAndVersion(browser: string): BrowserInterface {
