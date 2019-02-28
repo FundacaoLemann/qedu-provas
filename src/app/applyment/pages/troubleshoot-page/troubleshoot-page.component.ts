@@ -19,6 +19,45 @@ export class TroubleshootPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    const browserNameAndVersion = this.getBrowserNameAndVersion(window.navigator.userAgent);
+    this.currentBrowser = this.splitNameAndVersion(browserNameAndVersion);
+  }
+
+  splitNameAndVersion(browser: string): BrowserInterface {
+    const name: string = browser.split(' ')[0];
+    const version: string = browser.split(' ')[1];
+
+    return ({
+      name,
+      version: parseInt(version, 0),
+    });
+  }
+
+  getBrowserNameAndVersion(userAgent): string {
+    let userAgentMatch = userAgent.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    let temp;
+
+    if (/trident/i.test(userAgentMatch[1])) {
+      temp = /\brv[ :]+(\d+)/g.exec(userAgent) || [];
+      return 'IE ' + (temp[1] || '');
+    }
+
+    if (userAgentMatch[1] === 'Chrome') {
+      temp = userAgent.match(/\b(OPR|Edge)\/(\d+)/);
+      if (temp !== null) {
+        return temp.slice(1).join(' ').replace('OPR', 'Opera');
+      }
+    }
+
+    userAgentMatch = userAgentMatch[2]
+      ? [userAgentMatch[1], userAgentMatch[2]]
+      : [navigator.appName, navigator.appVersion, '-?'];
+
+    if ((temp = userAgent.match(/version\/(\d+)/i)) !== null) {
+      userAgentMatch.splice(1, 1, temp[1]);
+    }
+
+    return userAgentMatch.join(' ');
   }
 }
 
