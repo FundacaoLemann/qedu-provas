@@ -7,16 +7,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class TroubleshootPageComponent implements OnInit {
   currentBrowser: BrowserInterface = {
-    name: 'Chrome',
-    version: 73,
+    name: 'Buscando informações sobre seu navegador',
+    version: 0,
   };
   recommendedBrowsers: BrowserInterface[] = [
-    {name: 'Chrome', version: 72},
-    {name: 'Safari', version: 12},
-    {name: 'Edge', version: 18},
-    {name: 'Firefox', version: 65},
-    {name: 'Internet Explorer', version: 11},
-    {name: 'Opera', version: 57},
+    {name: 'Chrome', version: 73},
+    {name: 'Firefox', version: 60},
   ];
 
   constructor() {
