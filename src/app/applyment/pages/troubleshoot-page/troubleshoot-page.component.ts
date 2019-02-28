@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./troubleshoot-page.component.sass'],
 })
 export class TroubleshootPageComponent implements OnInit {
-  hideBrowserList = true;
+  isBrowserSupported = true;
   currentBrowser: BrowserInterface = {
     name: 'Buscando informações sobre seu navegador',
     version: 0,
@@ -22,7 +22,7 @@ export class TroubleshootPageComponent implements OnInit {
   ngOnInit() {
     const browserNameAndVersion = this.getBrowserNameAndVersion(window.navigator.userAgent);
     this.currentBrowser = this.splitNameAndVersion(browserNameAndVersion);
-    this.hideBrowserList = this.browserHasSupport(this.currentBrowser);
+    this.isBrowserSupported = this.browserHasSupport(this.currentBrowser);
   }
 
   browserHasSupport(currentBrowser: BrowserInterface): boolean {

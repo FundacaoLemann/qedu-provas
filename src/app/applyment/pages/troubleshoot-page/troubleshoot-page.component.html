@@ -11,13 +11,13 @@
           <h4>
             Detectamos os seguintes detalhes sobre seu navegador:
           </h4>
-          <h1 class="troubleshoot-title {{hideBrowserList}}">
+          <h1 class="troubleshoot-title {{isBrowserSupported}}">
             <strong>{{currentBrowser.name}} {{currentBrowser.version}}</strong>
             {{' '}}
-            <span class="troubleshoot-title-small">({{hideBrowserList ? 'navegador não recomendado' : 'navegador suportado'}})</span>
+            <span class="troubleshoot-title-small">({{isBrowserSupported ? 'navegador não recomendado' : 'navegador suportado'}})</span>
           </h1>
         </div>
-        <div class="troubleshoot-content" *ngIf="hideBrowserList">
+        <div class="troubleshoot-content" *ngIf="isBrowserSupported">
           <h4>
             Listade de navegadores recomendados com suas respectivas versões:
           </h4>
