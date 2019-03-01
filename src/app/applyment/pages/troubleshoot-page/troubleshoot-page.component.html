@@ -14,10 +14,10 @@
           <h1 class="troubleshoot-title {{isBrowserSupported}}">
             <strong>{{currentBrowser.name}} {{currentBrowser.version}}</strong>
             {{' '}}
-            <span class="troubleshoot-title-small">({{isBrowserSupported ? 'navegador não recomendado' : 'navegador suportado'}})</span>
+            <span class="troubleshoot-title-small">({{isBrowserSupported ? 'navegador suportado' : 'navegador não recomendado'}})</span>
           </h1>
         </div>
-        <div class="troubleshoot-content" *ngIf="isBrowserSupported">
+        <div class="troubleshoot-content" *ngIf="!isBrowserSupported">
           <h4>
             Listade de navegadores recomendados com suas respectivas versões:
           </h4>

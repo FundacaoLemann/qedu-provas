@@ -1,4 +1,4 @@
-import { TroubleshootService } from './troubleshoot-page.service';
+import {TroubleshootService} from './troubleshoot-page.service';
 
 describe('TroubleshootService', () => {
   let service: TroubleshootService;
@@ -9,10 +9,12 @@ describe('TroubleshootService', () => {
 
   it('browserHasSupport()', () => {
     const browserMock = {name: 'Chrome', version: 73};
-    const negativeResult = service.browserHasSupport(browserMock);
-    const positiveResult = service.browserHasSupport({...browserMock, version: 10});
+    const negativeNameResult = service.browserHasSupport({...browserMock, name: 'Edge'});
+    const negativeVersionResult = service.browserHasSupport({...browserMock, version: 10});
+    const positiveResult = service.browserHasSupport(browserMock);
 
-    expect(negativeResult).toEqual(false);
+    expect(negativeNameResult).toEqual(false);
+    expect(negativeVersionResult).toEqual(false);
     expect(positiveResult).toEqual(true);
   });
 

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TroubleshootService {
@@ -13,9 +13,9 @@ export class TroubleshootService {
   browserHasSupport(currentBrowser: BrowserInterface): boolean {
     const result = this.recommendedBrowsers
       .filter(({name}) => name === currentBrowser.name)
-      .filter(({version}) => version > currentBrowser.version);
+      .filter(({version}) => version <= currentBrowser.version);
 
-    return result.length
+    return result.length > 0
       ? true
       : false;
   }

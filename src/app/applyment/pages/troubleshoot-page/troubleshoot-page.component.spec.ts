@@ -4,11 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppModule } from '../../../app.module';
 import { TroubleshootPageComponent } from './troubleshoot-page.component';
 
-const browserMock = {
-  name: 'Chrome',
-  version: 73
-};
-
 describe('TroubleshootPageComponent', () => {
   let component: TroubleshootPageComponent;
   let fixture: ComponentFixture<TroubleshootPageComponent>;
