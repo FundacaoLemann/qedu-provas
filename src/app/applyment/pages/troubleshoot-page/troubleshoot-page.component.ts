@@ -1,32 +1,29 @@
 import {Component, OnInit} from '@angular/core';
+import {TroubleshootService, BrowserInterface} from './troubleshoot-page.service';
 
 @Component({
   selector: 'qp-troubleshoot-page',
   templateUrl: './troubleshoot-page.component.html',
-  styleUrls: ['./troubleshoot-page.component.sass']
+  styleUrls: ['./troubleshoot-page.component.sass'],
+  providers: [TroubleshootService],
 })
 export class TroubleshootPageComponent implements OnInit {
+  isBrowserSupported = true;
   currentBrowser: BrowserInterface = {
-    name: 'Chrome',
-    version: 73,
+    name: 'Buscando informações sobre seu navegador',
+    version: 0,
   };
-  recommendedBrowsers: BrowserInterface[] = [
-    {name: 'Chrome', version: 72},
-    {name: 'Safari', version: 12},
-    {name: 'Edge', version: 18},
-    {name: 'Firefox', version: 65},
-    {name: 'Internet Explorer', version: 11},
-    {name: 'Opera', version: 57},
-  ];
+  recommendedBrowsers: BrowserInterface[];
 
-  constructor() {
+  constructor(
+    private troubleshootService: TroubleshootService,
+  ) {
   }
 
   ngOnInit() {
+    const browserNameAndVersion = this.troubleshootService.getBrowserNameAndVersion(window.navigator.userAgent);
+    this.currentBrowser = this.troubleshootService.splitNameAndVersion(browserNameAndVersion);
+    this.isBrowserSupported = this.troubleshootService.browserHasSupport(this.currentBrowser);
+    this.recommendedBrowsers = this.troubleshootService.recommendedBrowsers;
   }
-}
-
-interface BrowserInterface {
-  name: string;
-  version: number;
 }

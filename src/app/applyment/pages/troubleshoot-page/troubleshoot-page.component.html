@@ -3,7 +3,7 @@
     <div class="panel panel-default">
       <div class="panel-footer">
         <div class="row">
-          <h4>Detalhes do navegador</h4>
+          <h4>Verificação do navegador</h4>
         </div>
       </div>
       <div class="panel-body">
@@ -11,13 +11,15 @@
           <h4>
             Detectamos os seguintes detalhes sobre seu navegador:
           </h4>
-          <h1>
+          <h1 class="troubleshoot-title {{isBrowserSupported}}">
             <strong>{{currentBrowser.name}} {{currentBrowser.version}}</strong>
+            {{' '}}
+            <span class="troubleshoot-title-small">({{isBrowserSupported ? 'navegador suportado' : 'navegador não recomendado'}})</span>
           </h1>
         </div>
-        <div class="troubleshoot-content">
+        <div class="troubleshoot-content" *ngIf="!isBrowserSupported">
           <h4>
-            Navegadores recomendados:
+            Listade de navegadores recomendados com suas respectivas versões:
           </h4>
           <ul class="list-unstyled">
             <li *ngFor="let browser of recommendedBrowsers">
