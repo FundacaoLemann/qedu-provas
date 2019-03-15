@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {TroubleshootService, BrowserInterface, TroubleshootPayloadInterface} from './troubleshoot-page.service';
+import { Component, OnInit } from '@angular/core';
+import { TroubleshootService, BrowserInterface, TroubleshootPayloadInterface } from './troubleshoot-page.service';
 
 @Component({
   selector: 'qp-troubleshoot-page',

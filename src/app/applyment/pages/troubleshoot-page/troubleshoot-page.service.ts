@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class TroubleshootService {
@@ -63,15 +64,12 @@ export class TroubleshootService {
       return;
     }
 
-    const url = 'http://localhost:3000/troubleshoots';
+    const url = `${environment.GALILEU_API_URL}/troubleshoots`;
     const options: any = {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
-      credentials: 'same-origin',
       headers: {'Content-Type': 'application/json'},
-      redirect: 'follow',
-      referrer: 'no-referrer',
       body: JSON.stringify(payload),
     };
 
