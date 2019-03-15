@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class TroubleshootService {
@@ -56,6 +57,54 @@ export class TroubleshootService {
 
     return userAgentMatch.join(' ');
   }
+
+  postTroubleshoot(payload: TroubleshootPayloadInterface): Promise<TroubleshootInterface> {
+    if (window.localStorage.troubleshoot) {
+      console.log('Navegador registrado:', `"${window.localStorage.troubleshoot}"`);
+      return;
+    }
+
+    const url = `${environment.GALILEU_API_URL}/troubleshoots`;
+    const options: any = {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload),
+    };
+
+    return fetch(url, options)
+      .then(response => response.json())
+      .then(({result}) => window.localStorage.troubleshoot = result._id)
+      .catch(error => console.log(error));
+  }
+}
+
+export interface TroubleshootPayloadInterface {
+  application: string;
+  school: string;
+  cpu: {
+    valid: boolean,
+    browser: {
+      name: string;
+      version: number;
+    };
+  };
+}
+
+export interface TroubleshootInterface {
+  application: string;
+  school: string;
+  cpus: [{
+    valid
+    browser: {
+      name: string;
+      version: string;
+    };
+    created_at: string;
+  }];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface BrowserInterface {
