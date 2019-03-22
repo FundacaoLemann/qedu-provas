@@ -63,7 +63,9 @@
     </div>
     <script>
 (function (window, document) {
-  var GALILEU_API_URL = 'http://localhost:3000'
+  var GALILEU_API_URL = '//localhost:3000'
+  if (window.location.hostname === 'staging-app-provas.qedu.org.br') GALILEU_API_URL = '//ecs-stg-galileu.qedu.org.br/api'
+  if (window.location.hostname === 'app-provas.qedu.org.br') GALILEU_API_URL = '//ecs-prd-galileu.qedu.org.br/api'
 
   var TroubleshootService = {
     recommendedBrowsers: [
