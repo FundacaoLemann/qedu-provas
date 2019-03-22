@@ -43,6 +43,7 @@
       m.parentNode.insertBefore(a, m)
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
     ga('create', 'UA-105536840-1', 'auto')</script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   </head>
   <body>
     <div class="troubleshoot-container">
@@ -126,16 +127,17 @@
         return
       }
 
-      var request = new XMLHttpRequest()
-      request.open('POST', GALILEU_API_URL + '/troubleshoots', true)
-      request.withCredentials = true
-      request.setRequestHeader('Content-Type', 'application/json')
-      request.send(payload)
-      request.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status >= 200 && this.status < 400) {
-          window.localStorage.troubleshoot = true
-        }
-      }
+      jQuery.ajax({
+        type: 'POST',
+        crossDomain: true,
+        cache: false,
+        url: GALILEU_API_URL + '/troubleshoots',
+        data: JSON.stringify(payload),
+        headers: {'Content-Type': 'application/json'},
+        success: function (data) {
+          window.localStorage.troubleshoot = data.result._id
+        },
+      })
     },
   }
 
