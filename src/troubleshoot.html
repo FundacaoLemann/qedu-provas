@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>QEdu Provas</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Droid Sans",Tahoma,sans-serif;
+        color: #555;
+        background-color: #dbf0e5;
+        height: 100%;
+      }
+      ul {
+        list-style: none;
+      }
+      .troubleshoot-container {
+        max-width: 950px;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+      }
+      .troubleshoot-header {
+        margin-bottom: 20px;
+        background-color: #fff;
+        padding: 2px 15px;
+        background-color: #f5f5f5;
+      }
+    </style>
+    <script>(function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r
+      i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date()
+      a = s.createElement(o), m = s.getElementsByTagName(o)[0]
+      a.async = 1
+      a.src = g
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
+    ga('create', 'UA-105536840-1', 'auto')</script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  </head>
+  <body>
+    <div class="troubleshoot-container">
+      <div class="troubleshoot-header">
+        <h4>Verificação do navegador</h4>
+      </div>
+      <div class="troubleshoot-content">
+        <h4>Detectamos os seguintes detalhes sobre seu navegador:</h4>
+        <h1 class="troubleshoot-title">
+          <strong>
+            <span id="browserName"></span>
+            <span id="browserVersion"></span>
+          </strong>
+          <span class="troubleshoot-title-small" id="isBrowserSupported"></span>
+        </h1>
+      </div>
+      <div class="troubleshoot-content" id="recommendedBrowsers"></div>
+    </div>
+    <script>
+(function (window, document) {
+  var GALILEU_API_URL = '//localhost:3000'
+  if (window.location.hostname === 'staging-app-provas.qedu.org.br') GALILEU_API_URL = '//ecs-stg-galileu.qedu.org.br/api'
+  if (window.location.hostname === 'app-provas.qedu.org.br') GALILEU_API_URL = '//ecs-prd-galileu.qedu.org.br/api'
+
+  var TroubleshootService = {
+    recommendedBrowsers: [
+      {name: 'Chrome', version: 67},
+      {name: 'Firefox', version: 60},
+    ],
+
+    browserHasSupport: function (currentBrowser) {
+      var result = this.recommendedBrowsers
+        .filter(({name}) => name === currentBrowser.name)
+        .filter(({version}) => version <= currentBrowser.version)
+
+      return result.length > 0
+        ? true
+        : false
+    },
+
+    splitNameAndVersion: function (browser) {
+      var name = browser.split(' ')[0]
+      var version = browser.split(' ')[1]
+
+      return ({
+        name,
+        version: parseInt(version, 0),
+      })
+    },
+
+    getBrowserNameAndVersion: function (userAgent) {
+      let userAgentMatch = userAgent.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || []
+      let temp
+
+      if (/trident/i.test(userAgentMatch[1])) {
+        temp = /\brv[ :]+(\d+)/g.exec(userAgent) || []
+        return 'IE ' + (temp[1] || '')
+      }
+
+      if (userAgentMatch[1] === 'Chrome') {
+        temp = userAgent.match(/\b(OPR|Edge)\/(\d+)/)
+        if (temp !== null) {
+          return temp.slice(1).join(' ').replace('OPR', 'Opera')
+        }
+      }
+
+      userAgentMatch = userAgentMatch[2]
+        ? [userAgentMatch[1], userAgentMatch[2]]
+        : [navigator.appName, navigator.appVersion, '-?']
+
+      if ((temp = userAgent.match(/version\/(\d+)/i)) !== null) {
+        userAgentMatch.splice(1, 1, temp[1])
+      }
+
+      return userAgentMatch.join(' ')
+    },
+
+    postTroubleshoot: function (payload) {
+      if (window.localStorage.troubleshoot) {
+        console.log('Navegador registrado: ', window.localStorage.troubleshoot)
+        return
+      }
+
+      jQuery.ajax({
+        type: 'POST',
+        crossDomain: true,
+        cache: false,
+        url: GALILEU_API_URL + '/troubleshoots',
+        data: JSON.stringify(payload),
+        headers: {'Content-Type': 'application/json'},
+        success: function (data) {
+          window.localStorage.troubleshoot = data.result._id
+        },
+      })
+    },
+  }
+
+  var troubleshootComponent = {
+    renderBrowserList: function (browsers) {
+      var i
+      var render = ''
+      for (i = 0; i < browsers.length; i++)
+        render += '<li><strong>' + browsers[i].name + ' ' + browsers[i].name + '</strong></li>'
+
+      return '<h4>Listade de navegadores recomendados com suas respectivas versões:</h4><ul class="list-unstyled">' + render + '</ul>'
+    },
+
+    init: function (troubleshootService) {
+      var browserNameAndVersion = troubleshootService.getBrowserNameAndVersion(window.navigator.userAgent)
+      var currentBrowser = troubleshootService.splitNameAndVersion(browserNameAndVersion)
+      var isBrowserSupported = troubleshootService.browserHasSupport(currentBrowser)
+      var recommendedBrowsers = this.renderBrowserList(troubleshootService.recommendedBrowsers)
+
+      document.querySelector('#browserName').innerHTML = currentBrowser.name
+      document.querySelector('#browserVersion').innerHTML = currentBrowser.version
+      document.querySelector('#isBrowserSupported').innerHTML = isBrowserSupported ? '(navegador suportado)' : '(navegador não recomendado)'
+      document.querySelector('.troubleshoot-title').style.color = isBrowserSupported ? 'green' : 'red'
+      document.querySelector('#recommendedBrowsers').innerHTML = !isBrowserSupported ? recommendedBrowsers : ''
+
+      var params = new URLSearchParams(window.location.search)
+      var payload = {
+        application: params.get('application'),
+        school: params.get('school'),
+        cpu: {
+          valid: isBrowserSupported,
+          browser: currentBrowser,
+        },
+      }
+      troubleshootService.postTroubleshoot(payload)
+    },
+  }
+
+  troubleshootComponent.init(TroubleshootService)
+})(window, document)
+    </script>
+  </body>
+</html>

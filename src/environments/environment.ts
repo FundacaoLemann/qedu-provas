@@ -7,5 +7,4 @@ export const environment = {
   production: false,
   API_URL: '//localhost',
   DOWNLOAD_CODE: 'offjkl9',
-  GALILEU_API_URL: '//localhost:3000',
 };
